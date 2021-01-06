@@ -26,11 +26,11 @@
         <activity android:name=".Minwoo.Activity.OrderDetailActivity" />
         <activity android:name=".Minwoo.Activity.OrderListActivity" />
         <activity android:name=".Minwoo.Activity.OrderSummaryActivity" />
-        <activity android:name=".Minwoo.Activity.StoreInfoActivity" />
+        <activity android:name=".MainActivity" />
         <!-- 민우 -->
 
         <activity android:name=".Taehyun.Activity.Mypage"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Minwoo.Activity.StoreInfoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

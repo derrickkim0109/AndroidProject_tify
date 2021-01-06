@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.InfoFragment">
+    tools:context=".Minwoo.Fragment.InfoFragment">
 
     <TextView
         android:layout_width="match_parent"

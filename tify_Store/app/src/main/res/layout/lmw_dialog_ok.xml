@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="예상 제조시간"
+        android:gravity="center"
+        android:textColor="@color/black"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <Button
+            android:id="@+id/dialog_ok_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            android:text="5분"/>
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/dialog_ok_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            android:text="10분"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <Button
+            android:id="@+id/dialog_ok_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            android:text="15분"/>
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/dialog_ok_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            android:text="20분"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        />
+
+    <EditText
+        android:id="@+id/dialog_ok_inputTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="예상 제조시간을 입력해주세요"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        />
+    <Button
+        android:id="@+id/dialog_ok_SendBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="전송"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        />
+    <Button
+        android:id="@+id/dialog_ok_cancelBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="취소"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        />
+
+
+
+
+</LinearLayout>
