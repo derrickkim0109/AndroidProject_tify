@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">tify</string>
+
+    <!-- 민우 -->
+    <string name="orderSummary_ActionBar">주문하기</string>
+    <string name="storeInfo_ActionBar">매장정보</string>
+    <string name="cartActivity_ActionBar">장바구니</string>
+    <string name="orderListActivity_ActionBaR">주문내역</string>
+
 </resources>

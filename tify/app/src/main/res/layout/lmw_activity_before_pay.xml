@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Minwoo.Activity.BeforePayActivity">
+
+    <include
+        layout="@layout/lmw_order_toolbar"
+        android:id="@+id/order_toolbar"
+        app:layout_scrollFlags="scroll|snap"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:orientation="vertical"
+
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:text="총 주문금액"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                />
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:id="@+id/beforePay_TV_Quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="10,000원"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="포인트 사용"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                />
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <TextView
+                    android:id="@+id/beforePay_TV_Point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0p"
+                    android:textSize="20dp"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center"
+
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:text="할인합계"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                />
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:id="@+id/beforePay_TV_Discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="0원"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+        </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        />
+    
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_centerInParent="true"
+        android:background="@color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="총 결제금액"
+            android:textSize="20dp"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/beforePay_TV_TotalPrice"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="10,000원"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/beforePay_Btn_Kakopay"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="카카오페이"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:backgroundTint="#FFEB3B"
+            android:layout_gravity="center"
+            />
+        <Button
+            android:id="@+id/beforePay_Btn_Card"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="카드 결제"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:backgroundTint="#2180F3"
+
+            />
+    </LinearLayout>
+</LinearLayout>

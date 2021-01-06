@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:foreground="?attr/selectableItemBackground">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#16000000"
+            >
+            <TextView
+                android:id="@+id/activity_OrderList_CV_OSeqno"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="25dp"
+                android:gravity="left"
+                android:text="주문번호 : 1"
+                android:paddingLeft="20dp"
+                />
+
+            <TextView
+                android:id="@+id/activity_OrderList_CV_ODate"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="2020-12-19 13:12"
+                />
+
+            <ImageView
+                android:id="@+id/activity_OrderList_CV_OrderDetailBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_action_right"
+                android:paddingRight="20dp"
+                />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/activity_OrderList_CV_sName"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="스타벅스"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <ImageButton
+                    android:id="@+id/activity_OrderList_CV_OrderRequest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_right"
+                    />
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    />
+                <ImageButton
+                    android:id="@+id/activity_OrderList_CV_OrderConfirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_right"/>
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    />
+
+
+                <ImageButton
+                    android:id="@+id/activity_OrderList_CV_OrderComplete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_right"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <TextView
+                    android:id="@+id/activity_OrderList_CV_TV_OrderRequest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="주문요청"
+                   />
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/activity_OrderList_CV_TV_OrderConfirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="주문접수"/>
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/activity_OrderList_CV_TV_OrderComplete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="제조완료"
+                    />
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                />
+
+            <Button
+                android:id="@+id/activity_OrderList_CV_Btn_InsertReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="리뷰쓰러 가기"
+                android:backgroundTint="#2180F3"
+                android:textColor="@color/white"
+                android:visibility="invisible"
+                android:clickable="false"
+                />
+
+            
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

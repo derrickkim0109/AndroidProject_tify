@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Minwoo.Activity.EmptyOrderListActivity">
+
+    <include
+        layout="@layout/lmw_emptyorderlist_toolbar"
+        android:id="@+id/emptyorderlist_toolbar"
+        app:layout_scrollFlags="scroll|snap"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#16000000"
+        android:gravity="center"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="2"
+                android:gravity="center"
+                android:text="  아직 주문하신 커피가 없네요 \n 카페인 충전하러 가시겠어요?"
+                />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/activity_EmptyOrderList_Btn_OrderNow"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="주문하러 가기"
+            android:textColor="@color/white"
+            android:backgroundTint="#2180F3"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
