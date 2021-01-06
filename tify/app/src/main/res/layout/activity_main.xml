@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:text="메인컬러 + 둥근효과"
+        android:layout_margin="20dp"
+        android:background="@drawable/button_shape"
+        app:backgroundTint="@color/mainColor"
+        android:layout_height="wrap_content">
+    </Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:text="서브컬러+ 둥근효과 + 테두리"
+        android:textColor="@color/SubColor"
+        android:layout_margin="20dp"
+        android:background="@drawable/radius_border"
+        app:backgroundTint="@color/white"
+        android:layout_height="wrap_content">
+    </Button>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:text="텍스트컬러+테두리"
+        android:textColor="@color/TextColor"
+        android:layout_margin="20dp"
+        android:background="@drawable/border"
+        app:backgroundTint="@color/white"
+        android:layout_height="wrap_content">
+    </Button>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:id="@+id/gifTest"
+        android:layout_height="wrap_content">
+    </ImageView>
+</LinearLayout>
