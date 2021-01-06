@@ -40,4 +40,19 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
+
+    ////태현 2021.01.06
+    //recycleview and material library
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    //image cropper
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    //circular Imageview
+    implementation 'com.github.mohammadatif:CircularImageView:1.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0-RC1'
+    /////이미지 불러오기 - 태현
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+
 }

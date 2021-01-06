@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/tify.iml" filepath="$PROJECT_DIR$/.idea/tify.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tify.iml" filepath="$PROJECT_DIR$/.idea/modules/tify.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/tify.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/tify.app.iml" />
     </modules>
   </component>

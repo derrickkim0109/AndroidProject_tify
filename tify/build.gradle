@@ -16,6 +16,11 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+
+        //태현 2020.12.27
+        maven { url 'https://jitpack.io' }
+
     }
 }
 
