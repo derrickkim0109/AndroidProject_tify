@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -13,13 +16,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CUDNetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
+public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
 
     final static String TAG = "CUDNetworkTask";
     Context context = null;
     String mAddr = null;
     ProgressDialog progressDialog = null;
-    //    ArrayList<Student> members;
+    Bean_Mypage_userinfo userinfo = null;
+    String where = null;
+
+
     ///////////////////////////////////////////////////////////////////////////////////////
     // Date : 2020.12.25
     //
@@ -27,12 +33,11 @@ public class CUDNetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
     //  - NetworkTask를 검색, 입력, 수정, 삭제 구분없이 하나로 사용키 위해 생성자 변수 추가.
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-    String where = null;
 
-    public CUDNetworkTask_TaeHyun(Context context, String mAddr, String where) {
+    public NetworkTask_TaeHyun(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
-//        this.members = new ArrayList<Student>();
+        this.userinfo = new Bean_Mypage_userinfo();
         this.where = where;
         Log.v(TAG, "Start : " + mAddr);
     }
@@ -90,9 +95,8 @@ public class CUDNetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                 //
                 ///////////////////////////////////////////////////////////////////////////////////////
                 if (where.equals("select")) {
-//                    parserSelect(stringBuffer.toString());
-                }
-                else {
+                    parserSelect(stringBuffer.toString());
+                } else {
                     result = parserAction(stringBuffer.toString());
                 }
                 ///////////////////////////////////////////////////////////////////////////////////////
@@ -118,66 +122,65 @@ public class CUDNetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
         //  - 입력, 수정, 삭제로 들어온 Task는 result를 return
         //
         ///////////////////////////////////////////////////////////////////////////////////////
-//        if (where.equals("select")) {
-////            return members;
-//        } else {
-        return result;
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-    @Override
-    protected void onPostExecute(Object o) {
-        Log.v(TAG, "onPostExecute()");
-        super.onPostExecute(o);
-        progressDialog.dismiss();
-
+        if (where.equals("select")) {
+            return userinfo;
+        } else {
+            return result;
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////
     }
 
-    @Override
-    protected void onCancelled() {
-        Log.v(TAG,"onCancelled()");
-        super.onCancelled();
-    }
+        @Override
+        protected void onPostExecute (Object o){
+            Log.v(TAG, "onPostExecute()");
+            super.onPostExecute(o);
+            progressDialog.dismiss();
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Date : 2020.12.25
-    //
-    // Description:
-    //  - 검색후 json parsing
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-//    private void parserSelect(String s){
-//        Log.v(TAG,"Parser()");
-//
-//        try {
-//            JSONObject jsonObject = new JSONObject(s);
-//            JSONArray jsonArray = new JSONArray(jsonObject.getString("students_info"));
-//            members.clear();
-//
-//            for(int i = 0; i < jsonArray.length(); i++){
-//                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-//                String code = jsonObject1.getString("code");
-//                String name = jsonObject1.getString("name");
-//                String dept = jsonObject1.getString("dept");
-//                String phone = jsonObject1.getString("phone");
-//
-//                Log.v(TAG, "code : " + code);
-//                Log.v(TAG, "name : " + name);
-//                Log.v(TAG, "dept : " + dept);
-//                Log.v(TAG, "phone : " + phone);
-//
-//                Bean_friendslist member = new Student(code, name, dept, phone);
-//                members.add(member);
-//                // Log.v(TAG, member.toString());
-//                Log.v(TAG, "----------------------------------");
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
+        }
+
+        @Override
+        protected void onCancelled () {
+            Log.v(TAG, "onCancelled()");
+            super.onCancelled();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        // Date : 2020.12.25
+        //
+        // Description:
+        //  - 검색후 json parsing
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+    private void parserSelect (String s){
+        Log.v(TAG, "Parser()");
+
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+
+                int uNo = jsonObject1.getInt("uNo");
+                String uEmail = jsonObject1.getString("uEmail");
+                String uNickName = jsonObject1.getString("uNickName");
+                int uTelNo = jsonObject1.getInt("uTelNo");
+                String uImage = jsonObject1.getString("uImage");
+                int uPayPassword = jsonObject1.getInt("uPayPassword");
+
+                Bean_Mypage_userinfo member = new Bean_Mypage_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
+
+                // Log.v(TAG, member.toString());
+                Log.v(TAG, "----------------------------------");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -188,8 +191,8 @@ public class CUDNetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
     //  - 입력, 수정, 삭제후 json parsing
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-    private String parserAction(String s){
-        Log.v(TAG,"Parser()");
+    private String parserAction (String s){
+        Log.v(TAG, "Parser()");
         String returnValue = null;
 
         try {
@@ -199,13 +202,12 @@ public class CUDNetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
             returnValue = jsonObject.getString("result");
             Log.v(TAG, returnValue);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return returnValue;
     }
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////
 
 } // ----------
