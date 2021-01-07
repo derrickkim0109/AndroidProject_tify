@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -24,11 +25,11 @@ import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
 import java.util.ArrayList;
 
-public class Mypage extends AppCompatActivity {
+public class MypageActivity extends AppCompatActivity {
 
     //2021.01.07 - 태현
     //field
-    final static String TAG = "DetailViewActivity";
+    final static String TAG = "Mypage";
     private ArrayList<Bean_MypageList> data = null;
     private MypageListAdapter adapter = null;
     private ListView listView = null;
@@ -56,16 +57,22 @@ public class Mypage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kth_activity_mypage);
+        nickName = findViewById(R.id.mypage_nickName);
+        email = findViewById(R.id.mypage_email);
 
         //url
         urlAddr = "http://" + macIP + ":8080/tify/mypage.jsp?";
         //listview
         data = new ArrayList<Bean_MypageList>();
+        userinfo = new Bean_Mypage_userinfo();
+        connectGetData();
+
 
         data.add(new Bean_MypageList("프로필 변경", R.drawable.ic_action_go));
         data.add(new Bean_MypageList("카드등록   ", R.drawable.ic_action_go));
         data.add(new Bean_MypageList("로그아웃   ", R.drawable.ic_action_go));
-        adapter = new MypageListAdapter(Mypage.this, R.layout.kth_activity_mypage_list,data);
+
+        adapter = new MypageListAdapter(MypageActivity.this, R.layout.kth_activity_mypage_list,data);
         listView = findViewById(R.id.mypage_listview);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(mItemClickListener);
@@ -86,7 +93,7 @@ public class Mypage extends AppCompatActivity {
 
                 //프로필 변경
                 case 1:
-                    intent = new Intent(Mypage.this,ProfileChage.class)
+                    intent = new Intent(MypageActivity.this, ProfileChageActivity.class)
                             .putExtra("uNo", uNo)
                             .putExtra("uEmail",uEmail)
                             .putExtra("uNickName",uNickName)
@@ -98,7 +105,7 @@ public class Mypage extends AppCompatActivity {
 
                     //카드등록
                 case 2:
-                    intent = new Intent(Mypage.this,CardRegistration.class)
+                    intent = new Intent(MypageActivity.this, CardRegistrationActivity.class)
                             .putExtra("uNo", uNo);
                     startActivity(intent);
 
@@ -106,14 +113,14 @@ public class Mypage extends AppCompatActivity {
 
                     //로그아웃
                 case 3:
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Mypage.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MypageActivity.this);
                     builder.setTitle("로그아웃");
                     builder.setMessage("로그아웃 하시겠습니까?");
                     builder.setNegativeButton("아니오", null);
                     builder.setPositiveButton("예", new DialogInterface.OnClickListener() { // 예를 눌렀을 경우 로그인 창으로 이동
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            intent = new Intent(Mypage.this, MainActivity.class);
+                            intent = new Intent(MypageActivity.this, MainActivity.class);
                             SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
                             SharedPreferences.Editor autoLogin = auto.edit();
 
@@ -142,19 +149,25 @@ public class Mypage extends AppCompatActivity {
             uNo = 1;
 
             urlAddress = urlAddr + "uNo=" + uNo;
-            NetworkTask_TaeHyun myPageNetworkTask = new NetworkTask_TaeHyun(Mypage.this, urlAddress,"select");
+            NetworkTask_TaeHyun myPageNetworkTask = new NetworkTask_TaeHyun(MypageActivity.this, urlAddress,"select");
             Object obj = myPageNetworkTask.execute().get();
             userinfo = (Bean_Mypage_userinfo) obj;
 
-            nickName.setText(uNickName);
-            email.setText(uEmail);
             //DB
             uTelNo = userinfo.getuTelNo();
-            uPayPassword = userinfo.getuPayPassword();
-            uEmail = userinfo.getuEmail();
-            uNickName = userinfo.getuNickName();
-            uImage = userinfo.getuImage();
+            Log.v(TAG,"uTelNo" + uTelNo);
 
+            uPayPassword = userinfo.getuPayPassword();
+            Log.v(TAG,"uPayPassword" + uPayPassword);
+            uEmail = userinfo.getuEmail();
+            Log.v(TAG,"uEmail" + uEmail);
+            uNickName = userinfo.getuNickName();
+            Log.v(TAG,"uNickName" + uNickName);
+            uImage = userinfo.getuImage();
+            Log.v(TAG,"uImage" + uImage);
+
+            nickName.setText(uNickName);
+            email.setText(uEmail);
             ////////////////////////////////////////////////////////////
             //                                                        //
             //                                                        //
@@ -163,12 +176,12 @@ public class Mypage extends AppCompatActivity {
 
 
             ///////
-            if(uImage.equals("null")){
-                profileIv.setImageResource(R.drawable.ic_person);
-            }else {
-                sendImageRequest(uImage);
-            }
-            ///////
+//            if(uImage.equals("null")){
+//                profileIv.setImageResource(R.drawable.ic_person);
+//            }else {
+//                sendImageRequest(uImage);
+//            }
+//            ///////
 
         }catch (Exception e){
             e.printStackTrace();

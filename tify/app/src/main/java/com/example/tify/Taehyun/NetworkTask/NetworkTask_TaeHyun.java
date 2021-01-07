@@ -123,6 +123,9 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
         //
         ///////////////////////////////////////////////////////////////////////////////////////
         if (where.equals("select")) {
+            Log.v("설마","설");
+            Log.v("설마","ㄹㅇㄴㄹㅇㄴ"+userinfo);
+
             return userinfo;
         } else {
             return result;
@@ -171,8 +174,14 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                 int uTelNo = jsonObject1.getInt("uTelNo");
                 String uImage = jsonObject1.getString("uImage");
                 int uPayPassword = jsonObject1.getInt("uPayPassword");
-
-                Bean_Mypage_userinfo member = new Bean_Mypage_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
+                Log.v("ddddddd","uNo : "+uNo);
+                Log.v("ddddddd","uNo : "+uEmail);
+                Log.v("ddddddd","uNo : "+uNickName);
+                Log.v("ddddddd","uNo : "+uTelNo);
+                Log.v("ddddddd","uNo : "+uImage);
+                Log.v("ddddddd","uNo : "+uPayPassword);
+                Log.v("ddddddd",where);
+                userinfo = new Bean_Mypage_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
 
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");

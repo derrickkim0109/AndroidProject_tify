@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.tify.R;
 
-public class ProfileChage extends AppCompatActivity {
+public class ProfileChageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
