@@ -12,9 +12,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
+import com.bumptech.glide.Glide;
 import com.example.tify.R;
 import com.example.tify.Taehyun.Adapter.MypageListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_MypageList;
+import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
+import com.example.tify.Taehyun.NetworkTask.CUDNetworkTask_TaeHyun;
 
 import java.util.ArrayList;
 
@@ -35,9 +38,13 @@ public class Mypage extends AppCompatActivity {
     int uTelNo = 0, uPayPassword, uNo = 0;
     String uEmail, uNickName, uImage = null;
     //url
-    String ImageUrl = null;
+    //jsp적을 주소
+    String urlAddr = null;
+    //
     String urlAddress = null;
-
+    String macIP = "192.168.200.129";
+    //Bean
+    Bean_Mypage_userinfo userinfo = null;
 
     Intent intent = null;
 
@@ -47,6 +54,8 @@ public class Mypage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kth_activity_mypage);
 
+        //url
+        urlAddr = "http://" + macIP + ":8080/tify/mypage.jsp?";
         //listview
         data = new ArrayList<Bean_MypageList>();
 
@@ -60,27 +69,13 @@ public class Mypage extends AppCompatActivity {
 
 
         intent = getIntent();
-        String imageLoad = intent.getStringExtra("fImage");
+        uNo = intent.getIntExtra("uNo", 0);
 
         ///////
-//        if(imageLoad.equals("null")){
-//            profileIv.setImageResource(R.drawable.ic_person);
-//        }else {
-//            sendImageRequest(imageLoad);
-//        }
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //           프로필 이미지 불러오기
-    //           Date : 2021.01.07 - 태현
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public void sendImageRequest(String s) {
-
-//        String url = "http://" + macIP + ":8080/mypeople/" + s ;
-//        Glide.with(this).load(url).into(profileIv);
 
     }
+
+
     AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -131,22 +126,52 @@ public class Mypage extends AppCompatActivity {
 
     private void connectGetData(){
         try {
-            urlAddr = urlAddr+"seq="+seq;
-            Log.v("여기","getdata"+urlAddr);
-            myPageNetworkTask myPageNetworkTask = new myPageNetworkTask(MyPageActivity.this, urlAddr);
+            //임시값
+            uNo = 1;
+
+            urlAddress = urlAddr + "uNo=" + uNo;
+            CUDNetworkTask_TaeHyun myPageNetworkTask = new CUDNetworkTask_TaeHyun(Mypage.this, urlAddress,"select");
             Object obj = myPageNetworkTask.execute().get();
-            bean_user = (Bean_user) obj;
+            userinfo = (Bean_Mypage_userinfo) obj;
 
-            mypage_tel.setText(bean_user.getuTel());
-            mypage_name.setText(bean_user.getuName());
-            mypage_id.setText(bean_user.getuId());
+            nickName.setText(uNickName);
+            email.setText(uEmail);
+            //DB
+            uTelNo = userinfo.getuTelNo();
+            uPayPassword = userinfo.getuPayPassword();
+            uEmail = userinfo.getuEmail();
+            uNickName = userinfo.getuNickName();
+            uImage = userinfo.getuImage();
 
-            update_tel1 = bean_user.getuTel();
-            update_name1 = bean_user.getuName();
-            update_pw = bean_user.getuPw();
+            ////////////////////////////////////////////////////////////
+            //                                                        //
+            //                                                        //
+            //                    /이미지 불러오기 //   2021.01.07 -태현     //
+            ////////////////////////////////////////////////////////////
+
+
+            ///////
+            if(uImage.equals("null")){
+                profileIv.setImageResource(R.drawable.ic_person);
+            }else {
+                sendImageRequest(uImage);
+            }
+            ///////
 
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //           프로필 이미지 불러오기
+    //           Date : 2021.01.07 - 태현
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void sendImageRequest(String s) {
+
+        String url = "http://" + macIP + ":8080/tify/" + s ;
+        Glide.with(this).load(url).into(profileIv);
+
     }
 }
