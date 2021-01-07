@@ -1,12 +1,12 @@
 package com.example.tify.Taehyun.Bean;
 
-public class MypageList {
+public class Bean_MypageList {
    // Date.2021.01.06 - 태현
     //field
     private String terms;
     private int into;
 
-    public MypageList(String terms, int into) {
+    public Bean_MypageList(String terms, int into) {
         this.terms = terms;
         this.into = into;
     }
