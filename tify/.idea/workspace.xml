@@ -25,30 +25,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6704d21d-1b40-4872-ab1a-dd3b44d11abb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_asynclayoutinflater_asynclayoutinflater_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_documentfile_documentfile_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_ui_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_v4_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_media_media_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_slidingpanelayout_slidingpanelayout_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_swiperefreshlayout_swiperefreshlayout_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__de_hdodenhof_circleimageview_3_1_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tify/Taehyun/Activity/Mypage.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tify/Taehyun/Activity/Mypage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_mypage.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/kth_activity_mypage.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_4_XL_API_30]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_XL_API_30]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -70,6 +59,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
@@ -77,7 +67,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1mgZuUzGyVnmFKKreIol7MZxhLR" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -86,24 +78,30 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/java/com/example/tify/Taehyun/Activity" />
     <property name="memory.settings.postsync.last.time.stamp" value="1609917439017" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="android.template.-32108891">
+      <recent name="com.example.tify.Taehyun.Activity" />
+    </key>
     <key name="android.template.-1627140942">
       <recent name="com.example.tify" />
     </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="layout.Adapter" />
-      <recent name="com.example.tify.Taehyun.Activity" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/example/tify/Taehyun/Activity" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/example/tify/Taehyun" />
       <recent name="C:\Users\test\Desktop\git\tify\app\src\main\res" />
       <recent name="C:\Users\test\Desktop\git\tify\app\src\main\res\layout" />
       <recent name="C:\Users\test\Desktop\git\tify\app\src\main\res\drawable-anydpi" />
-      <recent name="C:\Users\test\Desktop\git\tify\app\src\main\res\drawable-hdpi" />
-      <recent name="C:\Users\test\Desktop\git\tify\app\src\main\java\com\example\tify\Minwoo\Bean" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.tify.Taehyun.Activity" />
+      <recent name="layout.Adapter" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
     </key>
   </component>
   <component name="RunManager">
@@ -198,6 +196,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="331" y="181" key="#com.intellij.ide.util.MemberChooser" timestamp="1609944428791">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state x="331" y="181" key="#com.intellij.ide.util.MemberChooser/0.25.1440.875@0.25.1440.875" timestamp="1609944428791" />
     <state x="569" y="474" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1609923986555">
       <screen x="0" y="23" width="2048" height="1039" />
     </state>
@@ -210,13 +212,37 @@
       <screen x="0" y="23" width="2048" height="1039" />
     </state>
     <state x="762" y="296" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.2048.1039@0.23.2048.1039" timestamp="1609924254647" />
+    <state x="106" y="220" key="AndroidCreateResourceFileDialog" timestamp="1609943270100">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state x="106" y="220" key="AndroidCreateResourceFileDialog/0.25.1440.875@0.25.1440.875" timestamp="1609943270100" />
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1609933546070">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609933546070" />
+    <state width="993" height="227" key="GridCell.Tab.0.bottom" timestamp="1609947143039">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state width="993" height="227" key="GridCell.Tab.0.bottom/0.25.1440.875@0.25.1440.875" timestamp="1609947143039" />
+    <state width="993" height="227" key="GridCell.Tab.0.center" timestamp="1609947143038">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state width="993" height="227" key="GridCell.Tab.0.center/0.25.1440.875@0.25.1440.875" timestamp="1609947143038" />
+    <state width="993" height="227" key="GridCell.Tab.0.left" timestamp="1609947143038">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state width="993" height="227" key="GridCell.Tab.0.left/0.25.1440.875@0.25.1440.875" timestamp="1609947143038" />
+    <state width="993" height="227" key="GridCell.Tab.0.right" timestamp="1609947143038">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state width="993" height="227" key="GridCell.Tab.0.right/0.25.1440.875@0.25.1440.875" timestamp="1609947143038" />
     <state x="51" y="144" key="SettingsEditor" timestamp="1609934911618">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="51" y="144" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1609934911618" />
+    <state x="183" y="214" width="670" height="676" key="search.everywhere.popup" timestamp="1609949008902">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state x="183" y="214" width="670" height="676" key="search.everywhere.popup/0.25.1440.875@0.25.1440.875" timestamp="1609949008902" />
   </component>
 </project>
