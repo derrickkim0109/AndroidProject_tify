@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CUDNetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
+public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
 
     final static String TAG = "CUDNetworkTask";
     Context context = null;
@@ -34,7 +34,7 @@ public class CUDNetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
     //
     ///////////////////////////////////////////////////////////////////////////////////////
 
-    public CUDNetworkTask_TaeHyun(Context context, String mAddr, String where) {
+    public NetworkTask_TaeHyun(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
         this.userinfo = new Bean_Mypage_userinfo();

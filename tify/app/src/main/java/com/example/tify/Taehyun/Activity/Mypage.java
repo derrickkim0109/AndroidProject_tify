@@ -17,7 +17,7 @@ import com.example.tify.R;
 import com.example.tify.Taehyun.Adapter.MypageListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_MypageList;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
-import com.example.tify.Taehyun.NetworkTask.CUDNetworkTask_TaeHyun;
+import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
 import java.util.ArrayList;
 
@@ -80,6 +80,8 @@ public class Mypage extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position){
+
+                //프로필 변경
                 case 1:
                     intent = new Intent(Mypage.this,ProfileChage.class)
                             .putExtra("uNo", uNo)
@@ -90,9 +92,16 @@ public class Mypage extends AppCompatActivity {
                             .putExtra("uPayPassword",uPayPassword);
                     startActivity(intent);
                     break;
+
+                    //카드등록
                 case 2:
+                    intent = new Intent(Mypage.this,CardRegistration.class)
+                            .putExtra("uNo", uNo);
+                    startActivity(intent);
 
                     break;
+
+                    //로그아웃 
                 case 3:
                     AlertDialog.Builder builder = new AlertDialog.Builder(Mypage.this);
                     builder.setTitle("로그아웃");
@@ -130,7 +139,7 @@ public class Mypage extends AppCompatActivity {
             uNo = 1;
 
             urlAddress = urlAddr + "uNo=" + uNo;
-            CUDNetworkTask_TaeHyun myPageNetworkTask = new CUDNetworkTask_TaeHyun(Mypage.this, urlAddress,"select");
+            NetworkTask_TaeHyun myPageNetworkTask = new NetworkTask_TaeHyun(Mypage.this, urlAddress,"select");
             Object obj = myPageNetworkTask.execute().get();
             userinfo = (Bean_Mypage_userinfo) obj;
 
