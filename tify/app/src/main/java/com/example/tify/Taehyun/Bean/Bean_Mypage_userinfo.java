@@ -3,8 +3,8 @@ package com.example.tify.Taehyun.Bean;
 public class Bean_Mypage_userinfo {
 
     //field
-    int uNo, uPayPassword, uTelNo;
-    String uEmail, uNickName, uImage;
+    int uNo;
+    String uEmail, uNickName, uImage,uPayPassword, uTelNo;
 
     //constructor
 
@@ -13,7 +13,7 @@ public class Bean_Mypage_userinfo {
     }
 
     public Bean_Mypage_userinfo(int uNo, String uEmail , String uNickName
-            , int uTelNo, String uImage, int uPayPassword) {
+            , String uTelNo, String uImage, String uPayPassword) {
 
         this.uNo = uNo;
         this.uPayPassword = uPayPassword;
@@ -31,19 +31,19 @@ public class Bean_Mypage_userinfo {
         this.uNo = uNo;
     }
 
-    public int getuPayPassword() {
+    public String getuPayPassword() {
         return uPayPassword;
     }
 
-    public void setuPayPassword(int uPayPassword) {
+    public void setuPayPassword(String uPayPassword) {
         this.uPayPassword = uPayPassword;
     }
 
-    public int getuTelNo() {
+    public String getuTelNo() {
         return uTelNo;
     }
 
-    public void setuTelNo(int uTelNo) {
+    public void setuTelNo(String uTelNo) {
         this.uTelNo = uTelNo;
     }
 

@@ -171,9 +171,10 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                 int uNo = jsonObject1.getInt("uNo");
                 String uEmail = jsonObject1.getString("uEmail");
                 String uNickName = jsonObject1.getString("uNickName");
-                int uTelNo = jsonObject1.getInt("uTelNo");
+                String uTelNo = jsonObject1.getString("uTelNo");
                 String uImage = jsonObject1.getString("uImage");
-                int uPayPassword = jsonObject1.getInt("uPayPassword");
+                String uPayPassword = jsonObject1.getString("uPayPassword");
+
                 Log.v("ddddddd","uNo : "+uNo);
                 Log.v("ddddddd","uNo : "+uEmail);
                 Log.v("ddddddd","uNo : "+uNickName);

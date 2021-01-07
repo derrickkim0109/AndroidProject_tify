@@ -39,7 +39,9 @@ public class MypageActivity extends AppCompatActivity {
     CircularImageView profileIv = null;
 
     //DB
-    int uTelNo = 0, uPayPassword, uNo = 0;
+    String uTelNo = null;
+    String uPayPassword = null;
+    int uNo = 0;
     String uEmail, uNickName, uImage = null;
     //url
     //jsp적을 주소
@@ -92,27 +94,30 @@ public class MypageActivity extends AppCompatActivity {
             switch (position){
 
                 //프로필 변경
-                case 1:
+                case 0:
                     intent = new Intent(MypageActivity.this, ProfileChageActivity.class)
                             .putExtra("uNo", uNo)
-                            .putExtra("uEmail",uEmail)
                             .putExtra("uNickName",uNickName)
                             .putExtra("uTelNo",uTelNo)
                             .putExtra("uImage",uImage)
-                            .putExtra("uPayPassword",uPayPassword);
+                            .putExtra("uPayPassword",uPayPassword)
+                            .putExtra("macIP", macIP);
+
                     startActivity(intent);
                     break;
 
                     //카드등록
-                case 2:
+                case 1:
                     intent = new Intent(MypageActivity.this, CardRegistrationActivity.class)
-                            .putExtra("uNo", uNo);
+                            .putExtra("uNo", uNo)
+                            .putExtra("macIP", macIP);
+
                     startActivity(intent);
 
                     break;
 
                     //로그아웃
-                case 3:
+                case 2:
                     AlertDialog.Builder builder = new AlertDialog.Builder(MypageActivity.this);
                     builder.setTitle("로그아웃");
                     builder.setMessage("로그아웃 하시겠습니까?");
@@ -176,12 +181,12 @@ public class MypageActivity extends AppCompatActivity {
 
 
             ///////
-//            if(uImage.equals("null")){
-//                profileIv.setImageResource(R.drawable.ic_person);
-//            }else {
-//                sendImageRequest(uImage);
-//            }
-//            ///////
+            if(uImage.equals("null")){
+                profileIv.setImageResource(R.drawable.ic_person);
+            }else {
+                sendImageRequest(uImage);
+            }
+            ///////
 
         }catch (Exception e){
             e.printStackTrace();
