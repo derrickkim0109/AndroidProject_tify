@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action1"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_home"
+        android:title="홈"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action2"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_order"
+        android:title="일정 추가"/>
+
+    <item
+        android:id="@+id/action3"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_star"
+        android:title="설정"/>
+    <item
+        android:id="@+id/action4"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_qr"
+        android:title="일정 추가"/>
+
+    <item
+        android:id="@+id/action5"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_mypage"
+        android:title="설정"/>
+</menu>
