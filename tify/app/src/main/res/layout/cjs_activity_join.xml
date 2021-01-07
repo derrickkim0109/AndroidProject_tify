@@ -5,20 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Jiseok.Activity.JoinActivity"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     >
-    <!--1번 레이아웃 -->
+
+
     <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+
+
+    <FrameLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="9"
+        >
+        <!-- 1번 프레임-->
+    <LinearLayout
+        android:id="@+id/join_ly_fram1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        >
+       <!-- 1번 레이아웃-->
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1"
+        android:layout_weight="1.8"
         android:orientation="vertical"
         android:gravity="bottom"
         >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
+
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -33,23 +56,24 @@
                 android:text="를"
                 android:textSize="40dp"
                 />
+
         </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="시작해볼까요?"
             android:textSize="40dp"
-            android:layout_marginLeft="60dp"
+
             />
-
-
     </LinearLayout>
     <!--2번 레이아웃 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:orientation="vertical"
+        android:gravity="center"
         >
         <TextView
             android:layout_width="match_parent"
@@ -62,28 +86,216 @@
             android:orientation="horizontal"
             >
             <EditText
-                android:layout_width="200dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
+                android:hint="전화번호를 입력해 주세요"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background=""
+                android:background="@drawable/button_shape"
+                app:backgroundTint="@color/mainColor"
+                android:layout_marginLeft="20dp"
+                android:text="인증"
+                android:textSize="15dp"
                 />
-
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="15dp"></LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+        <EditText
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:hint="인증번호를 입력하세요"
+            />
+        </LinearLayout>
+
 
     </LinearLayout>
     <!--3번 레이아웃 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="0.7"
+            ></LinearLayout>
+
+
+        <!-- 프레임레이아웃1 종료-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="8">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_shape"
+                    app:backgroundTint="@color/mainColor"
+                    android:text="계속하기"
+                    />
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
 
     </LinearLayout>
+
+
+        <!--  2번 프레임-->
+        <LinearLayout
+            android:id="@+id/join_ly_fram2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1.8"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="추가정보를\n입력해주세요."
+                        android:textSize="40dp"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <!--2번 레이아웃 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="핸드폰 인증을 진행해주세요"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <EditText
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:hint="전화번호를 입력해 주세요"
+                        />
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_shape"
+                        app:backgroundTint="@color/mainColor"
+                        android:layout_marginLeft="20dp"
+                        android:text="인증"
+                        android:textSize="15dp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"></LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <EditText
+                        android:layout_width="330dp"
+                        android:layout_height="wrap_content"
+                        android:hint="인증번호를 입력하세요"
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <!--3번 레이아웃 -->
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="0.7"
+                ></LinearLayout>
+
+
+            <!-- 프레임레이아웃1 종료-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8">
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_shape"
+                        app:backgroundTint="@color/mainColor"
+                        android:text="계속하기"
+                        />
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </FrameLayout>
 
 
 
