@@ -39,7 +39,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_3a_API_30_x86]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -222,6 +222,22 @@
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1609999762855" />
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609936219760" />
+    <state width="1877" height="281" key="GridCell.Tab.0.bottom" timestamp="1610004954963">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610004954963" />
+    <state width="1877" height="281" key="GridCell.Tab.0.center" timestamp="1610004954963">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="281" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610004954963" />
+    <state width="1877" height="281" key="GridCell.Tab.0.left" timestamp="1610004954963">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="281" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610004954963" />
+    <state width="1877" height="281" key="GridCell.Tab.0.right" timestamp="1610004954963">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="281" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610004954963" />
     <state x="51" y="144" key="SettingsEditor" timestamp="1609934911618">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
