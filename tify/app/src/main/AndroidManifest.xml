@@ -28,6 +28,7 @@
         <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
         <activity android:name=".MainActivity" />
         <activity android:name=".Taehyun.Activity.Mypage">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
