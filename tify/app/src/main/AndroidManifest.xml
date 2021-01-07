@@ -19,6 +19,9 @@
         android:theme="@style/Theme.MaterialComponents.DayNight">
         <activity android:name=".Hyeona.Activity.LoginActivity"></activity>
         <activity android:name=".Taehyun.Activity.ProfileChage"></activity>
+        <!-- 지석 -->
+        <activity android:name=".Jiseok.Activity.JoinActivity"/>
+        <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.EmptyCartActivity" />
         <activity android:name=".Minwoo.Activity.BeforePayActivity" />
