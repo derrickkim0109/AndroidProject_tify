@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tify.R;
-import com.example.tify.Taehyun.Bean.MypageList;
+import com.example.tify.Taehyun.Bean.Bean_MypageList;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class MypageListAdapter extends BaseAdapter {
     private int layout = 0;
 
     //Bean   Date.2021.01.06 - 태현
-    private ArrayList<MypageList> data = null;
+    private ArrayList<Bean_MypageList> data = null;
     private LayoutInflater inflater = null;
 
 
@@ -30,7 +30,7 @@ public class MypageListAdapter extends BaseAdapter {
     //LayoutInflater
     //-----------------------------------------------
 
-    public MypageListAdapter(Context mContext, int layout, ArrayList<MypageList> data) {
+    public MypageListAdapter(Context mContext, int layout, ArrayList<Bean_MypageList> data) {
         this.mContext = mContext;
         this.layout = layout;
         this.data = data;

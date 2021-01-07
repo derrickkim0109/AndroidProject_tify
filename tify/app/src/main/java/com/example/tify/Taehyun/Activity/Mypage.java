@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.example.tify.R;
 import com.example.tify.Taehyun.Adapter.MypageListAdapter;
-import com.example.tify.Taehyun.Bean.MypageList;
+import com.example.tify.Taehyun.Bean.Bean_MypageList;
 
 import java.util.ArrayList;
 
@@ -23,13 +23,21 @@ public class Mypage extends AppCompatActivity {
     //2021.01.07 - 태현
     //field
     final static String TAG = "DetailViewActivity";
-    private ArrayList<MypageList> data = null;
+    private ArrayList<Bean_MypageList> data = null;
     private MypageListAdapter adapter = null;
     private ListView listView = null;
 
     //the values for return
     TextView nickName = null, email = null;
     CircularImageView profileIv = null;
+
+    //DB
+    int uTelNo = 0, uPayPassword, uNo = 0;
+    String uEmail, uNickName, uImage = null;
+    //url
+    String ImageUrl = null;
+    String urlAddress = null;
+
 
     Intent intent = null;
 
@@ -40,11 +48,11 @@ public class Mypage extends AppCompatActivity {
         setContentView(R.layout.kth_activity_mypage);
 
         //listview
-        data = new ArrayList<MypageList>();
+        data = new ArrayList<Bean_MypageList>();
 
-        data.add(new MypageList("프로필 변경", R.drawable.ic_action_go));
-        data.add(new MypageList("카드등록   ", R.drawable.ic_action_go));
-        data.add(new MypageList("로그아웃   ", R.drawable.ic_action_go));
+        data.add(new Bean_MypageList("프로필 변경", R.drawable.ic_action_go));
+        data.add(new Bean_MypageList("카드등록   ", R.drawable.ic_action_go));
+        data.add(new Bean_MypageList("로그아웃   ", R.drawable.ic_action_go));
         adapter = new MypageListAdapter(Mypage.this, R.layout.kth_activity_mypage_list,data);
         listView = findViewById(R.id.mypage_listview);
         listView.setAdapter(adapter);
@@ -78,7 +86,13 @@ public class Mypage extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position){
                 case 1:
-                    intent = new Intent(Mypage.this,ProfileChage.class);
+                    intent = new Intent(Mypage.this,ProfileChage.class)
+                            .putExtra("uNo", uNo)
+                            .putExtra("uEmail",uEmail)
+                            .putExtra("uNickName",uNickName)
+                            .putExtra("uTelNo",uTelNo)
+                            .putExtra("uImage",uImage)
+                            .putExtra("uPayPassword",uPayPassword);
                     startActivity(intent);
                     break;
                 case 2:
@@ -108,4 +122,31 @@ public class Mypage extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        connectGetData();
+    }
+
+    private void connectGetData(){
+        try {
+            urlAddr = urlAddr+"seq="+seq;
+            Log.v("여기","getdata"+urlAddr);
+            myPageNetworkTask myPageNetworkTask = new myPageNetworkTask(MyPageActivity.this, urlAddr);
+            Object obj = myPageNetworkTask.execute().get();
+            bean_user = (Bean_user) obj;
+
+            mypage_tel.setText(bean_user.getuTel());
+            mypage_name.setText(bean_user.getuName());
+            mypage_id.setText(bean_user.getuId());
+
+            update_tel1 = bean_user.getuTel();
+            update_name1 = bean_user.getuName();
+            update_pw = bean_user.getuPw();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
