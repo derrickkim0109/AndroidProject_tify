@@ -1,7 +1,9 @@
 package com.example.tify.Taehyun.Activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.bumptech.glide.Glide;
+import com.example.tify.MainActivity;
 import com.example.tify.R;
 import com.example.tify.Taehyun.Adapter.MypageListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_MypageList;
@@ -110,13 +113,13 @@ public class Mypage extends AppCompatActivity {
                     builder.setPositiveButton("예", new DialogInterface.OnClickListener() { // 예를 눌렀을 경우 로그인 창으로 이동
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-//                            intent = new Intent(Mypage.this, LoginActivity.class);
-//                            SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-//                            SharedPreferences.Editor autoLogin = auto.edit();
-//
-//                            autoLogin.clear();
-//                            autoLogin.commit();
-//                            startActivity(intent);
+                            intent = new Intent(Mypage.this, MainActivity.class);
+                            SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor autoLogin = auto.edit();
+
+                            autoLogin.clear();
+                            autoLogin.commit();
+                            startActivity(intent);
                             // 아이디값 넘기기?
                         }
                     });
