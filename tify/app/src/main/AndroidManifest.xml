@@ -16,7 +16,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        android:theme="@style/Theme.MaterialComponents.DayNight">
 
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.EmptyCartActivity"></activity>
@@ -26,11 +26,11 @@
         <activity android:name=".Minwoo.Activity.OrderDetailActivity" />
         <activity android:name=".Minwoo.Activity.OrderListActivity" />
         <activity android:name=".Minwoo.Activity.OrderSummaryActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Minwoo.Activity.StoreInfoActivity"/>
         <!-- 민우 -->
 
         <activity android:name=".Taehyun.Activity.Mypage"/>
-        <activity android:name=".Minwoo.Activity.StoreInfoActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
