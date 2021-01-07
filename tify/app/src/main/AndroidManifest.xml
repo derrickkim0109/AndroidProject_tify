@@ -15,8 +15,13 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/Theme.MaterialComponents.DayNight">
         <activity android:name=".Hyeona.Activity.LoginActivity"></activity>
+=======
+        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        <activity android:name=".Taehyun.Activity.ProfileChage"></activity>
+>>>>>>> 48ddf4f96293e302230ab5cafe22bdaefad5fcdb
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.EmptyCartActivity" />
         <activity android:name=".Minwoo.Activity.BeforePayActivity" />
@@ -26,10 +31,16 @@
         <activity android:name=".Minwoo.Activity.OrderListActivity" />
         <activity android:name=".Minwoo.Activity.OrderSummaryActivity" />
         <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
+<<<<<<< HEAD
         <activity android:name=".Taehyun.Activity.Mypage" />
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /><!--현아-->
         <activity android:name=".MainActivity" />
         <activity android:name=".Hyeona.Activity.IntroActivity">
+=======
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Taehyun.Activity.Mypage">
+
+>>>>>>> 48ddf4f96293e302230ab5cafe22bdaefad5fcdb
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
