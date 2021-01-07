@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.tify.R;
 
-public class CardRegistration extends AppCompatActivity {
+public class CardRegistrationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

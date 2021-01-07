@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
+import com.example.tify.Hyeona.Bean.Bean_review;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -13,9 +16,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.Timestamp;
 import java.util.ArrayList;
 
-public class CUDNetworkTask_Hyeona extends AsyncTask<Integer, String, Object> {
+public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
 
     /*공용이므로 항상 수정사항 알려주시기 바랍니다.*/
 
@@ -24,9 +28,9 @@ public class CUDNetworkTask_Hyeona extends AsyncTask<Integer, String, Object> {
     String mAddr = null;
     ProgressDialog progressDialog = null;
     String where = null;
-    //ArrayList<Bean_user> user_info;
+    ArrayList<Bean_review> reviews = null;
 
-    public CUDNetworkTask_Hyeona(Context context, String mAddr, String where) {
+    public CUDNetworkTask_review(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
         this.where = where;
@@ -71,7 +75,7 @@ public class CUDNetworkTask_Hyeona extends AsyncTask<Integer, String, Object> {
                 }
 
                 if(where.equals("select")){
-                    //parserSelect(stringBuffer.toString());
+                    parserSelect(stringBuffer.toString());
                 }else{
                     result = parserAction(stringBuffer.toString());
                 }
@@ -134,39 +138,33 @@ public class CUDNetworkTask_Hyeona extends AsyncTask<Integer, String, Object> {
         return returnValue;
     }
 
+    private void parserSelect(String s){
+        //Log.v("aaaaaa","parser()");
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("review"));
+            reviews.clear();
 
+            for (int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                int rNo = jsonObject1.getInt("rNo");
+                int user_uNo = jsonObject1.getInt("user_uNo");
+                int store_sSeqNo = jsonObject1.getInt("store_sSeqNo");
 
+                String rContent = jsonObject1.getString("rContent");
+                String rImage = jsonObject1.getString("rImage");
+                String rOwnerComment = jsonObject1.getString("rOwnerComment");
 
-//    private void parserSelect(String s){
-//        //Log.v("aaaaaa","parser()");
-//        try {
-//            JSONObject jsonObject = new JSONObject(s);
-//            JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
-//            user_info.clear();
-//
-//            for (int i=0; i<jsonArray.length(); i++){
-//                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-//                int uSeqno = jsonObject1.getInt("uSeqno");
-//                String uId = jsonObject1.getString("uId");
-//                Log.v("aaaaaa","aaaaaa"+uId);
-//                String uPw = jsonObject1.getString("uPw");
-//                String uName = jsonObject1.getString("uName");
-//                String uTel = jsonObject1.getString("uTel");
-//                Log.v("aaaaaa","aaaaaa");
-//                Timestamp uInsertDate = Timestamp.valueOf(jsonObject1.getString("uInsertDate"));
-//                Timestamp uDeleteDate = Timestamp.valueOf(jsonObject1.getString("uDeleteDate"));
-//
-//                Log.v("aaaaaa","aaaaaa");
-//                Bean_user bean_user = new Bean_user(uSeqno, uId, uPw, uName, uTel, uInsertDate, uDeleteDate);
-//
-//                Log.v("aaaaaa","aaaaaa");
-//            }
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
+                String rDeletedate = jsonObject1.getString("rDeletedate");
+                String rInsertDate = jsonObject1.getString("uDeleteDate");
 
+                Bean_review bean_review = new Bean_review(rNo, user_uNo, store_sSeqNo, rContent, rImage, rOwnerComment, rDeletedate, rInsertDate);
+                reviews.add(bean_review);
+            }
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 } // ----------

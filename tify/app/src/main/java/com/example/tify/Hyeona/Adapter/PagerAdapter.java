@@ -1,10 +1,14 @@
-package com.example.tify.Hyeona.Activity;
+package com.example.tify.Hyeona.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.example.tify.Hyeona.Activity.FirstFragment;
+import com.example.tify.Hyeona.Activity.SecondFragment;
+import com.example.tify.Hyeona.Activity.ThirdFragment;
 
 
 public class PagerAdapter extends FragmentPagerAdapter {

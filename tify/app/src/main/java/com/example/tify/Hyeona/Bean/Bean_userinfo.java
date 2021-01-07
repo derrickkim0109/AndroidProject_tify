@@ -1,19 +1,19 @@
-package com.example.tify.Taehyun.Bean;
+package com.example.tify.Hyeona.Bean;
 
-public class Bean_Mypage_userinfo {
+public class Bean_userinfo {
 
     //field
-    int uNo;
-    String uEmail, uNickName, uImage,uPayPassword, uTelNo;
+    int uNo, uPayPassword, uTelNo;
+    String uEmail, uNickName, uImage;
 
     //constructor
 
-    public Bean_Mypage_userinfo() {
+    public Bean_userinfo() {
 
     }
 
-    public Bean_Mypage_userinfo(int uNo, String uEmail , String uNickName
-            , String uTelNo, String uImage, String uPayPassword) {
+    public Bean_userinfo(int uNo, String uEmail , String uNickName
+            , int uTelNo, String uImage, int uPayPassword) {
 
         this.uNo = uNo;
         this.uPayPassword = uPayPassword;
@@ -31,19 +31,19 @@ public class Bean_Mypage_userinfo {
         this.uNo = uNo;
     }
 
-    public String getuPayPassword() {
+    public int getuPayPassword() {
         return uPayPassword;
     }
 
-    public void setuPayPassword(String uPayPassword) {
+    public void setuPayPassword(int uPayPassword) {
         this.uPayPassword = uPayPassword;
     }
 
-    public String getuTelNo() {
+    public int getuTelNo() {
         return uTelNo;
     }
 
-    public void setuTelNo(String uTelNo) {
+    public void setuTelNo(int uTelNo) {
         this.uTelNo = uTelNo;
     }
 

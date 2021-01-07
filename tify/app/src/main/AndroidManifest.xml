@@ -20,7 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
         <activity android:name=".Hyeona.Activity.LoginActivity"></activity>
-        <activity android:name=".Taehyun.Activity.ProfileChage"></activity>
+        <activity android:name=".Taehyun.Activity.ProfileChageActivity"></activity>
+        <!-- 태현 -->
+
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity"/>
         <!-- 지석 -->
@@ -33,10 +35,17 @@
         <activity android:name=".Minwoo.Activity.OrderListActivity" />
         <activity android:name=".Minwoo.Activity.OrderSummaryActivity" />
         <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
+
         <activity android:name=".Taehyun.Activity.Mypage" />
+        <activity android:name=".Hyeona.Activity.ViewPagerActivity" /><!-- 현아 -->
+        <activity android:name=".Hyeona.Activity.IntroActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Hyeona.Activity.reviewActivity"/>
+        <activity android:name=".Hyeona.Activity.IntroActivity" />
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- 현아 -->
         <activity android:name=".MainActivity" />
-        <activity android:name=".Hyeona.Activity.IntroActivity">
+        <activity android:name=".Taehyun.Activity.MypageActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
