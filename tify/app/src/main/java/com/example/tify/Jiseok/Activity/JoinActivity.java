@@ -2,8 +2,11 @@ package com.example.tify.Jiseok.Activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresPermission;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -33,15 +38,46 @@ public class JoinActivity extends AppCompatActivity {
     final int COUNT_DOWN_INTERVAL = 1000; //onTick 메소드를 호출할 간격 (1초)
     static final int SMS_RECEIVE_PERMISSON = 1;
     TelephonyManager telManager;
+    private final int MY_PERMISSION_REQUEST_SMS = 1001;
+    int timerCount = 0;
+    String passPhone=null;
 
-
-    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cjs_activity_join);
-        telManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        Log.v("여기","번호 : "+telManager.getLine1Number());
+
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.SEND_SMS)){
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("info");
+                builder.setMessage("This app won't work properly unless you grant SMS permission.");
+                builder.setIcon(R.drawable.ic_action_before);
+
+                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCompat.requestPermissions(JoinActivity.this,new String[] {Manifest.permission.SEND_SMS}, MY_PERMISSION_REQUEST_SMS);
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSION_REQUEST_SMS);
+            }
+        }
+        //telManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
+        //Log.v("여기","번호 : "+telManager.getLine1Number());
+        getPhoneNumber(this);
+        Log.v("여기","번호 : "+getPhoneNumber(this));
+
+
+
+
         // 1번 프레임
         etTel = findViewById(R.id.join_et_tel);
         btnAuthentication = findViewById(R.id.join_btn_authentication);
@@ -74,12 +110,13 @@ public class JoinActivity extends AppCompatActivity {
                     //권한이 부여되어 있는지 확인
 
                     int permissonCheck= ContextCompat.checkSelfPermission(JoinActivity.this, Manifest.permission.RECEIVE_SMS);
-                    if(permissonCheck == PackageManager.PERMISSION_GRANTED){
-                        Toast.makeText(getApplicationContext(), "SMS 수신권한 있음", Toast.LENGTH_SHORT).show();
-                        sendmsg2();
+                    if(permissonCheck == PackageManager.PERMISSION_GRANTED){//수신권한 있을때
+                        if(timerCount != 0) countDownTimer.cancel();
+                        sendmsg();
                         countDownTimer();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "SMS 수신권한 없음", Toast.LENGTH_SHORT).show();
+                        timerCount++;
+
+                    }else{// 수신권한 없을때
 
                         //권한설정 dialog에서 거부를 누르면
                         //ActivityCompat.shouldShowRequestPermissionRationale 메소드의 반환값이 true가 된다.
@@ -94,6 +131,11 @@ public class JoinActivity extends AppCompatActivity {
                         }
                     }
                     break;
+                case R.id.join_btn_go:
+                    if(passPhone.equals(etAuthentication.getText().toString())) Toast.makeText(JoinActivity.this,"성공",Toast.LENGTH_SHORT).show();
+                    else Toast.makeText(JoinActivity.this,"실패",Toast.LENGTH_SHORT).show();
+
+                    break;
             }
         }
     };
@@ -107,6 +149,22 @@ public class JoinActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        processCommand(intent);
+    }
+
+
+    private void processCommand(Intent intent){
+        if(intent != null){
+            String sender = intent.getStringExtra("sender");
+            String date = intent.getStringExtra("receivedDate");
+            String content = intent.getStringExtra("contents");
+            etAuthentication.setText(content.substring(6,14));
+
+        }
+    }
 
     //카운트 다운 메소드
     public void countDownTimer() {
@@ -134,17 +192,27 @@ public class JoinActivity extends AppCompatActivity {
 
             }
 
-
             @Override
             public void onFinish() { //시간이 다 되면 다이얼로그 종료
-                Toast.makeText(JoinActivity.this,"시간종료",Toast.LENGTH_SHORT).show();
+                passPhone="";
             }
         }.start();
     }
 
     public void sendmsg(){
-        String phoneNo = "(065) 555-1212";
-        String sms = "폰에서 자동으로 보내는 메시지 입니다.";
+
+         //이메일 인증코드 생성
+            String[] str = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+            String newCode = new String();
+
+            for (int x = 0; x < 8; x++) {
+                int random = (int) (Math.random() * str.length);
+                newCode += str[random];
+            }
+        passPhone=newCode;
+
+        String phoneNo = "5554";
+        String sms = "인증번호는 " +passPhone+" 입니다." ;
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNo, null, sms, null, null);
@@ -157,11 +225,34 @@ public class JoinActivity extends AppCompatActivity {
         }
     }
 
-    public void sendmsg2(){
-        String phoneNo = "(065) 555-1212";
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms : "+phoneNo));
-        intent.putExtra("sms_body","문자");
-        startActivity(intent);
+//    public void sendmsg2(){
+//        String phoneNo = "(065) 555-1212";
+//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms : "+phoneNo));
+//        intent.putExtra("sms_body","문자");
+//        startActivity(intent);
+//    }
+
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    public static String getPhoneNumber(Context context){
+
+        String phoneNumber = "";
+
+        TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        try {
+
+            String tmpPhoneNumber = mgr.getLine1Number();
+            phoneNumber=tmpPhoneNumber;
+
+        Log.v("여기","트라이번호 : "+tmpPhoneNumber);
+        } catch (Exception e) {
+            phoneNumber = "";
+            Log.v("여기","실패"+e);
+        }
+
+        return phoneNumber;
+
     }
+
+
 
 }
