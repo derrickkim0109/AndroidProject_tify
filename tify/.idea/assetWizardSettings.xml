@@ -24,7 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\choi_hyeona\AppData\Local\Temp\baseline_star_24.xml" />
+                                                <entry key="imagePath" value="C:\Users\choi_hyeona\AppData\Local\Temp\baseline_arrow_back_24.xml" />
                                                 <entry key="opacityPercent" value="60" />
                                               </map>
                                             </option>
@@ -36,7 +36,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/star/baseline_star_24.xml" />
+                                                <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/arrow_back/baseline_arrow_back_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -82,7 +82,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_action_star" />
+                                      <entry key="outputName" value="ic_action_before" />
                                     </map>
                                   </option>
                                 </PersistentState>
