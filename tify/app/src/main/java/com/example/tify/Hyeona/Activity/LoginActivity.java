@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.tify.Jiseok.Activity.JoinActivity;
 import com.example.tify.R;
 
 public class LoginActivity extends AppCompatActivity {
