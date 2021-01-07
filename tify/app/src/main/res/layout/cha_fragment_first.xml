@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Minwoo.Activity.FirstFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/tv_01"
+        android:layout_weight="2"
+        android:layout_gravity="bottom"
+        android:text="\n태그설정으로\n편리한 그룹관리"
+        android:lineHeight="30dp"
+        android:textColor="#333"
+        android:textStyle="bold"
+        android:layout_margin="20dp"
+        android:textSize="35dp"
+        android:layout_height="100dp">
+
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/tv_01_01"
+        android:layout_weight="1"
+        android:layout_gravity="top"
+        android:textSize="18dp"
+       android:layout_marginLeft="20dp"
+        android:layout_height="wrap_content"
+        android:text="중복 설정 가능한 태그로\n검색을 빠르게 할 수 있습니다."></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="3">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/iv_01"
+            android:layout_gravity="bottom"
+            android:layout_weight="3"
+            android:src="@drawable/intro_01"
+            android:layout_height="250dp">
+        </ImageView>
+
+    </LinearLayout>
+
+</LinearLayout>
