@@ -11,6 +11,6 @@ public class CardRegistration extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_registration);
+        setContentView(R.layout.kth_activity_card_registration);
     }
 }
