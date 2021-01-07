@@ -96,8 +96,7 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                 ///////////////////////////////////////////////////////////////////////////////////////
                 if (where.equals("select")) {
                     parserSelect(stringBuffer.toString());
-                }
-                else {
+                } else {
                     result = parserAction(stringBuffer.toString());
                 }
                 ///////////////////////////////////////////////////////////////////////////////////////
@@ -126,42 +125,44 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
         if (where.equals("select")) {
             return userinfo;
         } else {
-        return result;
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-    @Override
-    protected void onPostExecute(Object o) {
-        Log.v(TAG, "onPostExecute()");
-        super.onPostExecute(o);
-        progressDialog.dismiss();
-
+            return result;
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////
     }
 
-    @Override
-    protected void onCancelled() {
-        Log.v(TAG,"onCancelled()");
-        super.onCancelled();
-    }
+        @Override
+        protected void onPostExecute (Object o){
+            Log.v(TAG, "onPostExecute()");
+            super.onPostExecute(o);
+            progressDialog.dismiss();
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Date : 2020.12.25
-    //
-    // Description:
-    //  - 검색후 json parsing
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-    private void parserSelect(String s){
-        Log.v(TAG,"Parser()");
+        }
+
+        @Override
+        protected void onCancelled () {
+            Log.v(TAG, "onCancelled()");
+            super.onCancelled();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        // Date : 2020.12.25
+        //
+        // Description:
+        //  - 검색후 json parsing
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+    private void parserSelect (String s){
+        Log.v(TAG, "Parser()");
 
         try {
             JSONObject jsonObject = new JSONObject(s);
             JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
 
-            for(int i = 0; i < jsonArray.length(); i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
 
                 int uNo = jsonObject1.getInt("uNo");
@@ -171,12 +172,12 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                 String uImage = jsonObject1.getString("uImage");
                 int uPayPassword = jsonObject1.getInt("uPayPassword");
 
-                Bean_Mypage_userinfo member = new Bean_Mypage_userinfo(uNo,uEmail,uNickName, uTelNo, uImage, uPayPassword);
+                Bean_Mypage_userinfo member = new Bean_Mypage_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
 
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -190,8 +191,8 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
     //  - 입력, 수정, 삭제후 json parsing
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-    private String parserAction(String s){
-        Log.v(TAG,"Parser()");
+    private String parserAction (String s){
+        Log.v(TAG, "Parser()");
         String returnValue = null;
 
         try {
@@ -201,13 +202,12 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
             returnValue = jsonObject.getString("result");
             Log.v(TAG, returnValue);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return returnValue;
     }
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////
 
 } // ----------

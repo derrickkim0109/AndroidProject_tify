@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.tify.R;
+
 public class CardRegistration extends AppCompatActivity {
 
     @Override

@@ -101,7 +101,7 @@ public class Mypage extends AppCompatActivity {
 
                     break;
 
-                    //로그아웃 
+                    //로그아웃
                 case 3:
                     AlertDialog.Builder builder = new AlertDialog.Builder(Mypage.this);
                     builder.setTitle("로그아웃");
