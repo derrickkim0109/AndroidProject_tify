@@ -72,8 +72,7 @@ public class JoinActivity extends AppCompatActivity {
         //telManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
         //Log.v("여기","번호 : "+telManager.getLine1Number());
-        getPhoneNumber(this);
-        Log.v("여기","번호 : "+getPhoneNumber(this));
+
 
 
 
@@ -110,14 +109,13 @@ public class JoinActivity extends AppCompatActivity {
                     //권한이 부여되어 있는지 확인
 
                     int permissonCheck= ContextCompat.checkSelfPermission(JoinActivity.this, Manifest.permission.RECEIVE_SMS);
-                    if(permissonCheck == PackageManager.PERMISSION_GRANTED){//수신권한 있을때
+                    if(permissonCheck == PackageManager.PERMISSION_GRANTED){
                         if(timerCount != 0) countDownTimer.cancel();
+                        //수신권한 있을때
                         sendmsg();
                         countDownTimer();
                         timerCount++;
-
                     }else{// 수신권한 없을때
-
                         //권한설정 dialog에서 거부를 누르면
                         //ActivityCompat.shouldShowRequestPermissionRationale 메소드의 반환값이 true가 된다.
                         //단, 사용자가 "Don't ask again"을 체크한 경우
