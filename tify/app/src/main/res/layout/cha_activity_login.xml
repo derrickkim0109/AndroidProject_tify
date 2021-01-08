@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Hyeona.Activity.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="2">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_gravity="center"
+            android:paddingTop="100dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/login_image02">
+        </ImageView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:src="@drawable/login_image01">
+            </ImageView>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_weight="0.02"
+            android:background="#b8b8b8">
+        </View>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:background="@color/mainColor"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="50dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_shape"
+                app:backgroundTint="@color/kakao"
+                android:layout_marginStart="50dp"
+                android:drawableLeft="@drawable/kakao"
+                android:text="카카오로 로그인하기"
+                android:textColor="#382224"
+                android:textStyle="bold"
+                android:layout_marginEnd="50dp">
+            </Button>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:padding="10dp"
+                android:text="or">
+            </TextView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_shape"
+                app:backgroundTint="#fff"
+                android:layout_marginStart="50dp"
+                android:text="이메일로 로그인하기"
+                android:textColor="@color/TextColor"
+                android:textStyle="bold"
+                android:layout_marginEnd="50dp">
+            </Button>
+
+            <TextView
+                android:id="@+id/login_tv_emailJoin"
+                android:layout_width="match_parent"
+                android:padding="20dp"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:text="이메일로 회원가입">
+
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
