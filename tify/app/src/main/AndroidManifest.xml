@@ -33,6 +33,7 @@
 
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
+        <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity"/>
         <!-- 지석 -->
 
         <!-- 민우 -->
