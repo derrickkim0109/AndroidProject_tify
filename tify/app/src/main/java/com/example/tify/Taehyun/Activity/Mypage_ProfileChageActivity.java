@@ -24,10 +24,11 @@ import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
 import java.io.File;
 
-public class ProfileChageActivity extends AppCompatActivity {
+public class Mypage_ProfileChageActivity extends AppCompatActivity {
     //2021.01.07-태현
     //field
     final static String TAG = "ProfileChageActivity";
+
     //url
     //jsp적을 주소
     String urlAddr = null;
@@ -64,6 +65,7 @@ public class ProfileChageActivity extends AppCompatActivity {
 
     //회원탈퇴
     TextView profile_withdraw = null;
+    final String userDeleteMessage = "";
 
     //카메라, 갤러리
     private static final int CAMERA_REQUEST_CODE = 100;
@@ -111,11 +113,11 @@ public class ProfileChageActivity extends AppCompatActivity {
 
 
         //이미지 불러오기
-        if (mImage.equals("null")) {
-            profileIv.setImageResource(R.drawable.ic_person);
-        } else {
+//        if (mImage.equals("") || mImage.equals("null")) {
+//            profileIv.setImageResource(R.drawable.ic_person);
+//        } else {
             sendImageRequest(mImage);
-        }
+//        }
 
     }
 
@@ -255,7 +257,7 @@ public class ProfileChageActivity extends AppCompatActivity {
         Log.v(TAG, "url!! :" + urlAddress);
 
         try {
-            NetworkTask_TaeHyun updateNetworkTask = new NetworkTask_TaeHyun(ProfileChageActivity.this, urlAddress, "update");
+            NetworkTask_TaeHyun updateNetworkTask = new NetworkTask_TaeHyun(Mypage_ProfileChageActivity.this, urlAddress, "update");
             Object obj = updateNetworkTask.execute().get();
             result = (String) obj;
 
@@ -267,19 +269,24 @@ public class ProfileChageActivity extends AppCompatActivity {
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //
-    //          프로필 사진 / 변경하기 텍스트 누름 -> 카메라/ 갤러리 가기
+    //          결제 비번 변경 , 회원 탈퇴
     //           2021.01.08 -태현
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     View.OnClickListener tClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                
+                //결제
                 case R.id.profile_payPasswordCG:
-
+                    intent = new Intent(Mypage_ProfileChageActivity.this, Mypage_PayPasswordActivity.class)
+                            .putExtra("uNo",uNo)
+                            .putExtra("uPayPassword", uPayPassword);
+                    startActivity(intent);
                     break;
 
                 case R.id.profile_withdraw:
+                    Mypage_WithdrawActivity myPage_customDialog = new Mypage_WithdrawActivity(Mypage_ProfileChageActivity.this,uNo,macIP);
+                    myPage_customDialog.callFunction(userDeleteMessage);
 
                     break;
             }

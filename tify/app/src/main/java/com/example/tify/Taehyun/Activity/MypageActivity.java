@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.bumptech.glide.Glide;
-import com.example.tify.MainActivity;
+import com.example.tify.Hyeona.Activity.LoginActivity;
 import com.example.tify.R;
 import com.example.tify.Taehyun.Adapter.MypageListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_MypageList;
@@ -67,7 +67,7 @@ public class MypageActivity extends AppCompatActivity {
         //listview
         data = new ArrayList<Bean_MypageList>();
         userinfo = new Bean_Mypage_userinfo();
-        connectGetData();
+
 
 
         data.add(new Bean_MypageList("프로필 변경", R.drawable.ic_action_go));
@@ -83,7 +83,8 @@ public class MypageActivity extends AppCompatActivity {
         intent = getIntent();
         uNo = intent.getIntExtra("uNo", 0);
 
-        ///////
+
+
 
     }
 
@@ -95,7 +96,7 @@ public class MypageActivity extends AppCompatActivity {
 
                 //프로필 변경
                 case 0:
-                    intent = new Intent(MypageActivity.this, ProfileChageActivity.class)
+                    intent = new Intent(MypageActivity.this, Mypage_ProfileChageActivity.class)
                             .putExtra("uNo", uNo)
                             .putExtra("uNickName",uNickName)
                             .putExtra("uTelNo",uTelNo)
@@ -108,7 +109,7 @@ public class MypageActivity extends AppCompatActivity {
 
                     //카드등록
                 case 1:
-                    intent = new Intent(MypageActivity.this, CardRegistrationActivity.class)
+                    intent = new Intent(MypageActivity.this, Mypage_CardRegistrationActivity.class)
                             .putExtra("uNo", uNo)
                             .putExtra("macIP", macIP);
 
@@ -125,7 +126,7 @@ public class MypageActivity extends AppCompatActivity {
                     builder.setPositiveButton("예", new DialogInterface.OnClickListener() { // 예를 눌렀을 경우 로그인 창으로 이동
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            intent = new Intent(MypageActivity.this, MainActivity.class);
+                            intent = new Intent(MypageActivity.this, LoginActivity.class);
                             SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
                             SharedPreferences.Editor autoLogin = auto.edit();
 
@@ -178,14 +179,13 @@ public class MypageActivity extends AppCompatActivity {
             //                                                        //
             //                    /이미지 불러오기 //   2021.01.07 -태현     //
             ////////////////////////////////////////////////////////////
-
+            sendImageRequest(uImage);
 
             ///////
-            if(uImage.equals("null")){
-                profileIv.setImageResource(R.drawable.ic_person);
-            }else {
-                sendImageRequest(uImage);
-            }
+//            if(uImage.equals("null") || uImage.equals("")){
+//                profileIv.setImageResource(R.drawable.ic_person);
+//            }else {
+//            }
             ///////
 
         }catch (Exception e){
@@ -201,7 +201,9 @@ public class MypageActivity extends AppCompatActivity {
     public void sendImageRequest(String s) {
 
         String url = "http://" + macIP + ":8080/tify/" + s ;
+        Log.v(TAG,url);
         Glide.with(this).load(url).into(profileIv);
 
     }
+
 }
