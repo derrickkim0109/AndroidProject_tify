@@ -1,6 +1,7 @@
 package com.example.tify.Hyeona.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,10 @@ import java.util.ArrayList;
 public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHolder> {
     private Context mContext = null;
     private int layout = 0;
-    private ArrayList<Bean_review> reviews = null;
+    private ArrayList<Bean_review> reviews = new ArrayList<Bean_review>();
     private LayoutInflater inflater = null;
     int user_uNo ;
-    Bean_userinfo bean_userinfo = null;
+    Bean_userinfo bean_userinfo =new Bean_userinfo();
     private String uImage;
     private String uNickName;
 
@@ -41,20 +42,25 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Log.v("TT","ddddddddddddd");
         //holder.review_profileIv.setImageResource(reviews.get(position).getrImage());
         //이미지 가져오는건 다시 해야함
         user_uNo = reviews.get(position).getUser_uNo();
-        connectGetData();
-        holder.review_name.setText(uNickName);
-        holder.review_day.setText(reviews.get(position).getrInsertDate());
-        holder.review_text.setText(reviews.get(position).getrContent());
-        holder.review_storesay.setText(reviews.get(position).getrOwnerComment());
+        connectGetData(reviews.get(position).getUser_uNo());
 
+        holder.review_name.setText(uNickName);
+
+        Log.v("TT","ddddddddddddd"+user_uNo);
+        holder.review_day.setText(reviews.get(position).getrInsertDate());
+        Log.v("TT","ddddddddddddd");
+        holder.review_text.setText(reviews.get(position).getrContent());
+        Log.v("TT","ddddddddddddd");
+        holder.review_storesay.setText(reviews.get(position).getrOwnerComment());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return reviews.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -69,13 +75,13 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
 
         MyViewHolder(View v) {
             super(v);
-            review_profileIv = v.findViewById(R.id.review_profileIv);
+//          review_profileIv = v.findViewById(R.id.review_profileIv);
             review_name = v.findViewById(R.id.review_name);
             review_day = v.findViewById(R.id.review_day);
             review_text = v.findViewById(R.id.review_text);
-            review_storename = v.findViewById(R.id.review_storename);
+//          review_storename = v.findViewById(R.id.review_storename);
             review_storesay = v.findViewById(R.id.review_storesay);
-            review_image = v.findViewById(R.id.review_image);
+//          review_image = v.findViewById(R.id.review_image);
 
         }
     }
@@ -87,18 +93,19 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
         this.inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    private void connectGetData(){
+    private void connectGetData(int s){
         try {
             String macIP = "192.168.0.55";
             String urlAddr = "http://" + macIP + ":8080/tify/user_info.jsp?";
             //여기 변경 포인트
-            String urlAddress = urlAddr + "uNo=" + user_uNo;
+            String urlAddress = urlAddr + "uNo=" + s;
             CUDNetworkTask_userinfo mCUDNetworkTask_userinfo = new CUDNetworkTask_userinfo(review_adapter.this, urlAddress,"select");
             Object obj = mCUDNetworkTask_userinfo.execute().get();
             bean_userinfo = (Bean_userinfo) obj;
 
-            uImage = bean_userinfo.getuImage();
+            //uImage = bean_userinfo.getuImage();
             uNickName = bean_userinfo.getuNickName();
+            Log.v("tttt","dd"+uNickName);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -107,6 +114,4 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
 
 }
 
-    // Create new views (invoked by the layout manager)
-
-
+// Create new views (invoked by the layout manager)

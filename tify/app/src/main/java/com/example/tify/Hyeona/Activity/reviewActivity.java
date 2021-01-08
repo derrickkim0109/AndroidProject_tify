@@ -1,5 +1,6 @@
 package com.example.tify.Hyeona.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class reviewActivity extends AppCompatActivity {
 
-   // private ListView listView;
+    // private ListView listView;
     private Button button;
     private TextView textView;
     private ArrayList<Bean_review> reviews = null;
@@ -37,6 +38,7 @@ public class reviewActivity extends AppCompatActivity {
         //레이아웃 매니저 만들기
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        reviews = new ArrayList<Bean_review>();
     }
 
     @Override
@@ -51,7 +53,7 @@ public class reviewActivity extends AppCompatActivity {
             CUDNetworkTask_review mCUDNetworkTask_review = new CUDNetworkTask_review(reviewActivity.this, urlAddress,"select");
             Object obj = mCUDNetworkTask_review.execute().get();
             reviews = (ArrayList<Bean_review>) obj;
-
+            Log.v("dddd","dd"+reviews);
             //리사이클러뷰 어댑터를 넣기
             adapter = new review_adapter(reviewActivity.this, R.layout.cha_reviewcontent, reviews);
             //어댑터에게 보내기

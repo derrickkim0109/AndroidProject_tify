@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.tify.Hyeona.Bean.Bean_userinfo;
+import com.example.tify.Taehyun.Bean.Bean_MypageList;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
 
 import org.json.JSONArray;

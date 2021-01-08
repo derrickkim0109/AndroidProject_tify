@@ -39,6 +39,7 @@ public class SmsReceiver extends BroadcastReceiver {
         }
     }
 
+
     // 액티비티로 메세지의 내용을 전달해줌
     private void sendToActivity(Context context, String sender, String contents, Date receivedDate){
         Intent intent = new Intent(context, JoinActivity.class);
@@ -52,6 +53,7 @@ public class SmsReceiver extends BroadcastReceiver {
     }
 
 
+
     private SmsMessage[] parseSmsMessage(Bundle bundle){
         Object[] objs = (Object[]) bundle.get("pdus");
         SmsMessage[] messages = new SmsMessage[objs.length];
@@ -63,7 +65,6 @@ public class SmsReceiver extends BroadcastReceiver {
                 messages[i] = SmsMessage.createFromPdu((byte[]) objs[i]);
             }
         }
-        Log.v("여기","왜");
         return messages;
     }
 
