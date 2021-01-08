@@ -30,7 +30,6 @@
         <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity" /> <!-- 태현 -->
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
-        <activity android:name=".JoinPayPasswordActivity"/>
         <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.EmptyCartActivity" />
