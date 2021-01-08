@@ -21,17 +21,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
-        <activity android:name=".Hyeona.Activity.LoginActivity" />
 
-        <!-- 태현 -->
+        <activity android:name=".Hyeona.Activity.LoginActivity" /> <!-- 태현 -->
         <activity android:name=".Taehyun.Activity.MypageActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_CardRegistrationActivity" />
-        <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity"></activity>
-        <!-- 태현 -->
+        <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity" /> <!-- 태현 -->
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
+        <activity android:name=".JoinPayPasswordActivity"/>
         <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.EmptyCartActivity" />
@@ -54,8 +53,7 @@
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Theme.AppCompat" />
-        <!-- 지석 (문자인증) -->
+            android:theme="@style/Theme.AppCompat" /> <!-- 지석 (문자인증) -->
         <receiver
             android:name=".Jiseok.Activity.SmsReceiver"
             android:enabled="true"
@@ -64,7 +62,6 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        <!-- 지석 (문자인증) -->
     </application>
 
 </manifest>
