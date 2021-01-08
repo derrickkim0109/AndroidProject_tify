@@ -147,6 +147,7 @@ public class MypageActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         connectGetData();
+
     }
 
     private void connectGetData(){
@@ -174,12 +175,13 @@ public class MypageActivity extends AppCompatActivity {
 
             nickName.setText(uNickName);
             email.setText(uEmail);
+            sendImageRequest();
             ////////////////////////////////////////////////////////////
             //                                                        //
             //                                                        //
             //                    /이미지 불러오기 //   2021.01.07 -태현     //
             ////////////////////////////////////////////////////////////
-            sendImageRequest(uImage);
+
 
             ///////
 //            if(uImage.equals("null") || uImage.equals("")){
@@ -198,9 +200,9 @@ public class MypageActivity extends AppCompatActivity {
     //           Date : 2021.01.07 - 태현
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void sendImageRequest(String s) {
+    public void sendImageRequest() {
 
-        String url = "http://" + macIP + ":8080/tify/" + s ;
+        String url = "http://" + macIP + ":8080/tify/" + uImage ;
         Log.v(TAG,url);
         Glide.with(this).load(url).into(profileIv);
 
