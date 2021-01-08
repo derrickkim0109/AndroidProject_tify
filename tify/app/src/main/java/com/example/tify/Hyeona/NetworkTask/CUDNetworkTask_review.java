@@ -28,13 +28,14 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
     String mAddr = null;
     ProgressDialog progressDialog = null;
     String where = null;
+    Bean_review bean_review = null;
     ArrayList<Bean_review> reviews = null;
 
     public CUDNetworkTask_review(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
         this.where = where;
-        Log.v(TAG,"Start : " + mAddr);
+        this.reviews = new ArrayList<Bean_review>();
     }
 
     @Override
@@ -95,7 +96,7 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
         }
 
         if(where.equals("select")){
-            return null;
+            return reviews;
         }else{
             return result;
         }
@@ -146,19 +147,30 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
             reviews.clear();
 
             for (int i=0; i<jsonArray.length(); i++){
+
                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+
                 int rNo = jsonObject1.getInt("rNo");
+                String rContent = jsonObject1.getString("rContent");
+                Log.v("값확인","ㅇ"+rNo);
+                Log.v("값확인","ㅇ"+rContent);
+                String rImage = jsonObject1.getString("rImage");
+                Log.v("값확인","ㅇ"+rImage);
+                String rOwnerComment = jsonObject1.getString("rOwnerComment");
+                Log.v("값확인","ㅇ"+rOwnerComment);
+                String rDeletedate = jsonObject1.getString("rDeletedate");
+                Log.v("값확인","ㅇ"+rDeletedate);
+                String rInsertDate = jsonObject1.getString("rInsertDate");
+                Log.v("값확인","ㅇ"+rInsertDate);
+
                 int user_uNo = jsonObject1.getInt("user_uNo");
+                Log.v("값확인","ㅇ"+user_uNo);
                 int store_sSeqNo = jsonObject1.getInt("store_sSeqNo");
 
-                String rContent = jsonObject1.getString("rContent");
-                String rImage = jsonObject1.getString("rImage");
-                String rOwnerComment = jsonObject1.getString("rOwnerComment");
+                Log.v("값확인","ㅇ"+store_sSeqNo);
 
-                String rDeletedate = jsonObject1.getString("rDeletedate");
-                String rInsertDate = jsonObject1.getString("uDeleteDate");
-
-                Bean_review bean_review = new Bean_review(rNo, user_uNo, store_sSeqNo, rContent, rImage, rOwnerComment, rDeletedate, rInsertDate);
+                bean_review = new Bean_review(rNo, user_uNo, store_sSeqNo, rContent, rImage, rOwnerComment, rDeletedate, rInsertDate);
+                Log.v("값확인","ㅇ"+bean_review);
                 reviews.add(bean_review);
             }
 
@@ -167,4 +179,4 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
         }
     }
 
-} // ----------
+} // —————

@@ -35,17 +35,19 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
         this.context = context;
         this.mAddr = mAddr;
         this.where = where;
+        this.bean_userinfo = new Bean_userinfo();
+
         Log.v(TAG,"Start : " + mAddr);
     }
 
     @Override
     protected void onPreExecute() {
         Log.v(TAG, "onPreExecute()");
-        //progressDialog = new ProgressDialog(context);
-        progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
-        progressDialog.setTitle("Create/Update/Delete");
-        progressDialog.setMessage("Working...");
-        progressDialog.show();
+//        progressDialog = new ProgressDialog(context);
+//        progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
+//        progressDialog.setTitle("Create/Update/Delete");
+//        progressDialog.setMessage("Working...");
+//        progressDialog.show();
     }
 
     @Override
@@ -96,9 +98,9 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
         }
 
         if(where.equals("select")){
-            return null;
+            return bean_userinfo;
         }else{
-            return result;
+            return null;
         }
     }
 
@@ -112,7 +114,7 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
     protected void onPostExecute(Object o) {
         Log.v(TAG, "onPostExecute()");
         super.onPostExecute(o);
-        progressDialog.dismiss();
+        //progressDialog.dismiss();
 
     }
 
@@ -147,13 +149,20 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
 
                 int uNo = jsonObject1.getInt("uNo");
+                Log.v("dad","d"+uNo);
                 String uEmail = jsonObject1.getString("uEmail");
+                Log.v("dad","d"+uEmail);
                 String uNickName = jsonObject1.getString("uNickName");
-                int uTelNo = jsonObject1.getInt("uTelNo");
+                Log.v("dad","d"+uNickName);
+                String uTelNo = jsonObject1.getString("uTelNo");
+                Log.v("dad","d"+uTelNo);
                 String uImage = jsonObject1.getString("uImage");
-                int uPayPassword = jsonObject1.getInt("uPayPassword");
+                Log.v("dad","d"+uImage);
+                String uPayPassword = jsonObject1.getString("uPayPassword");
+                Log.v("dad","d"+uPayPassword);
 
-                Bean_userinfo bean_userinfo = new Bean_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
+                bean_userinfo = new Bean_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
+
             }
 
         }catch (Exception e){
