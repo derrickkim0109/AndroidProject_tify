@@ -12,14 +12,18 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +32,10 @@ import androidx.core.content.ContextCompat;
 
 import com.example.tify.R;
 
+import java.util.regex.Pattern;
+
 public class JoinActivity extends AppCompatActivity {
+    LinearLayout ly1,ly2;
     EditText etTel, etAuthentication, etEmail, etNickName;
     Button btnAuthentication, btnGo, btnGoGo;
     ImageView imgProfile, imgProfilePlus;
@@ -37,10 +44,19 @@ public class JoinActivity extends AppCompatActivity {
     final int MILLISINFUTURE = 180 * 1000; //총 시간 (300초 = 5분)
     final int COUNT_DOWN_INTERVAL = 1000; //onTick 메소드를 호출할 간격 (1초)
     static final int SMS_RECEIVE_PERMISSON = 1;
-    TelephonyManager telManager;
+
     private final int MY_PERMISSION_REQUEST_SMS = 1001;
-    int timerCount = 0;
+    int timerCount = 0; // 타이머 누른 횟수
+    int timeout = 0; // 타임아웃된 횟수
     String passPhone=null;
+    String patternTel="^\\d{2,3}-\\d{3,4}-\\d{4}$";
+    String patternEmail="/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;";
+    String patternNickName="/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\\*]+$/";
+
+
+    String getTextCheck = null; // editText null 체크용 변수
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,20 +85,15 @@ public class JoinActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSION_REQUEST_SMS);
             }
         }
-        //telManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-
-        //Log.v("여기","번호 : "+telManager.getLine1Number());
-
-
-
-
 
         // 1번 프레임
+        ly1 = findViewById(R.id.join_ly_fram1);
         etTel = findViewById(R.id.join_et_tel);
         btnAuthentication = findViewById(R.id.join_btn_authentication);
         etAuthentication = findViewById(R.id.join_et_authenticationNum);
         btnGo = findViewById(R.id.join_btn_go);
         // 2번 프레임
+        ly2 = findViewById(R.id.join_ly_fram2);
         imgProfile = findViewById(R.id.join_img_profile);
         imgProfilePlus = findViewById(R.id.join_img_profilePlus);
         etEmail = findViewById(R.id.join_et_email);
@@ -90,12 +101,73 @@ public class JoinActivity extends AppCompatActivity {
         btnGoGo = findViewById(R.id.join_btn_gogo);
 
 
-
         btnAuthentication.setOnClickListener(firstFrameClickListener);
         btnGo.setOnClickListener(firstFrameClickListener);
 
         imgProfilePlus.setOnClickListener(secondFrameClickListener);
         btnGoGo.setOnClickListener(secondFrameClickListener);
+
+
+        etTel.addTextChangedListener(new TextWatcher() {//자동으로 "-" 생성해서 전화번호에 붙여주기
+
+
+            private int beforeLenght = 0;
+            private int afterLenght = 0;
+
+            //입력 혹은 삭제 전의 길이와 지금 길이를 비교하기 위해 beforeTextChanged에 저장
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                beforeLenght = s.length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //아무글자도 없는데 지우려고 하면 로그띄우기 에러방지
+                if (s.length() <= 0) {
+                    Log.d("addTextChangedListener", "onTextChanged: Intput text is wrong (Type : Length)");
+                    return;
+                }
+                //특수문자 입력 방지
+                char inputChar = s.charAt(s.length() - 1);
+                if (inputChar != '-' && (inputChar < '0' || inputChar > '9')) {
+                    etTel.getText().delete(s.length() - 1, s.length());
+                    return;
+                }
+
+                afterLenght = s.length();
+
+                String tel = String.valueOf(etTel.getText());
+                tel.substring(0,1);
+                Log.v("하이픈", "after" + String.valueOf(afterLenght));
+
+                if (beforeLenght < afterLenght) {// 타자를 입력 중이면
+                    if (s.toString().indexOf("01") < 0 && afterLenght == 2) { //subSequence로 지정된 문자열을 반환해서 "-"폰을 붙여주고 substring
+                        etTel.setText(s.toString().subSequence(0, 2) + "-" + s.toString().substring(2, s.length()));
+
+                    } else if (s.toString().indexOf("01") < 0 && afterLenght == 6) {
+                        etTel.setText(s.toString().subSequence(0, 6) + "-" + s.toString().substring(6, s.length()));
+
+                    } else {
+                        if (afterLenght == 4 && s.toString().indexOf("-") < 0) { //subSequence로 지정된 문자열을 반환해서 "-"폰을 붙여주고 substring
+                            etTel.setText(s.toString().subSequence(0, 3) + "-" + s.toString().substring(3, s.length()));
+
+                        } else if (s.toString().indexOf("02") < 0 && afterLenght == 9) {
+                            etTel.setText(s.toString().subSequence(0, 8) + "-" + s.toString().substring(8, s.length()));
+
+                        }
+                    }
+                }
+                etTel.setSelection(etTel.length());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // 생략
+            }
+
+        });//자동으로 전화번호 누르기 끝
 
     }
 
@@ -106,8 +178,27 @@ public class JoinActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.join_btn_authentication:
 
-                    //권한이 부여되어 있는지 확인
+                    getTextCheck = etTel.getText().toString();
+                    if(getTextCheck.getBytes().length<=0){
 
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("전화번호를 입력해 주세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        etTel.requestFocus();
+                        break;
+                    }
+                    if(!Pattern.matches(patternTel,etTel.getText().toString())){
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("전화번호를 확인해 주세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        etTel.requestFocus();
+                        break;
+                    }
+
+
+                    //권한이 부여되어 있는지 확인
                     int permissonCheck= ContextCompat.checkSelfPermission(JoinActivity.this, Manifest.permission.RECEIVE_SMS);
                     if(permissonCheck == PackageManager.PERMISSION_GRANTED){
                         if(timerCount != 0) countDownTimer.cancel();
@@ -115,6 +206,12 @@ public class JoinActivity extends AppCompatActivity {
                         sendmsg();
                         countDownTimer();
                         timerCount++;
+                        btnAuthentication.setText("재요청");
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("인증번호가 발송 되었습니다.")
+                                .setMessage("제한시간 내에 인증번호를 입력해 주세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
                     }else{// 수신권한 없을때
                         //권한설정 dialog에서 거부를 누르면
                         //ActivityCompat.shouldShowRequestPermissionRationale 메소드의 반환값이 true가 된다.
@@ -129,13 +226,45 @@ public class JoinActivity extends AppCompatActivity {
                         }
                     }
                     break;
-                case R.id.join_btn_go:
-                    if(passPhone.equals(etAuthentication.getText().toString())) Toast.makeText(JoinActivity.this,"성공",Toast.LENGTH_SHORT).show();
-                    else Toast.makeText(JoinActivity.this,"실패",Toast.LENGTH_SHORT).show();
 
-                    break;
+                    // 1번프레임 계속하기버튼
+                    case R.id.join_btn_go:
+
+                        switch (timeout) {
+                            case 0:
+                            if (passPhone.equals(etAuthentication.getText().toString())) {
+                                countDownTimer.cancel();
+                                Toast.makeText(JoinActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                                new AlertDialog.Builder(JoinActivity.this)
+                                        .setTitle("인증 되었습니다.")
+                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                ly1.setVisibility(View.INVISIBLE);
+                                                ly2.setVisibility(View.VISIBLE);
+                                            }
+                                        })
+                                        .show();
+                            }
+                            else {
+                                Toast.makeText(JoinActivity.this, "실패", Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                            default:
+                                new AlertDialog.Builder(JoinActivity.this)
+                                        .setTitle("제한시간이 지났습니다..")
+                                        .setMessage("인증번호 재요청을 눌러주세요.")
+                                        .setPositiveButton("확인",null)
+                                        .show();
+                        }// ----- timeout switch
+
+
+
+                    }
+
+
             }
-        }
+
     };
 
 
@@ -143,6 +272,55 @@ public class JoinActivity extends AppCompatActivity {
     View.OnClickListener secondFrameClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            switch (v.getId()){
+                // 2번프레임 프로필플러스 버튼
+                case R.id.join_img_profilePlus:
+
+                    break;
+                    // 2번프레임 계속하기버튼
+                case R.id.join_btn_gogo:
+                    // email null check
+                    getTextCheck = etEmail.getText().toString();
+                    if(getTextCheck.getBytes().length<=0){
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("이메일을 입력해 주세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        etEmail.requestFocus();
+                        break;
+                    }
+                    //nickname null check
+                    getTextCheck = etNickName.getText().toString();
+                    if(getTextCheck.getBytes().length<=0){
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("닉네임을 입력해 주세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        etNickName.requestFocus();
+                        break;
+                    }
+                    if(!Pattern.matches(patternEmail,etEmail.getText().toString())){
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("이메일형식을 확인해 주세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        etEmail.requestFocus();
+                        break;
+                    }
+                    if(!Pattern.matches(patternNickName,etNickName.getText().toString())){
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("한글,영어,숫자만 입력 가능합니다.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        etNickName.requestFocus();
+                        break;
+                    }
+                    //-------------------------- 정규식 종료 --------------------------
+
+
+
+
+            }
 
         }
     };
@@ -153,12 +331,12 @@ public class JoinActivity extends AppCompatActivity {
         processCommand(intent);
     }
 
-
     private void processCommand(Intent intent){
         if(intent != null){
             String sender = intent.getStringExtra("sender");
             String date = intent.getStringExtra("receivedDate");
             String content = intent.getStringExtra("contents");
+            Log.v("번호확인",content.substring(0,3));
             etAuthentication.setText(content.substring(6,14));
 
         }
@@ -169,7 +347,6 @@ public class JoinActivity extends AppCompatActivity {
 
         time_counter = findViewById(R.id.join_tv_timer);
         //줄어드는 시간을 나타내는 TextView
-
 
         countDownTimer = new CountDownTimer(MILLISINFUTURE, COUNT_DOWN_INTERVAL) {
             @Override
@@ -183,23 +360,27 @@ public class JoinActivity extends AppCompatActivity {
                 } else { //초가 10보다 작으면 앞에 '0' 붙여서 같이 출력. ex) 02,03,04...
                     time_counter.setText((emailAuthCount / 60) + " : 0" + (emailAuthCount - ((emailAuthCount / 60) * 60)));
                 }
-
                 //emailAuthCount은 종료까지 남은 시간임. 1분 = 60초 되므로,
                 // 분을 나타내기 위해서는 종료까지 남은 총 시간에 60을 나눠주면 그 몫이 분이 된다.
                 // 분을 제외하고 남은 초를 나타내기 위해서는, (총 남은 시간 - (분*60) = 남은 초) 로 하면 된다.
-
             }
 
             @Override
-            public void onFinish() { //시간이 다 되면 다이얼로그 종료
+            public void onFinish() { //시간이 다 되면 인증번호 초기화
+                timeout++;
                 passPhone="";
+                new AlertDialog.Builder(JoinActivity.this)
+                        .setTitle("제한시간이 지났습니다.")
+                        .setMessage("인증번호 재요청을 눌러주세요.")
+                        .setPositiveButton("확인",null)
+                        .show();
             }
+
         }.start();
     }
 
     public void sendmsg(){
-
-         //이메일 인증코드 생성
+         //문자 인증코드 생성
             String[] str = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
             String newCode = new String();
 
@@ -214,43 +395,14 @@ public class JoinActivity extends AppCompatActivity {
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNo, null, sms, null, null);
-            Toast.makeText(getApplicationContext(), "전송 완료!", Toast.LENGTH_LONG).show();
+            Log.v("여기","메세지 전송 완료.");
         } catch (Exception e) {
-            Log.v("여기","에러 : "+e);
-            Toast.makeText(getApplicationContext(), "전송 오류!"+e, Toast.LENGTH_LONG).show();
+            Log.v("여기","메세지 에러 : "+e);
 
             e.printStackTrace();
         }
     }
 
-//    public void sendmsg2(){
-//        String phoneNo = "(065) 555-1212";
-//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms : "+phoneNo));
-//        intent.putExtra("sms_body","문자");
-//        startActivity(intent);
-//    }
-
-    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
-    public static String getPhoneNumber(Context context){
-
-        String phoneNumber = "";
-
-        TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        try {
-
-            String tmpPhoneNumber = mgr.getLine1Number();
-            phoneNumber=tmpPhoneNumber;
-
-        Log.v("여기","트라이번호 : "+tmpPhoneNumber);
-        } catch (Exception e) {
-            phoneNumber = "";
-            Log.v("여기","실패"+e);
-        }
-
-        return phoneNumber;
-
-    }
 
 
-
-}
+}//--------------------------------
