@@ -1,10 +1,6 @@
 package com.example.tify.Minwoo.Activity;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -12,14 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.tify.Minwoo.NetworkTask.LMW_NetworkTask;
+import com.example.tify.Minwoo.NetworkTask.LMW_CartNetworkTask;
 import com.example.tify.R;
 
 import java.text.NumberFormat;
@@ -95,7 +90,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
         sName = intent.getStringExtra("sName");
 
         macIP = intent.getStringExtra("macIP");
-        user_uSeqNo = intent.getIntExtra("userSeqno", 0);
+        user_uSeqNo = intent.getIntExtra("user_uSeqNo", 0);
         store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
 
 
@@ -177,7 +172,23 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
             switch (v.getId()){
                 case R.id.orderSummary_Btn_Direct:
+
+
                      intent = new Intent(OrderSummaryActivity.this, BeforePayActivity.class);
+
+                    intent.putExtra("macIP", macIP);
+                    intent.putExtra("user_uSeqNo", user_uSeqNo);
+                    intent.putExtra("store_sSeqNo", store_sSeqNo);
+                    intent.putExtra("totalPrice", plusTotal);
+                    intent.putExtra("sName", sName);
+                    intent.putExtra("menu_mName", mName);
+                    intent.putExtra("olSizeUp", sizeUpCount);
+                    intent.putExtra("olAddShot", shotCount);
+                    intent.putExtra("olRequest", et_Request.getText().toString());
+                    intent.putExtra("olPrice", plusTotal);
+                    intent.putExtra("olQuantity", Integer.parseInt(tv_Quantity.getText().toString()));
+                    intent.putExtra("from", "OrderSummaryActivity");
+
                      startActivity(intent);
                      break;
                 case R.id.orderSummary_Btn_Plus:
@@ -315,8 +326,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
                     }
 
                     // NetworkTask 연결
-                    urlAddr = "http://" + macIP + ":8080/tify/lmw_cartlist_insert.jsp?user_uSeqNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo + "&menu_mName=" + mName + "&cLPrice=" + plusTotal + "&cLQuantity=" + quantity + "&cLImage=" + mImage + "&cLSizeUp=" + sizeUpCount + "&cLAddShot=" + shotCount + "&cLRequest=" + request;
-                    where = "OrderSummaryActivity";
+                    urlAddr = "http://" + macIP + ":8080/tify/lmw_cartlist_insert.jsp?user_uSeqNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&menu_mName=" + mName + "&cLPrice=" + plusTotal + "&cLQuantity=" + quantity + "&cLImage=" + mImage + "&cLSizeUp=" + sizeUpCount + "&cLAddShot=" + shotCount + "&cLRequest=" + request;
+                    where = "insert";
                     String result = connectInsertData();
                     Log.v(TAG, "장바구니 넣기 : " + result);
 
@@ -359,7 +370,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             //  - NetworkTask의 생성자 추가 : where <- "insert"
             //
             ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_NetworkTask networkTask = new LMW_NetworkTask(OrderSummaryActivity.this, urlAddr, where, 1);
+            LMW_CartNetworkTask networkTask = new LMW_CartNetworkTask(OrderSummaryActivity.this, urlAddr, where);
             ///////////////////////////////////////////////////////////////////////////////////////
 
             ///////////////////////////////////////////////////////////////////////////////////////

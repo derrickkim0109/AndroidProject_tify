@@ -72,31 +72,24 @@
                 android:orientation="horizontal"
                 android:gravity="center"
                 >
-                <ImageButton
-                    android:id="@+id/activity_OrderList_CV_OrderRequest"
+
+                <ImageView
+                    android:id="@+id/activity_OrderList_CV_right1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_right" />
+                <ImageView
+                    android:id="@+id/activity_OrderList_CV_right2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_action_right"
-                    />
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    />
-                <ImageButton
-                    android:id="@+id/activity_OrderList_CV_OrderConfirm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_action_right"/>
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    />
-
-
-                <ImageButton
-                    android:id="@+id/activity_OrderList_CV_OrderComplete"
+                <ImageView
+                    android:id="@+id/activity_OrderList_CV_right3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_action_right"
                     />
 
@@ -112,25 +105,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="주문요청"
+                    android:gravity="center"
+                    android:layout_weight="1"
                    />
-                <TextView
-                    android:layout_width="96dp"
-                    android:layout_height="wrap_content"
-                    />
+
                 <TextView
                     android:id="@+id/activity_OrderList_CV_TV_OrderConfirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="주문접수"/>
-                <TextView
-                    android:layout_width="96dp"
-                    android:layout_height="wrap_content"
-                    />
+
                 <TextView
                     android:id="@+id/activity_OrderList_CV_TV_OrderComplete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="제조완료"
+                    android:gravity="center"
+                    android:layout_weight="1"
                     />
 
             </LinearLayout>
@@ -143,7 +136,7 @@
                 android:id="@+id/activity_OrderList_CV_Btn_InsertReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="리뷰쓰러 가기"
+                android:text="리뷰쓰기"
                 android:backgroundTint="#2180F3"
                 android:textColor="@color/white"
                 android:visibility="invisible"
