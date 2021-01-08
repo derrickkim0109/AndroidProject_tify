@@ -1,8 +1,11 @@
 package com.example.tify.Jiseok.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.preference.DialogPreference;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tify.R;
@@ -18,47 +22,68 @@ import com.example.tify.R;
 import java.util.Random;
 
 public class JoinPayPasswordActivity extends AppCompatActivity {
+    String TAG = "여기, JoinPayPasswordActivity";
     Button btnRearrangement;
     ImageButton btnDelete;
     Button [] btn = new Button[10];
     String result = "0"; // null 값에서 길이 체크하면 터짐
     String userpw=null;
-    Toast toast=null;
     int count=0;//비밀번호 틀린 횟수
-    String passCheck="";// 결제비밀번호 설정이 돼있는지 체크
+//    String passCheck="";// 결제비밀번호 설정이 돼있는지 체크
     ImageView[] img = new ImageView[6];
     Random random = new Random();
     String [] btnNum = new String[10];//랜덤 10개수를 받아서 버튼에 넣음
+
+    String payPassword1=null;
+    String payPassword2=null;// 비밀번호 확인
+    int payCheck=0; // 0일때 payPassword1, 1일때 payPassword2
+
+    TextView tvComment,tvCount,tvTitle;
+
+    String userTel;
+    String userEmail;
+    String userprofile;
+    String userNickName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cjs_activity_join_pay_password);
 
-        userpw = password();//유저패스워드값 받아옴
+        Intent intent = getIntent();
+        userTel = intent.getStringExtra("userTel");
+        userEmail = intent.getStringExtra("userEmail");
+        userNickName = intent.getStringExtra("userNickName");
+        Log.v(TAG,"userTel : "+userTel);
+        Log.v(TAG,"userEmail : "+userEmail);
+        Log.v(TAG,"userNickName : "+userNickName);
 
-        btn[0]=findViewById(R.id.btn0);
-        btn[1]=findViewById(R.id.btn1);
-        btn[2]=findViewById(R.id.btn2);
-        btn[3]=findViewById(R.id.btn3);
-        btn[4]=findViewById(R.id.btn4);
-        btn[5]=findViewById(R.id.btn5);
-        btn[6]=findViewById(R.id.btn6);
-        btn[7]=findViewById(R.id.btn7);
-        btn[8]=findViewById(R.id.btn8);
-        btn[9]=findViewById(R.id.btn9);
-        btnRearrangement=findViewById(R.id.btn_rearrangement);
-        btnDelete=findViewById(R.id.btn_delete);
 
-        img[0]=findViewById(R.id.img1);
-        img[1]=findViewById(R.id.img2);
-        img[2]=findViewById(R.id.img3);
-        img[3]=findViewById(R.id.img4);
-        img[4]=findViewById(R.id.img5);
-        img[5]=findViewById(R.id.img6);
+        btn[0]=findViewById(R.id.join_pay_btn0);
+        btn[1]=findViewById(R.id.join_pay_btn1);
+        btn[2]=findViewById(R.id.join_pay_btn2);
+        btn[3]=findViewById(R.id.join_pay_btn3);
+        btn[4]=findViewById(R.id.join_pay_btn4);
+        btn[5]=findViewById(R.id.join_pay_btn5);
+        btn[6]=findViewById(R.id.join_pay_btn6);
+        btn[7]=findViewById(R.id.join_pay_btn7);
+        btn[8]=findViewById(R.id.join_pay_btn8);
+        btn[9]=findViewById(R.id.join_pay_btn9);
+        btnRearrangement=findViewById(R.id.join_pay_btn_rearrangement);
+        btnDelete=findViewById(R.id.join_pay_btn_delete);
 
+        img[0]=findViewById(R.id.join_pay_img_dot1);
+        img[1]=findViewById(R.id.join_pay_img_dot2);
+        img[2]=findViewById(R.id.join_pay_img_dot3);
+        img[3]=findViewById(R.id.join_pay_img_dot4);
+        img[4]=findViewById(R.id.join_pay_img_dot5);
+        img[5]=findViewById(R.id.join_pay_img_dot6);
+
+        tvComment = findViewById(R.id.join_pay_tv_countComment);
+        tvCount = findViewById(R.id.join_pay_tv_count);
+        tvTitle = findViewById(R.id.join_pay_tv_title);
         rearrangement(); // 키패드 배열
-        userpw=password();//비밀번호 받아옴
+//        userpw=password();//비밀번호 받아옴
 
         for(int i=0;i<10;i++){
             btn[i].setOnClickListener(numClickListener);
@@ -80,37 +105,37 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
             if(result.length()<7) {
                 switch (v.getId()) {
-                    case R.id.btn0:
+                    case R.id.join_pay_btn0:
                         result += btn[0].getText().toString();
                         break;
-                    case R.id.btn1:
+                    case R.id.join_pay_btn1:
                         result += btn[1].getText().toString();
                         break;
-                    case R.id.btn2:
+                    case R.id.join_pay_btn2:
                         result += btn[2].getText().toString();
                         break;
-                    case R.id.btn3:
+                    case R.id.join_pay_btn3:
                         result += btn[3].getText().toString();
                         break;
-                    case R.id.btn4:
+                    case R.id.join_pay_btn4:
                         result += btn[4].getText().toString();
                         break;
-                    case R.id.btn5:
+                    case R.id.join_pay_btn5:
                         result += btn[5].getText().toString();
                         break;
-                    case R.id.btn6:
+                    case R.id.join_pay_btn6:
                         result += btn[6].getText().toString();
                         break;
-                    case R.id.btn7:
+                    case R.id.join_pay_btn7:
                         result += btn[7].getText().toString();
                         break;
-                    case R.id.btn8:
+                    case R.id.join_pay_btn8:
                         result += btn[8].getText().toString();
                         break;
-                    case R.id.btn9:
+                    case R.id.join_pay_btn9:
                         result += btn[9].getText().toString();
                         break;
-                    case R.id.btn_rearrangement:
+                    case R.id.join_pay_btn_rearrangement:
                         rearrangement();
                         break;
                     default:
@@ -119,28 +144,81 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
             }
 
             resultToStar();
-            Log.v("여기","result : " + result+", pass : " + userpw);
+            Log.v(TAG,"result : " + result+", pass : " + userpw);
 
             switch (result.length()){
                 case 7:
-                    //비밀번호 일치할때
-                    if(result.substring(1,result.toString().length()).equals(userpw)) {
-//                        Intent intent = new Intent(Payment.this,MainActivity.class);
-//                        startActivity(intent);
+                    switch (payCheck){
+                        // 첫번째 비밀번호 입력
+                        case 0:
+                            payPassword1=result.substring(1,7);
+                            result="0";
+                            payCheck=1;
+                            Log.v(TAG,"payPassword1 : "+payPassword1+", result : "+result);
+                            resultToStar();
+                            tvTitle.setText("다시한번\n입력해주세요.");
+                            break;
+                            // 확인 비밀번호 입력
+                        case 1:
+                            payPassword2=result.substring(1,7);
+                            Log.v(TAG,"payPassword2 : "+payPassword2+", result : "+result);
+                            // 확인비밀번호가 일치할때
+                            if(payPassword1.equals(payPassword2)){
+                                Toast.makeText(JoinPayPasswordActivity.this,"yes",Toast.LENGTH_SHORT).show();
+                                new AlertDialog.Builder(JoinPayPasswordActivity.this)
+                                        .setTitle("회원가입이 완료되었습니다.")
+                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Intent intent = new Intent(JoinPayPasswordActivity.this,JiseokMainActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        })
+                                        .show();
 
-                        //비밀번호 불일치할때
-                    }else{
-                        count++; // 비밀번호 틀린 횟수
-                        result="0";
-                        Log.v("여기",""+count);
-                        resultToStar();
+                            }else{
+                                Toast.makeText(JoinPayPasswordActivity.this,"no",Toast.LENGTH_SHORT).show();
+                                count++;
+                                result="0";
+                                resultToStar();
+                                tvComment.setVisibility(View.VISIBLE);
+                                tvCount.setVisibility(View.VISIBLE);
+                                tvCount.setText("틀린횟수 ("+count+"/5)");
+                                Log.v(TAG,"틀린횟수 : "+count);
+                                // 5번틀리면 초기화
+                                switch (count){
+                                    case 5:
+                                        Toast.makeText(JoinPayPasswordActivity.this,"5번틀렷으니 초기화",Toast.LENGTH_SHORT).show();
+                                        new AlertDialog.Builder(JoinPayPasswordActivity.this)
+                                                .setTitle("비밀번호를 다시 입력해주세요.")
+                                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        tvComment.setVisibility(View.INVISIBLE);
+                                                        tvCount.setVisibility(View.INVISIBLE);
+                                                        tvTitle.setText("결제 비밀번호를\n입력해주세요");
+                                                        payCheck=0;
+                                                        count=0;
+                                                        result="0";
+                                                        resultToStar();
+                                                    }
+                                                })
+                                                .show();
+                                        break;
+                                }
+                            }
+                            break;
                     }
                     break;
+                default:
+                    break;
+
             }
 
         }
     };
 
+    // 지우기버튼
     View.OnClickListener deleteClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -169,11 +247,12 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         setBtn();
     }
 
-    //디비에서 받은 비밀번호
-    private String password(){
-        String pass = "123456";
-        return pass;
-    }
+
+//    //디비에서 받은 비밀번호
+//    private String password(){
+//        String pass = "123456";
+//        return pass;
+//    }
 
     //0~9 중복없이 뽑기
     public void rand(){

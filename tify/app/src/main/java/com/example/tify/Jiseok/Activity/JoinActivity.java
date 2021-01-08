@@ -299,24 +299,32 @@ public class JoinActivity extends AppCompatActivity {
                         etNickName.requestFocus();
                         break;
                     }
-                    if(!Pattern.matches(patternEmail,etEmail.getText().toString())){
-                        new AlertDialog.Builder(JoinActivity.this)
-                                .setTitle("이메일형식을 확인해 주세요.")
-                                .setPositiveButton("확인",null)
-                                .show();
-                        etEmail.requestFocus();
-                        break;
-                    }
-                    if(!Pattern.matches(patternNickName,etNickName.getText().toString())){
-                        new AlertDialog.Builder(JoinActivity.this)
-                                .setTitle("한글,영어,숫자만 입력 가능합니다.")
-                                .setPositiveButton("확인",null)
-                                .show();
-                        etNickName.requestFocus();
-                        break;
-                    }
+//                    if(!Pattern.matches(patternEmail,etEmail.getText().toString())){
+//                        new AlertDialog.Builder(JoinActivity.this)
+//                                .setTitle("이메일형식을 확인해 주세요.")
+//                                .setPositiveButton("확인",null)
+//                                .show();
+//                        etEmail.requestFocus();
+//                        break;
+//                    }
+//                    if(!Pattern.matches(patternNickName,etNickName.getText().toString())){
+//                        new AlertDialog.Builder(JoinActivity.this)
+//                                .setTitle("한글,영어,숫자만 입력 가능합니다.")
+//                                .setPositiveButton("확인",null)
+//                                .show();
+//                        etNickName.requestFocus();
+//                        break;
+//                    }
                     //-------------------------- 정규식 종료 --------------------------
 
+
+                    // 페이 페스워드로 이동
+                    Intent intent = new Intent(JoinActivity.this,JoinPayPasswordActivity.class);
+                    intent.putExtra("userTel",etTel.getText().toString());
+                    //intent.putExtra("userprofile")\
+                    intent.putExtra("userEmail",etEmail.getText().toString());
+                    intent.putExtra("userNickName",etNickName.getText().toString());
+                    startActivity(intent);
 
 
 
