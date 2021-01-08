@@ -1,8 +1,8 @@
 package com.example.tify.Taehyun.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tify.R;
 

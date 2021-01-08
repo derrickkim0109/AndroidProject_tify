@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
         android:allowBackup="true"
@@ -20,6 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
         <activity android:name=".Hyeona.Activity.LoginActivity"></activity>
+        <!-- 태현 -->
+        <activity android:name=".Taehyun.Activity.MypageActivity" />
         <activity android:name=".Taehyun.Activity.ProfileChageActivity"></activity>
         <!-- 태현 -->
 
@@ -41,6 +45,8 @@
         <activity android:name=".Hyeona.Activity.reviewActivity" />
         <activity android:name=".MainActivity" />
 
+
+
         <activity android:name=".Hyeona.Activity.IntroActivity">
 
             <intent-filter>
@@ -52,6 +58,14 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Theme.AppCompat" />
+        <receiver
+            android:name=".Jiseok.Activity.SmsReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
