@@ -74,7 +74,7 @@ public class StoreInfoActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("macIP", "172.30.1.27");
         bundle.putString("sName", "스타벅스 강남점");
-        bundle.putInt("userSeqno", 2);
+        bundle.putInt("user_uSeqNo", 2);
         bundle.putInt("store_sSeqNo", 1);
 
         menuFragment.setArguments(bundle);

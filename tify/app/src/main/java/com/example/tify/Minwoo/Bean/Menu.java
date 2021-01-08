@@ -11,11 +11,6 @@ public class Menu {
     int mType;
     String mComment;
 
-    public Menu(String mName, int mPrice) {
-        this.mName = mName;
-        this.mPrice = mPrice;
-    }
-
     public Menu(int mNo, String mName, int mPrice, int mSizeUp, int mShot, String mImage, int mType, String mComment) {
         this.mNo = mNo;
         this.mName = mName;
@@ -27,10 +22,6 @@ public class Menu {
         this.mComment = mComment;
     }
 
-    public Menu(int mNo, String mName) {
-        this.mNo = mNo;
-        this.mName = mName;
-    }
 
     public int getmNo() {
         return mNo;

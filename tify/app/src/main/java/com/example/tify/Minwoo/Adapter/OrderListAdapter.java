@@ -1,5 +1,7 @@
 package com.example.tify.Minwoo.Adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tify.Minwoo.Activity.OrderListActivity;
+import com.example.tify.Minwoo.Activity.StoreInfoActivity;
+import com.example.tify.Minwoo.Bean.Order;
 import com.example.tify.Minwoo.Bean.OrderList;
 import com.example.tify.R;
 
@@ -22,8 +27,9 @@ import java.util.ArrayList;
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyViewHolder> {
 
     String TAG = "OrderListAdapter 확인용";
+    Context context = null;
 
-    private ArrayList<OrderList> mDataset;
+    private ArrayList<Order> mDataset;
     private OrderListAdapter.OnItemClickListener mListener = null;
 
     //인터페이스 선언
@@ -39,32 +45,40 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     }
 
     // 메인 액티비티에서 받은 myDataset을 가져오
-    public OrderListAdapter(OrderListActivity orderListActivity, int layout, ArrayList<OrderList> myDataset) {
+    public OrderListAdapter(OrderListActivity orderListActivity, int layout, ArrayList<Order> myDataset) {
         mDataset = myDataset;
+        this.context = orderListActivity;
         Log.v(TAG, "OrderListAdapter Constructor");
 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView OSeqno;
-        public TextView ODate;
-        public TextView sName;
-        public Button reviewBtn;
-        public ImageButton orderRequestBtn;
-        public ImageButton orderConfirmBtn;
-        public ImageButton orderCompleteBtn;
+        // layout
+        TextView tv_orderNo;
+        TextView tv_orderDate;
+        ImageView tv_right1;
+        ImageView tv_right2;
+        ImageView tv_right3;
+        TextView tv_orderRequest;
+        TextView tv_orderGet;
+        TextView tv_complete;
+        TextView tv_sName;
+        Button btn_Review;
 
         MyViewHolder(View v) {
             super(v);
             Log.v(TAG, "MyViewHolder");
-            OSeqno = v.findViewById(R.id.activity_OrderList_CV_OSeqno);
-            ODate = v.findViewById(R.id.activity_OrderList_CV_ODate);
-            sName = v.findViewById(R.id.activity_OrderList_CV_sName);
-            reviewBtn = v.findViewById(R.id.activity_OrderList_CV_Btn_InsertReview);
-            orderRequestBtn = v.findViewById(R.id.activity_OrderList_CV_OrderRequest);
-            orderConfirmBtn = v.findViewById(R.id.activity_OrderList_CV_OrderConfirm);
-            orderCompleteBtn = v.findViewById(R.id.activity_OrderList_CV_OrderComplete);
+            tv_orderNo = v.findViewById(R.id.activity_OrderList_CV_OSeqno);
+            tv_orderDate = v.findViewById(R.id.activity_OrderList_CV_ODate);
+            tv_sName = v.findViewById(R.id.activity_OrderList_CV_sName);
+            tv_right1 = v.findViewById(R.id.activity_OrderList_CV_right1);
+            tv_right2 = v.findViewById(R.id.activity_OrderList_CV_right2);
+            tv_right3 = v.findViewById(R.id.activity_OrderList_CV_right3);
+            tv_orderRequest = v.findViewById(R.id.activity_OrderList_CV_TV_OrderRequest);
+            tv_orderGet = v.findViewById(R.id.activity_OrderList_CV_TV_OrderConfirm);
+            tv_complete = v.findViewById(R.id.activity_OrderList_CV_TV_OrderComplete);
+            btn_Review = v.findViewById(R.id.activity_OrderList_CV_Btn_InsertReview);
 
             // 뷰홀더에서만 리스트 포지션값을 불러올 수 있음.
             v.setOnClickListener(new View.OnClickListener() {
@@ -101,23 +115,43 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     public void onBindViewHolder(@NonNull OrderListAdapter.MyViewHolder holder, int position) {
         Log.v(TAG, "onBindViewHolder");
 
-        holder.OSeqno.setText("주문번호 : " + mDataset.get(position).getoSeqno());
-        holder.ODate.setText(mDataset.get(position).getoDate());
-//        holder.sName.setText("가게이름");
+        holder.tv_orderNo.setText("주문번호 : " + mDataset.get(position).getoNo());
+        holder.tv_orderDate.setText(mDataset.get(position).getoInsertDate());
+        holder.tv_sName.setText(mDataset.get(position).getStore_sName());
 
-        switch (mDataset.get(position).getoStatus()){
-            case "주문요청":
-                holder.orderRequestBtn.setBackgroundColor(Color.BLUE);
+        switch (mDataset.get(position).getoStatus()){ // 0 주문요청 1 주문접수 2 제조완료 3 픽업완료
+            case 0:
+                holder.tv_right1.setBackgroundColor(Color.BLUE);
+                holder.tv_orderRequest.setBackgroundColor(Color.BLUE);
                 break;
-            case "주문접수":
-                holder.orderConfirmBtn.setBackgroundColor(Color.BLUE);
+            case 1:
+                holder.tv_right2.setBackgroundColor(Color.BLUE);
+                holder.tv_orderGet.setBackgroundColor(Color.BLUE);
                 break;
-            case "제조완료":
-                holder.orderCompleteBtn.setBackgroundColor(Color.BLUE);
-                holder.reviewBtn.setVisibility(View.VISIBLE);
+            case 2:
+                holder.tv_right3.setBackgroundColor(Color.BLUE);
+                holder.tv_complete.setBackgroundColor(Color.BLUE);
+                break;
+            case 3:
+                holder.tv_right3.setBackgroundColor(Color.BLUE);
+                holder.tv_complete.setBackgroundColor(Color.BLUE);
+                holder.btn_Review.setVisibility(View.VISIBLE);
                 break;
         }
 
+        if(mDataset.get(position).getoReview() == 1 && mDataset.get(position).getoStatus() == 3){
+            holder.btn_Review.setVisibility(View.VISIBLE);
+            holder.btn_Review.setText("픽업완료");
+            holder.btn_Review.setEnabled(false);
+        }
+
+        holder.btn_Review.setOnClickListener(new View.OnClickListener() { // 리뷰쓰기 버튼 클릭
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), com.example.tify.Hyeona.Activity.reviewActivity.class); // 정확한 주소 필요!
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

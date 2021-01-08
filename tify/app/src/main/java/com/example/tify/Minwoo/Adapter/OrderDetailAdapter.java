@@ -14,7 +14,9 @@ import com.example.tify.Minwoo.Activity.OrderDetailActivity;
 import com.example.tify.Minwoo.Bean.OrderList;
 import com.example.tify.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.MyViewHolder> {
 
@@ -22,6 +24,9 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
     private ArrayList<OrderList> mDataset;
     private OrderDetailAdapter.OnItemClickListener mListener = null;
+
+    int order_oNo = 0;
+    String order_oInsertDate = null;
 
     //인터페이스 선언
     public interface OnItemClickListener{
@@ -36,8 +41,10 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     }
 
     // 메인 액티비티에서 받은 myDataset을 가져오
-    public OrderDetailAdapter(OrderDetailActivity orderDetailActivity, int layout, ArrayList<OrderList> myDataset) {
+    public OrderDetailAdapter(OrderDetailActivity orderDetailActivity, int layout, ArrayList<OrderList> myDataset, int order_oNo, String order_oInsertDate) {
         mDataset = myDataset;
+        this.order_oNo = order_oNo;
+        this.order_oInsertDate = order_oInsertDate;
         Log.v(TAG, "OrderDetailAdapter Constructor");
 
     }
@@ -100,25 +107,29 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     public void onBindViewHolder(@NonNull OrderDetailAdapter.MyViewHolder holder, int position) {
         Log.v(TAG, "onBindViewHolder");
 
-       holder.oSeqno.setText("주문번호 : " + mDataset.get(position).getoSeqno());
-       holder.oDate.setText(mDataset.get(position).getoDate());
+       holder.oSeqno.setText("주문번호 : " + order_oNo);
+       holder.oDate.setText(order_oInsertDate);
 //       holder.sName.setText("가게이름");
-        holder.mName.setText(mDataset.get(position).getmName());
+        holder.mName.setText(mDataset.get(position).getMenu_mName());
 
-        if(mDataset.get(position).getAddOrder1() != null){
+        if(mDataset.get(position).getOlAddShot() != 0){
             holder.addOrder1.setVisibility(View.VISIBLE);
-            holder.addOrder1.setText(mDataset.get(position).getAddOrder1());
+            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlSizeUp());
         }
-        if(mDataset.get(position).getAddOrder2() != null){
+        if(mDataset.get(position).getOlSizeUp() != 0){
             holder.addOrder2.setVisibility(View.VISIBLE);
-            holder.addOrder2.setText(mDataset.get(position).getAddOrder2());
+            holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlAddShot());
         }
-        if(mDataset.get(position).getRequest() != null){
+        if(mDataset.get(position).getOlRequest() != null){
             holder.request.setVisibility(View.VISIBLE);
-            holder.request.setText(mDataset.get(position).getRequest());
+            holder.request.setText(mDataset.get(position).getOlRequest());
         }
 
-        holder.subTotalPrice.setText(mDataset.get(position).getSubTotalPrice() + "원");
+        NumberFormat moneyFormat = null;
+        moneyFormat = NumberFormat.getInstance(Locale.KOREA);
+        String strTotal = moneyFormat.format(mDataset.get(position).getOlPrice());
+
+        holder.subTotalPrice.setText(strTotal + "원");
 
 
     }

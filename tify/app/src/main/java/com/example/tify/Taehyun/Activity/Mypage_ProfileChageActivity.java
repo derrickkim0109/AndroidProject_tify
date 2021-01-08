@@ -239,7 +239,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
                 //업데이트
                 case R.id.profile_btn_update:
                     //이미지 서버에 올리기 연결
-                    connectImage();
+//                    connectImage(); // 오류 나서 잠굼
                     snickname = nickname.getText().toString();
                     stelNo = telNo.getText().toString();
 
@@ -556,41 +556,41 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
         return result;
     }
 
-    private void connectImage(){
-        imageurl = "http://" + macIP + ":8080/mypeople/multipartRequest.jsp";
-        ImageNetworkTask imageNetworkTask = new ImageNetworkTask(Mypage_ProfileChageActivity.this,profileIv,img_path,imageurl);
-        //////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        //              NetworkTask Class의 doInBackground Method의 결과값을 가져온다.
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////////
-        try {
-            Integer result = imageNetworkTask.execute(100).get();
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            //              doInBackground의 결과값으로 Toast생성
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            switch (result){
-                case 1:
-                    Toast.makeText(DetailViewActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-
-                    //////////////////////////////////////////////////////////////////////////////////////////////
-                    //
-                    //              Device에 생성한 임시 파일 삭제
-                    //
-                    //////////////////////////////////////////////////////////////////////////////////////////////
-                    File file = new File(img_path);
-                    file.delete();
-                    break;
-                case 0:
-                    Toast.makeText(DetailViewActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-            //////////////////////////////////////////////////////////////////////////////////////////////
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+//    private void connectImage(){
+//        imageurl = "http://" + macIP + ":8080/mypeople/multipartRequest.jsp";
+//        ImageNetworkTask imageNetworkTask = new ImageNetworkTask(Mypage_ProfileChageActivity.this,profileIv,img_path,imageurl);
+//        //////////////////////////////////////////////////////////////////////////////////////////////
+//        //
+//        //              NetworkTask Class의 doInBackground Method의 결과값을 가져온다.
+//        //
+//        //////////////////////////////////////////////////////////////////////////////////////////////
+//        try {
+//            Integer result = imageNetworkTask.execute(100).get();
+//            //////////////////////////////////////////////////////////////////////////////////////////////
+//            //
+//            //              doInBackground의 결과값으로 Toast생성
+//            //
+//            //////////////////////////////////////////////////////////////////////////////////////////////
+//            switch (result){
+//                case 1:
+//                    Toast.makeText(DetailViewActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+//
+//                    //////////////////////////////////////////////////////////////////////////////////////////////
+//                    //
+//                    //              Device에 생성한 임시 파일 삭제
+//                    //
+//                    //////////////////////////////////////////////////////////////////////////////////////////////
+//                    File file = new File(img_path);
+//                    file.delete();
+//                    break;
+//                case 0:
+//                    Toast.makeText(DetailViewActivity.this, "Error", Toast.LENGTH_SHORT).show();
+//                    break;
+//            }
+//            //////////////////////////////////////////////////////////////////////////////////////////////
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
 }////---END
