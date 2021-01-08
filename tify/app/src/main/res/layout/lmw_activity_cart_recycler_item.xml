@@ -90,13 +90,13 @@
                         android:gravity="center">
 
 
-                        <Button
-                            android:id="@+id/activity_Cart_CV_MinusBtn"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:backgroundTint="@color/white"
-                            android:textColor="@color/black"
-                            android:text="-"/>
+<!--                        <Button-->
+<!--                            android:id="@+id/activity_Cart_CV_MinusBtn"-->
+<!--                            android:layout_width="40dp"-->
+<!--                            android:layout_height="40dp"-->
+<!--                            android:backgroundTint="@color/white"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:text="-"/>-->
                         <TextView
                             android:id="@+id/activity_Cart_CV_Quantity"
                             android:layout_width="wrap_content"
@@ -106,13 +106,13 @@
                             android:textColor="@color/black"
                             android:textSize="20dp"
                             />
-                        <Button
-                            android:id="@+id/activity_Cart_CV_PlusBtn"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:textColor="@color/black"
-                            android:backgroundTint="@color/white"
-                            android:text="+"/>
+<!--                        <Button-->
+<!--                            android:id="@+id/activity_Cart_CV_PlusBtn"-->
+<!--                            android:layout_width="40dp"-->
+<!--                            android:layout_height="40dp"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:backgroundTint="@color/white"-->
+<!--                            android:text="+"/>-->
 
                         <TextView
                             android:id="@+id/activity_Cart_CV_SubTotalPrice"

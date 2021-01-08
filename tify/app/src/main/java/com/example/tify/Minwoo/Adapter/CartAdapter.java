@@ -1,9 +1,12 @@
 package com.example.tify.Minwoo.Adapter;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tify.Minwoo.Activity.CartActivity;
 import com.example.tify.Minwoo.Bean.Cart;
+import com.example.tify.Minwoo.Bean.Menu;
 import com.example.tify.R;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -23,10 +28,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     String TAG = "CartAdapter 확인용";
 
     private ArrayList<Cart> mDataset;
+    private ArrayList<Menu> menuNames;
     private OnItemClickListener mListener = null;
-    String strAddOrder1;
-    String strAddOrder2;
-    String strRequest;
+
+    String mName;
+    int sizeUpCount = 0;
+    int shotCount = 0;
+
 
     //인터페이스 선언
     public interface OnItemClickListener{
@@ -34,11 +42,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     }
 
-    //메인에서 사용할 클릭메서드 선언
+    //메인에서 사용할 클릭메서드 선언 (삭제)
     public void setOnItemClickListener(OnItemClickListener listener){
         this.mListener = listener;
         Log.v(TAG, "setOnItemClickListener");
     }
+
 
     // 메인 액티비티에서 받은 myDataset을 가져오
     public CartAdapter(CartActivity cartActivity, int layout, ArrayList<Cart> myDataset) {
@@ -46,6 +55,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         Log.v(TAG, "CartAdapter Constructor");
 
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -103,30 +113,71 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         Log.v(TAG, "onBindViewHolder");
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+
+//        ArrayList<Integer> numbers = new ArrayList<Integer>();
+//        ArrayList<Integer> mNumbers = new ArrayList<Integer>();
+//
+//        for(int i = 0; i < menuNames.size(); i++){
+//            numbers.add(menuNames.get(i).getmNo());
+//        }
+//        Log.v(TAG, String.valueOf(numbers));
+//
+//        for(int i = 0; i < mDataset.size(); i++){
+//            mNumbers.add(mDataset.get(i).getMenu_mSeqNo());
+//        }
+//
+//        TreeSet<Integer> tree = new TreeSet<Integer>(mNumbers); // 중복제거
+//        ArrayList<Integer> mNumbers2 = new ArrayList<Integer>(tree); // 다시 반환
+//        Log.v(TAG, String.valueOf(mNumbers2));
+//
+//        for(int i = 0; i < menuNames.size(); i++){ // 사이즈 맞추기
+//            if(mNumbers2.size() != menuNames.size()){
+//                mNumbers2.add(0);
+//            }
+//        }
+//        Log.v(TAG, String.valueOf(mNumbers2));
+//
+//        for(int i = 0; i < menuNames.size(); i++){
+//            for(int j = 0; j < mNumbers2.size(); j++){
+//                if(mNumbers2.get(j) == menuNames.get(i).getmNo()){
+//                    holder.mName.setText(menuNames.get(i).getmName());
+//                }
+//            }
+//        }
+
+
+//        // cartlist로 Insert하기!
+//        if(sizeUpCount == 1 && shotCount == 1){ // 둘다 추가
+//            addOrderTotal = 3;
+//        }else if(sizeUpCount == 1 && shotCount == 0){ // 사이즈업만
+//            addOrderTotal = 2;
+//        }else if(shotCount == 1 && sizeUpCount == 0){ // 샷추가만
+//            addOrderTotal = 1;
+//        }else{ // 아무것도 안함
+//            addOrderTotal = 0;
+//        }
+
+        Log.v(TAG, "AddShot : " + mDataset.get(position).getcLAddShot());
+
         //데이터를 받은걸 올리기
-        holder.cLPhoto.setImageResource(R.drawable.ic_launcher_foreground);
-        holder.mName.setText(mDataset.get(position).getmName());
-
-        if(mDataset.get(position).getAddOrder1() == null){
+        if(mDataset.get(position).getcLSizeUp() != 0){
+            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getcLSizeUp());
+        }else{
             holder.addOrder1.setText("");
-        }else{
-            holder.addOrder1.setText(mDataset.get(position).getAddOrder1());
         }
-        if(mDataset.get(position).getAddOrder2() == null){
-            holder.addOrder2.setText("");
-        }else{
+
+        if(mDataset.get(position).getcLAddShot() != 0){
+            holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getcLAddShot());
             holder.addOrder2.setVisibility(View.VISIBLE);
-            holder.addOrder2.setText(mDataset.get(position).getAddOrder2());
-        }
-        if(mDataset.get(position).getRequest() == null){
-            holder.request.setText("");
         }else{
-            holder.request.setText(mDataset.get(position).getRequest());
+            holder.addOrder2.setText("");
         }
 
-        holder.cLQuantity.setText(Integer.toString(mDataset.get(position).getcLQuantity()));
+        holder.mName.setText(mDataset.get(position).getMenu_mName());
+        holder.cLPhoto.setImageResource(R.drawable.ic_launcher_foreground);
+        holder.cLQuantity.setText("<" + mDataset.get(position).getcLQuantity() + ">");
         holder.cLPrice.setText(mDataset.get(position).getcLPrice() + "원");
-
+        holder.request.setText(mDataset.get(position).getcLRequest());
 
     }
 

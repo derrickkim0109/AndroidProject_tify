@@ -15,7 +15,9 @@ import com.example.tify.Minwoo.Bean.Menu;
 import com.example.tify.Minwoo.Fragment.MenuFragment;
 import com.example.tify.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -23,6 +25,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
 
     String TAG = "MenuAdapter";
     Context context;
+
+    private ArrayList<Menu> mDataset;
 
     //인터페이스 선언
     public interface OnItemClickListener{
@@ -37,7 +41,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         Log.v(TAG, "setOnItemClickListener");
     }
 
-    private ArrayList<Menu> mDataset;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -73,9 +77,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
 
     // 메인 액티비티에서 받은 myDataset을 가져오
     public MenuAdapter(MenuFragment MenuFragment, int member, ArrayList<Menu> myDataset) {
-        mDataset = myDataset;
+        this.mDataset = myDataset;
+        Log.v(TAG, "mDataset size : " + mDataset.size());
         Log.v(TAG, "MenuAdapter Constructor");
-//
+
     }
 
     public MenuAdapter(ArrayList<Menu> mDataset) {
@@ -101,7 +106,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         // - replace the contents of the view with that element
         //데이터를 받은걸 올리기
         holder.mName.setText(mDataset.get(position).getmName());
-        holder.mPrice.setText(mDataset.get(position).getmPrice() + "원");
+
+        // 콤마 찍어서 원화로 바꿔줌!
+        NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
+        String price = moneyFormat.format(mDataset.get(position).getmPrice());
+
+        holder.mPrice.setText(price + "원");
         holder.mPhoto.setImageResource(R.drawable.ic_launcher_foreground);
 
 
