@@ -7,11 +7,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 외장권한 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -21,15 +21,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
-        <activity android:name=".Hyeona.Activity.LoginActivity"></activity>
-        <!-- 태현 -->
-        <activity android:name=".Taehyun.Activity.MypageActivity" />
-        <activity android:name=".Taehyun.Activity.ProfileChageActivity"></activity>
+        <activity android:name=".Hyeona.Activity.LoginActivity" />
+        <activity android:name=".Hyeona.Activity.IntroActivity" />
+
+
         <!-- 태현 -->
 
+
+        <activity android:name=".Taehyun.Activity.Mypage_payPassword"></activity>
+        <activity android:name=".Taehyun.Activity.ProfileChageActivity" />
+        <activity android:name=".Taehyun.Activity.CardRegistrationActivity" />
+        <!-- 태현 -->
+
+
+
         <!-- 지석 -->
-        <activity android:name=".Jiseok.Activity.JoinActivity"/>
-        <!-- 지석 -->
+        <activity android:name=".Jiseok.Activity.JoinActivity" /> <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.EmptyCartActivity" />
         <activity android:name=".Minwoo.Activity.BeforePayActivity" />
@@ -39,12 +46,10 @@
         <activity android:name=".Minwoo.Activity.OrderListActivity" />
         <activity android:name=".Minwoo.Activity.OrderSummaryActivity" />
         <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
-
-        <activity android:name=".Hyeona.Activity.ViewPagerActivity" /><!-- 현아 -->
+        <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- 현아 -->
         <activity android:name=".MainActivity" />
-        <activity android:name=".Hyeona.Activity.reviewActivity"/>
-        <activity android:name=".Hyeona.Activity.IntroActivity">
-
+        <activity android:name=".Hyeona.Activity.reviewActivity" />
+        <activity android:name=".Taehyun.Activity.MypageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,6 +59,7 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Theme.AppCompat" />
+
         <receiver
             android:name=".Jiseok.Activity.SmsReceiver"
             android:enabled="true"

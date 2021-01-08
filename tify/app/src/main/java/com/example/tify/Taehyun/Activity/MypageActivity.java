@@ -48,7 +48,7 @@ public class MypageActivity extends AppCompatActivity {
     String urlAddr = null;
     //
     String urlAddress = null;
-    String macIP = "192.168.200.129";
+    String macIP = "192.168.0.80";
     //Bean
     Bean_Mypage_userinfo userinfo = null;
 

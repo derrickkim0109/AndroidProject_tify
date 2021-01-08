@@ -59,6 +59,12 @@ public class ProfileChageActivity extends AppCompatActivity {
     InputMethodManager inputMethodManager;
     LinearLayout profile_ll;
 
+    // 결제 비번 변경구간
+    LinearLayout profile_payPasswordCG = null;
+
+    //회원탈퇴
+    TextView profile_withdraw = null;
+
     //카메라, 갤러리
     private static final int CAMERA_REQUEST_CODE = 100;
     private static final int STORAGE_REQUEST_CODE = 101;
@@ -180,10 +186,18 @@ public class ProfileChageActivity extends AppCompatActivity {
         profile_tv_change = findViewById(R.id.profile_change);
 
         profileIv.setOnClickListener(imgClickListener);  // 카메라 갤러리
-        profile_tv_change.setOnClickListener(imgClickListener); // 카메라 갤러리
+        profile_tv_change.setOnClickListener(imgClickListener); // 카메라 갤러리 변경하기_TextView
 
         actionBar = getSupportActionBar(); // 카메라 액션바.
 
+        //결제 비번 변경
+        profile_payPasswordCG = findViewById(R.id.profile_payPasswordCG);
+        profile_payPasswordCG.setOnClickListener(tClickListener);
+
+
+        //회원탈퇴
+        profile_withdraw = findViewById(R.id.profile_withdraw);
+        profile_withdraw.setOnClickListener(tClickListener);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,7 +240,11 @@ public class ProfileChageActivity extends AppCompatActivity {
             }
         }
     };
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //          프로필 사진, 닉네임, 전화번호 띄우기.
+    //           2021.01.07 -태현
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private String connectUpdate() {
         Log.v(TAG, "connectUpdate()");
 
@@ -247,5 +265,26 @@ public class ProfileChageActivity extends AppCompatActivity {
         }
         return result;
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //          프로필 사진 / 변경하기 텍스트 누름 -> 카메라/ 갤러리 가기
+    //           2021.01.08 -태현
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    View.OnClickListener tClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                
+                case R.id.profile_payPasswordCG:
+
+                    break;
+
+                case R.id.profile_withdraw:
+
+                    break;
+            }
+        }
+    };
+
 
 }////---END
