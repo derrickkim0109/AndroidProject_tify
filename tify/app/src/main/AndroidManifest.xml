@@ -22,7 +22,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
         <!-- 태현 -->
-        <activity android:name=".Hyeona.Activity.LoginActivity" />
         <activity android:name=".Taehyun.Activity.MypageActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />
@@ -44,6 +43,7 @@
         <activity android:name=".Minwoo.Activity.OrderSummaryActivity" />
         <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
         <!-- 현아 -->
+        <activity android:name=".Hyeona.Activity.LoginActivity" />
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- <activity android:name=".Hyeona.Activity.IntroActivity" /> -->
         <activity android:name=".MainActivity" />
         <activity android:name=".Hyeona.Activity.reviewActivity" />
