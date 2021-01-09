@@ -52,7 +52,6 @@ public class review_white_dialoge extends Dialog {
         final ImageView review_store_image = findViewById(R.id.review_store_image);
 
         final EditText review_content = findViewById(R.id.review_content);
-        review_content.setFilters(new InputFilter[] {new InputFilter.LengthFilter(100)});
         //레이아웃 정보 받아옴
 
         connectGetData();
