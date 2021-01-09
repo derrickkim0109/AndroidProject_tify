@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class LMW_LoginNetworkTask extends AsyncTask<Integer, String, Object> {
 
-    final static String TAG = "LMW_CartNetworkTask";
+    final static String TAG = "LMW_LoginNetworkTask";
     Context context = null;
     String mAddr = null;
     ProgressDialog progressDialog = null;

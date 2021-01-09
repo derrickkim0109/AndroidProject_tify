@@ -30,7 +30,7 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-		String A = "insert into tify.cartlist(user_uSeqNo, store_sSeqNo, store_sName, menu_mName, cLPrice, cLQuantity, cLImage, cLSizeUp, cLAddShot, cLRequest) value (?, ?, ?, ? ,? ,?, ?, ?, ?, ?)";
+		String A = "insert into tify.cartlist(user_uSeqNo, storekeeper_skSeqNo, store_sName, menu_mName, cLPrice, cLQuantity, cLImage, cLSizeUp, cLAddShot, cLRequest) value (?, ?, ?, ? ,? ,?, ?, ?, ?, ?)";
 		
 	    ps = conn_mysql.prepareStatement(A);
         ps.setInt(1, user_uSeqNo);
