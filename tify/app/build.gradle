@@ -71,4 +71,5 @@ dependencies {
     //현아 서클 인클레이터
     implementation 'me.relex:circleindicator:1.2.2'
     implementation 'com.android.support:recyclerview-v7:30.0.0'
+
 }

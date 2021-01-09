@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="320dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_margin="10dp"
-    android:scrollbars="vertical"
     android:id="@+id/detail_ll_hide"
+    android:layout_margin="30dp"
     android:layout_height="match_parent">
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="right"
-        android:id="@+id/review_cancel"
-        android:src="@drawable/ic_action_close">
-    </ImageView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:text="리뷰작성">
-    </TextView>
 
     <androidx.cardview.widget.CardView
         android:layout_marginTop="10dp"
@@ -60,8 +53,8 @@
     </TextView>
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:id="@+id/review_add_image"
         android:layout_marginTop="20dp"
         android:src="@drawable/null_image">
@@ -70,10 +63,12 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
+        android:background="@color/background_color"
+        android:padding="20dp"
         android:hint="리뷰를 작성해주세요.(100자 이내)"
         android:scrollbars="vertical"
         android:id="@+id/review_content"
-        android:layout_height="100dp">
+        android:layout_height="200dp">
     </EditText>
 
 
@@ -91,6 +86,7 @@
 
     </Button>
 
-
-
 </LinearLayout>
+</ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
