@@ -45,9 +45,13 @@
         <!-- 현아 -->
         <activity android:name=".Hyeona.Activity.LoginActivity" />
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- <activity android:name=".Hyeona.Activity.IntroActivity" /> -->
+
         <activity android:name=".MainActivity" />
         <activity android:name=".Hyeona.Activity.reviewActivity" />
+
         <activity android:name=".Hyeona.Activity.IntroActivity">
+<!--           <activity android:name=".Hyeona.Activity.test">-->
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

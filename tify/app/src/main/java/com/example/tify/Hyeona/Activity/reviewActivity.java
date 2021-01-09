@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tify.Hyeona.Adapter.review_adapter;
-import com.example.tify.Hyeona.Bean.Bean_review;
+import com.example.tify.Hyeona.Bean.Bean_review_review;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_review;
 import com.example.tify.R;
 
@@ -20,11 +20,11 @@ public class reviewActivity extends AppCompatActivity {
     // private ListView listView;
     private Button button;
     private TextView textView;
-    private ArrayList<Bean_review> reviews = null;
+    private ArrayList<Bean_review_review> reviews = null;
     private review_adapter adapter;
     private RecyclerView recyclerView = null;
     private RecyclerView.LayoutManager layoutManager = null;
-    int store_sSeqNo = 1;
+    int storekeeper_skSeqNo = 1;
     // 가게 번호 넘겨야댐
     String macIP = "192.168.0.55";
     String urlAddr = "http://" + macIP + ":8080/tify/review.jsp?";
@@ -33,12 +33,13 @@ public class reviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cha_reviewlist);
+
         recyclerView = findViewById(R.id.reviewList);
-        recyclerView.setHasFixedSize(true);
+        //recyclerView.setHasFixedSize(true);
         //레이아웃 매니저 만들기
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        reviews = new ArrayList<Bean_review>();
+        //reviews = new ArrayList<Bean_review>();
     }
 
     @Override
@@ -49,10 +50,10 @@ public class reviewActivity extends AppCompatActivity {
 
     private void connectGetData(){
         try {
-            String urlAddress = urlAddr + "store_sSeqNo=" + store_sSeqNo;
+            String urlAddress = urlAddr + "storekeeper_skSeqNo=" + storekeeper_skSeqNo;
             CUDNetworkTask_review mCUDNetworkTask_review = new CUDNetworkTask_review(reviewActivity.this, urlAddress,"select");
             Object obj = mCUDNetworkTask_review.execute().get();
-            reviews = (ArrayList<Bean_review>) obj;
+            reviews = (ArrayList<Bean_review_review>) obj;
             Log.v("dddd","dd"+reviews);
             //리사이클러뷰 어댑터를 넣기
             adapter = new review_adapter(reviewActivity.this, R.layout.cha_reviewcontent, reviews);

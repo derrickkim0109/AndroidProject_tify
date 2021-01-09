@@ -1,11 +1,11 @@
-package com.example.tify.Hyeona.NetworkTask;
+package com.android.tify_store.Minwoo.NetworkTask;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.tify.Hyeona.Adapter.review_adapter;
-import com.example.tify.Hyeona.Bean.Bean_review_userinfo;
+import com.android.tify_store.Minwoo.Bean.Login;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,47 +15,48 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
-public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> {
+public class LMW_LoginNetworkTask extends AsyncTask<Integer, String, Object> {
 
-    /*공용이므로 항상 수정사항 알려주시기 바랍니다.*/
-
-    final static String TAG = "CUDNetworkTask";
-    review_adapter context = null;
+    final static String TAG = "LMW_CartNetworkTask";
+    Context context = null;
     String mAddr = null;
     ProgressDialog progressDialog = null;
-    String where = null;
-    Bean_review_userinfo bean_review_userinfo = null;
 
-    public CUDNetworkTask_userinfo(review_adapter context, String mAddr, String where) {
+    ArrayList<Login> datas;
+
+    String where = null;
+
+    public LMW_LoginNetworkTask(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
         this.where = where;
-        this.bean_review_userinfo = new Bean_review_userinfo();
-
-        Log.v(TAG,"Start : " + mAddr);
+        this.datas = new ArrayList<Login>();
+        Log.v(TAG, "Start : " + mAddr);
     }
 
     @Override
     protected void onPreExecute() {
         Log.v(TAG, "onPreExecute()");
-//        progressDialog = new ProgressDialog(context);
-//        progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
-//        progressDialog.setTitle("Create/Update/Delete");
-//        progressDialog.setMessage("Working...");
-//        progressDialog.show();
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setTitle("Dialogue");
+        progressDialog.setMessage("Get ....");
+        progressDialog.show();
+
     }
 
     @Override
     protected Object doInBackground(Integer... integers) {
         Log.v(TAG, "doInBackground()");
 
+        String result = null;
+
         StringBuffer stringBuffer = new StringBuffer();
         InputStream inputStream = null;
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
-
-        String result = null;
 
         try {
             URL url = new URL(mAddr);
@@ -72,13 +73,11 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
                     if(strline == null) break;
                     stringBuffer.append(strline + "\n");
                 }
-
                 if(where.equals("select")){
                     parserSelect(stringBuffer.toString());
                 }else{
                     result = parserAction(stringBuffer.toString());
                 }
-
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -92,32 +91,51 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
                 e2.printStackTrace();
             }
         }
-
         if(where.equals("select")){
-            return bean_review_userinfo;
+            return datas;
         }else{
             return result;
         }
     }
 
     @Override
-    protected void onProgressUpdate(String... values) {
-        Log.v(TAG, "onProgressUpdate()");
-        super.onProgressUpdate(values);
-    }
-
-    @Override
     protected void onPostExecute(Object o) {
         Log.v(TAG, "onPostExecute()");
         super.onPostExecute(o);
-        //progressDialog.dismiss();
+        progressDialog.dismiss();
 
     }
 
     @Override
     protected void onCancelled() {
-        Log.v(TAG, "onCancelled");
+        Log.v(TAG,"onCancelled()");
         super.onCancelled();
+    }
+
+    private void parserSelect(String s){
+        Log.v(TAG,"Parser()");
+
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("storekeeper"));
+            datas.clear();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+
+                int cnt = jsonObject1.getInt("cnt");
+                int skSeqNo = jsonObject1.getInt("skSeqNo");
+
+                Log.v(TAG, "cnt : " + cnt);
+
+                Login login = new Login(skSeqNo, cnt);
+                datas.add(login);
+
+                Log.v(TAG, "----------------------------------");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private String parserAction(String s){
@@ -136,34 +154,4 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
         }
         return returnValue;
     }
-
-    private void parserSelect(String s){
-        try {
-            JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-
-                int uNo = jsonObject1.getInt("uNo");
-                Log.v("dad","d"+uNo);
-                String uEmail = jsonObject1.getString("uEmail");
-                Log.v("dad","d"+uEmail);
-                String uNickName = jsonObject1.getString("uNickName");
-                Log.v("dad","d"+uNickName);
-                String uTelNo = jsonObject1.getString("uTelNo");
-                Log.v("dad","d"+uTelNo);
-                String uImage = jsonObject1.getString("uImage");
-                Log.v("dad","d"+uImage);
-                String uPayPassword = jsonObject1.getString("uPayPassword");
-                Log.v("dad","d"+uPayPassword);
-
-                bean_review_userinfo = new Bean_review_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
-
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-} // ----------
+}
