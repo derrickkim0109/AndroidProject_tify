@@ -23,7 +23,7 @@
         android:paddingLeft="35dp">
 
         <com.blogspot.atifsoftwares.circularimageview.CircularImageView
-            android:id="@+id/profile_IV"
+            android:id="@+id/profile_profile_IV"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"

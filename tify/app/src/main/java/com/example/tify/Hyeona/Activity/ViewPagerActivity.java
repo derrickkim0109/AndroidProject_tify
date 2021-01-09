@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -28,6 +29,18 @@ public class ViewPagerActivity extends AppCompatActivity {
         setContentView(R.layout.cha_activity_view_pager);
         initView();
         Button start_btn = findViewById(R.id.start_btn);
+
+        // 여기에 다시는 보지않게 할 자리
+//        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+//        SharedPreferences.Editor autoLogin = auto.edit();
+//        autoLogin.putString("inputId", et_id.getText().toString());
+//        autoLogin.putString("inputPw", et_pw.getText().toString());
+//        autoLogin.commit();
+
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        //액션바 삭제
 
         SharedPreferences introskip = getSharedPreferences("introskip", Activity.MODE_PRIVATE);
 

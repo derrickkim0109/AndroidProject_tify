@@ -1,6 +1,6 @@
 package com.example.tify.Hyeona.Bean;
 
-public class Bean_userinfo {
+public class Bean_review_userinfo {
 
     //field
     int uNo;
@@ -8,11 +8,11 @@ public class Bean_userinfo {
 
     //constructor
 
-    public Bean_userinfo() {
+    public Bean_review_userinfo() {
 
     }
 
-    public Bean_userinfo(int uNo, String uEmail , String uNickName
+    public Bean_review_userinfo(int uNo, String uEmail , String uNickName
             , String uTelNo, String uImage, String uPayPassword) {
 
         this.uNo = uNo;

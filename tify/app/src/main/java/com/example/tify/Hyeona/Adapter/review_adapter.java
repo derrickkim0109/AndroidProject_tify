@@ -12,9 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tify.Hyeona.Bean.Bean_review;
-import com.example.tify.Hyeona.Bean.Bean_userinfo;
-import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_review;
+import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
+import com.bumptech.glide.Glide;
+import com.example.tify.Hyeona.Bean.Bean_review_review;
+import com.example.tify.Hyeona.Bean.Bean_review_userinfo;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_userinfo;
 import com.example.tify.R;
 
@@ -23,12 +24,14 @@ import java.util.ArrayList;
 public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHolder> {
     private Context mContext = null;
     private int layout = 0;
-    private ArrayList<Bean_review> reviews = new ArrayList<Bean_review>();
+    private ArrayList<Bean_review_review> reviews = new ArrayList<Bean_review_review>();
     private LayoutInflater inflater = null;
     int user_uNo ;
-    Bean_userinfo bean_userinfo =new Bean_userinfo();
+    Bean_review_userinfo bean_review_userinfo =new Bean_review_userinfo();
     private String uImage;
     private String uNickName;
+    String macIP = "192.168.0.55";
+    //private CircularImageView review_profileIv;
 
     @NonNull
     @Override
@@ -43,19 +46,34 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Log.v("TT","ddddddddddddd");
-        //holder.review_profileIv.setImageResource(reviews.get(position).getrImage());
-        //이미지 가져오는건 다시 해야함
+
         user_uNo = reviews.get(position).getUser_uNo();
         connectGetData(reviews.get(position).getUser_uNo());
 
         holder.review_name.setText(uNickName);
 
+       // if(uImage.equals("null")){
+       //     holder.review_profileIv.setImageResource(R.drawable.ic_person);
+       // }else {
+            Glide.with(mContext).load("http://" + macIP + ":8080/tify/"+ uImage).into(holder.review_profileIv);
+        //}
+        Glide.with(mContext).load("http://" + macIP + ":8080/tify/"+ reviews.get(position).getrImage()).into(holder.review_image);
         Log.v("TT","ddddddddddddd"+user_uNo);
         holder.review_day.setText(reviews.get(position).getrInsertDate());
-        Log.v("TT","ddddddddddddd");
+
+        if (reviews.get(position).getrOwnerComment().equals("null")){
+            holder.review_storesay.setVisibility(View.GONE);
+            holder.review_storename.setVisibility(View.GONE);
+            // 사장님 댓글이 없는 경우 댓글 기본 세팅값도 보이지 않음
+        }else{
+            holder.review_storesay.setText(reviews.get(position).getrOwnerComment());
+            //댓글이 있을 경우에만 나타남
+        }
+
         holder.review_text.setText(reviews.get(position).getrContent());
         Log.v("TT","ddddddddddddd");
-        holder.review_storesay.setText(reviews.get(position).getrOwnerComment());
+
+
     }
 
     @Override
@@ -65,7 +83,7 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         final static String TAG = "MemberAdapter";
-        private ImageView review_profileIv;
+        private CircularImageView review_profileIv;
         private TextView review_name;
         private TextView review_day;
         private TextView review_text;
@@ -75,18 +93,18 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
 
         MyViewHolder(View v) {
             super(v);
-//          review_profileIv = v.findViewById(R.id.review_profileIv);
+            review_profileIv = v.findViewById(R.id.review_profileIv);
             review_name = v.findViewById(R.id.review_name);
             review_day = v.findViewById(R.id.review_day);
             review_text = v.findViewById(R.id.review_text);
-//          review_storename = v.findViewById(R.id.review_storename);
+            review_storename = v.findViewById(R.id.review_storename);
             review_storesay = v.findViewById(R.id.review_storesay);
-//          review_image = v.findViewById(R.id.review_image);
+            review_image = v.findViewById(R.id.review_image);
 
         }
     }
 
-    public review_adapter(Context mContext, int layout, ArrayList<Bean_review> reviews) {
+    public review_adapter(Context mContext, int layout, ArrayList<Bean_review_review> reviews) {
         this.mContext = mContext;
         this.layout = layout;
         this.reviews = reviews;
@@ -95,21 +113,21 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
 
     private void connectGetData(int s){
         try {
-            String macIP = "192.168.0.55";
             String urlAddr = "http://" + macIP + ":8080/tify/user_info.jsp?";
             //여기 변경 포인트
             String urlAddress = urlAddr + "uNo=" + s;
             CUDNetworkTask_userinfo mCUDNetworkTask_userinfo = new CUDNetworkTask_userinfo(review_adapter.this, urlAddress,"select");
             Object obj = mCUDNetworkTask_userinfo.execute().get();
-            bean_userinfo = (Bean_userinfo) obj;
+            bean_review_userinfo = (Bean_review_userinfo) obj;
 
-            //uImage = bean_userinfo.getuImage();
-            uNickName = bean_userinfo.getuNickName();
+            uImage = bean_review_userinfo.getuImage();
+            uNickName = bean_review_userinfo.getuNickName();
             Log.v("tttt","dd"+uNickName);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
 
 
 }

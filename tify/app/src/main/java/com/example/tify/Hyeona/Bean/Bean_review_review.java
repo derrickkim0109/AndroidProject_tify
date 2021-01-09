@@ -1,18 +1,18 @@
 package com.example.tify.Hyeona.Bean;
 
-public class Bean_review {
+public class Bean_review_review {
 
-    int rNo, user_uNo, store_sSeqNo;
+    int rNo, user_uNo, storekeeper_skSeqNo;
     String rContent, rImage, rOwnerComment, rDeletedate, rInsertDate;
 
-    public Bean_review(){
+    public Bean_review_review() {
 
-    };
+    }
 
-    public Bean_review(int rNo, int user_uNo, int store_sSeqNo, String rContent, String rImage, String rOwnerComment, String rDeletedate, String rInsertDate) {
+    public Bean_review_review(int rNo, int user_uNo, int storekeeper_skSeqNo, String rContent, String rImage, String rOwnerComment, String rDeletedate, String rInsertDate) {
         this.rNo = rNo;
         this.user_uNo = user_uNo;
-        this.store_sSeqNo = store_sSeqNo;
+        this.storekeeper_skSeqNo = storekeeper_skSeqNo;
         this.rContent = rContent;
         this.rImage = rImage;
         this.rOwnerComment = rOwnerComment;
@@ -36,12 +36,12 @@ public class Bean_review {
         this.user_uNo = user_uNo;
     }
 
-    public int getStore_sSeqNo() {
-        return store_sSeqNo;
+    public int getStorekeeper_skSeqNo() {
+        return storekeeper_skSeqNo;
     }
 
-    public void setStore_sSeqNo(int store_sSeqNo) {
-        this.store_sSeqNo = store_sSeqNo;
+    public void setStorekeeper_skSeqNo(int storekeeper_skSeqNo) {
+        this.storekeeper_skSeqNo = storekeeper_skSeqNo;
     }
 
     public String getrContent() {
