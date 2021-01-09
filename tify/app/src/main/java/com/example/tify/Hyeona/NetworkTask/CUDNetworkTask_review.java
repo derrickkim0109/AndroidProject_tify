@@ -6,7 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
-import com.example.tify.Hyeona.Bean.Bean_review;
+import com.example.tify.Hyeona.Bean.Bean_review_review;
+import com.example.tify.Hyeona.Bean.Bean_review_store;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,7 +17,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.Timestamp;
 import java.util.ArrayList;
 
 public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
@@ -28,14 +28,15 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
     String mAddr = null;
     ProgressDialog progressDialog = null;
     String where = null;
-    Bean_review bean_review = null;
-    ArrayList<Bean_review> reviews = null;
+    Bean_review_review bean_review_review = null;
+    ArrayList<Bean_review_review> reviews = null;
+    Bean_review_store bean_review_store = null;
 
     public CUDNetworkTask_review(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
         this.where = where;
-        this.reviews = new ArrayList<Bean_review>();
+        this.reviews = new ArrayList<Bean_review_review>();
     }
 
     @Override
@@ -74,10 +75,12 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
                     if(strline == null) break;
                     stringBuffer.append(strline + "\n");
                 }
-
                 if(where.equals("select")){
                     parserSelect(stringBuffer.toString());
-                }else{
+                }else if(where.equals("select_review_storeinfo")){
+                    parserSelect_review_storeinfo(stringBuffer.toString());
+                }
+                else{
                     result = parserAction(stringBuffer.toString());
                 }
 
@@ -165,18 +168,41 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
 
                 int user_uNo = jsonObject1.getInt("user_uNo");
                 Log.v("값확인","ㅇ"+user_uNo);
-                int store_sSeqNo = jsonObject1.getInt("store_sSeqNo");
+                int storekeeper_skSeqNo = jsonObject1.getInt("storekeeper_skSeqNo");
 
-                Log.v("값확인","ㅇ"+store_sSeqNo);
+                Log.v("값확인","ㅇ"+storekeeper_skSeqNo);
 
-                bean_review = new Bean_review(rNo, user_uNo, store_sSeqNo, rContent, rImage, rOwnerComment, rDeletedate, rInsertDate);
-                Log.v("값확인","ㅇ"+bean_review);
-                reviews.add(bean_review);
+                bean_review_review = new Bean_review_review(rNo, user_uNo, storekeeper_skSeqNo, rContent, rImage, rOwnerComment, rDeletedate, rInsertDate);
+                Log.v("값확인","ㅇ"+ bean_review_review);
+                reviews.add(bean_review_review);
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+    private void parserSelect_review_storeinfo(String s){
+        //Log.v("aaaaaa","parser()");
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("review"));
+            reviews.clear();
 
+            for (int i=0; i<jsonArray.length(); i++){
+
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+
+                int storekeeper_skSeqNo = jsonObject1.getInt("storekeeper_skSeqNo");
+                String sName = jsonObject1.getString("sName");
+                String sTelNo = jsonObject1.getString("sTelNo");
+                String sAddress = jsonObject1.getString("sAddress");
+                String sImage = jsonObject1.getString("sImage");
+
+                bean_review_store = new Bean_review_store(storekeeper_skSeqNo, sName, sTelNo, sAddress, sImage);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 } // —————

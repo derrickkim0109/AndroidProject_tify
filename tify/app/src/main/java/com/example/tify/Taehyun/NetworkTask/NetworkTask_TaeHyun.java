@@ -5,8 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.tify.Hyeona.Bean.Bean_userinfo;
-import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
+import com.example.tify.Hyeona.Bean.Bean_review_userinfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,7 +22,7 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
     Context context = null;
     String mAddr = null;
     ProgressDialog progressDialog = null;
-    Bean_userinfo userinfo = null;
+    Bean_review_userinfo userinfo = null;
     String where = null;
 
 
@@ -38,7 +37,7 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
     public NetworkTask_TaeHyun(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
-        this.userinfo = new Bean_userinfo();
+        this.userinfo = new Bean_review_userinfo();
         this.where = where;
         Log.v(TAG, "Start : " + mAddr);
     }
@@ -183,7 +182,7 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                 Log.v("ddddddd","uNo : "+uImage);
                 Log.v("ddddddd","uNo : "+uPayPassword);
                 Log.v("ddddddd",where);
-                userinfo = new Bean_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
+                userinfo = new Bean_review_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
 
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");

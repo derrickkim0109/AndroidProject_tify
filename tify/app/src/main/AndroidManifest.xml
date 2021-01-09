@@ -42,12 +42,11 @@
 
 
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /><!-- 현아 -->
-        <activity android:name=".Hyeona.Activity.reviewActivity" />
+        <activity android:name=".Hyeona.Activity.IntroActivity" />
         <activity android:name=".MainActivity" />
 
 
-
-        <activity android:name=".Hyeona.Activity.IntroActivity">
+        <activity android:name=".Hyeona.Activity.reviewActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
