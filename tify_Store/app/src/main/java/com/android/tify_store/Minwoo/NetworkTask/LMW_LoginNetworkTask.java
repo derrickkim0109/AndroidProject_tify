@@ -117,13 +117,14 @@ public class LMW_LoginNetworkTask extends AsyncTask<Integer, String, Object> {
 
         try {
             JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonArray = new JSONArray(jsonObject.getString("cartList"));
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("storekeeper"));
             datas.clear();
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-                int skSeqNo = jsonObject1.getInt("skSeqNo");
+
                 int cnt = jsonObject1.getInt("cnt");
+                int skSeqNo = jsonObject1.getInt("skSeqNo");
 
                 Log.v(TAG, "cnt : " + cnt);
 
