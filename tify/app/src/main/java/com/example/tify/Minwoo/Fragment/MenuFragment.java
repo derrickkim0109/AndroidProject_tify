@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tify.Minwoo.Activity.OrderSummaryActivity;
 import com.example.tify.Minwoo.Adapter.MenuAdapter;
 import com.example.tify.Minwoo.Bean.Menu;
-import com.example.tify.Minwoo.NetworkTask.LMW_NetworkTask;
+import com.example.tify.Minwoo.NetworkTask.LMW_MenuNetworkTask;
 import com.example.tify.R;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class MenuFragment extends Fragment {
     String urlAddr = null;
     String where = null;
     String sName = null;
-    int userSeqno = 0;
+    int user_uSeqNo = 0;
     int store_sSeqNo = 0;
 
     @Nullable
@@ -48,23 +48,27 @@ public class MenuFragment extends Fragment {
             // Inflate the layout for this fragment
             View v =  inflater.inflate(R.layout.lmw_fragment_menu, container, false);
 
-            // 초기 설정 값
-            where = "MenuFragment";
+
+
             // StoreInfoActivity로 부터 값을 받는다.
             Bundle bundle = getArguments();
             macIP = bundle.getString("macIP");
-            userSeqno = bundle.getInt("userSeqno");
+            user_uSeqNo = bundle.getInt("user_uSeqNo");
             store_sSeqNo = bundle.getInt("store_sSeqNo");
             sName = bundle.getString("sName");
 
+            // 초기 설정 값
+            where = "select";
+            urlAddr = "http://" + macIP + ":8080/tify/lmw_menulist.jsp?store_sSeqNo=" + store_sSeqNo;
+            Log.v(TAG, "urlAddr : " + urlAddr);
+
             Log.v(TAG, "macIP : " + macIP);
-            Log.v(TAG, "userSeqno : " + userSeqno);
+            Log.v(TAG, "user_uSeqNo : " + user_uSeqNo);
             Log.v(TAG, "store_sSeqNo : " + store_sSeqNo);
             Log.v(TAG, "sName : " + sName);
             //----------------------
 
-            urlAddr = "http://" + macIP + ":8080/tify/lmw_menulist.jsp?store_sSeqNo=" + store_sSeqNo;
-            Log.v(TAG, "urlAddr : " + urlAddr);
+
 
             //recyclerview
             recyclerView = v.findViewById(R.id.recycler_view);
@@ -93,7 +97,7 @@ public class MenuFragment extends Fragment {
                     intent.putExtra("mType", menuList.get(position).getmType());
 
                     intent.putExtra("macIP", macIP);
-                    intent.putExtra("userSeqno", userSeqno);
+                    intent.putExtra("user_uSeqNo", user_uSeqNo);
                     intent.putExtra("store_sSeqNo", store_sSeqNo);
                     intent.putExtra("sName", sName);
 
@@ -114,7 +118,7 @@ public class MenuFragment extends Fragment {
             //  - NetworkTask의 생성자 추가 : where <- "select"
             //
             ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_NetworkTask networkTask = new LMW_NetworkTask(getActivity(), urlAddr, where, 0);
+            LMW_MenuNetworkTask networkTask = new LMW_MenuNetworkTask(getActivity(), urlAddr, where);
             ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();

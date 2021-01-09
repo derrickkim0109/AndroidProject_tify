@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,11 +21,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tify.Minwoo.Adapter.CartAdapter;
-import com.example.tify.Minwoo.Adapter.MenuAdapter;
 import com.example.tify.Minwoo.Bean.Cart;
-import com.example.tify.Minwoo.Bean.Menu;
-import com.example.tify.Minwoo.Fragment.MenuFragment;
-import com.example.tify.Minwoo.NetworkTask.LMW_NetworkTask;
+import com.example.tify.Minwoo.Bean.Order;
+import com.example.tify.Minwoo.NetworkTask.LMW_CartNetworkTask;
+import com.example.tify.Minwoo.NetworkTask.LMW_OrderNetworkTask;
 import com.example.tify.R;
 
 import java.text.NumberFormat;
@@ -39,14 +36,13 @@ public class CartActivity extends AppCompatActivity {
     String TAG = "CartActivity";
 
     private ArrayList<Cart> data = null;
-    private ArrayList<Menu> menus = null;
     private CartAdapter adapter = null;
     private ListView listView = null;
     private RecyclerView recyclerView = null;
     private RecyclerView.LayoutManager layoutManager = null;
 
     private ArrayList<Cart> list;
-    private ArrayList<Menu> menuNames;
+    private ArrayList<Order> orders;
 
     // layout
     Button payBtn;
@@ -56,8 +52,6 @@ public class CartActivity extends AppCompatActivity {
 
     // OrderSummaryActivity로 부터 받을 값
     String sName;
-    String mName;
-    int totalPrice;
 
     // cartlist RUD
     String macIP;
@@ -67,6 +61,8 @@ public class CartActivity extends AppCompatActivity {
     int store_sSeqNo = 0;
 
     String strTotal;
+    int oNo;
+    int total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +86,14 @@ public class CartActivity extends AppCompatActivity {
         tv_sName.setText(sName);
         tv_totalPrice.setText(strTotal + "원");
 
-        // NetworkTask 세팅
+        orders = OrderConnectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
+        if (orders.size() != 0) {
+            oNo = orders.get(0).getoNo() + 1;
+            Log.v(TAG, "마지막 oNo + 1: " + oNo);
+        }
 
+
+        // NetworkTask 세팅
 
 //        data = new ArrayList<Cart>();
 //
@@ -122,8 +124,18 @@ public class CartActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),new LinearLayoutManager(this).getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+
         list = new ArrayList<Cart>();
         list = connectGetData(); // db를 통해 받은 데이터를 담는다.
+
+        Log.v(TAG, "list size : " + list.size());
+
+        if(list.size() == 0){
+            finish();
+
+            Intent intent1 = new Intent(CartActivity.this, EmptyCartActivity.class);
+            startActivity(intent1);
+        }
 
         // 툴바 생성
         Toolbar toolbar = (Toolbar)findViewById(R.id.cart_toolbar); // 상단 툴바
@@ -158,7 +170,15 @@ public class CartActivity extends AppCompatActivity {
 
             switch (v.getId()){
                 case R.id.cart_Btn_Pay:
-                    intent = new Intent(CartActivity.this, OrderListActivity.class);
+                    intent = new Intent(CartActivity.this, BeforePayActivity2.class);
+
+                    intent.putExtra("sName", sName);
+                    intent.putExtra("macIP", macIP);
+                    intent.putExtra("user_uSeqNo", user_uSeqNo);
+                    intent.putExtra("store_sSeqNo", store_sSeqNo);
+                    intent.putExtra("total", total);
+                    intent.putExtra("from", "CartActivity");
+
                     startActivity(intent);
                     break;
                 case R.id.cart_IV_Cancel:
@@ -171,7 +191,7 @@ public class CartActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             urlAddr = "http://" + macIP + ":8080/tify/lmw_cartlist_delete_all.jsp?user_uSeqNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo;
-                            where = "CartActivity";
+                            where = "delete";
 
                             connectDeleteData(); // 해당 메뉴 삭제
                             Intent intent = new Intent(CartActivity.this, CartActivity.class);
@@ -193,8 +213,9 @@ public class CartActivity extends AppCompatActivity {
     private ArrayList<Cart> connectGetData(){
         ArrayList<Cart> beanList = new ArrayList<Cart>();
 
+        where = "select";
         urlAddr = "http://" + macIP + ":8080/tify/lmw_cartlist_select.jsp?user_uSeqNo=" + user_uSeqNo;
-        where = "CartActivity";
+
         try {
             ///////////////////////////////////////////////////////////////////////////////////////
             // Date : 2020.12.25
@@ -203,7 +224,7 @@ public class CartActivity extends AppCompatActivity {
             //  - NetworkTask의 생성자 추가 : where <- "select"
             //
             ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_NetworkTask networkTask = new LMW_NetworkTask(CartActivity.this, urlAddr, where, 0);
+            LMW_CartNetworkTask networkTask = new LMW_CartNetworkTask(CartActivity.this, urlAddr, where);
             ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();
@@ -213,7 +234,7 @@ public class CartActivity extends AppCompatActivity {
             adapter = new CartAdapter(CartActivity.this, R.layout.lmw_activity_cart_recycler_item, data);
             recyclerView.setAdapter(adapter);
 
-            int total = 0;
+            total = 0;
 
             for(int i = 0; i < data.size(); i++){
                 total = total + data.get(i).getcLPrice();
@@ -233,6 +254,35 @@ public class CartActivity extends AppCompatActivity {
         return beanList;
     }
 
+    private ArrayList<Order> OrderConnectGetData(){
+        ArrayList<Order> beanList = new ArrayList<Order>();
+
+        where = "select";
+        urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
+
+        try {
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // Date : 2020.12.25
+            //
+            // Description:
+            //  - NetworkTask의 생성자 추가 : where <- "select"
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////
+            LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(CartActivity.this, urlAddr, where);
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            Object obj = networkTask.execute().get();
+            orders = (ArrayList<Order>) obj;
+            Log.v(TAG, "data.size() : " + orders.size());
+
+            beanList = orders;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return beanList;
+    }
+
     private String connectDeleteData(){ // 선택한 메뉴 삭제 or 전체 삭제
         String result = null;
 
@@ -245,7 +295,7 @@ public class CartActivity extends AppCompatActivity {
             //  - NetworkTask의 생성자 추가 : where <- "insert"
             //
             ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_NetworkTask networkTask = new LMW_NetworkTask(CartActivity.this, urlAddr, where, 1);
+            LMW_CartNetworkTask networkTask = new LMW_CartNetworkTask(CartActivity.this, urlAddr, where);
             ///////////////////////////////////////////////////////////////////////////////////////
 
             ///////////////////////////////////////////////////////////////////////////////////////

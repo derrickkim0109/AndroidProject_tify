@@ -49,7 +49,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/beforePay_TV_Quantity"
+                    android:id="@+id/beforePay_TV_totalOrderPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:text="10,000원"
@@ -172,7 +172,7 @@
             android:gravity="center"
             />
         <TextView
-            android:id="@+id/beforePay_TV_TotalPrice"
+            android:id="@+id/beforePay_TV_totalPayPrice"
             android:layout_width="0px"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
         android:orientation="horizontal"
         >
         <Button
-            android:id="@+id/beforePay_Btn_Kakopay"
+            android:id="@+id/beforePay_Btn_Kakaopay"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_weight="1"

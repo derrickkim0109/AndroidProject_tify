@@ -2,224 +2,52 @@ package com.example.tify.Minwoo.Bean;
 
 public class OrderList {
 
-    // order
-    int oNo;
-    int store_sSeqno;
-    int cartlist_cLNo;
-    String oInsertDate;
-    String oDeleteDate;
-    int oSum;
-    String oCardName;
-    int oCardNo;
-    int oReview;
-
     //orderlist
-    String sName;
+    int store_sSeqNo;
+    String store_sName;
+    String menu_mName;
     int olSeqNo;
-    int olAddOrder;
+    int olSizeUp;
+    int olAddShot;
     String olRequest;
     int olPrice;
     int olQuantity;
 
 
-    int oSeqno;
-    String oDate;
-
-    String oStatus;
-
-    String mName;
-    String addOrder1;
-    String addOrder2;
-    String request;
-
-    int subTotalPrice;
-
-    public OrderList(int oSeqno, String oDate, int store_sSeqno, String oStatus) { // OrderListActivity
-        this.oSeqno = oSeqno;
-        this.oDate = oDate;
-        this.store_sSeqno = store_sSeqno;
-        this.oStatus = oStatus;
-    }
-
-    public OrderList(int oSeqno, String oDate, String mName, String addOrder1, String addOrder2, String request, String sName, int subTotalPrice) { // OrderDetailActivity
-        this.oSeqno = oSeqno;
-        this.oDate = oDate;
-        this.mName = mName;
-        this.addOrder1 = addOrder1;
-        this.addOrder2 = addOrder2;
-        this.request = request;
-        this.sName = sName;
-        this.subTotalPrice = subTotalPrice;
-    }
-
-    // OrderListActivity
-    public OrderList(int oNo, int store_sSeqno, int cartlist_cLNo, String oInsertDate, String oDeleteDate, int oSum, String oCardName, int oCardNo, int oReview) {
-        this.oNo = oNo;
-        this.store_sSeqno = store_sSeqno;
-        this.cartlist_cLNo = cartlist_cLNo;
-        this.oInsertDate = oInsertDate;
-        this.oDeleteDate = oDeleteDate;
-        this.oSum = oSum;
-        this.oCardName = oCardName;
-        this.oCardNo = oCardNo;
-        this.oReview = oReview;
-    }
-
-
-    // OrderDetailActivity
-    public OrderList(String oInsertDate, String sName, int olSeqNo, int olAddOrder, String olRequest, int olPrice, int olQuantity, String mName) {
-        this.oInsertDate = oInsertDate;
-        this.sName = sName;
+    public OrderList(int store_sSeqNo, String store_sName, String menu_mName, int olSeqNo, int olSizeUp, int olAddShot, String olRequest, int olPrice, int olQuantity) {
+        this.store_sSeqNo = store_sSeqNo;
+        this.store_sName = store_sName;
+        this.menu_mName = menu_mName;
         this.olSeqNo = olSeqNo;
-        this.olAddOrder = olAddOrder;
+        this.olSizeUp = olSizeUp;
+        this.olAddShot = olAddShot;
         this.olRequest = olRequest;
         this.olPrice = olPrice;
         this.olQuantity = olQuantity;
-        this.mName = mName;
     }
 
-    public int getoSeqno() {
-        return oSeqno;
+    public int getStore_sSeqNo() {
+        return store_sSeqNo;
     }
 
-    public void setoSeqno(int oSeqno) {
-        this.oSeqno = oSeqno;
+    public void setStore_sSeqNo(int store_sSeqNo) {
+        this.store_sSeqNo = store_sSeqNo;
     }
 
-    public String getoDate() {
-        return oDate;
+    public String getStore_sName() {
+        return store_sName;
     }
 
-    public void setoDate(String oDate) {
-        this.oDate = oDate;
+    public void setStore_sName(String store_sName) {
+        this.store_sName = store_sName;
     }
 
-    public int getStore_sSeqno() {
-        return store_sSeqno;
+    public String getMenu_mName() {
+        return menu_mName;
     }
 
-    public void setStore_sSeqno(int store_sSeqno) {
-        this.store_sSeqno = store_sSeqno;
-    }
-
-    public String getoStatus() {
-        return oStatus;
-    }
-
-    public void setoStatus(String oStatus) {
-        this.oStatus = oStatus;
-    }
-
-    public String getmName() {
-        return mName;
-    }
-
-    public void setmName(String mName) {
-        this.mName = mName;
-    }
-
-    public String getAddOrder1() {
-        return addOrder1;
-    }
-
-    public void setAddOrder1(String addOrder1) {
-        this.addOrder1 = addOrder1;
-    }
-
-    public String getAddOrder2() {
-        return addOrder2;
-    }
-
-    public void setAddOrder2(String addOrder2) {
-        this.addOrder2 = addOrder2;
-    }
-
-    public String getRequest() {
-        return request;
-    }
-
-    public void setRequest(String request) {
-        this.request = request;
-    }
-
-    public String getsName() {
-        return sName;
-    }
-
-    public void setsName(String sName) {
-        this.sName = sName;
-    }
-
-    public int getSubTotalPrice() {
-        return subTotalPrice;
-    }
-
-    public void setSubTotalPrice(int subTotalPrice) {
-        this.subTotalPrice = subTotalPrice;
-    }
-
-    public int getoNo() {
-        return oNo;
-    }
-
-    public void setoNo(int oNo) {
-        this.oNo = oNo;
-    }
-
-    public int getCartlist_cLNo() {
-        return cartlist_cLNo;
-    }
-
-    public void setCartlist_cLNo(int cartlist_cLNo) {
-        this.cartlist_cLNo = cartlist_cLNo;
-    }
-
-    public String getoInsertDate() {
-        return oInsertDate;
-    }
-
-    public void setoInsertDate(String oInsertDate) {
-        this.oInsertDate = oInsertDate;
-    }
-
-    public String getoDeleteDate() {
-        return oDeleteDate;
-    }
-
-    public void setoDeleteDate(String oDeleteDate) {
-        this.oDeleteDate = oDeleteDate;
-    }
-
-    public int getoSum() {
-        return oSum;
-    }
-
-    public void setoSum(int oSum) {
-        this.oSum = oSum;
-    }
-
-    public String getoCardName() {
-        return oCardName;
-    }
-
-    public void setoCardName(String oCardName) {
-        this.oCardName = oCardName;
-    }
-
-    public int getoCardNo() {
-        return oCardNo;
-    }
-
-    public void setoCardNo(int oCardNo) {
-        this.oCardNo = oCardNo;
-    }
-
-    public int getoReview() {
-        return oReview;
-    }
-
-    public void setoReview(int oReview) {
-        this.oReview = oReview;
+    public void setMenu_mName(String menu_mName) {
+        this.menu_mName = menu_mName;
     }
 
     public int getOlSeqNo() {
@@ -230,12 +58,20 @@ public class OrderList {
         this.olSeqNo = olSeqNo;
     }
 
-    public int getOlAddOrder() {
-        return olAddOrder;
+    public int getOlSizeUp() {
+        return olSizeUp;
     }
 
-    public void setOlAddOrder(int olAddOrder) {
-        this.olAddOrder = olAddOrder;
+    public void setOlSizeUp(int olSizeUp) {
+        this.olSizeUp = olSizeUp;
+    }
+
+    public int getOlAddShot() {
+        return olAddShot;
+    }
+
+    public void setOlAddShot(int olAddShot) {
+        this.olAddShot = olAddShot;
     }
 
     public String getOlRequest() {
@@ -262,3 +98,4 @@ public class OrderList {
         this.olQuantity = olQuantity;
     }
 }
+
