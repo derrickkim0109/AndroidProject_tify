@@ -12,9 +12,13 @@ public class OrderRequest {
     String olRequest;
     int olPrice;
     int olQuantity;
+    String oInsertDate;
+    int oStatus;
 
+    public OrderRequest() {
+    }
 
-    public OrderRequest(int order_oNo, String store_sName, String menu_mName, int olSeqNo, int olSizeUp, int olAddShot, String olRequest, int olPrice, int olQuantity) {
+    public OrderRequest(int order_oNo, String store_sName, String menu_mName, int olSeqNo, int olSizeUp, int olAddShot, String olRequest, int olPrice, int olQuantity, String oInsertDate, int oStatus) {
         this.order_oNo = order_oNo;
         this.store_sName = store_sName;
         this.menu_mName = menu_mName;
@@ -24,7 +28,14 @@ public class OrderRequest {
         this.olRequest = olRequest;
         this.olPrice = olPrice;
         this.olQuantity = olQuantity;
+        this.oInsertDate = oInsertDate;
+        this.oStatus = oStatus;
     }
+
+    public OrderRequest(int order_oNo) {
+        this.order_oNo = order_oNo;
+    }
+
 
     public int getOrder_oNo() {
         return order_oNo;
@@ -97,4 +108,22 @@ public class OrderRequest {
     public void setOlQuantity(int olQuantity) {
         this.olQuantity = olQuantity;
     }
+
+    public int getoStatus() {
+        return oStatus;
+    }
+
+    public void setoStatus(int oStatus) {
+        this.oStatus = oStatus;
+    }
+
+    public String getoInsertDate() {
+        return oInsertDate;
+    }
+
+    public void setoInsertDate(String oInsertDate) {
+        this.oInsertDate = oInsertDate;
+    }
+
+
 }

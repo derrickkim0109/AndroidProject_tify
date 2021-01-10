@@ -16,7 +16,7 @@
         android:id="@+id/dialog_cancel_Btn_Soldout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="재고소진"
+        android:text="재료부족"
         android:textColor="@color/black"
         android:backgroundTint="@color/white"
         />

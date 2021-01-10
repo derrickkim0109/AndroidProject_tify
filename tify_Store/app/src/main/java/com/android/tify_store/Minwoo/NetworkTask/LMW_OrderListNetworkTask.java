@@ -166,10 +166,13 @@ public class LMW_OrderListNetworkTask extends AsyncTask<Integer, String, Object>
                 String olRequest = jsonObject1.getString("olRequest");
                 int olPrice = jsonObject1.getInt("olPrice");
                 int olQuantity = jsonObject1.getInt("olQuantity");
+                String oInsertDate = jsonObject1.getString("oInsertDate");
+                int oStatus = jsonObject1.getInt("oStatus");
+
 
                 Log.v(TAG, "olSeqNo : " + olSeqNo);
 
-                OrderRequest orderList = new OrderRequest(order_oNo, store_sName, menu_mName, olSeqNo, olSizeUp, olAddShot, olRequest, olPrice, olQuantity);
+                OrderRequest orderList = new OrderRequest(order_oNo, store_sName, menu_mName, olSeqNo, olSizeUp, olAddShot, olRequest, olPrice, olQuantity, oInsertDate, oStatus);
                 orderLists.add(orderList);
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");

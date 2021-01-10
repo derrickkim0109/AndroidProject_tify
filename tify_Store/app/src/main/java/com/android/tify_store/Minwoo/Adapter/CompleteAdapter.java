@@ -1,6 +1,7 @@
 package com.android.tify_store.Minwoo.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.android.tify_store.Minwoo.Bean.Complete;
 import com.android.tify_store.Minwoo.Bean.OrderRequest;
 import com.android.tify_store.Minwoo.Fragment.CompleteFragment;
 import com.android.tify_store.Minwoo.Fragment.OrderRequestFragment;
+import com.android.tify_store.Minwoo.Fragment.ProgressingFragment;
 import com.android.tify_store.R;
 
 import java.text.NumberFormat;
@@ -29,15 +31,20 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
     Context context;
     Fragment fragment;
 
+    String macIP;
+    String urlAddr = null;
+    String where = null;
+    int skSeqNo = 0;
+
     //인터페이스 선언
     public interface OnItemClickListener{
         void onItemClick(View v, int position);
 
     }
-    private OrderRequestAdapter.OnItemClickListener mListener = null;
+    private CompleteAdapter.OnItemClickListener mListener = null;
 
     //메인에서 사용할 클릭메서드 선언
-    public void setOnItemClickListener(OrderRequestAdapter.OnItemClickListener listener){
+    public void setOnItemClickListener(CompleteAdapter.OnItemClickListener listener){
         this.mListener = listener;
         Log.v(TAG, "setOnItemClickListener");
     }
@@ -54,6 +61,7 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
         public TextView oDate;
         public TextView oSeqno;
         public TextView subTotalPrice;
+        public TextView oStatus;
 
         MyViewHolder(View v) {
             super(v);
@@ -66,7 +74,7 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
             addOrder2 = v.findViewById(R.id.fragment_Complete_CV_AddOrder2);
             request = v.findViewById(R.id.fragment_Complete_CV_Request);
             subTotalPrice = v.findViewById(R.id.fragment_Complete_CV_SubTotalPrice);
-
+            oStatus = v.findViewById(R.id.fragment_Complete_TV_oStatus);
             // 뷰홀더에서만 리스트 포지션값을 불러올 수 있음.
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,9 +95,12 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
     }
 
 
-    public CompleteAdapter(ArrayList<OrderRequest> mDataset, CompleteFragment fragment) {
-        this.mDataset = mDataset;
-        this.fragment = fragment;
+    // 메인 액티비티에서 받은 myDataset을 가져오
+    public CompleteAdapter(CompleteFragment MenuFragment, int member, ArrayList<OrderRequest> myDataset, String macIP, int skSeqNo) {
+        this.mDataset = myDataset;
+        this.fragment = MenuFragment;
+        this.macIP = macIP;
+        this.skSeqNo = skSeqNo;
     }
 
     @NonNull
@@ -109,7 +120,7 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
         Log.v(TAG, "onBindViewHolder");
 
         holder.oSeqno.setText("주문번호 : " + mDataset.get(position).getOrder_oNo());
-        holder.oDate.setText("2021-01-10 13:13"); // 고객이 요청할 때 보내주는 입력 시간으로 받기
+        holder.oDate.setText(mDataset.get(position).getoInsertDate());
         holder.sName.setText(mDataset.get(position).getStore_sName());
         holder.mName.setText(mDataset.get(position).getMenu_mName());
 
@@ -124,6 +135,16 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
         if(mDataset.get(position).getOlRequest() != null){
             holder.request.setVisibility(View.VISIBLE);
             holder.request.setText(mDataset.get(position).getOlRequest());
+        }
+
+        if(mDataset.get(position).getoStatus() == 3){
+            holder.oStatus.setVisibility(View.VISIBLE);
+            holder.oStatus.setText("픽업완료된 주문");
+            holder.oStatus.setTextColor(Color.parseColor("#009688"));
+        }else{
+            holder.oStatus.setVisibility(View.VISIBLE);
+            holder.oStatus.setText("취소된 주문");
+            holder.oStatus.setTextColor(Color.parseColor("#870146"));
         }
 
         NumberFormat moneyFormat = null;

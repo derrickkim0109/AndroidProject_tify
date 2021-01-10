@@ -89,6 +89,8 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
                 //
                 ///////////////////////////////////////////////////////////////////////////////////////
                 if(where.equals("select")){
+                    parserOrder_Select(stringBuffer.toString());
+                }else if(where.equals("oNo")) {
                     parserOrdermNo_Select(stringBuffer.toString());
                 }else{
                     result = parserAction(stringBuffer.toString());
@@ -116,7 +118,7 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
         //  - 입력, 수정, 삭제로 들어온 Task는 result를 return
         //
         ///////////////////////////////////////////////////////////////////////////////////////
-        if(where.equals("select")){
+        if(where.equals("select") || where.equals("oNo")){
             return orders;
         }else{
             return result;
@@ -139,8 +141,8 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
         super.onCancelled();
     }
 
-    private void parserOrdermNo_Select(String s) { // BeforePayActivity
-        Log.v(TAG, "parserOrdermNo_Select()");
+    private void parserOrder_Select(String s) { // BeforePayActivity
+        Log.v(TAG, "parserOrder_Select()");
         try {
             JSONObject jsonObject = new JSONObject(s);
             JSONArray jsonArray = new JSONArray(jsonObject.getString("order"));
@@ -164,6 +166,30 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
                 Log.v(TAG, "oStatus : " + oStatus);
 
                 Order order = new Order(user_uNo, oNo, store_sSeqNo, store_sName, oInsertDate, oDeleteDate, oSum, oCardName, oCardNo, oReview, oStatus);
+                orders.add(order);
+                // Log.v(TAG, member.toString());
+                Log.v(TAG, "----------------------------------");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void parserOrdermNo_Select(String s) { // BeforePayActivity
+        Log.v(TAG, "parserOrdermNo_Select()");
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("order"));
+            orders.clear();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                int max = jsonObject1.getInt("max");
+
+                Log.v(TAG, "oStatus : " + max);
+
+                Order order = new Order(max);
                 orders.add(order);
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");
