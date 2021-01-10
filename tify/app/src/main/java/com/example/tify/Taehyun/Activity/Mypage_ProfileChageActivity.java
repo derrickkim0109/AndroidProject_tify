@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,7 +68,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
 
     //XML for findID
     EditText nickname, telNo = null;
-    Button btn_update = null;
+    ImageView btn_update = null;
 
     Intent intent = null;
     String snickname = null, stelNo =null;
@@ -213,6 +214,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
         //회원탈퇴
         profile_withdraw = findViewById(R.id.profile_withdraw);
         profile_withdraw.setOnClickListener(tClickListener);
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

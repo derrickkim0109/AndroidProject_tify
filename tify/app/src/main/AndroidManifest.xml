@@ -22,6 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
         <!-- 태현 -->
+        <activity android:name=".Taehyun.Activity.CardRG2Activity"></activity>
         <activity android:name=".Taehyun.Activity.MypageActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />
@@ -30,8 +31,7 @@
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
         <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />
-        <activity android:name=".Jiseok.Activity.JiseokMainActivity"/>
-        <!-- 지석 -->
+        <activity android:name=".Jiseok.Activity.JiseokMainActivity" /> <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.BeforePayActivity2" />
         <activity android:name=".Minwoo.Activity.EmptyCartActivity" />
@@ -45,12 +45,11 @@
         <!-- 현아 -->
         <activity android:name=".Hyeona.Activity.LoginActivity" />
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- <activity android:name=".Hyeona.Activity.IntroActivity" /> -->
-
         <activity android:name=".MainActivity" />
         <activity android:name=".Hyeona.Activity.reviewActivity" />
-
         <activity android:name=".Hyeona.Activity.IntroActivity">
-<!--           <activity android:name=".Hyeona.Activity.test">-->
+
+            <!-- <activity android:name=".Hyeona.Activity.test"> -->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
