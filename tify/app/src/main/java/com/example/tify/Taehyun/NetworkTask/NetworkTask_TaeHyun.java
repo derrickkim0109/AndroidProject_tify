@@ -5,7 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.tify.Hyeona.Bean.Bean_userinfo;
+
+import com.example.tify.Hyeona.Bean.Bean_review_userinfo;
 import com.example.tify.Taehyun.Bean.Bean_MypageList;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
 
@@ -40,6 +41,7 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
         this.context = context;
         this.mAddr = mAddr;
         this.userinfo = new Bean_Mypage_userinfo();
+
         this.where = where;
         Log.v(TAG, "Start : " + mAddr);
     }
@@ -184,7 +186,10 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                 Log.v("ddddddd","uNo : "+uImage);
                 Log.v("ddddddd","uNo : "+uPayPassword);
                 Log.v("ddddddd",where);
+
+
                 userinfo = new Bean_Mypage_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
+
 
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");

@@ -1,14 +1,11 @@
 package com.example.tify.Hyeona.NetworkTask;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.tify.Hyeona.Adapter.review_adapter;
-import com.example.tify.Hyeona.Bean.Bean_review;
-import com.example.tify.Hyeona.Bean.Bean_userinfo;
-import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
+import com.example.tify.Hyeona.Bean.Bean_review_userinfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +15,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> {
 
@@ -29,13 +25,13 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
     String mAddr = null;
     ProgressDialog progressDialog = null;
     String where = null;
-    Bean_userinfo bean_userinfo = null;
+    Bean_review_userinfo bean_review_userinfo = null;
 
     public CUDNetworkTask_userinfo(review_adapter context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
         this.where = where;
-        this.bean_userinfo = new Bean_userinfo();
+        this.bean_review_userinfo = new Bean_review_userinfo();
 
         Log.v(TAG,"Start : " + mAddr);
     }
@@ -98,9 +94,9 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
         }
 
         if(where.equals("select")){
-            return bean_userinfo;
+            return bean_review_userinfo;
         }else{
-            return null;
+            return result;
         }
     }
 
@@ -161,7 +157,7 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
                 String uPayPassword = jsonObject1.getString("uPayPassword");
                 Log.v("dad","d"+uPayPassword);
 
-                bean_userinfo = new Bean_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
+                bean_review_userinfo = new Bean_review_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
 
             }
 

@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="PW를 입력하세요"
-        android:inputType="numberPassword"
+        android:inputType="textPassword"
         android:gravity="center"
         />
     <TextView
@@ -31,6 +31,8 @@
         android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/black"
         android:text="Login"
         />
 

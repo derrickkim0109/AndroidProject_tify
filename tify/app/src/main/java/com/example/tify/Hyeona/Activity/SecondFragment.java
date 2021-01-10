@@ -43,12 +43,12 @@ public class SecondFragment extends Fragment {
         View view = null;
         view = inflater.inflate(R.layout.cha_fragment_second,container,false);
         TextView tv02 = view.findViewById(R.id.tv_02);
-        tv02.setText("\n사진등록으로\n빠른 친구구분");
+        tv02.setText("\n주변에 있는\n개인카페와 함께");
 
         TextView tv02_01 = view.findViewById(R.id.tv_02_01);
-        tv02_01.setText("주소록 등록시 사진 업로드로 리스트에서\n친구를 사진으로 구별 할 수 있습니다.");
+        tv02_01.setText("티피에서는 당신의 주변에 있는\n이웃 개인카페만 만나보실 수 있습니다.\n*프렌차이즈는 입점할 수 없습니다.");
 
-        ImageView iv_02 = view.findViewById(R.id.iv_02);
+       // ImageView iv_02 = view.findViewById(R.id.iv_02);
        //iv_02.setImageResource(R.drawable.intro_02);
 
         return view;

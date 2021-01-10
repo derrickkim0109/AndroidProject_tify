@@ -20,7 +20,7 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-		String A = "delete from cartlist where user_uSeqNo = " + user_uSeqNo + " and store_sSeqNo = " + store_sSeqNo;
+		String A = "delete from cartlist where user_uSeqNo = " + user_uSeqNo + " and storekeeper_skSeqNo = " + store_sSeqNo;
 
 
 	    ps = conn_mysql.prepareStatement(A);

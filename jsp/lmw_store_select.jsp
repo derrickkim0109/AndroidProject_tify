@@ -4,13 +4,13 @@
 
 <%
     request.setCharacterEncoding("utf-8");
-    int sSeqNo = Integer.parseInt(request.getParameter("sSeqNo"));
+    int storekeeper_skSeqNo = Integer.parseInt(request.getParameter("storekeeper_skSeqNo"));
 	
 //-----
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "select sName from store where sSeqNo = " + sSeqNo;
+    String WhereDefault = "select * from store where storekeeper_skSeqNo = " + storekeeper_skSeqNo;
     int count = 0;
     
     try {
@@ -34,7 +34,14 @@
 %>            
 			{
 			
-            "sName" : "<%=rs.getString(1) %>"
+            "sName" : "<%=rs.getString(2) %>",
+            "sTelNo" : "<%=rs.getString(3) %>",
+            "sRunningTime" : "<%=rs.getString(4) %>",
+            "sAddress" : "<%=rs.getString(5) %>",
+            "sImage" : "<%=rs.getString(6) %>",
+            "sPackaging" : "<%=rs.getInt(7) %>",
+            "sComment" : "<%=rs.getString(8) %>"
+
             
 			}
 

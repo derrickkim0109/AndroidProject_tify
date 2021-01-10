@@ -86,10 +86,12 @@ public class CartActivity extends AppCompatActivity {
         tv_sName.setText(sName);
         tv_totalPrice.setText(strTotal + "원");
 
-
         orders = OrderConnectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
-        oNo = orders.get(0).getoNo() + 1;
-        Log.v(TAG, "마지막 oNo + 1: " + oNo);
+        if (orders.size() != 0) {
+            oNo = orders.get(0).getoNo() + 1;
+            Log.v(TAG, "마지막 oNo + 1: " + oNo);
+        }
+
 
         // NetworkTask 세팅
 

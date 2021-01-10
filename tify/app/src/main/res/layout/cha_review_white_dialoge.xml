@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:scrollbars="vertical"
+    android:id="@+id/detail_ll_hide"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:id="@+id/review_cancel"
+        android:src="@drawable/ic_action_close">
+    </ImageView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="리뷰작성">
+    </TextView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="10dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="70dp"
+        android:layout_gravity="center"
+        android:paddingLeft="30dp">
+
+        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+            android:id="@+id/review_store_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:maxWidth="60dp"
+            android:maxHeight="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person"
+            app:c_border="true"
+            app:c_border_color="@color/colorGray1"
+            app:c_border_width="1dp" />
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:id="@+id/review_store_name"
+        android:paddingTop="10dp"
+        android:textSize="20dp"
+        android:text="슈퍼커피 신논현">
+    </TextView>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/review_add_image"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/null_image">
+    </ImageView>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:hint="리뷰를 작성해주세요.(100자 이내)"
+        android:scrollbars="vertical"
+        android:id="@+id/review_content"
+        android:layout_height="100dp">
+    </EditText>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_shape"
+        android:text="작성완료"
+        android:id="@+id/review_white_complete"
+
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/mainColor">
+
+    </Button>
+
+
+
+</LinearLayout>

@@ -36,20 +36,23 @@ public class FirstFragment extends Fragment {
         title = getArguments().getString("title");
         page =getArguments().getInt("page");
 
+
+
         }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 
+
         View view = null;
         view = inflater.inflate(R.layout.cha_fragment_first,container,false);
         TextView tv01 = view.findViewById(R.id.tv_01);
-        tv01.setText("\n태그설정으로\n편리한 그룹관리");
+        tv01.setText("\n비대면시대\n편리한 스마트오더");
 
         TextView tv01_01 = view.findViewById(R.id.tv_01_01);
-        tv01_01.setText("중복 설정 가능한 태그로\n검색을 빠르게 할 수 있습니다.");
+        tv01_01.setText("직접적인 신체적 접촉을 피하고\n생활에 필수적인 커피는\n스마트오더로 바로픽업!");
 
-        ImageView iv_01 = view.findViewById(R.id.iv_01);
+        //ImageView iv_01 = view.findViewById(R.id.iv_01);
         //iv_01.setImageResource(R.drawable.intro_01);
      return view;
     }
