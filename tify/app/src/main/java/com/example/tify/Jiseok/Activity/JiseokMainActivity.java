@@ -13,22 +13,14 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 
-import android.util.Log;
-
-import androidx.appcompat.app.AlertDialog;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.tify.Hyeona.Adapter.review_adapter;
-import com.example.tify.Hyeona.Bean.Bean_review_review;
 import com.example.tify.Minwoo.Activity.OrderListActivity;
 import com.example.tify.R;
 import com.example.tify.Taehyun.Activity.MypageActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
 
 public class JiseokMainActivity extends AppCompatActivity {
     LinearLayout ll_hide;

@@ -30,6 +30,12 @@
             android:theme="@style/NoActionBar"
             ></activity>
 
+
+
+        <!-- 태현 -->
+        <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity"></activity>
+
+        <!-- 태현 -->
         <!-- 태현 -->
         <activity android:name=".Taehyun.Activity.MypageActivity"
             />
@@ -39,7 +45,9 @@
         <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity" /> <!-- 태현 -->
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
-        <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" /> <!-- 지석 -->
+        <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />
+        <activity android:name=".Jiseok.Activity.JiseokMainActivity"/>
+        <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.BeforePayActivity2" />
         <activity android:name=".Minwoo.Activity.EmptyCartActivity" />
@@ -51,12 +59,14 @@
         <activity android:name=".Minwoo.Activity.OrderSummaryActivity" />
         <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
 
+
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- 현아 -->
         <activity android:name=".Hyeona.Activity.LoginActivity" />
-        <activity android:name=".MainActivity" /> <!-- <activity android:name=".Hyeona.Activity.review_white"/> -->
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Hyeona.Activity.test" />
 
-        <activity android:name=".Jiseok.Activity.JiseokMainActivity"/>
-        <activity android:name=".Hyeona.Activity.reviewActivity" /> <!-- <activity android:name=".Hyeona.Activity.IntroActivity"> -->
+
+        <activity android:name=".Hyeona.Activity.reviewActivity" />
         <activity android:name=".Hyeona.Activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
