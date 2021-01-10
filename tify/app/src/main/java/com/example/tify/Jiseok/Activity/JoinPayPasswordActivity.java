@@ -1,6 +1,7 @@
 package com.example.tify.Jiseok.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +25,8 @@ import java.util.Random;
 
 public class JoinPayPasswordActivity extends AppCompatActivity {
     String TAG = "여기, JoinPayPasswordActivity";
+    Context context = this;
+
     Button btnRearrangement;
     ImageButton btnDelete;
     Button [] btn = new Button[10];
@@ -99,6 +103,34 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                new AlertDialog.Builder(JoinPayPasswordActivity.this)
+                        .setTitle("잘못된 접근입니다.")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.v("컨컨",""+context);
+                                startActivityForResult(new Intent(JoinPayPasswordActivity.this,JiseokMainActivity.class),1);
+                            }
+                        })
+                        .show();
+                break;
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+
+
+
     View.OnClickListener numClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -144,7 +176,6 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
             }
 
             resultToStar();
-            Log.v(TAG,"result : " + result+", pass : " + userpw);
 
             switch (result.length()){
                 case 7:
@@ -171,7 +202,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 Intent intent = new Intent(JoinPayPasswordActivity.this,JiseokMainActivity.class);
-                                                startActivity(intent);
+                                                startActivityForResult(intent,1);
                                             }
                                         })
                                         .show();
