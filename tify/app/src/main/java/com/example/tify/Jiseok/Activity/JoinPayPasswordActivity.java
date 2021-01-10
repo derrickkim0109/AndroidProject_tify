@@ -1,9 +1,11 @@
 package com.example.tify.Jiseok.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -198,6 +200,11 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
                                 //디비에 회원정보 저장
                                 insertUserInfo();
+                                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor autoLogin = auto.edit();
+                                autoLogin.putString("userEmail", userEmail);
+                                autoLogin.putString("userSeq", "0");
+                                autoLogin.commit();
 
                                 new AlertDialog.Builder(JoinPayPasswordActivity.this)
                                         .setTitle("회원가입이 완료되었습니다.")
@@ -316,5 +323,6 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinPayPasswordActivity.this,urlAddr,"insertUserInfo");
 
     }
+
 
 }

@@ -29,6 +29,7 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
 
     int userTelCount = 0;
     int userEmailCount=0;
+    int uNo=0;
 
 
     public CJS_NetworkTask(Context context, String mAddr, String where) {
@@ -82,6 +83,9 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
                     case "userEmailCount":
                         userEmailCount(stringBuffer.toString());
                         break;
+                    case "uNoSelect":
+                        uNoSelect(stringBuffer.toString());
+                        break;
                 }
 
             }
@@ -98,11 +102,14 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
             }
         }
 
+        Log.v("where",where);
         switch (where){
             case "userTelCount":
                 return userTelCount;
             case "userEmailCount":
                 return userEmailCount;
+            case "uNoSelect":
+                return uNo;
         }
 
 
@@ -161,6 +168,24 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
                 int storekeeper_skSeqNo = jsonObject1.getInt("EmailCount");
 
                 userEmailCount = storekeeper_skSeqNo;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void uNoSelect(String s){
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
+
+            for (int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                int storekeeper_skSeqNo = jsonObject1.getInt("uNo");
+
+                uNo = storekeeper_skSeqNo;
+                Log.v("왜안떠",""+uNo);
             }
 
         }catch (Exception e){
