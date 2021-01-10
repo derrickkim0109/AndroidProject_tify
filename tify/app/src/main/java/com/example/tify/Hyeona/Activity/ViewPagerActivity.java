@@ -21,6 +21,7 @@ public class ViewPagerActivity extends AppCompatActivity {
 
     private FragmentPagerAdapter fragmentPagerAdapter;
     private ViewPager vp;
+   // private CircleIndicator indicator;
     private CircleIndicator indicator;
 
     @Override

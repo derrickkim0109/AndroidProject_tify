@@ -275,6 +275,9 @@ public class JoinActivity extends AppCompatActivity {
             switch (v.getId()){
                 // 2번프레임 프로필플러스 버튼
                 case R.id.join_img_profilePlus:
+                    ///////////////////////////////////////////////
+                    //  이미지                                  ///
+                    //////////////////////////////////////////////
 
                     break;
                     // 2번프레임 계속하기버튼
@@ -339,6 +342,8 @@ public class JoinActivity extends AppCompatActivity {
         processCommand(intent);
     }
 
+
+    //인증번호 받아서 띄움
     private void processCommand(Intent intent){
         if(intent != null){
             String sender = intent.getStringExtra("sender");
@@ -346,6 +351,7 @@ public class JoinActivity extends AppCompatActivity {
             String content = intent.getStringExtra("contents");
             Log.v("번호확인",content.substring(0,3));
             etAuthentication.setText(content.substring(6,14));
+            etAuthentication.requestFocus();
 
         }
     }

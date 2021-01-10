@@ -95,16 +95,13 @@
             android:text="010-3213-1324"
             />
 
-            <Button
+            <ImageView
+                android:src="@drawable/success"
                 android:id="@+id/profile_btn_update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/btn_mypage"
-                android:text="변경하기"
-                android:textColor="@color/colorGray1"
-                app:backgroundTint="#514444"
-                app:iconTint="#FFFFFF" />
+                />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/profile_payPasswordCG"
