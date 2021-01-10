@@ -1,12 +1,11 @@
-package com.example.tify.Minwoo.NetworkTask;
+package com.android.tify_store.Minwoo.NetworkTask;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.tify.Minwoo.Bean.Order;
-import com.example.tify.Minwoo.Bean.OrderList;
+import com.android.tify_store.Minwoo.Bean.OrderRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,22 +18,23 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
-    final static String TAG = "LMW_OrderNetworkTask";
+    String TAG = "LMW_OrderNetworkTask";
     Context context = null;
     String mAddr = null;
     ProgressDialog progressDialog = null;
-    ArrayList<Order> orders;
+    ArrayList<OrderRequest> orderLists;
 
     String where = null;
-
 
     public LMW_OrderNetworkTask(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
-        this.orders = new ArrayList<Order>();
+        this.orderLists = new ArrayList<OrderRequest>();
         this.where = where;
         Log.v(TAG, "Start : " + mAddr);
+
     }
+
 
     @Override
     protected void onPreExecute() {
@@ -49,6 +49,7 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
 
     @Override
     protected Object doInBackground(Integer... integers) {
+
         Log.v(TAG, "doInBackground()");
 
         StringBuffer stringBuffer = new StringBuffer();
@@ -89,9 +90,7 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
                 //
                 ///////////////////////////////////////////////////////////////////////////////////////
                 if(where.equals("select")){
-                    parserOrder_Select(stringBuffer.toString());
-                }else if(where.equals("oNo")) {
-                    parserOrdermNo_Select(stringBuffer.toString());
+                    parserSelect(stringBuffer.toString());
                 }else{
                     result = parserAction(stringBuffer.toString());
                 }
@@ -118,8 +117,8 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
         //  - 입력, 수정, 삭제로 들어온 Task는 result를 return
         //
         ///////////////////////////////////////////////////////////////////////////////////////
-        if(where.equals("select") || where.equals("oNo")){
-            return orders;
+        if(where.equals("select")){
+            return orderLists;
         }else{
             return result;
         }
@@ -141,63 +140,35 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
         super.onCancelled();
     }
 
-    private void parserOrder_Select(String s) { // BeforePayActivity
-        Log.v(TAG, "parserOrder_Select()");
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Date : 2020.12.25
+    //
+    // Description:
+    //  - 검색후 json parsing
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+    private void parserSelect(String s){
+        Log.v(TAG,"Parser()");
+
         try {
             JSONObject jsonObject = new JSONObject(s);
             JSONArray jsonArray = new JSONArray(jsonObject.getString("order"));
-            orders.clear();
+            orderLists.clear();
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-                int user_uNo = jsonObject1.getInt("user_uNo");
                 int oNo = jsonObject1.getInt("oNo");
-                int store_sSeqNo = jsonObject1.getInt("store_sSeqNo");
-                String store_sName = jsonObject1.getString("store_sName");
-                String oInsertDate = jsonObject1.getString("oInsertDate");
-                String oDeleteDate = jsonObject1.getString("oDeleteDate");
-                int oSum = jsonObject1.getInt("oSum");
-                String oCardName = jsonObject1.getString("oCardName");
-                int oCardNo = jsonObject1.getInt("oCardNo");
-                int oReview = jsonObject1.getInt("oReview");
-                int oStatus = jsonObject1.getInt("oStatus");
 
-                Log.v(TAG, "oReview : " + oReview);
-                Log.v(TAG, "oStatus : " + oStatus);
+                Log.v(TAG, "oNo : " + oNo);
 
-                Order order = new Order(user_uNo, oNo, store_sSeqNo, store_sName, oInsertDate, oDeleteDate, oSum, oCardName, oCardNo, oReview, oStatus);
-                orders.add(order);
+                OrderRequest orderList = new OrderRequest(oNo);
+                orderLists.add(orderList);
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");
             }
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
-
-    }
-
-    private void parserOrdermNo_Select(String s) { // BeforePayActivity
-        Log.v(TAG, "parserOrdermNo_Select()");
-        try {
-            JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonArray = new JSONArray(jsonObject.getString("order"));
-            orders.clear();
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-                int max = jsonObject1.getInt("max");
-
-                Log.v(TAG, "oStatus : " + max);
-
-                Order order = new Order(max);
-                orders.add(order);
-                // Log.v(TAG, member.toString());
-                Log.v(TAG, "----------------------------------");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
     ///////////////////////////////////////////////////////////////////////////////////////
 

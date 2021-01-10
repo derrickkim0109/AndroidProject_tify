@@ -8,16 +8,34 @@
     android:gravity="center"
     tools:context=".Minwoo.Activity.LoginActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tify For Store"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:paddingBottom="20dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
     <EditText
         android:id="@+id/ip"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="ID를 입력하세요"
         android:gravity="center"
         />
     <EditText
         android:id="@+id/pw"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="PW를 입력하세요"
         android:inputType="textPassword"
@@ -35,5 +53,6 @@
         android:backgroundTint="@color/black"
         android:text="Login"
         />
+    </LinearLayout>
 
 </LinearLayout>

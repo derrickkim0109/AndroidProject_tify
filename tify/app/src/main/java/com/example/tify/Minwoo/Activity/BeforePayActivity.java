@@ -96,17 +96,6 @@ public class BeforePayActivity extends AppCompatActivity {
 
         }
 
-        where = "select";
-        urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
-        list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
-        if (list.size() == 0){
-            oNo = 1;
-        }else{
-            oNo = list.get(0).getoNo() + 1;
-        }
-
-        Log.v(TAG, "마지막 oNo : " + oNo);
-
         // 콤마 찍어서 원화로 바꿔줌!
         NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
         strTotal = moneyFormat.format(totalPrice);
@@ -171,6 +160,19 @@ public class BeforePayActivity extends AppCompatActivity {
                     urlAddr = "http://" + macIP + ":8080/tify/lmw_order_insert.jsp?user_uNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&oSum=" + totalPrice + "&oCardName=" + cardName + "&oCardNo=" + cardNum + "&oReview=" + 0 + "&oStatus=" + 0;
 
                     connectInsertData(); // order Insert
+
+
+
+                    where = "oNo";
+                    urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
+                    list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
+                    if (list.size() == 0){
+                        oNo = 1;
+                    }else{
+                        oNo = list.get(0).getMax();
+                    }
+                    Log.v(TAG, "마지막 oNo : " + oNo);
+
 
 //                    // oNo Select
 //                    where = "select";

@@ -4,13 +4,18 @@
 
 <%
     request.setCharacterEncoding("utf-8");
-    int user_uNo = Integer.parseInt(request.getParameter("user_uNo"));
 
+    int skSeqNo = Integer.parseInt(request.getParameter("skSeqNo"));
+
+
+    // oStatus 조회
+
+	
 //-----
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "select max(oNo) as max from tify.order where user_uNo = " + user_uNo;
+    String WhereDefault = "select oNo from tify.order where oStatus = 0 and storekeeper_skSeqNo = " + skSeqNo;
     int count = 0;
     
     try {
@@ -33,10 +38,7 @@
             }
 %>            
 			{
-			"max" : "<%=rs.getInt(1) %>"
-            
-     
-          
+			"oNo" : "<%=rs.getInt(1) %>"            
 			}
 
 <%		

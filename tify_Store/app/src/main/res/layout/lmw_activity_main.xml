@@ -22,9 +22,10 @@
         android:background="@android:color/background_light"
         app:tabMode="fixed"
         app:tabGravity="fill"
-        app:tabTextColor="#83171515"
+        app:tabTextColor="#32000000"
+        app:tabBackground="@color/white"
         app:tabSelectedTextColor="@color/black"
-        app:tabRippleColor="#1A0053"/>
+        app:tabRippleColor="@color/black"/>
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
