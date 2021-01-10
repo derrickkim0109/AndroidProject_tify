@@ -56,9 +56,6 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Hyeona.Activity.test" />
 
-        <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- 현아 -->
-        <activity android:name=".Hyeona.Activity.LoginActivity" />
-        <activity android:name=".MainActivity" /> 
 
         <activity android:name=".Hyeona.Activity.reviewActivity" />
         <activity android:name=".Hyeona.Activity.IntroActivity">
