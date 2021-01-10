@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/join_ly_Layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -250,12 +251,26 @@
                     android:layout_height="wrap_content"
 
                     >
-                <ImageView
-                    android:id="@+id/join_img_profile"
-                    android:layout_width="140dp"
-                    android:layout_height="match_parent"
-                    android:src="@raw/profile"
-                    />
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:cardCornerRadius="80dp"
+                        android:paddingLeft="35dp">
+
+                        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+                            android:id="@+id/join_img_profile"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerHorizontal="true"
+                            android:maxWidth="80dp"
+                            android:maxHeight="80dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_person"
+                            app:c_border="true"
+                            app:c_border_color="@color/colorGray1"
+                            app:c_border_width="1dp" />
+                    </androidx.cardview.widget.CardView>
+
 
                     <ImageView
                         android:id="@+id/join_img_profilePlus"
