@@ -75,7 +75,7 @@ public class review_white extends AppCompatActivity {
 
     String devicePath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.android.tify/"; //// 외부쓰레드 에서 메인 UI화면을 그릴때 사용 인데 뭔지모르겟음
 
-    //카메라, 갤러리
+    //갤러리
     private final int REQ_CODE_SELECT_IMAGE = 300; // Gallery Return Code
 
     @Override

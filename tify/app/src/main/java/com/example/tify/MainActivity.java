@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         ImageView backgroundImageView = findViewById(R.id.gifTest);
-        Glide.with(this).load(R.raw.gps_setting).into(backgroundImageView);
+       // Glide.with(this).load(R.drawable.gps_setting).into(backgroundImageView);
         //gif를 사용하기위함
 
         //////////////////////////////////////////////////////////////////////////////////
