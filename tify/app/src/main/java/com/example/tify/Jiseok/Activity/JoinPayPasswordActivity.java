@@ -1,11 +1,10 @@
 package com.example.tify.Jiseok.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,15 +13,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.R;
+import com.example.tify.Taehyun.NetworkTask.ImageNetworkTask_TaeHyun;
 
+import java.io.File;
 import java.util.Random;
 
 public class JoinPayPasswordActivity extends AppCompatActivity {
     String TAG = "여기, JoinPayPasswordActivity";
+    Context context ;
+    String MacIP="192.168.219.100";
+
     Button btnRearrangement;
     ImageButton btnDelete;
     Button [] btn = new Button[10];
@@ -42,7 +48,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
     String userTel;
     String userEmail;
-    String userprofile;
+    String userProfile;
     String userNickName;
 
     @Override
@@ -54,9 +60,12 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         userTel = intent.getStringExtra("userTel");
         userEmail = intent.getStringExtra("userEmail");
         userNickName = intent.getStringExtra("userNickName");
+        userProfile = intent.getStringExtra("userProfile");
+
         Log.v(TAG,"userTel : "+userTel);
         Log.v(TAG,"userEmail : "+userEmail);
         Log.v(TAG,"userNickName : "+userNickName);
+        Log.v(TAG,"userProfile : "+userProfile);
 
 
         btn[0]=findViewById(R.id.join_pay_btn0);
@@ -90,14 +99,36 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         }
         btnRearrangement.setOnClickListener(numClickListener);
         btnDelete.setOnClickListener(deleteClickListener);
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                new AlertDialog.Builder(JoinPayPasswordActivity.this)
+                        .setTitle("잘못된 접근입니다.")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivityForResult(new Intent(JoinPayPasswordActivity.this,JiseokMainActivity.class),1);
+                            }
+                        })
+                        .show();
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 
     View.OnClickListener numClickListener = new View.OnClickListener() {
         @Override
@@ -144,7 +175,6 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
             }
 
             resultToStar();
-            Log.v(TAG,"result : " + result+", pass : " + userpw);
 
             switch (result.length()){
                 case 7:
@@ -165,13 +195,17 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                             // 확인비밀번호가 일치할때
                             if(payPassword1.equals(payPassword2)){
                                 Toast.makeText(JoinPayPasswordActivity.this,"yes",Toast.LENGTH_SHORT).show();
+
+                                //디비에 회원정보 저장
+                                insertUserInfo();
+
                                 new AlertDialog.Builder(JoinPayPasswordActivity.this)
                                         .setTitle("회원가입이 완료되었습니다.")
                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 Intent intent = new Intent(JoinPayPasswordActivity.this,JiseokMainActivity.class);
-                                                startActivity(intent);
+                                                startActivityForResult(intent,1);
                                             }
                                         })
                                         .show();
@@ -275,4 +309,12 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
             btn[i].setText(btnNum[i]);
         }
     }
+
+    private void insertUserInfo(){
+        String urlAddr = "http://" + MacIP + ":8080/tify/insertUserInfo.jsp?uEmail="+userEmail+"&uNickName="+userNickName+"&uTelNo="+userTel+"&uImage="+userProfile+"&uPayPassword="+payPassword2;
+        Log.v("여기","insertUserInfo : "+urlAddr);
+        CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinPayPasswordActivity.this,urlAddr,"insertUserInfo");
+
+    }
+
 }

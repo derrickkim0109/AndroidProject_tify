@@ -1,18 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Jiseok.Activity.JiseokMainActivity"
     android:orientation="vertical"
-    >
+    android:layout_height="match_parent"
+    tools:context=".Jiseok.Activity.JiseokMainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:id="@+id/detail_ll_hide"
+        android:layout_marginEnd="30dp"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="100dp"
+            android:src="@drawable/gps_setting"
+            android:id="@+id/gps_setting"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+        </ImageView>
+        <LinearLayout
+            android:id="@+id/main_Linear_outer"
+            android:layout_width="match_parent"
+            android:background="@drawable/border"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+                <AutoCompleteTextView
+                    android:id="@+id/main_Edit_SearchText"
+                    android:layout_width="200dp"
+                    android:layout_weight="2"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:hint="서울시 서초구에 계신가요?"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:background="@null"
+                    android:textColorHint="#555555"
+                    android:completionThreshold="1"
+                    tools:ignore="Autofill,TextFields"
+                    android:textSize="17dp"
+                    />
+                <ImageView
+                    android:id="@+id/main_ImgBtn_SearchBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_action_search"
+                    />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="메인입니다."
-        android:textSize="40dp"
-        />
+            </LinearLayout>
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="지금까지 주문한 커피는 32잔 입니다."
+                android:paddingTop="20dp">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/stamp"
+                        android:id="@+id/stamp"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content">
+                    </ImageView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:text="스탬프">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/point"
+                        android:id="@+id/point"
+                      android:layout_gravity="center"
+                        android:layout_height="wrap_content">
+                    </ImageView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:paddingTop="5dp"
+                        android:text="포인트">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/recomand"
+                        android:id="@+id/recomand"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content">
+                    </ImageView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:paddingTop="5dp"
+                        android:paddingLeft="10dp"
+                        android:text="친구초대">
+
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="50dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="지돌지돌님 근처에 있는 카페"
+                android:textSize="25dp"
+                android:textColor="@color/TextColor">
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/cafelist">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="wrap_content">
+        <include
+            layout="@layout/cha_bottom_bar"
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></include>
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

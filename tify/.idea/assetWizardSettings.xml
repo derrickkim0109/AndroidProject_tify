@@ -25,6 +25,7 @@
                                               <map>
                                                 <entry key="color" value="000000" />
                                                 <entry key="imagePath" value="/private/var/folders/cf/rx6npryn1810ftvjjc8873tw0000gn/T/baseline_check_circle_24.xml" />
+
                                                 <entry key="opacityPercent" value="80" />
                                                 <entry key="paddingPercent" value="50" />
                                               </map>
@@ -38,6 +39,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/check_circle/baseline_check_circle_24.xml" />
+
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -86,6 +88,7 @@
                                       <entry key="outputName" value="ic_action_agree1_check" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="0084ff" />
+
                                     </map>
                                   </option>
                                 </PersistentState>
