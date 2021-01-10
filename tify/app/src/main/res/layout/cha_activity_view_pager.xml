@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/mainColor"
     android:orientation="vertical"
-    tools:context=".HyunA.Activity.ViewPagerActivity">
+    tools:context=".Hyeona.Activity.ViewPagerActivity">
 
 
 
