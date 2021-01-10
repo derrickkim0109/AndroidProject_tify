@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="match_parent">
+
+    <!--카드 이미지-->
+    <ImageView
+        android:layout_weight="1"
+        android:id="@+id/mypage_gointo_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"/>
+    <!--카드 번호 -->
+    <TextView
+        android:layout_weight="6"
+        android:text=""
+        android:textSize="14dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/mypage_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"/>
+    <ImageView
+        android:layout_weight="1"
+        android:id="@+id/card_delete"
+        android:src="@drawable/ic_action_x"
+        android:layout_width="10dp"
+        android:layout_height="40dp"/>
+</LinearLayout>

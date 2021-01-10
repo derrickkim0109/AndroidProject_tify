@@ -8,4 +8,6 @@
         <color name="SubColor">#999999</color><!-- 그외 회색의 버튼 등 컬러 -->
         <color name="bar">#cfcfcf</color><!-- 그외 회색의 버튼 등 컬러 -->
         <!--android:textColor="@color/mainColor" 와 같이 쓸 쓰면 메인컬러가 입혀집니다. -->
+        <color name="check_btn">#999</color>
+
 </resources>
