@@ -2,14 +2,18 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="320dp"
     android:orientation="vertical"
-    android:layout_margin="50dp"
+    android:layout_margin="10dp"
+    android:scrollbars="vertical"
+    android:id="@+id/detail_ll_hide"
     android:layout_height="match_parent">
+
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="right"
+        android:id="@+id/review_cancel"
         android:src="@drawable/ic_action_close">
     </ImageView>
     <TextView
@@ -86,6 +90,7 @@
         app:backgroundTint="@color/mainColor">
 
     </Button>
+
 
 
 </LinearLayout>

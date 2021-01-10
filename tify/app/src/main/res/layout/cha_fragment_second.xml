@@ -3,47 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Minwoo.Activity.FirstFragment">
+    android:background="@drawable/intro_02"
+    tools:context=".Hyeona.Activity.SecondFragment"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:id="@+id/tv_02"
-        android:layout_weight="2"
         android:layout_gravity="bottom"
-        android:text="\n사진등록으로\n빠른 친구구분"
+        android:text="\n코로나시대\n편리한 스마트오더"
         android:lineHeight="30dp"
-        android:textColor="#333"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_margin="20dp"
+        android:paddingTop="20dp"
         android:textSize="35dp"
-        android:layout_height="100dp">
+        android:layout_height="wrap_content">
 
     </TextView>
     <TextView
         android:layout_width="match_parent"
         android:id="@+id/tv_02_01"
-        android:layout_weight="1"
+        android:textColor="@color/white"
         android:layout_gravity="top"
         android:textSize="18dp"
+        android:paddingTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_height="wrap_content"
-        android:text="주소록 등록시 사진 업로드로 리스트에서\n친구를 사진으로 구별 할 수 있습니다."></TextView>
+        android:text="직접적인 신체적 접촉을 피하고\n생활에 필수적인 커피는\n마시고싶은 사람들을 위한 어플입니다."></TextView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="3">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:id="@+id/iv_02"
-            android:layout_gravity="bottom"
-            android:layout_weight="3"
-            android:src="@drawable/intro_02"
-            android:layout_height="250dp">
-        </ImageView>
-
-    </LinearLayout>
 
 </LinearLayout>

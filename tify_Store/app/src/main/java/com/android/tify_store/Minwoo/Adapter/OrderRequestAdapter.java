@@ -19,7 +19,9 @@ import com.android.tify_store.Minwoo.Fragment.DialogFragment_OrderRequest_Ok;
 import com.android.tify_store.Minwoo.Fragment.OrderRequestFragment;
 import com.android.tify_store.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapter.MyViewHolder> {
 
@@ -90,9 +92,12 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
     }
 
 
-    public OrderRequestAdapter(ArrayList<OrderRequest> mDataset, OrderRequestFragment fragment) {
-        this.mDataset = mDataset;
-        this.fragment = fragment;
+    // 메인 액티비티에서 받은 myDataset을 가져오
+    public OrderRequestAdapter(OrderRequestFragment MenuFragment, int member, ArrayList<OrderRequest> myDataset) {
+        this.mDataset = myDataset;
+        Log.v(TAG, "mDataset size : " + mDataset.size());
+        Log.v(TAG, "MenuAdapter Constructor");
+
     }
 
     @NonNull
@@ -111,25 +116,29 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
     public void onBindViewHolder(@NonNull OrderRequestAdapter.MyViewHolder holder, int position) {
         Log.v(TAG, "onBindViewHolder");
 
-        holder.oSeqno.setText("주문번호 : " + mDataset.get(position).getSeqno());
-        holder.oDate.setText(mDataset.get(position).getDate());
-//       holder.sName.setText("가게이름");
-        holder.mName.setText(mDataset.get(position).getMenuName());
+        holder.oSeqno.setText("주문번호 : " + mDataset.get(position).getOrder_oNo());
+        holder.oDate.setText("2021-01-10 13:13"); // 고객이 요청할 때 보내주는 입력 시간으로 받기
+        holder.sName.setText(mDataset.get(position).getStore_sName());
+        holder.mName.setText(mDataset.get(position).getMenu_mName());
 
-        if(mDataset.get(position).getAddOrder1() != null){
+        if(mDataset.get(position).getOlAddShot() != 0){
             holder.addOrder1.setVisibility(View.VISIBLE);
-            holder.addOrder1.setText(mDataset.get(position).getAddOrder1());
+            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlSizeUp());
         }
-        if(mDataset.get(position).getAddOrder2() != null){
+        if(mDataset.get(position).getOlSizeUp() != 0){
             holder.addOrder2.setVisibility(View.VISIBLE);
-            holder.addOrder2.setText(mDataset.get(position).getAddOrder2());
+            holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlAddShot());
         }
-        if(mDataset.get(position).getOrderRequest() != null){
+        if(mDataset.get(position).getOlRequest() != null){
             holder.request.setVisibility(View.VISIBLE);
-            holder.request.setText(mDataset.get(position).getOrderRequest());
+            holder.request.setText(mDataset.get(position).getOlRequest());
         }
 
-        holder.subTotalPrice.setText(mDataset.get(position).getPrice() + "원");
+        NumberFormat moneyFormat = null;
+        moneyFormat = NumberFormat.getInstance(Locale.KOREA);
+        String strTotal = moneyFormat.format(mDataset.get(position).getOlPrice());
+
+        holder.subTotalPrice.setText(strTotal + "원");
 
         holder.reject.setOnClickListener(btnClickListener);
         holder.accept.setOnClickListener(btnClickListener);

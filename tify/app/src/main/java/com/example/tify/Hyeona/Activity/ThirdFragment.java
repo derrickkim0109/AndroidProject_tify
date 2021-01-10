@@ -46,12 +46,12 @@ public class ThirdFragment extends Fragment {
         view = inflater.inflate(R.layout.cha_fragment_third,container,false);
 
         TextView tv03 = view.findViewById(R.id.tv_03);
-        tv03.setText("\n지금 바로\n시작해볼까요?");
+        tv03.setText("\n모두다 어려운시기\n주변과 함께 나눠요");
 
         TextView tv03_01 = view.findViewById(R.id.tv_03_01);
-        tv03_01.setText("아래의 시작하기 버튼을 눌러\nHay를 시작해주세요.");
+        tv03_01.setText("주변의 이웃과 함께 이겨낼 수 있도록\n 티피를 시작해볼까요?");
 
-        ImageView iv_03 = view.findViewById(R.id.iv_03);
+        //ImageView iv_03 = view.findViewById(R.id.iv_03);
        // iv_03.setImageResource(R.drawable.intro_03);
 
 

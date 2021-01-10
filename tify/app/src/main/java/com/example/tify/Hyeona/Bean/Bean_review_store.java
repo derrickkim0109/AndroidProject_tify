@@ -5,6 +5,10 @@ public class Bean_review_store {
     int storekeeper_skSeqNo;
     String sName, sTelNo, sAddress, sImage;
 
+
+    public Bean_review_store() {
+
+    }
     public Bean_review_store(int storekeeper_skSeqNo, String sName, String sTelNo, String sAddress, String sImage) {
         this.storekeeper_skSeqNo = storekeeper_skSeqNo;
         this.sName = sName;
@@ -12,6 +16,8 @@ public class Bean_review_store {
         this.sAddress = sAddress;
         this.sImage = sImage;
     }
+
+
 
     public int getStorekeeper_skSeqNo() {
         return storekeeper_skSeqNo;

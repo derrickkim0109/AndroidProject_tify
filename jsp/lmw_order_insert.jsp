@@ -27,7 +27,7 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-		String A = "insert into tify.order(user_uNo, store_sSeqNo, store_sName, oInsertDate, oSum, oCardName, oCardNo, oReview, oStatus) values (?, ?, ?, now(), ?, ?, ?, ?, ?)";
+		String A = "insert into tify.order(user_uNo, storekeeper_skSeqNo, store_sName, oInsertDate, oSum, oCardName, oCardNo, oReview, oStatus) values (?, ?, ?, now(), ?, ?, ?, ?, ?)";
 	
 	    ps = conn_mysql.prepareStatement(A);
 		ps.setInt(1, user_uNo);

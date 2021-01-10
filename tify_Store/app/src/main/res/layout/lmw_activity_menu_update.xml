@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Minwoo.Activity.MenuUpdateActivity">
+
+    <include
+        layout="@layout/lmw_menuupdate_toolbar"
+        android:id="@+id/lmw_menuupdate_toolbar"
+        app:layout_scrollFlags="scroll|snap"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/activity_MenuUpdate_CIV_mImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/americano"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="메뉴명 : "
+                android:textSize="20dp"
+                android:gravity="right"
+                />
+
+            <EditText
+                android:id="@+id/activity_MenuUpdate_ET_mName"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="메뉴명"
+                android:textSize="20dp"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="가격 : "
+                android:textSize="20dp"
+                android:gravity="right"
+                />
+
+            <EditText
+                android:id="@+id/activity_MenuUpdate_ET_mPrice"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="가격"
+                android:textSize="20dp"
+                android:inputType="number"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="메뉴소개 : "
+                android:textSize="20dp"
+                android:gravity="right"
+                />
+
+            <EditText
+                android:id="@+id/activity_MenuUpdate_ET_mComment"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="메뉴소개"
+                android:textSize="20dp"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="종류 : "
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+                <RadioGroup
+                    android:id="@+id/activity_MenuUpdate_RG_RadioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <RadioButton
+                        android:id="@+id/activity_MenuUpdate_RB_Drink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="음료"/>
+                    <RadioButton
+                        android:id="@+id/activity_MenuUpdate_RB_Other"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="디저트"/>
+
+                </RadioGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        >
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="사이즈업 : "
+                            android:textSize="20dp"
+                            android:gravity="right"
+                            />
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:id="@+id/activity_MenuUpdate_RG_RadioGroupSizeUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        >
+                        <RadioButton
+                            android:id="@+id/activity_MenuUpdate_RB_SizeUpOK"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="가능"/>
+                        <RadioButton
+                            android:id="@+id/activity_MenuUpdate_RB_SizeUpNO"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="불가능"/>
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:text="샷추가 : "
+                                android:textSize="20dp"
+                                android:gravity="right"
+                                />
+                        </LinearLayout>
+
+                        <RadioGroup
+                            android:id="@+id/activity_MenuUpdate_RG_RadioGroupAddShot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            >
+                            <RadioButton
+                                android:id="@+id/activity_MenuUpdate_RB_AddShotOK"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="가능"/>
+                            <RadioButton
+                                android:id="@+id/activity_MenuUpdate_RB_AddShotNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="불가능"/>
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <Button
+            android:id="@+id/activity_MenuUpdate_Btn_Update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수정"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/black"
+            ></Button>
+    </LinearLayout>
+</LinearLayout>

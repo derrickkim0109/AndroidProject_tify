@@ -37,6 +37,7 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
         this.mAddr = mAddr;
         this.where = where;
         this.reviews = new ArrayList<Bean_review_review>();
+        this.bean_review_store = new Bean_review_store();
     }
 
     @Override
@@ -100,6 +101,8 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
 
         if(where.equals("select")){
             return reviews;
+        }if(where.equals("select_review_storeinfo")){
+            return bean_review_store;
         }else{
             return result;
         }
@@ -185,20 +188,19 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
         //Log.v("aaaaaa","parser()");
         try {
             JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonArray = new JSONArray(jsonObject.getString("review"));
-            reviews.clear();
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("review_store"));
 
             for (int i=0; i<jsonArray.length(); i++){
+                    JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                    int storekeeper_skSeqNo = jsonObject1.getInt("storekeeper_skSeqNo");
+                    String sName = jsonObject1.getString("sName");
+                    String sTelNo = jsonObject1.getString("sTelNo");
+                    String sAddress = jsonObject1.getString("sAddress");
+                    String sImage = jsonObject1.getString("sImage");
+                    Log.v("스토어",sName);
+                    Log.v("스토어",sImage);
 
-                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-
-                int storekeeper_skSeqNo = jsonObject1.getInt("storekeeper_skSeqNo");
-                String sName = jsonObject1.getString("sName");
-                String sTelNo = jsonObject1.getString("sTelNo");
-                String sAddress = jsonObject1.getString("sAddress");
-                String sImage = jsonObject1.getString("sImage");
-
-                bean_review_store = new Bean_review_store(storekeeper_skSeqNo, sName, sTelNo, sAddress, sImage);
+                    bean_review_store = new Bean_review_store(storekeeper_skSeqNo, sName, sTelNo, sAddress, sImage);
             }
 
         }catch (Exception e){

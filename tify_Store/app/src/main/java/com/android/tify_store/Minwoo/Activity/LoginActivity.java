@@ -38,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
 
     String id;
     String pw;
+    int skStatus = 1;
+
 
 
     @Override
@@ -73,13 +75,11 @@ public class LoginActivity extends AppCompatActivity {
                     if(datas.get(0).getCnt() == 0){
                         Toast.makeText(LoginActivity.this, "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                     }else{
-                        strResult = connectUpdateData();
-                        Log.v(TAG, "strResult : " + strResult);
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
                         intent.putExtra("macIP", "172.30.1.27");
-                        intent.putExtra("storekeeper_skSeqNo", datas.get(0).getSkSeqNo());
+                        intent.putExtra("skSeqNo", datas.get(0).getSkSeqNo());
 
                         startActivity(intent);
                     }
@@ -121,38 +121,5 @@ public class LoginActivity extends AppCompatActivity {
         return beanList;
     }
 
-    private String connectUpdateData(){ // 로그인 성공하면 skStatus 1로 바꾸기
-        String result = null;
 
-        urlAddr = "http://" + macIP + ":8080/tify/lmw_storekeeper_update.jsp?skSeqNo=" + 1;
-        where = "update";
-
-        try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_LoginNetworkTask networkTask = new LMW_LoginNetworkTask(LoginActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            Object obj = networkTask.execute().get();
-            result = (String) obj;
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return result;
-    }
 }
