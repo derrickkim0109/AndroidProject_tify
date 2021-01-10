@@ -2,7 +2,7 @@ package com.example.tify.Jiseok.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,11 +12,11 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-=======
+
 import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
->>>>>>> 8b41972bfdec32b53d8743a9c08520eb943c912a
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,7 +46,7 @@ public class JiseokMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cjs_activity_jiseok_main);
 
-<<<<<<< HEAD
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         // 상단 액션바 삭제
@@ -112,16 +112,9 @@ public class JiseokMainActivity extends AppCompatActivity {
 
     }
 }
-=======
-
-    }
 
 
-    //뒤로가기버튼
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 
-}
->>>>>>> 8b41972bfdec32b53d8743a9c08520eb943c912a
+
+
+
