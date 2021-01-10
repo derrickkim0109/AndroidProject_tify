@@ -25,7 +25,7 @@ import java.util.Random;
 
 public class JoinPayPasswordActivity extends AppCompatActivity {
     String TAG = "여기, JoinPayPasswordActivity";
-    Context context = this;
+    Context context ;
 
     Button btnRearrangement;
     ImageButton btnDelete;
@@ -58,6 +58,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         userTel = intent.getStringExtra("userTel");
         userEmail = intent.getStringExtra("userEmail");
         userNickName = intent.getStringExtra("userNickName");
+
         Log.v(TAG,"userTel : "+userTel);
         Log.v(TAG,"userEmail : "+userEmail);
         Log.v(TAG,"userNickName : "+userNickName);
