@@ -29,7 +29,7 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-		String A = "insert into orderlist(user_uNo, order_oNo, store_sSeqNo, store_sName, menu_mName, olSizeUp, olAddShot, olRequest, olPrice, olQuantity) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String A = "insert into orderlist(user_uNo, order_oNo, storekeeper_skSeqNo, store_sName, menu_mName, olSizeUp, olAddShot, olRequest, olPrice, olQuantity) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 	    ps = conn_mysql.prepareStatement(A);
         ps.setInt(1, user_uNo);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<FrameLayout
+    android:id="@+id/card_enroll_FL"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,4 +8,21 @@
     android:layout_height="match_parent"
     tools:context=".Taehyun.Activity.Mypage_CardRegistrationActivity">
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/card_btn"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:src="@drawable/card"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"/>
+        <ImageView
+            android:background="@color/white"
+            android:src="@drawable/card_enroll"
+            android:layout_width="150dp"
+            android:layout_height="100dp"/>
+    </LinearLayout>
+
+</FrameLayout>

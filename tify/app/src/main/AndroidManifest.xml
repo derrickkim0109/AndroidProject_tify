@@ -23,6 +23,7 @@
         android:theme="@style/Theme.MaterialComponents.DayNight">
 <!--        <activity android:name=".Hyeona.Activity.review_white"></activity>-->
         <!-- 태현 -->
+        <activity android:name=".Taehyun.Activity.CardRG2Activity"></activity>
         <activity android:name=".Taehyun.Activity.MypageActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />

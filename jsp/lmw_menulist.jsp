@@ -10,7 +10,7 @@
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "select * from menu where store_sSeqNo = " + store_sSeqNo  + " order by (case when ascii(substring(mName,1)) between 48 and 57 then 1 WHEN ASCII(SUBSTRING(mName,1)) < 128 THEN 2 ELSE 3 END), mName";
+    String WhereDefault = "select * from menu where storekeeper_skSeqNo = " + store_sSeqNo  + " order by (case when ascii(substring(mName,1)) between 48 and 57 then 1 WHEN ASCII(SUBSTRING(mName,1)) < 128 THEN 2 ELSE 3 END), mName";
     int count = 0;
     
     try {

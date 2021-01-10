@@ -2,97 +2,99 @@ package com.android.tify_store.Minwoo.Bean;
 
 public class OrderRequest {
 
-    int seqno;
-    String date;
-    String storeName;
-    String menuName;
-    int quantity;
-    String addOrder1;
-    String addOrder2;
-    String orderRequest;
-    int price;
+    //orderlist
+    int order_oNo;
+    String store_sName;
+    String menu_mName;
+    int olSeqNo;
+    int olSizeUp;
+    int olAddShot;
+    String olRequest;
+    int olPrice;
+    int olQuantity;
 
-    public OrderRequest(int seqno, String date, String storeName, String menuName, int quantity, String addOrder1, String addOrder2, String orderRequest, int price) {
-        this.seqno = seqno;
-        this.date = date;
-        this.storeName = storeName;
-        this.menuName = menuName;
-        this.quantity = quantity;
-        this.addOrder1 = addOrder1;
-        this.addOrder2 = addOrder2;
-        this.orderRequest = orderRequest;
-        this.price = price;
+
+    public OrderRequest(int order_oNo, String store_sName, String menu_mName, int olSeqNo, int olSizeUp, int olAddShot, String olRequest, int olPrice, int olQuantity) {
+        this.order_oNo = order_oNo;
+        this.store_sName = store_sName;
+        this.menu_mName = menu_mName;
+        this.olSeqNo = olSeqNo;
+        this.olSizeUp = olSizeUp;
+        this.olAddShot = olAddShot;
+        this.olRequest = olRequest;
+        this.olPrice = olPrice;
+        this.olQuantity = olQuantity;
     }
 
-    public int getSeqno() {
-        return seqno;
+    public int getOrder_oNo() {
+        return order_oNo;
     }
 
-    public void setSeqno(int seqno) {
-        this.seqno = seqno;
+    public void setOrder_oNo(int order_oNo) {
+        this.order_oNo = order_oNo;
     }
 
-    public String getDate() {
-        return date;
+    public String getStore_sName() {
+        return store_sName;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStore_sName(String store_sName) {
+        this.store_sName = store_sName;
     }
 
-    public String getStoreName() {
-        return storeName;
+    public String getMenu_mName() {
+        return menu_mName;
     }
 
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
+    public void setMenu_mName(String menu_mName) {
+        this.menu_mName = menu_mName;
     }
 
-    public String getMenuName() {
-        return menuName;
+    public int getOlSeqNo() {
+        return olSeqNo;
     }
 
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
+    public void setOlSeqNo(int olSeqNo) {
+        this.olSeqNo = olSeqNo;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getOlSizeUp() {
+        return olSizeUp;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setOlSizeUp(int olSizeUp) {
+        this.olSizeUp = olSizeUp;
     }
 
-    public String getAddOrder1() {
-        return addOrder1;
+    public int getOlAddShot() {
+        return olAddShot;
     }
 
-    public void setAddOrder1(String addOrder1) {
-        this.addOrder1 = addOrder1;
+    public void setOlAddShot(int olAddShot) {
+        this.olAddShot = olAddShot;
     }
 
-    public String getAddOrder2() {
-        return addOrder2;
+    public String getOlRequest() {
+        return olRequest;
     }
 
-    public void setAddOrder2(String addOrder2) {
-        this.addOrder2 = addOrder2;
+    public void setOlRequest(String olRequest) {
+        this.olRequest = olRequest;
     }
 
-    public String getOrderRequest() {
-        return orderRequest;
+    public int getOlPrice() {
+        return olPrice;
     }
 
-    public void setOrderRequest(String orderRequest) {
-        this.orderRequest = orderRequest;
+    public void setOlPrice(int olPrice) {
+        this.olPrice = olPrice;
     }
 
-    public int getPrice() {
-        return price;
+    public int getOlQuantity() {
+        return olQuantity;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setOlQuantity(int olQuantity) {
+        this.olQuantity = olQuantity;
     }
 }

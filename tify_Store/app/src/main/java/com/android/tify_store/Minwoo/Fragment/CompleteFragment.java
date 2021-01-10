@@ -50,13 +50,7 @@ public class CompleteFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prepareData(); // 데이터 넣어주자
-    }
-
-    private void prepareData() { // 받은 데이터가 null일 경우 접수된 주문이 없다고 멘트 띄워주기
-        completes.add(new OrderRequest(1,"2021-01-05 13:11","빽다방","아메리카노(COLD)",2,null,null,null,4000));
-        completes.add(new OrderRequest(2,"2021-01-05 14:42","빽다방","아메리카노(COLD)",1,null,null,"얼음 조금만",4000));
-        completes.add(new OrderRequest(3,"2021-01-05 15:34","빽다방","아메리카노(COLD)",1,"+사이즈업","샷추가","얼음 많이",4000));
 
     }
+
 }

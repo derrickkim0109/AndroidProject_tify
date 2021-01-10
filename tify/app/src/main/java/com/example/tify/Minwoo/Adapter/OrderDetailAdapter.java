@@ -112,18 +112,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 //       holder.sName.setText("가게이름");
         holder.mName.setText(mDataset.get(position).getMenu_mName());
 
-        if(mDataset.get(position).getOlAddShot() != 0){
-            holder.addOrder1.setVisibility(View.VISIBLE);
-            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlSizeUp());
-        }
-        if(mDataset.get(position).getOlSizeUp() != 0){
-            holder.addOrder2.setVisibility(View.VISIBLE);
-            holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlAddShot());
-        }
-        if(mDataset.get(position).getOlRequest() != null){
-            holder.request.setVisibility(View.VISIBLE);
-            holder.request.setText(mDataset.get(position).getOlRequest());
-        }
+
 
         NumberFormat moneyFormat = null;
         moneyFormat = NumberFormat.getInstance(Locale.KOREA);
