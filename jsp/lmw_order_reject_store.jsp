@@ -20,7 +20,7 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-        String A = "update tify.order set oDeleteDate = now(), oStatus = 4 where oNo = " + oNo;
+        String A = "update tify.order set oDeleteDate = now(), oStatus = 5 where oNo = " + oNo;
         
 
         ps = conn_mysql.prepareStatement(A);

@@ -18,6 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:src="@drawable/americano"
+        android:maxWidth="60dp"
+        android:maxHeight="60dp"
+        android:scaleType="centerCrop"
         />
 
     <TextView

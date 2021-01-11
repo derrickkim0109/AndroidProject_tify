@@ -10,7 +10,16 @@
         android:layout_height="match_parent">
         <Button
             android:layout_width="wrap_content"
-            android:text="메인컬러 + 둥근효과"
+            android:text="비선택"
+            android:layout_margin="20dp"
+            android:background="@drawable/button_shape"
+            app:backgroundTint="#999"
+            android:layout_height="wrap_content">
+        </Button>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:text="선택"
             android:layout_margin="20dp"
             android:background="@drawable/button_shape"
             app:backgroundTint="@color/mainColor"
@@ -19,21 +28,10 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:text="서브컬러+ 둥근효과 + 테두리"
-            android:textColor="@color/SubColor"
-            android:layout_margin="20dp"
-            android:background="@drawable/radius_border"
-            app:backgroundTint="@color/white"
-            android:layout_height="wrap_content">
-        </Button>
-
-        <Button
-            android:layout_width="wrap_content"
             android:text="텍스트컬러+테두리"
             android:textColor="@color/TextColor"
             android:layout_margin="20dp"
-            android:background="@drawable/border"
-            app:backgroundTint="@color/white"
+            android:background="@drawable/pay_password_border"
             android:layout_height="wrap_content">
         </Button>
 

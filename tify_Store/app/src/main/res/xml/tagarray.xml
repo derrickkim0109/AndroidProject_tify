@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string-array name="spinnerArray">
+
+        <item> TAG </item>
+
+        <item> TAG1 </item>
+
+        <item> TAG2 </item>
+
+        <item> TAG3 </item>
+
+        <item> TAG4 </item>
+
+        <item> TAG5 </item>
+
+    </string-array>
+
+</resources>

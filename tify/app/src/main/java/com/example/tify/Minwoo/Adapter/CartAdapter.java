@@ -1,5 +1,6 @@
 package com.example.tify.Minwoo.Adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,14 +12,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tify.Minwoo.Activity.CartActivity;
 import com.example.tify.Minwoo.Bean.Cart;
 import com.example.tify.Minwoo.Bean.Menu;
 import com.example.tify.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.TreeSet;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -35,6 +40,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     int sizeUpCount = 0;
     int shotCount = 0;
 
+    Context context = null;
+    String macIP;
+
 
     //인터페이스 선언
     public interface OnItemClickListener{
@@ -50,8 +58,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
 
     // 메인 액티비티에서 받은 myDataset을 가져오
-    public CartAdapter(CartActivity cartActivity, int layout, ArrayList<Cart> myDataset) {
+    public CartAdapter(CartActivity cartActivity, int layout, ArrayList<Cart> myDataset, String macIP) {
         mDataset = myDataset;
+        this.context = cartActivity;
+        this.macIP = macIP;
+
         Log.v(TAG, "CartAdapter Constructor");
 
     }
@@ -159,6 +170,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
         Log.v(TAG, "AddShot : " + mDataset.get(position).getcLAddShot());
 
+        // 콤마 찍어서 원화로 바꿔줌!
+        NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
+        String price = moneyFormat.format(mDataset.get(position).getcLPrice());
+
+        Log.v(TAG, "mDataset.get(position).getcLImage() : " + mDataset.get(position).getcLImage());
+        Glide.with(context).load("http://" + macIP + ":8080/tify/"+ mDataset.get(position).getcLImage()).into(holder.cLPhoto);
+
         //데이터를 받은걸 올리기
         if(mDataset.get(position).getcLSizeUp() != 0){
             holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getcLSizeUp());
@@ -174,9 +192,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         }
 
         holder.mName.setText(mDataset.get(position).getMenu_mName());
-        holder.cLPhoto.setImageResource(R.drawable.ic_launcher_foreground);
         holder.cLQuantity.setText("<" + mDataset.get(position).getcLQuantity() + ">");
-        holder.cLPrice.setText(mDataset.get(position).getcLPrice() + "원");
+        holder.cLPrice.setText(price+ "원");
         holder.request.setText(mDataset.get(position).getcLRequest());
 
     }

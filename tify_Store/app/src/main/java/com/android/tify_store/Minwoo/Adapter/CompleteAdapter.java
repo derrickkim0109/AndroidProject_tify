@@ -126,11 +126,11 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
 
         if(mDataset.get(position).getOlAddShot() != 0){
             holder.addOrder1.setVisibility(View.VISIBLE);
-            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlSizeUp());
+            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlAddShot());
         }
         if(mDataset.get(position).getOlSizeUp() != 0){
             holder.addOrder2.setVisibility(View.VISIBLE);
-            holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlAddShot());
+            holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlSizeUp());
         }
         if(mDataset.get(position).getOlRequest() != null){
             holder.request.setVisibility(View.VISIBLE);
@@ -141,10 +141,17 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
             holder.oStatus.setVisibility(View.VISIBLE);
             holder.oStatus.setText("픽업완료된 주문");
             holder.oStatus.setTextColor(Color.parseColor("#009688"));
-        }else{
+        }
+
+        if(mDataset.get(position).getoStatus() == 4 || (mDataset.get(position).getoStatus() == 5)){
             holder.oStatus.setVisibility(View.VISIBLE);
-            holder.oStatus.setText("취소된 주문");
             holder.oStatus.setTextColor(Color.parseColor("#870146"));
+            if(mDataset.get(position).getoStatus() == 4){
+                holder.oStatus.setText("주문 취소 : 고객 요청");
+            }
+            if(mDataset.get(position).getoStatus() == 5){
+                holder.oStatus.setText("주문 취소 : 매장 요청");
+            }
         }
 
         NumberFormat moneyFormat = null;
