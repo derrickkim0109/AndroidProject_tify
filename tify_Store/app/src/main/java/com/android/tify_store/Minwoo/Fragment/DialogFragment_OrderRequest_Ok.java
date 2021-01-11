@@ -131,7 +131,7 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
                     String why = et_inputTime.getText().toString(); // 예상 제조시간! 고객에게 알림으로 전달하기!
 
                     where = "update";
-                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus1.jsp?oNo=" + oNo;
+                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus1.jsp?oNo=" + oNo + "&oStatus=" + 1;
                     String result1 = connectData();
 
                     if(result1.equals("1")){

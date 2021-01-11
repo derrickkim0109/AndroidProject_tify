@@ -34,6 +34,7 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
         this.orders = new ArrayList<Order>();
         this.where = where;
         Log.v(TAG, "Start : " + mAddr);
+        Log.v(TAG, "where : " + where);
     }
 
     @Override
@@ -187,7 +188,7 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
                 int max = jsonObject1.getInt("max");
 
-                Log.v(TAG, "oStatus : " + max);
+                Log.v(TAG, "max : " + max);
 
                 Order order = new Order(max);
                 orders.add(order);

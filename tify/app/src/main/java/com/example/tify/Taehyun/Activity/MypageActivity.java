@@ -30,7 +30,7 @@ public class MypageActivity extends AppCompatActivity {
 
     //2021.01.07 - 태현
     //field
-    final static String TAG = "Mypage";
+    final static String TAG = "MypageActivity";
     private ArrayList<Bean_MypageList> data = null;
     private MypageListAdapter adapter = null;
     private ListView listView = null;
@@ -50,7 +50,7 @@ public class MypageActivity extends AppCompatActivity {
     String urlAddr = null;
     //
     String urlAddress = null;
-    String macIP = "192.168.200.129";
+    String macIP = "192.168.0.80";
     //Bean
     Bean_Mypage_userinfo userinfo = null;
 

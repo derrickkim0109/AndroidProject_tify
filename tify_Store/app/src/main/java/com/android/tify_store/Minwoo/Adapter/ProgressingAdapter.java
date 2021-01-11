@@ -150,7 +150,7 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
 
         if(mDataset.get(position).getOlAddShot() != 0){
             holder.addOrder1.setVisibility(View.VISIBLE);
-            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlSizeUp());
+            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlAddShot());
         }
         if(mDataset.get(position).getOlSizeUp() != 0){
             holder.addOrder2.setVisibility(View.VISIBLE);
@@ -191,7 +191,7 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
                 holder.pickUpDone.setBackgroundColor(Color.BLACK);
                 holder.pickUpDone.setEnabled(true);
 
-                urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus2.jsp?oNo=" + mDataset.get(position).getOrder_oNo();
+                urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus1.jsp?oNo=" + mDataset.get(position).getOrder_oNo() + "&oStatus=" + 2;
                 where = "update";
 
                 String result = connectUpdateData();
@@ -211,7 +211,7 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
                 holder.makeDone.setVisibility(View.GONE);
                 holder.pickUpDone.setText("완료탭에서 확인해주세요");
 
-                urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus3.jsp?oNo=" + mDataset.get(position).getOrder_oNo();
+                urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus1.jsp?oNo=" + mDataset.get(position).getOrder_oNo() + "&oStatus=" + 3;
                 where = "update";
 
                 String result = connectUpdateData();

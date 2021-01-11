@@ -18,7 +18,9 @@ import com.example.tify.Minwoo.Bean.Cart;
 import com.example.tify.Minwoo.Bean.Menu;
 import com.example.tify.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.TreeSet;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -159,6 +161,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
         Log.v(TAG, "AddShot : " + mDataset.get(position).getcLAddShot());
 
+        // 콤마 찍어서 원화로 바꿔줌!
+        NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
+        String price = moneyFormat.format(mDataset.get(position).getcLPrice());
+
         //데이터를 받은걸 올리기
         if(mDataset.get(position).getcLSizeUp() != 0){
             holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getcLSizeUp());
@@ -176,7 +182,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         holder.mName.setText(mDataset.get(position).getMenu_mName());
         holder.cLPhoto.setImageResource(R.drawable.ic_launcher_foreground);
         holder.cLQuantity.setText("<" + mDataset.get(position).getcLQuantity() + ">");
-        holder.cLPrice.setText(mDataset.get(position).getcLPrice() + "원");
+        holder.cLPrice.setText(price+ "원");
         holder.request.setText(mDataset.get(position).getcLRequest());
 
     }
