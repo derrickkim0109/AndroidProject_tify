@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -20,11 +21,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tify.Hyeona.Activity.LoginActivity;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.Minwoo.Activity.OrderListActivity;
 import com.example.tify.R;
 import com.example.tify.Taehyun.Activity.MypageActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 public class JiseokMainActivity extends AppCompatActivity {
     String MacIP = "192.168.219.100";
@@ -92,9 +96,24 @@ public class JiseokMainActivity extends AppCompatActivity {
                         return true;
                     }
                     case R.id.action3: {
-                    //즐겨찾기
+                        Toast.makeText(getApplicationContext(), "정상적으로 로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
+
+                        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+                            @Override
+                            public void onCompleteLogout() {
+                                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor autoLogin = auto.edit();
+                                autoLogin.clear();
+                                autoLogin.commit();
+                                Intent intent = new Intent(JiseokMainActivity.this, LoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        });
+
                         return true;
                     }
+
                     case R.id.action4: {
                      //큐알결제
                         Log.v("여기",""+selectUserSeq());
@@ -141,6 +160,8 @@ public class JiseokMainActivity extends AppCompatActivity {
         }
         return utc;
     }
+
+
 }
 
 

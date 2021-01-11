@@ -85,7 +85,8 @@ public class JoinActivity extends AppCompatActivity {
     private final int REQ_CODE_SELECT_IMAGE = 300; // Gallery Return Code
 
 
-
+    String userEmail="";
+    String userNickName="";
 
 
 
@@ -111,6 +112,10 @@ public class JoinActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.join_et_email);
         etNickName = findViewById(R.id.join_et_nickName);
         btnGoGo = findViewById(R.id.join_btn_gogo);
+
+        Intent intent = getIntent();
+        userEmail = intent.getStringExtra("userEmail");
+        userNickName = intent.getStringExtra("userNickName");
 
 
         btnAuthentication.setOnClickListener(firstFrameClickListener);
@@ -296,6 +301,10 @@ public class JoinActivity extends AppCompatActivity {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 ly1.setVisibility(View.INVISIBLE);
                                                 ly2.setVisibility(View.VISIBLE);
+                                                if(userEmail!=null&&userNickName!=null) {
+                                                    etEmail.setText(userEmail);
+                                                    etNickName.setText(userNickName);
+                                                }
                                             }
                                         })
                                         .show();
@@ -407,9 +416,12 @@ public class JoinActivity extends AppCompatActivity {
         }
     };
 
+
+    // 인텐트가 새로 들어왓을때 실행되는 매소드
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        //인증번호 setText
         processCommand(intent);
     }
 
@@ -447,7 +459,7 @@ public class JoinActivity extends AppCompatActivity {
     }
 
 
-    //인증번호 받아서 띄움
+    //인증번호 setText
     private void processCommand(Intent intent){
         if(intent != null){
             String sender = intent.getStringExtra("sender");
@@ -456,7 +468,6 @@ public class JoinActivity extends AppCompatActivity {
             Log.v("번호확인",content.substring(0,3));
             etAuthentication.setText(content.substring(6,14));
             etAuthentication.requestFocus();
-
         }
     }
 
