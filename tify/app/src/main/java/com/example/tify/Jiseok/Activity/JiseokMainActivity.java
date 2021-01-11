@@ -51,6 +51,7 @@ public class JiseokMainActivity extends AppCompatActivity {
     String userEmail;
     String userSeq;
     String userNickName;
+    String myLocation;
 
 
     @Override
@@ -63,6 +64,10 @@ public class JiseokMainActivity extends AppCompatActivity {
         userEmail = auto.getString("userEmail", null);
         userSeq = auto.getString("userSeq", null);
         userNickName = auto.getString("userNickName", null);
+        myLocation = auto.getString("myLocation", null);
+
+        Log.v("내위치",""+myLocation);
+        Log.v("내위치",""+userEmail);
 
         imgPoint = findViewById(R.id.main_img_point);
         imgStamp = findViewById(R.id.main_img_stamp);
@@ -170,6 +175,7 @@ public class JiseokMainActivity extends AppCompatActivity {
                 case R.id.main_img_point:
                     startActivity(new Intent(JiseokMainActivity.this, PointActivity.class));
                     break;
+                    //친구추천 버튼
                 case R.id.main_img_recommend:
                     break;
             }
@@ -181,6 +187,8 @@ public class JiseokMainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.main_img_gps:
+                    Intent intent = new Intent(JiseokMainActivity.this,MyLocationActivity.class);
+                    startActivityForResult(intent,9999);
                     break;
 
                 case R.id.main_img_SearchBtn:
