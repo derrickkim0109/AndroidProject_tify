@@ -21,10 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
-        <activity
-            android:name=".Hyeona.Activity.StampActivity"
-            android:label="@string/title_activity_stamp"
-            android:theme="@style/NoActionBar"></activity>
+        <activity android:name=".Hyeona.Activity.PointActivity"></activity>
         <!-- 태현 -->
         <activity android:name=".Taehyun.Activity.CardRG2Activity" />
         <activity android:name=".Taehyun.Activity.MypageActivity" />
@@ -47,11 +44,11 @@
         <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- 현아 -->
         <activity android:name=".Hyeona.Activity.LoginActivity" />
+        <activity android:name=".Hyeona.Activity.IntroActivity" />
         <activity android:name=".MainActivity" /> <!-- <activity android:name=".Hyeona.Activity.review_white"/> -->
-
-        <activity android:name=".Jiseok.Activity.JiseokMainActivity"/>
+        <activity android:name=".Jiseok.Activity.JiseokMainActivity" />
         <activity android:name=".Hyeona.Activity.reviewActivity" /> <!-- <activity android:name=".Hyeona.Activity.IntroActivity"> -->
-        <activity android:name=".Hyeona.Activity.IntroActivity">
+        <activity android:name=".Hyeona.Activity.StampActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
