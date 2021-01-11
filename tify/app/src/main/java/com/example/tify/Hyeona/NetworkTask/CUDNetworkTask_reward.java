@@ -4,10 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.tify.Hyeona.Adapter.review_adapter;
-import com.example.tify.Hyeona.Adapter.stampOrder_adapter;
-import com.example.tify.Hyeona.Bean.Bean_review_userinfo;
-import com.example.tify.Hyeona.Bean.Bean_stamp_orderlist;
+import com.example.tify.Hyeona.Bean.Bean_point_history;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,24 +14,28 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 
-    public class CUDNetworkTask_stamp extends AsyncTask<Integer, String, Object> {
+public class CUDNetworkTask_reward extends AsyncTask<Integer, String, Object> {
 
         /*공용이므로 항상 수정사항 알려주시기 바랍니다.*/
 
         final static String TAG = "CUDNetworkTask";
-        stampOrder_adapter context = null;
+       // pointHistory_adapter context = null;
         String mAddr = null;
         ProgressDialog progressDialog = null;
         String where = null;
-        Bean_stamp_orderlist bean_stamp_orderlist = null;
-
-        public CUDNetworkTask_stamp(stampOrder_adapter context, String mAddr, String where) {
-            this.context = context;
+       // Bean_stamp_orderlist bean_stamp_orderlist = null;
+        Bean_point_history bean_point_history = null;
+        ArrayList<Bean_point_history> point_history = null;
+        public CUDNetworkTask_reward(String mAddr, String where) {
+            //this.context = context;
             this.mAddr = mAddr;
             this.where = where;
-            this.bean_stamp_orderlist = new Bean_stamp_orderlist();
+            //this.bean_stamp_orderlist = new Bean_stamp_orderlist();
+            this.bean_point_history = new Bean_point_history();
+            this.point_history = new ArrayList<Bean_point_history>();
 
             Log.v(TAG,"Start : " + mAddr);
         }
@@ -58,7 +59,8 @@ import java.net.URL;
             InputStreamReader inputStreamReader = null;
             BufferedReader bufferedReader = null;
 
-            String result = null;
+            String result1 = null;
+            int result2 = 0;
 
             try {
                 URL url = new URL(mAddr);
@@ -77,9 +79,15 @@ import java.net.URL;
                     }
 
                     if(where.equals("select")){
-                        parserSelect(stringBuffer.toString());
-                    }else{
-                        result = parserAction(stringBuffer.toString());
+                       // parserSelect(stringBuffer.toString());
+                    }else if (where.equals("pointHistory_select")){
+                        parserpPointHistory_select(stringBuffer.toString());
+                    }else if(where.equals("select_point")){
+                        result2 = parserPointSelect(stringBuffer.toString());
+                    }
+
+                    else{
+                        result1 = parserAction(stringBuffer.toString());
                     }
 
                 }
@@ -97,9 +105,14 @@ import java.net.URL;
             }
 
             if(where.equals("select")){
-                return bean_stamp_orderlist;
-            }else{
-                return result;
+                return null;
+            }else if(where.equals("pointHistory_select")){
+                return point_history;
+            }else if(where.equals("select_point")){
+                return result2;
+            }
+            else{
+                return result1;
             }
         }
 
@@ -140,24 +153,52 @@ import java.net.URL;
             return returnValue;
         }
 
-        private void parserSelect(String s){
+
+
+        private void parserpPointHistory_select(String s){
             try {
                 JSONObject jsonObject = new JSONObject(s);
-                JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
+                JSONArray jsonArray = new JSONArray(jsonObject.getString("rewardhistory"));
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
 
-                    int uNo = jsonObject1.getInt("uNo");
-
-
-                    bean_stamp_orderlist = new Bean_stamp_orderlist();
-
+                    int rhNo = jsonObject1.getInt("rhNo");
+                    Log.v("히스토리","ㅇ"+rhNo);
+                    String rhDay = jsonObject1.getString("rhDay");
+                    Log.v("히스토리","ㅇ"+rhDay);
+                    String rhContent = jsonObject1.getString("rhContent");
+                    Log.v("히스토리","ㅇ"+rhContent);
+                    int rhChoice = jsonObject1.getInt("rhChoice");
+                    Log.v("히스토리","ㅇ"+rhChoice);
+                    String rhPointHow = jsonObject1.getString("rhPointHow");
+                    Log.v("히스토리","ㅇ"+rhPointHow);
+                    bean_point_history = new Bean_point_history(rhNo,rhDay,rhContent,rhChoice,rhPointHow);
+                    point_history.add(bean_point_history);
                 }
 
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
+
+    private int parserPointSelect(String s){
+        int user_rwStamp = 0;
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("rwPoint_select"));
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+
+                user_rwStamp = jsonObject1.getInt("rwPoint");
+                Log.v("네트워크","ㅇㅇ"+user_rwStamp);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }return user_rwStamp;
+    }
+
+
 
     } // ----------
 

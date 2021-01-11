@@ -1,11 +1,11 @@
 package com.example.tify.Hyeona.NetworkTask;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.tify.Hyeona.Bean.Bean_stamp_orderlist;
+import com.example.tify.Hyeona.Bean.Bean_point_history;
+import com.example.tify.Hyeona.Bean.Bean_reward_stamphistory;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,8 +15,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
- public class CUDNetworkTask_stampCount extends AsyncTask<Integer, String, Object> {
+public class CUDNetworkTask_stampCount extends AsyncTask<Integer, String, Object> {
 
         /*공용이므로 항상 수정사항 알려주시기 바랍니다.*/
 
@@ -25,13 +26,15 @@ import java.net.URL;
         String mAddr = null;
         ProgressDialog progressDialog = null;
         String where = null;
-        Bean_stamp_orderlist bean_stamp_orderlist = null;
+         ArrayList<Bean_reward_stamphistory> stamphistory = null;
+        Bean_reward_stamphistory bean_reward_stamphistory = null;
 
         public CUDNetworkTask_stampCount(String mAddr, String where) {
 
             this.mAddr = mAddr;
             this.where = where;
-            this.bean_stamp_orderlist = new Bean_stamp_orderlist();
+            this.bean_reward_stamphistory = new Bean_reward_stamphistory();
+            this.stamphistory = new ArrayList<Bean_reward_stamphistory>();
 
             Log.v(TAG,"Start : " + mAddr);
         }
@@ -76,7 +79,11 @@ import java.net.URL;
                     if(where.equals("select_stamp")){
                         //셀렉트로 값 하나만 받아옴
                         result = parserSelect(stringBuffer.toString());
-                    }else{
+                    }else if (where.equals("select_orderhistory")){
+                        parserOrderhistorySelect(stringBuffer.toString());
+                    }
+
+                    else{
                         result1 = parserAction(stringBuffer.toString());
                     }
 
@@ -96,7 +103,12 @@ import java.net.URL;
 
             if(where.equals("select_stamp")){
                 return result;
-            }else{
+            }else if (where.equals("select_orderhistory")){
+                return stamphistory;
+            }
+
+
+            else{
                 //임시
                 return result1;
             }
@@ -152,6 +164,33 @@ import java.net.URL;
                 e.printStackTrace();
             }return user_rwStamp;
         }
+
+
+     private void parserOrderhistorySelect(String s){
+         try {
+             JSONObject jsonObject = new JSONObject(s);
+             JSONArray jsonArray = new JSONArray(jsonObject.getString("order_history"));
+             for (int i = 0; i < jsonArray.length(); i++) {
+                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+
+                 int user_uNo = jsonObject1.getInt("user_uNo");
+                 String oInsertDate = jsonObject1.getString("oInsertDate");
+                 String store_sName = jsonObject1.getString("store_sName");
+                 int total = jsonObject1.getInt("total");
+
+                 Log.v("테스","1"+user_uNo);
+                 Log.v("테스","1"+oInsertDate);
+                 Log.v("테스","1"+store_sName);
+
+                 bean_reward_stamphistory = new Bean_reward_stamphistory(user_uNo,oInsertDate,store_sName,total);
+                 stamphistory.add(bean_reward_stamphistory);
+             }
+
+         }catch (Exception e){
+             e.printStackTrace();
+         }
+     }
+
 
     } // ----------
 
