@@ -200,6 +200,7 @@ public class StampActivity extends AppCompatActivity {
     private int connectInsertData() {
         int result = 0;
         try {
+            String hContent = "스탬프 교환";
             // 스탬프로 인한 적립 히스토리 저장
             String urlAddress3 = urlAddr3 + "user_uNo=" + user_uNo;
             CUDNetworkTask_stampCount CUDNetworkTask_stampCount =  new CUDNetworkTask_stampCount(urlAddress3,"insert_stamp");
