@@ -1,8 +1,11 @@
 package com.example.tify.Jiseok.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +20,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.Minwoo.Activity.OrderListActivity;
 import com.example.tify.R;
 import com.example.tify.Taehyun.Activity.MypageActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class JiseokMainActivity extends AppCompatActivity {
+    String MacIP = "192.168.219.100";
     LinearLayout ll_hide;
     InputMethodManager inputMethodManager ;
 
@@ -31,12 +36,30 @@ public class JiseokMainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView = null;
     private RecyclerView.LayoutManager layoutManager = null;
+    String userEmail;
+    String userSeq;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cjs_activity_jiseok_main);
+
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+
+        SharedPreferences.Editor autoLogin = auto.edit();
+        userEmail = auto.getString("userEmail",null);
+        userSeq = auto.getString("userSeq",null);
+        Log.v("여기저기","이메일 : "+userEmail);
+        Log.v("여기저기","seq : "+userSeq);
+//        if(userSeq.equals("0")){
+//            Log.v("왜안떠1",""+selectUserSeq());
+//            userSeq = Integer.toString(selectUserSeq());
+//            autoLogin.putString("userSeq", userSeq);
+//            userSeq =  userSeq = auto.getString("userSeq",null);
+//            Log.v("여기저기","seq11111 : "+userSeq);
+//
+//        }
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -65,6 +88,7 @@ public class JiseokMainActivity extends AppCompatActivity {
                         Intent intent = new Intent(JiseokMainActivity.this, OrderListActivity.class);
                         startActivity(intent);
                         finish();
+
                         return true;
                     }
                     case R.id.action3: {
@@ -73,6 +97,7 @@ public class JiseokMainActivity extends AppCompatActivity {
                     }
                     case R.id.action4: {
                      //큐알결제
+                        Log.v("여기",""+selectUserSeq());
                         return true;
                     }
                     case R.id.action5: {
@@ -102,6 +127,19 @@ public class JiseokMainActivity extends AppCompatActivity {
 
 
 
+    }
+    private int selectUserSeq(){
+        int utc= 0;
+        try {
+            String urlAddr = "http://" + MacIP + ":8080/tify/userSeqSelect.jsp?uEmail="+ userEmail;
+            CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JiseokMainActivity.this, urlAddr, "uNoSelect");
+            Object obj = cjs_networkTask.execute().get();
+
+            utc= (int) obj;
+        }catch (Exception e){
+
+        }
+        return utc;
     }
 }
 

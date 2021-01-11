@@ -1,9 +1,11 @@
 package com.example.tify.Jiseok.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -198,6 +200,13 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
                                 //디비에 회원정보 저장
                                 insertUserInfo();
+                                String userseq = Integer.toString(selectUserSeq());
+                               //자동로그인
+                                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor autoLogin = auto.edit();
+                                autoLogin.putString("userEmail", userEmail);
+                                autoLogin.putString("userSeq", userseq);
+                                autoLogin.commit();
 
                                 new AlertDialog.Builder(JoinPayPasswordActivity.this)
                                         .setTitle("회원가입이 완료되었습니다.")
@@ -311,10 +320,30 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
     }
 
     private void insertUserInfo(){
-        String urlAddr = "http://" + MacIP + ":8080/tify/insertUserInfo.jsp?uEmail="+userEmail+"&uNickName="+userNickName+"&uTelNo="+userTel+"&uImage="+userProfile+"&uPayPassword="+payPassword2;
-        Log.v("여기","insertUserInfo : "+urlAddr);
-        CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinPayPasswordActivity.this,urlAddr,"insertUserInfo");
+       try {
+           String urlAddr = "http://" + MacIP + ":8080/tify/insertUserInfo.jsp?uEmail=" + userEmail + "&uNickName=" + userNickName + "&uTelNo=" + userTel + "&uImage=" + userProfile + "&uPayPassword=" + payPassword2;
+           Log.v("여기", "insertUserInfo : " + urlAddr);
+           CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinPayPasswordActivity.this, urlAddr, "insertUserInfo");
+           cjs_networkTask.execute().get();
+       }catch (Exception e){
+
+       }
 
     }
+    private int selectUserSeq(){
+        int utc= 0;
+        try {
+            String urlAddr = "http://" + MacIP + ":8080/tify/userSeqSelect.jsp?uEmail="+ userEmail;
+            Log.v("왜안떠",urlAddr);
+            CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinPayPasswordActivity.this, urlAddr, "uNoSelect");
+            Object obj = cjs_networkTask.execute().get();
+
+            utc= (int) obj;
+        }catch (Exception e){
+
+        }
+        return utc;
+    }
+
 
 }

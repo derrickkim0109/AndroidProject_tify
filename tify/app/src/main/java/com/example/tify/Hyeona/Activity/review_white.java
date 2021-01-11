@@ -305,9 +305,9 @@ public class review_white extends AppCompatActivity {
         actionBar.setCustomView(actionbar);
         TextView title = findViewById(R.id.title);
         title.setText("리뷰작성");
-        ImageButton cart = findViewById(R.id.cart);
-        cart.setVisibility(View.GONE);
-//         장바구니 없애려면 위에거 살리면 됨
+        //ImageButton cart = findViewById(R.id.cart);
+        //cart.setVisibility(View.GONE);
+        //장바구니 없애려면 위에거 살리면 됨
         //액션바 양쪽 공백 없애기
         ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {

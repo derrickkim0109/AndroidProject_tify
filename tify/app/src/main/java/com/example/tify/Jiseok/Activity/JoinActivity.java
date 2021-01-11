@@ -66,8 +66,8 @@ public class JoinActivity extends AppCompatActivity {
     int timeout = 0; // 타임아웃된 횟수
     String passPhone=null;
     String patternTel="^\\d{2,3}-\\d{3,4}-\\d{4}$";
-    String patternEmail="/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;";
-    String patternNickName="/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\\*]+$/";
+    String patternEmail="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    String patternNickName="^[가-힣ㄱ-ㅎa-zA-Z0-9._ -]{2,}\\$";
 
 
     String getTextCheck = null; // editText null 체크용 변수
@@ -360,14 +360,17 @@ public class JoinActivity extends AppCompatActivity {
                         etNickName.requestFocus();
                         break;
                     }
-//                    if(!Pattern.matches(patternEmail,etEmail.getText().toString())){
-//                        new AlertDialog.Builder(JoinActivity.this)
-//                                .setTitle("이메일형식을 확인해 주세요.")
-//                                .setPositiveButton("확인",null)
-//                                .show();
-//                        etEmail.requestFocus();
-//                        break;
-//                    }
+
+                    if(!Pattern.matches(patternEmail,etEmail.getText().toString())){
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("이메일형식을 확인해 주세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        etEmail.requestFocus();
+                        break;
+                    }
+
+//                    Log.v("제발",""+Pattern.matches(patternNickName,etNickName.getText().toString()));
 //                    if(!Pattern.matches(patternNickName,etNickName.getText().toString())){
 //                        new AlertDialog.Builder(JoinActivity.this)
 //                                .setTitle("한글,영어,숫자만 입력 가능합니다.")
@@ -385,6 +388,7 @@ public class JoinActivity extends AppCompatActivity {
                         etEmail.requestFocus();
                         break;
                     }
+
 
 
                     // 페이 페스워드로 이동
@@ -539,10 +543,12 @@ public class JoinActivity extends AppCompatActivity {
         int utc= 0;
         try {
             String urlAddr = "http://" + MacIP + ":8080/tify/userEmailSelect.jsp?uEmail="+ etEmail.getText().toString();
+            Log.v("여기","urlAddr : "+urlAddr);
             CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinActivity.this, urlAddr, "userEmailCount");
             Object obj = cjs_networkTask.execute().get();
 
             utc= (int) obj;
+            Log.v("여기","userEmailCheck : "+utc);
         }catch (Exception e){
 
         }
