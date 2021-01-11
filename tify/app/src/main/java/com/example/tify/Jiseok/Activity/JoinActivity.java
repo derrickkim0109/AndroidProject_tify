@@ -390,6 +390,7 @@ public class JoinActivity extends AppCompatActivity {
                     }
 
 
+
                     // 페이 페스워드로 이동
                     connectImage();
                     Intent intent2 = new Intent(JoinActivity.this,JoinPayPasswordActivity.class);
@@ -547,6 +548,7 @@ public class JoinActivity extends AppCompatActivity {
             Object obj = cjs_networkTask.execute().get();
 
             utc= (int) obj;
+            Log.v("여기","userEmailCheck : "+utc);
         }catch (Exception e){
 
         }

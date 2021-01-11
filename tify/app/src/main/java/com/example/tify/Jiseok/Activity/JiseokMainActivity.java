@@ -52,14 +52,14 @@ public class JiseokMainActivity extends AppCompatActivity {
         userSeq = auto.getString("userSeq",null);
         Log.v("여기저기","이메일 : "+userEmail);
         Log.v("여기저기","seq : "+userSeq);
-        if(userSeq.equals("0")){
-            Log.v("왜안떠1",""+selectUserSeq());
-            userSeq = Integer.toString(selectUserSeq());
-            autoLogin.putString("userSeq", userSeq);
-            userSeq =  userSeq = auto.getString("userSeq",null);
-            Log.v("여기저기","seq11111 : "+userSeq);
-
-        }
+//        if(userSeq.equals("0")){
+//            Log.v("왜안떠1",""+selectUserSeq());
+//            userSeq = Integer.toString(selectUserSeq());
+//            autoLogin.putString("userSeq", userSeq);
+//            userSeq =  userSeq = auto.getString("userSeq",null);
+//            Log.v("여기저기","seq11111 : "+userSeq);
+//
+//        }
 
 
         ActionBar actionBar = getSupportActionBar();
