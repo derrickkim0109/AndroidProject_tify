@@ -4,6 +4,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTabHost;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TabHost;
 
 import com.android.tify_store.Minwoo.Fragment.CompleteFragment;
 import com.android.tify_store.Minwoo.Fragment.OrderRequestFragment;
@@ -111,15 +116,15 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("macIP", macIP);
         bundle.putInt("skSeqNo", skSeqNo);
-
         OrderRequestFragment.setArguments(bundle);
-
-
-        getSupportFragmentManager().beginTransaction().add(R.id.frame, OrderRequestFragment).commit(); // 초기 시작 프래그먼트
+        ProgressingFragment.setArguments(bundle);
+        CompleteFragment.setArguments(bundle);
 
         tabs.addTab(tabs.newTab().setText("접수대기"));
         tabs.addTab(tabs.newTab().setText("처리중"));
         tabs.addTab(tabs.newTab().setText("완료"));
+
+        getSupportFragmentManager().beginTransaction().add(R.id.frame, OrderRequestFragment).commit();
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -145,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
 
             }
         });

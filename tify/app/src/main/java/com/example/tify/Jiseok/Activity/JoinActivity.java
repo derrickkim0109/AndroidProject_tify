@@ -1,21 +1,24 @@
 package com.example.tify.Jiseok.Activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.telephony.SmsManager;
-import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,22 +26,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresPermission;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
+import com.example.tify.Hyeona.Activity.review_white;
+import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.R;
+import com.example.tify.Taehyun.NetworkTask.ImageNetworkTask_TaeHyun;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class JoinActivity extends AppCompatActivity {
-    LinearLayout ly1,ly2;
+    InputMethodManager inputMethodManager ;
+
+    LinearLayout ly1,ly2,ly;
     EditText etTel, etAuthentication, etEmail, etNickName;
     Button btnAuthentication, btnGo, btnGoGo;
-    ImageView imgProfile, imgProfilePlus;
+    ImageView imgProfilePlus;
+    CircularImageView imgProfile;
     TextView time_counter;
     CountDownTimer countDownTimer;
     final int MILLISINFUTURE = 180 * 1000; //총 시간 (300초 = 5분)
@@ -50,11 +66,26 @@ public class JoinActivity extends AppCompatActivity {
     int timeout = 0; // 타임아웃된 횟수
     String passPhone=null;
     String patternTel="^\\d{2,3}-\\d{3,4}-\\d{4}$";
-    String patternEmail="/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;";
-    String patternNickName="/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\\*]+$/";
+    String patternEmail="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    String patternNickName="^[가-힣ㄱ-ㅎa-zA-Z0-9._ -]{2,}\\$";
 
 
     String getTextCheck = null; // editText null 체크용 변수
+
+    String MacIP="192.168.219.100";
+
+    String imageurl;
+    String img_path = null;// 최종 file name
+    String f_ext = null;
+    File tempSelectFile;
+    String imgName = null;
+    String db_review_content;
+    String devicePath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.android.tify/"; //// 외부쓰레드 에서 메인 UI화면을 그릴때 사용 인데 뭔지모르겟음
+    //갤러리
+    private final int REQ_CODE_SELECT_IMAGE = 300; // Gallery Return Code
+
+
+
 
 
 
@@ -62,30 +93,11 @@ public class JoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cjs_activity_join);
+        ActivityCompat.requestPermissions(JoinActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
 
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.SEND_SMS)){
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("info");
-                builder.setMessage("This app won't work properly unless you grant SMS permission.");
-                builder.setIcon(R.drawable.ic_action_before);
 
-                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(JoinActivity.this,new String[] {Manifest.permission.SEND_SMS}, MY_PERMISSION_REQUEST_SMS);
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
-            }else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSION_REQUEST_SMS);
-            }
-        }
-
+        ly = findViewById(R.id.join_ly_Layout);
         // 1번 프레임
         ly1 = findViewById(R.id.join_ly_fram1);
         etTel = findViewById(R.id.join_et_tel);
@@ -106,6 +118,15 @@ public class JoinActivity extends AppCompatActivity {
 
         imgProfilePlus.setOnClickListener(secondFrameClickListener);
         btnGoGo.setOnClickListener(secondFrameClickListener);
+        inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);  //OS에서 지원해주는 메소드이다.
+
+        //키보드 화면 터치시 숨김.
+        ly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputMethodManager.hideSoftInputFromWindow(ly.getWindowToken(),0);
+            }
+        });
 
 
         etTel.addTextChangedListener(new TextWatcher() {//자동으로 "-" 생성해서 전화번호에 붙여주기
@@ -187,6 +208,7 @@ public class JoinActivity extends AppCompatActivity {
                                 .show();
                         etTel.requestFocus();
                         break;
+
                     }
                     if(!Pattern.matches(patternTel,etTel.getText().toString())){
                         new AlertDialog.Builder(JoinActivity.this)
@@ -195,6 +217,38 @@ public class JoinActivity extends AppCompatActivity {
                                 .show();
                         etTel.requestFocus();
                         break;
+
+                    }
+
+                    if(userTelCount()==1){
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("이미 가입된 전화번호 입니다.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        break;
+                    }
+
+                    if(ContextCompat.checkSelfPermission(JoinActivity.this,Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
+                        if(ActivityCompat.shouldShowRequestPermissionRationale(JoinActivity.this,Manifest.permission.SEND_SMS)){
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(JoinActivity.this);
+                            builder.setTitle("info");
+                            builder.setMessage("This app won't work properly unless you grant SMS permission.");
+                            builder.setIcon(R.drawable.ic_action_before);
+
+                            builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ActivityCompat.requestPermissions(JoinActivity.this,new String[] {Manifest.permission.SEND_SMS}, MY_PERMISSION_REQUEST_SMS);
+                                }
+                            });
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+
+                        }else {
+                            ActivityCompat.requestPermissions(JoinActivity.this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSION_REQUEST_SMS);
+                        }
                     }
 
 
@@ -225,7 +279,7 @@ public class JoinActivity extends AppCompatActivity {
                             ActivityCompat.requestPermissions(JoinActivity.this, new String[]{ Manifest.permission.RECEIVE_SMS}, SMS_RECEIVE_PERMISSON);
                         }
                     }
-                    break;
+                    break; // 인증버튼 끝
 
                     // 1번프레임 계속하기버튼
                     case R.id.join_btn_go:
@@ -256,6 +310,7 @@ public class JoinActivity extends AppCompatActivity {
                                         .setMessage("인증번호 재요청을 눌러주세요.")
                                         .setPositiveButton("확인",null)
                                         .show();
+                                break;
                         }// ----- timeout switch
 
 
@@ -275,9 +330,12 @@ public class JoinActivity extends AppCompatActivity {
             switch (v.getId()){
                 // 2번프레임 프로필플러스 버튼
                 case R.id.join_img_profilePlus:
-                    ///////////////////////////////////////////////
-                    //  이미지                                  ///
-                    //////////////////////////////////////////////
+                    // 이미지 넣는 버튼 눌렀을 때
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);
+                    //카메라, 갤러리를 진행시킴
 
                     break;
                     // 2번프레임 계속하기버튼
@@ -302,14 +360,17 @@ public class JoinActivity extends AppCompatActivity {
                         etNickName.requestFocus();
                         break;
                     }
-//                    if(!Pattern.matches(patternEmail,etEmail.getText().toString())){
-//                        new AlertDialog.Builder(JoinActivity.this)
-//                                .setTitle("이메일형식을 확인해 주세요.")
-//                                .setPositiveButton("확인",null)
-//                                .show();
-//                        etEmail.requestFocus();
-//                        break;
-//                    }
+
+                    if(!Pattern.matches(patternEmail,etEmail.getText().toString())){
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("이메일형식을 확인해 주세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        etEmail.requestFocus();
+                        break;
+                    }
+
+//                    Log.v("제발",""+Pattern.matches(patternNickName,etNickName.getText().toString()));
 //                    if(!Pattern.matches(patternNickName,etNickName.getText().toString())){
 //                        new AlertDialog.Builder(JoinActivity.this)
 //                                .setTitle("한글,영어,숫자만 입력 가능합니다.")
@@ -319,15 +380,25 @@ public class JoinActivity extends AppCompatActivity {
 //                        break;
 //                    }
                     //-------------------------- 정규식 종료 --------------------------
+                    if(userEmailCheck()==1){
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("이미가입된 이메일 입니다.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        etEmail.requestFocus();
+                        break;
+                    }
+
 
 
                     // 페이 페스워드로 이동
-                    Intent intent = new Intent(JoinActivity.this,JoinPayPasswordActivity.class);
-                    intent.putExtra("userTel",etTel.getText().toString());
-                    //intent.putExtra("userprofile")\
-                    intent.putExtra("userEmail",etEmail.getText().toString());
-                    intent.putExtra("userNickName",etNickName.getText().toString());
-                    startActivity(intent);
+                    connectImage();
+                    Intent intent2 = new Intent(JoinActivity.this,JoinPayPasswordActivity.class);
+                    intent2.putExtra("userTel",etTel.getText().toString());
+                    intent2.putExtra("userProfile",imgName);
+                    intent2.putExtra("userEmail",etEmail.getText().toString());
+                    intent2.putExtra("userNickName",etNickName.getText().toString());
+                    startActivity(intent2);
 
 
 
@@ -340,6 +411,39 @@ public class JoinActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         processCommand(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQ_CODE_SELECT_IMAGE && resultCode == Activity.RESULT_OK) {
+            try {
+                //이미지의 URI를 얻어 경로값으로 반환.
+                img_path = getImagePathToUri(data.getData());
+                Log.v("이미지", "image path :" + img_path);
+                Log.v("이미지", "Data :" +String.valueOf(data.getData()));
+
+                //이미지를 비트맵형식으로 반환
+                Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+
+                //image_bitmap 으로 받아온 이미지의 사이즈를 임의적으로 조절함. width: 400 , height: 300
+                Bitmap image_bitmap_copy = Bitmap.createScaledBitmap(image_bitmap, 400, 400, true);
+                imgProfile.setImageBitmap(image_bitmap_copy);
+
+                // 파일 이름 및 경로 바꾸기(임시 저장, 경로는 임의로 지정 가능)
+                String date = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());
+                String imageName = date + "." + f_ext;
+                tempSelectFile = new File(devicePath , imageName);
+                OutputStream out = new FileOutputStream(tempSelectFile);
+                image_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
+                // 임시 파일 경로로 위의 img_path 재정의
+                img_path = devicePath + imageName;
+                Log.v("이미지","fileName :" + img_path);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 
@@ -417,6 +521,89 @@ public class JoinActivity extends AppCompatActivity {
         }
     }
 
+    // 전화번호 중복체크
+    private int userTelCount(){
+        int utc= 0;
+        try {
+            String urlAddr = "http://" + MacIP + ":8080/tify/userTelSelect.jsp?usertel="+ etTel.getText().toString();
+            Log.v("urlAddr",""+urlAddr);
+            CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinActivity.this, urlAddr, "userTelCount");
+            Object obj = cjs_networkTask.execute().get();
+
+            utc= (int) obj;
+        }catch (Exception e){
+
+        }
+        return utc;
+    }
+
+
+    // 이메일 중복체크크
+   private int userEmailCheck(){
+        int utc= 0;
+        try {
+            String urlAddr = "http://" + MacIP + ":8080/tify/userEmailSelect.jsp?uEmail="+ etEmail.getText().toString();
+            Log.v("여기","urlAddr : "+urlAddr);
+            CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinActivity.this, urlAddr, "userEmailCount");
+            Object obj = cjs_networkTask.execute().get();
+
+            utc= (int) obj;
+            Log.v("여기","userEmailCheck : "+utc);
+        }catch (Exception e){
+
+        }
+        return utc;
+    }
+
+    //이미지
+    public String getImagePathToUri(Uri data) {
+
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(data, proj, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+
+        //이미지의 경로 값
+        String imgPath = cursor.getString(column_index);
+        Log.v("이미지", "Image Path :" + imgPath);
+
+        //이미지의 이름 값
+        imgName = imgPath.substring(imgPath.lastIndexOf("/") + 1).replaceAll("\\p{Z}","");
+
+        // 확장자 명 저장
+        f_ext = imgPath.substring(imgPath.length()-3, imgPath.length());
+
+        return imgPath;
+    }//end of getImagePathToUri()
+
+
+    private void connectImage(){
+        imageurl = "http://" + MacIP + ":8080/tify/multipartRequest.jsp";
+        ImageNetworkTask_TaeHyun imageNetworkTask = new ImageNetworkTask_TaeHyun(JoinActivity.this,imgProfile,img_path,imageurl);
+        try {
+            Integer result = imageNetworkTask.execute(100).get();
+
+            switch (result){
+                case 1:
+                    Toast.makeText(JoinActivity.this, "이미지서버 저장 성공 !", Toast.LENGTH_SHORT).show();
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////
+                    //
+                    //              Device에 생성한 임시 파일 삭제
+                    //
+                    //////////////////////////////////////////////////////////////////////////////////////////////
+                    File file = new File(img_path);
+                    file.delete();
+                    break;
+                case 0:
+                    Toast.makeText(JoinActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+            //////////////////////////////////////////////////////////////////////////////////////////////
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 }//--------------------------------

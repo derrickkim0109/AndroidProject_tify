@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,11 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.bumptech.glide.Glide;
+import com.example.tify.Jiseok.Activity.JoinActivity;
 import com.example.tify.R;
 import com.example.tify.Taehyun.NetworkTask.ImageNetworkTask_TaeHyun;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
@@ -36,6 +40,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class Mypage_ProfileChageActivity extends AppCompatActivity {
     //2021.01.07-태현
@@ -69,6 +74,12 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
     //XML for findID
     EditText nickname, telNo = null;
     ImageView btn_update = null;
+    String passPhone=null;
+    String patternTel="^\\d{2,3}-\\d{3,4}-\\d{4}$";
+    String patternNickName="/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\\*]+$/";
+    String getTelCheck = null; // editText null 체크용 변수
+    String getNickNameCheck = null; // editText null 체크용 변수
+
 
     Intent intent = null;
     String snickname = null, stelNo =null;
@@ -133,6 +144,64 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
             sendImageRequest(mImage);
 //        }
 
+        //휴대폰 넘버
+        telNo.addTextChangedListener(new TextWatcher() {
+            private int beforeLenght = 0;
+            private int afterLenght = 0;
+
+            //입력 혹은 삭제 전의 길이와 지금 길이를 비교하기 위해 beforeTextChanged에 저장
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                beforeLenght = s.length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //아무글자도 없는데 지우려고 하면 로그띄우기 에러방지
+                if (s.length() <= 0) {
+                    Log.d("addTextChangedListener", "onTextChanged: Intput text is wrong (Type : Length)");
+                    return;
+                }
+                //특수문자 입력 방지
+                char inputChar = s.charAt(s.length() - 1);
+                if (inputChar != '-' && (inputChar < '0' || inputChar > '9')) {
+                    telNo.getText().delete(s.length() - 1, s.length());
+                    return;
+                }
+
+                afterLenght = s.length();
+
+                String tel = String.valueOf(telNo.getText());
+                tel.substring(0,1);
+                Log.v("하이픈", "after" + String.valueOf(afterLenght));
+
+                if (beforeLenght < afterLenght) {// 타자를 입력 중이면
+                    if (s.toString().indexOf("01") < 0 && afterLenght == 2) { //subSequence로 지정된 문자열을 반환해서 "-"폰을 붙여주고 substring
+                        telNo.setText(s.toString().subSequence(0, 2) + "-" + s.toString().substring(2, s.length()));
+
+                    } else if (s.toString().indexOf("01") < 0 && afterLenght == 6) {
+                        telNo.setText(s.toString().subSequence(0, 6) + "-" + s.toString().substring(6, s.length()));
+
+                    } else {
+                        if (afterLenght == 4 && s.toString().indexOf("-") < 0) { //subSequence로 지정된 문자열을 반환해서 "-"폰을 붙여주고 substring
+                            telNo.setText(s.toString().subSequence(0, 3) + "-" + s.toString().substring(3, s.length()));
+
+                        } else if (s.toString().indexOf("02") < 0 && afterLenght == 9) {
+                            telNo.setText(s.toString().subSequence(0, 8) + "-" + s.toString().substring(8, s.length()));
+
+                        }
+                    }
+                }
+                telNo.setSelection(telNo.length());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
@@ -228,17 +297,35 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
             switch (v.getId()) {
                 //업데이트
                 case R.id.profile_btn_update:
-                    //이미지 서버에 올리기 연결
-                    connectImage();
-                    snickname = nickname.getText().toString();
-                    stelNo = telNo.getText().toString();
 
-                    if (snickname.equals("")){
-                        Toast.makeText(Mypage_ProfileChageActivity.this,"닉네임을 입력하세요.",Toast.LENGTH_SHORT).show();
-                    }else if (stelNo.equals("")){
-                        Toast.makeText(Mypage_ProfileChageActivity.this,"전화번호를 입력하세요.",Toast.LENGTH_SHORT).show();
+                    //휴대폰
+                    getTelCheck = telNo.getText().toString();
+                    if (getTelCheck.getBytes().length <= 0) {
+                        if(!Pattern.matches(patternTel,telNo.getText().toString())){
+                            new AlertDialog.Builder(Mypage_ProfileChageActivity.this)
+                                    .setTitle("전화번호를 확인해 주세요.")
+                                    .setPositiveButton("확인",null)
+                                    .show();
+                            telNo.requestFocus();
+                            break;
+                        }
+                    }
+                    //닉네임
+                    getNickNameCheck = nickname.getText().toString();
+                    if (getNickNameCheck.getBytes().length <= 0) {
+                        if(!Pattern.matches(patternNickName,nickname.getText().toString())){
+                            new AlertDialog.Builder(Mypage_ProfileChageActivity.this)
+                                    .setTitle("닉네임을 확인해 주세요.")
+                                    .setPositiveButton("확인",null)
+                                    .show();
+                            telNo.requestFocus();
+                            break;
+                        }
                     }
                     else {
+                        //이미지 서버에 올리기 연결
+                        connectImage();
+
                         String result = connectUpdate();
                         if(result.equals("1")){
                             Toast.makeText(Mypage_ProfileChageActivity.this,"성공 .",Toast.LENGTH_SHORT).show();
@@ -273,6 +360,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
                     intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);// 2021.01.08 - 태현
                     break;
+
                 case R.id.profile_change:
                     intent = new Intent(Intent.ACTION_PICK);
                     intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
@@ -298,6 +386,8 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
                             .putExtra("uNo",uNo)
                             .putExtra("uPayPassword", uPayPassword);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
                     break;
 
                 case R.id.profile_withdraw:
@@ -350,6 +440,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
             }
 
         }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 

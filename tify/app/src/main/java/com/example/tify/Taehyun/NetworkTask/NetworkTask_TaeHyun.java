@@ -73,6 +73,7 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
         //
         ///////////////////////////////////////////////////////////////////////////////////////
         String result = null;
+        String count = null;
         ///////////////////////////////////////////////////////////////////////////////////////
 
         try {
@@ -100,7 +101,10 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                 ///////////////////////////////////////////////////////////////////////////////////////
                 if (where.equals("select")) {
                     parserSelect(stringBuffer.toString());
-                } else {
+                } else if (where.equals("count")){
+                    count = parserCardSelect(stringBuffer.toString());
+                }
+                else {
                     result = parserAction(stringBuffer.toString());
                 }
                 ///////////////////////////////////////////////////////////////////////////////////////
@@ -131,6 +135,8 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
             Log.v("설마","ㄹㅇㄴㄹㅇㄴ"+userinfo);
 
             return userinfo;
+        } else if (where.equals("count")){
+            return count;
         } else {
             return result;
         }
@@ -198,7 +204,34 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
             e.printStackTrace();
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Date : 2021.01.11
+    //
+    // Description:
+    //  -//카드 등록한 갯수 파악
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+    private String parserCardSelect(String s){
+        Log.v(TAG,"Parser()");
+        String returnValue = null;
 
+        try {
+            Log.v(TAG, s);
+
+            JSONObject jsonObject = new JSONObject(s);
+            returnValue = jsonObject.getString("cardCount");
+            Log.v(TAG, returnValue);
+
+            }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return returnValue;
+
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////////////////

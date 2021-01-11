@@ -14,6 +14,7 @@ public class Order {
     int oCardNo;
     int oReview;
     int oStatus;
+    int max;
 
     public Order(int user_uNo, int oNo, int store_sSeqno, String store_sName, String oInsertDate, String oDeleteDate, int oSum, String oCardName, int oCardNo, int oReview, int oStatus) {
         this.user_uNo = user_uNo;
@@ -27,6 +28,10 @@ public class Order {
         this.oCardNo = oCardNo;
         this.oReview = oReview;
         this.oStatus = oStatus;
+    }
+
+    public Order(int max) {
+        this.max = max;
     }
 
     public int getUser_uNo() {
@@ -115,5 +120,13 @@ public class Order {
 
     public void setoStatus(int oStatus) {
         this.oStatus = oStatus;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
     }
 }

@@ -57,6 +57,7 @@ public class MypageActivity extends AppCompatActivity {
     Intent intent = null;
     String mypage_uImage = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,15 +107,22 @@ public class MypageActivity extends AppCompatActivity {
                             .putExtra("macIP", macIP);
 
                     startActivity(intent);
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
                     break;
 
                 //카드등록
                 case 1:
+                    //카드 등록햇나 유무 파악
+                    int cardcount = cardCountselect();
+                    Log.v("ㄲㄲㄲ여기기기기", ":"+cardcount);
                     intent = new Intent(MypageActivity.this, Mypage_CardRegistrationActivity.class)
                             .putExtra("uNo", uNo)
-                            .putExtra("macIP", macIP);
+                            .putExtra("macIP", macIP)
+                            .putExtra("cardcount",cardcount);
 
                     startActivity(intent);
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
                     break;
 
@@ -134,7 +142,7 @@ public class MypageActivity extends AppCompatActivity {
                             autoLogin.clear();
                             autoLogin.commit();
                             startActivity(intent);
-                            // 아이디값 넘기기?
+
                         }
                     });
                     builder.create().show();
@@ -222,6 +230,21 @@ public class MypageActivity extends AppCompatActivity {
                 break;
         }
     }
+    // 전화번호 중복체크
+    private int cardCountselect(){
+        int cardcount = 0;
+        try {
+            uNo = 1;
+            String urlAddr = "http://" + macIP + ":8080/tify/mypage_cardcountselect.jsp?uNo="+ uNo;
+            Log.v("urlAddr",""+urlAddr);
+            NetworkTask_TaeHyun countnetworkTask = new NetworkTask_TaeHyun(MypageActivity.this, urlAddr, "count");
+            Object obj = countnetworkTask.execute().get();
 
+            cardcount= (int) obj;
+        }catch (Exception e){
+
+        }
+        return cardcount;
+    }
 
 }////---END

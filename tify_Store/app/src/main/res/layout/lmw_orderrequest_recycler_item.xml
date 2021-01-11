@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:layout_height="25dp"
                 android:gravity="left"
-                android:text="주문번호 : 1"
+                android:text="주문번호 : 9999"
                 android:paddingLeft="20dp"
                 />
 
@@ -52,7 +52,7 @@
                 android:id="@+id/fragment_OrderRequest_CV_StoreName"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:text="스타벅스"
+                android:text="스타벅스999"
                 android:gravity="center"
                 android:textColor="@color/black"/>
             <TextView
@@ -75,7 +75,7 @@
                         android:id="@+id/fragment_OrderRequest_CV_MenuName"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:text="아메리카노(COLD)"
+                        android:text="아메리카노(COLD)999"
                         android:paddingLeft="20dp"
                         android:textColor="@color/black"
                         />
@@ -94,7 +94,7 @@
                         android:id="@+id/fragment_OrderRequest_CV_AddOrder2"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:text="+샷추가"
+                        android:text="+샷추가999"
                         android:paddingLeft="20dp"
                         android:visibility="invisible"
                         android:textColor="@color/black"
@@ -104,7 +104,7 @@
                         android:id="@+id/fragment_OrderRequest_CV_Request"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:text="얼음 조금만 넣어주세요"
+                        android:text="얼음 조금만 넣어주세요999"
                         android:paddingLeft="20dp"
                         android:visibility="invisible"
                         />
@@ -120,7 +120,7 @@
                         android:id="@+id/fragment_OrderRequest_CV_SubTotalPrice"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="4,000원"
+                        android:text="4,000원999"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:paddingRight="20dp"/>

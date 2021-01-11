@@ -1,21 +1,30 @@
 package com.android.tify_store.Minwoo.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.tify_store.Minwoo.Activity.MainActivity;
 import com.android.tify_store.Minwoo.Bean.OrderRequest;
+import com.android.tify_store.Minwoo.Fragment.DialogFragment_OrderRequest_Cancel;
+import com.android.tify_store.Minwoo.Fragment.DialogFragment_Progressing_Accept;
+import com.android.tify_store.Minwoo.Fragment.OrderRequestFragment;
 import com.android.tify_store.Minwoo.Fragment.ProgressingFragment;
+import com.android.tify_store.Minwoo.NetworkTask.LMW_LoginNetworkTask;
+import com.android.tify_store.Minwoo.NetworkTask.LMW_OrderListNetworkTask;
 import com.android.tify_store.R;
 
 import java.text.NumberFormat;
@@ -28,6 +37,15 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
     Context context;
     Fragment fragment;
 
+    String macIP;
+    String urlAddr = null;
+    String where = null;
+    int skSeqNo = 0;
+
+    int positionNum = -1;
+
+    int switchNum = -1;
+
     //인터페이스 선언
     public interface OnItemClickListener{
         void onItemClick(View v, int position);
@@ -39,6 +57,12 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
     public void setOnItemClickListener(ProgressingAdapter.OnItemClickListener listener){
         this.mListener = listener;
         Log.v(TAG, "setOnItemClickListener");
+
+    }
+
+    public int returnNum(){
+
+        return positionNum;
     }
 
     private ArrayList<OrderRequest> mDataset;
@@ -77,6 +101,7 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
                     Log.v(TAG, "MyViewHolder onClick");
 
                     int position=getAdapterPosition();//어뎁터 포지션값
+
                     // 뷰홀더에서 사라지면 NO_POSITION 을 리턴
                     if(position!=RecyclerView.NO_POSITION){
                         if(mListener !=null){
@@ -89,9 +114,12 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
         }
     }
 
-    public ProgressingAdapter(ArrayList<OrderRequest> mDataset, ProgressingFragment fragment) {
-        this.mDataset = mDataset;
-        this.fragment = fragment;
+    // 메인 액티비티에서 받은 myDataset을 가져오
+    public ProgressingAdapter(ProgressingFragment MenuFragment, int member, ArrayList<OrderRequest> myDataset, String macIP, int skSeqNo) {
+        this.mDataset = myDataset;
+        this.fragment = MenuFragment;
+        this.macIP = macIP;
+        this.skSeqNo = skSeqNo;
     }
 
     @NonNull
@@ -109,9 +137,14 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Log.v(TAG, "onBindViewHolder");
+        Log.v(TAG, "switchNum : " + switchNum);
+        if(switchNum == 1){
+            holder.makeDone.setEnabled(false);
+            holder.pickUpDone.setEnabled(false);
+        }
 
         holder.oSeqno.setText("주문번호 : " + mDataset.get(position).getOrder_oNo());
-        holder.oDate.setText("2021-01-10 13:13"); // 고객이 요청할 때 보내주는 입력 시간으로 받기
+        holder.oDate.setText(mDataset.get(position).getoInsertDate());
         holder.sName.setText(mDataset.get(position).getStore_sName());
         holder.mName.setText(mDataset.get(position).getMenu_mName());
 
@@ -134,19 +167,73 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
 
         holder.subTotalPrice.setText(strTotal + "원");
 
+        Log.v(TAG, "mDataset.get(position).getoStatus() : " + mDataset.get(position).getoStatus());
+
+        if(mDataset.get(position).getoStatus() == 1){
+            holder.makeDone.setEnabled(true);
+            holder.makeDone.setBackgroundColor(Color.WHITE);
+            holder.pickUpDone.setEnabled(false);
+            holder.pickUpDone.setBackgroundColor(Color.parseColor("#48000000"));
+        }else{
+            holder.makeDone.setEnabled(false);
+            holder.makeDone.setBackgroundColor(Color.parseColor("#48000000"));
+            holder.pickUpDone.setBackgroundColor(Color.WHITE);
+            holder.pickUpDone.setEnabled(true);
+            holder.pickUpDone.setTextColor(Color.BLACK);
+        }
+
         holder.makeDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 holder.makeDone.setEnabled(false);
+                holder.makeDone.setBackgroundColor(Color.parseColor("#48000000"));
                 holder.pickUpDone.setBackgroundColor(Color.BLACK);
                 holder.pickUpDone.setEnabled(true);
+
+                urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus2.jsp?oNo=" + mDataset.get(position).getOrder_oNo();
+                where = "update";
+
+                String result = connectUpdateData();
+
+                if(result.equals("1")){
+
+                }else {
+                    Toast.makeText(fragment.getActivity(), "오류 발생! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         holder.pickUpDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.pickUpDone.setEnabled(false);
+                holder.pickUpDone.setBackgroundColor(Color.parseColor("#48000000"));
+                holder.makeDone.setVisibility(View.GONE);
+                holder.pickUpDone.setText("완료탭에서 확인해주세요");
+
+                urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus3.jsp?oNo=" + mDataset.get(position).getOrder_oNo();
+                where = "update";
+
+                String result = connectUpdateData();
+
+                if(result.equals("1")){
+                    Toast.makeText(fragment.getActivity(), "고객에게 알림이 전송되었습니다.", Toast.LENGTH_SHORT).show();
+                    switchNum = 1;
+
+//                    DialogFragment_Progressing_Accept dialogFragment_progressing_accept = new DialogFragment_Progressing_Accept();
+//
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("macIP", macIP);
+//                    bundle.putInt("skSeqNo", skSeqNo);
+//
+//                    dialogFragment_progressing_accept.setArguments(bundle);
+//                    dialogFragment_progressing_accept.show(fragment.getActivity().getSupportFragmentManager(),"tag");
+
+                }else {
+                    Toast.makeText(fragment.getActivity(), "오류 발생! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show();
+                }
             }
+
         });
 
     }
@@ -157,4 +244,38 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
         Log.v(TAG, "getItemCount");
         return mDataset.size();
     }
+
+    private String connectUpdateData(){ // oStatus 2,3으로 바꾸기
+        String result = null;
+
+        try {
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // Date : 2020.12.25
+            //
+            // Description:
+            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
+            //  - NetworkTask의 생성자 추가 : where <- "insert"
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////
+            LMW_OrderListNetworkTask networkTask = new LMW_OrderListNetworkTask(fragment.getActivity(), urlAddr, where);
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // Date : 2020.12.24
+            //
+            // Description:
+            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////
+            Object obj = networkTask.execute().get();
+            result = (String) obj;
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
 }

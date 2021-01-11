@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tify">
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -21,9 +22,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
+
         <activity android:name=".Hyeona.Activity.PointActivity"></activity>
+
+
+        <activity
+            android:name=".Hyeona.Activity.StampActivity"
+            android:label="@string/title_activity_stamp"
+            android:theme="@style/NoActionBar" /> <!-- 태현 -->
+        <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity" /> <!-- 태현 -->
+
         <!-- 태현 -->
-        <activity android:name=".Taehyun.Activity.CardRG2Activity" />
         <activity android:name=".Taehyun.Activity.MypageActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />
@@ -31,7 +40,10 @@
         <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity" /> <!-- 태현 -->
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
-        <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" /> <!-- 지석 -->
+        <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />
+        <activity android:name=".Jiseok.Activity.JiseokMainActivity" />
+        <activity android:name=".Jiseok.Activity.EmailLoginActivity"/>
+        <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.BeforePayActivity2" />
         <activity android:name=".Minwoo.Activity.EmptyCartActivity" />
@@ -44,10 +56,15 @@
         <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- 현아 -->
         <activity android:name=".Hyeona.Activity.LoginActivity" />
-        <activity android:name=".Hyeona.Activity.StampActivity" />
+
         <activity android:name=".MainActivity" /> <!-- <activity android:name=".Hyeona.Activity.review_white"/> -->
-        <activity android:name=".Jiseok.Activity.JiseokMainActivity" />
+
         <activity android:name=".Hyeona.Activity.reviewActivity" /> <!-- <activity android:name=".Hyeona.Activity.IntroActivity"> -->
+
+
+        <activity android:name=".Hyeona.Activity.test" />
+
+
         <activity android:name=".Hyeona.Activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
