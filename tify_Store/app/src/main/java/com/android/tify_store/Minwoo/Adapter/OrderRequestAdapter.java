@@ -165,11 +165,11 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
 
             if (mDataset.get(position).getOlAddShot() != 0) {
                 holder.addOrder1.setVisibility(View.VISIBLE);
-                holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlSizeUp());
+                holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlAddShot());
             }
             if (mDataset.get(position).getOlSizeUp() != 0) {
                 holder.addOrder2.setVisibility(View.VISIBLE);
-                holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlAddShot());
+                holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlSizeUp());
             }
             if (mDataset.get(position).getOlRequest() != null) {
                 holder.request.setVisibility(View.VISIBLE);

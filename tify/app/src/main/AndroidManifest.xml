@@ -29,14 +29,11 @@
             android:label="@string/title_activity_stamp"
             android:theme="@style/NoActionBar"
             ></activity>
-
-
-
-
+        <activity android:name=".Hyeona.Activity.PointActivity"></activity>
 
         <!-- 태현 -->
+        <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity" /> <!-- 태현 -->
         <activity android:name=".Taehyun.Activity.MypageActivity" />
-        <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity"></activity>
         <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_CardRegistrationActivity" />
@@ -45,7 +42,8 @@
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
         <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />
-        <activity android:name=".Jiseok.Activity.JiseokMainActivity"/>
+        <activity android:name=".Jiseok.Activity.JiseokMainActivity" />
+        <activity android:name=".Jiseok.Activity.EmailLoginActivity"/>
         <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.BeforePayActivity2" />
@@ -58,14 +56,13 @@
         <activity android:name=".Minwoo.Activity.OrderSummaryActivity" />
         <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
 
-
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- 현아 -->
         <activity android:name=".Hyeona.Activity.LoginActivity" />
-        <activity android:name=".MainActivity" />
+
+        <activity android:name=".MainActivity" /> <!-- <activity android:name=".Hyeona.Activity.review_white"/> -->
+        <activity android:name=".Hyeona.Activity.reviewActivity" /> <!-- <activity android:name=".Hyeona.Activity.IntroActivity"> -->
         <activity android:name=".Hyeona.Activity.test" />
 
-
-        <activity android:name=".Hyeona.Activity.reviewActivity" />
         <activity android:name=".Hyeona.Activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

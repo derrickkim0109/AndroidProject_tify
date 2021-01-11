@@ -118,7 +118,7 @@ public class DialogFragment_OrderRequest_Cancel extends DialogFragment {
                     String why = et_why.getText().toString(); // 거절 이유! 고객에게 알림으로 전달하기!
 
                     where = "update";
-                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_reject_store.jsp?oNo=" + oNo;
+                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_cancel.jsp?oNo=" + oNo + "&oStatus=" + 5;
                     int result1 = Integer.parseInt(connectData());
 
                     if(result1 == 1){

@@ -78,10 +78,10 @@ public class BeforePayActivity2 extends AppCompatActivity {
         sName = intent.getStringExtra("sName");
         from = intent.getStringExtra("from");
 
-        where = "select";
+        where = "oNo";
         urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
         list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
-        oNo = list.get(0).getoNo() + 1;
+        oNo = list.get(0).getMax() + 1;
         Log.v(TAG, "마지막 oNo : " + oNo);
 
 
@@ -162,8 +162,6 @@ public class BeforePayActivity2 extends AppCompatActivity {
 
 
                     // orderlist 테이블 Insert
-
-
 
                     for(int i = 0; i < carts.size(); i++){ // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
                         where = "insert";

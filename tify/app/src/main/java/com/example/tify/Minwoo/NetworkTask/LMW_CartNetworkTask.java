@@ -167,7 +167,6 @@ public class LMW_CartNetworkTask extends AsyncTask<Integer, String, Object> {
 
                 Log.v(TAG, "cLNo : " + cLNo);
 
-
                 Cart cart = new Cart(cLNo, store_sSeqNo, menu_mName, cLPrice, cLQuantity, cLImage, cLSizeUp, cLAddShot, cLRequest);
                 carts.add(cart);
                 // Log.v(TAG, member.toString());
