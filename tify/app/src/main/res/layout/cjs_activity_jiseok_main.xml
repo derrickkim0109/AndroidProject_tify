@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="100dp"
             android:src="@drawable/gps_setting"
-            android:id="@+id/gps_setting"
+            android:id="@+id/main_img_gps"
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content">
         </ImageView>
@@ -44,7 +44,7 @@
                     android:textSize="17dp"
                     />
                 <ImageView
-                    android:id="@+id/main_ImgBtn_SearchBtn"
+                    android:id="@+id/main_img_SearchBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_action_search"
@@ -80,7 +80,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:src="@drawable/stamp"
-                        android:id="@+id/stamp"
+                        android:id="@+id/main_img_stamp"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content">
                     </ImageView>
@@ -103,7 +103,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:src="@drawable/point"
-                        android:id="@+id/point"
+                        android:id="@+id/main_img_point"
                       android:layout_gravity="center"
                         android:layout_height="wrap_content">
                     </ImageView>
@@ -127,7 +127,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:src="@drawable/recomand"
-                        android:id="@+id/recomand"
+                        android:id="@+id/main_img_recommend"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content">
                     </ImageView>
