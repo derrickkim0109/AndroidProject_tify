@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.tify.Hyeona.Bean.Bean_review_review;
 import com.example.tify.Hyeona.Bean.Bean_review_store;
+import com.example.tify.Jiseok.Bean.Bean_Login_cjs;
 import com.example.tify.Minwoo.Bean.Menu;
 
 import org.json.JSONArray;
@@ -30,7 +31,7 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
     int userTelCount = 0;
     int userEmailCount=0;
     int uNo=0;
-
+    Bean_Login_cjs bean_login_cjs = null;
 
 
     public CJS_NetworkTask(Context context, String mAddr, String where) {
@@ -98,7 +99,7 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
                 if(where.equals("userEmailCount")) userEmailCount(stringBuffer.toString());
                 if(where.equals("uNoSelect")) uNoSelect(stringBuffer.toString());
                 if(where.equals("insertUserInfo")) parserAction(stringBuffer.toString());;
-
+                if(where.equals("emailLogin")) emailLogin(stringBuffer.toString());
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -126,7 +127,7 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
         if(where.equals("userTelCount")) return userTelCount;
         if(where.equals("userEmailCount")) return userEmailCount;
         if(where.equals("uNoSelect")) return uNo;
-
+        if(where.equals("emailLogin")) return bean_login_cjs;
 
 
        return null;
@@ -216,6 +217,32 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
         }
 
     }
+
+    private void emailLogin(String s){
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
+            Log.v("왜안떠",""+jsonArray.length());
+            for (int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                int count = jsonObject1.getInt("count");
+                int uNo = jsonObject1.getInt("uNo");
+                String uEmail = jsonObject1.getString("uEmail");
+                String uNickName = jsonObject1.getString("uNickName");
+
+                bean_login_cjs = new Bean_Login_cjs(count,uNo,uEmail,uNickName);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.v("왜안떠",""+e);
+        }
+
+    }
+
+
+
     private String parserAction(String s){
         Log.v(TAG,"Parser()");
         String returnValue = null;
@@ -233,6 +260,7 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
         }
         return returnValue;
     }
+
 
 
 

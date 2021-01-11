@@ -42,6 +42,7 @@ public class JiseokMainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager = null;
     String userEmail;
     String userSeq;
+    String userNickName;
 
 
     @Override
@@ -50,10 +51,11 @@ public class JiseokMainActivity extends AppCompatActivity {
         setContentView(R.layout.cjs_activity_jiseok_main);
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-
         SharedPreferences.Editor autoLogin = auto.edit();
         userEmail = auto.getString("userEmail",null);
         userSeq = auto.getString("userSeq",null);
+        userNickName = auto.getString("userNickName",null);
+
         Log.v("여기저기","이메일 : "+userEmail);
         Log.v("여기저기","seq : "+userSeq);
 //        if(userSeq.equals("0")){
@@ -97,7 +99,6 @@ public class JiseokMainActivity extends AppCompatActivity {
                     }
                     case R.id.action3: {
                         Toast.makeText(getApplicationContext(), "정상적으로 로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
-
                         UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
                             @Override
                             public void onCompleteLogout() {

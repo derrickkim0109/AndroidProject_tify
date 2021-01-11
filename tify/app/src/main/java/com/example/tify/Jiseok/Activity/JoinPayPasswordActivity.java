@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -56,6 +57,9 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         setContentView(R.layout.cjs_activity_join_pay_password);
 
         Intent intent = getIntent();
@@ -206,6 +210,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                                 SharedPreferences.Editor autoLogin = auto.edit();
                                 autoLogin.putString("userEmail", userEmail);
                                 autoLogin.putString("userSeq", userseq);
+                                autoLogin.putString("userNickName", userNickName);
                                 autoLogin.commit();
 
                                 new AlertDialog.Builder(JoinPayPasswordActivity.this)

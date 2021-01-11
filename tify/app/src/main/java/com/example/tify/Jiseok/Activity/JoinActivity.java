@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -85,14 +86,18 @@ public class JoinActivity extends AppCompatActivity {
     private final int REQ_CODE_SELECT_IMAGE = 300; // Gallery Return Code
 
 
-    String userEmail="";
-    String userNickName="";
+    String userEmail=null;
+    String userNickName=null;
+    String userTel=null;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         setContentView(R.layout.cjs_activity_join);
         ActivityCompat.requestPermissions(JoinActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
 
@@ -116,6 +121,7 @@ public class JoinActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userEmail = intent.getStringExtra("userEmail");
         userNickName = intent.getStringExtra("userNickName");
+        userTel = intent.getStringExtra("userTel");
 
 
         btnAuthentication.setOnClickListener(firstFrameClickListener);
@@ -132,6 +138,10 @@ public class JoinActivity extends AppCompatActivity {
                 inputMethodManager.hideSoftInputFromWindow(ly.getWindowToken(),0);
             }
         });
+
+        if(userTel!=null){
+            etTel.setText(userTel);
+        }
 
 
         etTel.addTextChangedListener(new TextWatcher() {//자동으로 "-" 생성해서 전화번호에 붙여주기

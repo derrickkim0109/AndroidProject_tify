@@ -1,15 +1,35 @@
 package com.example.tify.Jiseok.Bean;
 
 public class Bean_Login_cjs {
+    private int count;
+    private int uNo;
     private String uEmail;
-    private String uPayPassword;
+    private String uNickName;
 
     public Bean_Login_cjs() {
     }
 
-    public Bean_Login_cjs(String uEmail, String uPayPassword) {
+    public Bean_Login_cjs(int count, int uNo, String uEmail, String uNickName) {
+        this.count = count;
+        this.uNo = uNo;
         this.uEmail = uEmail;
-        this.uPayPassword = uPayPassword;
+        this.uNickName = uNickName;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getuNo() {
+        return uNo;
+    }
+
+    public void setuNo(int uNo) {
+        this.uNo = uNo;
     }
 
     public String getuEmail() {
@@ -20,12 +40,12 @@ public class Bean_Login_cjs {
         this.uEmail = uEmail;
     }
 
-    public String getuPayPassword() {
-        return uPayPassword;
+    public String getuNickName() {
+        return uNickName;
     }
 
-    public void setuPayPassword(String uPayPassword) {
-        this.uPayPassword = uPayPassword;
+    public void setuNickName(String uNickName) {
+        this.uNickName = uNickName;
     }
 }
 

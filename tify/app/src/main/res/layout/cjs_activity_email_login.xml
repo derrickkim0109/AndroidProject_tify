@@ -55,11 +55,12 @@
             android:paddingTop="20dp">
 
             <EditText
+                android:id="@+id/email_join_et_userEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
-                android:hint="아이디"
+                android:hint="이메일"
                 android:paddingLeft="20dp"
                 android:paddingBottom="20dp"
                 android:textColor="#fff"
@@ -69,6 +70,7 @@
                 app:backgroundTint="#fff"></EditText>
 
             <EditText
+                android:id="@+id/email_join_et_userPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
@@ -81,10 +83,13 @@
                 android:textColorHint="#fff"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                app:backgroundTint="#fff"></EditText>
+                app:backgroundTint="#fff"
+                android:inputType="number"
+                android:maxLength="6"
+                ></EditText>
 
             <Button
-                android:id="@+id/login_btn_emailLogin"
+                android:id="@+id/email_join_btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
@@ -96,7 +101,7 @@
                 app:backgroundTint="#fff"></Button>
 
             <TextView
-                android:id="@+id/login_tv_emailJoin"
+                android:id="@+id/email_join_ev_join"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"

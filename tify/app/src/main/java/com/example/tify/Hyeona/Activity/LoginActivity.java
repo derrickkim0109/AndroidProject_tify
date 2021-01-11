@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tify.Jiseok.Activity.EmailLoginActivity;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.Jiseok.Activity.JoinActivity;
 import com.example.tify.R;
@@ -55,9 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         emailJoin.setOnClickListener(onClickListener);
         btnEmailLogin.setOnClickListener(onClickListener);
 
-
-
-
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -69,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.login_btn_emailLogin:
-
+                    startActivity(new Intent(LoginActivity.this, EmailLoginActivity.class));
                     break;
 
             }
@@ -116,14 +114,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(MeV2Response result) {
-                    Log.v("카카오","로그인성공");
-                    Log.v("카카오","로그인성공"+result.getKakaoAccount().getEmail());
-                    Log.v("카카오","로그인성공"+result.getNickname());
-
                     //로그인 성공
                     Intent intentk = new Intent(getApplicationContext(), JoinActivity.class);
                     intentk.putExtra("userEmail", result.getKakaoAccount().getEmail().toString());
                     intentk.putExtra("userNickName", result.getNickname().toString());
+                    intentk.putExtra("userTel", result.getKakaoAccount().getPhoneNumber().toString());
+
                     startActivity(intentk);
                     finish();
                 }
