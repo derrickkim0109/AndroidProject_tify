@@ -1,22 +1,39 @@
 package com.android.tify_store.Minwoo.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.tify_store.Minwoo.Activity.MenuInsertActivity;
 import com.android.tify_store.Minwoo.Activity.MenuListActivity;
 import com.android.tify_store.Minwoo.Bean.Menu;
+import com.android.tify_store.Minwoo.NetworkTask.ImageNetworkTask_TaeHyun;
 import com.android.tify_store.R;
+import com.bumptech.glide.Glide;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -25,6 +42,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MyView
 
     String TAG = "MenuListAdapter";
     Context context;
+    String macIP;
 
     private ArrayList<Menu> mDataset;
 
@@ -76,8 +94,10 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MyView
     }
 
     // 메인 액티비티에서 받은 myDataset을 가져오
-    public MenuListAdapter(MenuListActivity activity, int member, ArrayList<Menu> myDataset) {
+    public MenuListAdapter(MenuListActivity activity, int member, ArrayList<Menu> myDataset, String macIp) {
         this.mDataset = myDataset;
+        this.macIP = macIp;
+        this.context = activity;
         Log.v(TAG, "mDataset size : " + mDataset.size());
         Log.v(TAG, "MenuAdapter Constructor");
 
@@ -112,8 +132,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MyView
         String price = moneyFormat.format(mDataset.get(position).getmPrice());
 
         holder.mPrice.setText(price + "원");
-        holder.mPhoto.setImageResource(R.drawable.ic_launcher_foreground);
-
+        Glide.with(context).load("http://" + macIP + ":8080/tify/"+ mDataset.get(position).getmImage()).into(holder.mPhoto);
 
     }
 
@@ -123,4 +142,6 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MyView
         Log.v(TAG, "getItemCount");
         return mDataset.size();
     }
+
+
 }

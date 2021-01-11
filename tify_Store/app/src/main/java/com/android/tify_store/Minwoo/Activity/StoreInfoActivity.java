@@ -130,9 +130,10 @@ public class StoreInfoActivity extends AppCompatActivity {
         if (list.size() == 0){ // 등록된 데이터가 없다
 
         }else{ // 있다
+            Log.v(TAG, "list.get(0).getsImage() : " + list.get(0).getsImage());
             mImage = list.get(0).getsImage();
+            sendImageRequest(mImage);
 
-            iv_storePhoto.setImageResource(R.drawable.starbucks); // 이미지 받기
             tv_storeName.setText(list.get(0).getsName());
             tv_storeAddress.setText(list.get(0).getsAddress());
             et_storeName.setText(list.get(0).getsName());
@@ -142,7 +143,6 @@ public class StoreInfoActivity extends AppCompatActivity {
             et_storeTime.setText(list.get(0).getsRunningTime());
 
             btn_Insert.setText("수정");
-            sendImageRequest(mImage);
 
         }
 
@@ -418,6 +418,7 @@ public class StoreInfoActivity extends AppCompatActivity {
     private void sendImageRequest(String s) {
 
         String url = "http://" + macIP + ":8080/tify/" + s;
+        Log.v(TAG, "ImageUrl : " + url);
         Glide.with(this).load(url).into(iv_storePhoto);
     }
 

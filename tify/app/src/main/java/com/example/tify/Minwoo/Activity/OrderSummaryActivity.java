@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.example.tify.Minwoo.NetworkTask.LMW_CartNetworkTask;
 import com.example.tify.R;
 
@@ -123,6 +124,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
 //        tv_mPhoto.setImageResource(); // 태현형한테 사진 받기
         tv_mName.setText(mName);
         tv_Content.setText(mComment);
+        sendImageRequest(mImage);
 
         // 콤마 찍어서 원화로 바꿔줌!
         NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
@@ -388,6 +390,14 @@ public class OrderSummaryActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return result;
+    }
+
+    // 이미지
+    private void sendImageRequest(String s) {
+
+        String url = "http://" + macIP + ":8080/tify/" + s;
+        Log.v(TAG, "ImageUrl : " + url);
+        Glide.with(this).load(url).into(tv_mPhoto);
     }
 
 }
