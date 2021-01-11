@@ -73,7 +73,7 @@ public class MenuFragment extends Fragment {
             //recyclerview
             recyclerView = v.findViewById(R.id.recycler_view);
             recyclerView.setHasFixedSize(true);
-            mAdapter = new MenuAdapter(MenuFragment.this, R.layout.lmw_fragment_menu , menuList);
+            mAdapter = new MenuAdapter(MenuFragment.this, R.layout.lmw_fragment_menu , menuList, macIP);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(mLayoutManager);
@@ -125,7 +125,7 @@ public class MenuFragment extends Fragment {
             menuList = (ArrayList<Menu>) obj;
             Log.v(TAG, "menuList.size() : " + menuList.size());
 
-            mAdapter = new MenuAdapter(MenuFragment.this, R.layout.lmw_fragment_menu_recycler_item, menuList);
+            mAdapter = new MenuAdapter(MenuFragment.this, R.layout.lmw_fragment_menu_recycler_item, menuList,macIP);
             recyclerView.setAdapter(mAdapter);
 
             beanList = menuList;

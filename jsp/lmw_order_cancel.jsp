@@ -4,6 +4,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
     int oNo = Integer.parseInt(request.getParameter("oNo"));
+    int oStatus = Integer.parseInt(request.getParameter("oStatus"));
  
   
 //------
@@ -20,7 +21,7 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-        String A = "update tify.order set oDeleteDate = now(), oStatus = 5 where oNo = " + oNo;
+        String A = "update tify.order set oDeleteDate = now(), oStatus = " + oStatus + " where oNo = " + oNo;
         
 
         ps = conn_mysql.prepareStatement(A);

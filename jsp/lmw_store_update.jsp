@@ -27,10 +27,10 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-        String A = "update store set sName = " + sName + ", sTelNo = " + sTelNo + ", sRunningTime = " + sRunningTime + ", sAddress = " + sAddress + ", sImage = " + sImage + ", sPackaging = " + sPackaging + ", sComment = " + sComment
-        String B = " where storekeeper_skSeqNo = " + storekeeper_skSeqNo;
+        String A = "update tify.store set sName = '" + sName + "', sTelNo = '" + sTelNo + "', sRunningTime = '" + sRunningTime + "', sAddress = '" + sAddress + "', sImage = '" + sImage + "', sPackaging = " + sPackaging + ", sComment = '" + sComment;
+        String B = "' where storekeeper_skSeqNo = " + storekeeper_skSeqNo;
 
-        ps = conn_mysql.prepareStatement(A);
+        ps = conn_mysql.prepareStatement(A+B);
 
         
         result = ps.executeUpdate();

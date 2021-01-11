@@ -13,7 +13,7 @@
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "select * from tify.order where (oStatus = 3 or oStatus = 4) and store_skSeqNo = " + skSeqNo + " order by oNo desc";
+    String WhereDefault = "select * from tify.order where (oStatus = 3 or oStatus = 4 or oStatus = 5) and store_skSeqNo = " + skSeqNo + " order by oNo desc";
     int count = 0;
     
     try {

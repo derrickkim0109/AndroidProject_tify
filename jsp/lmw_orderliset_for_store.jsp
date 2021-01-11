@@ -9,7 +9,7 @@
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "select ol.*, o.oInsertDate, o.oStatus from tify.orderlist as ol, tify.order as o where ol.storekeeper_skSeqNo = " + skSeqNo + " and o.oStatus = 0 and o.oNo = ol.order_oNo order by ol.order_oNo desc";
+    String WhereDefault = "select ol.*, o.oInsertDate, o.oStatus from tify.orderlist as ol, tify.order as o where o.oDeleteDate IS NULL and (ol.storekeeper_skSeqNo = " + skSeqNo + " and o.oStatus = 0 and o.oNo = ol.order_oNo) order by ol.order_oNo desc";
     int count = 0;
     
     try {

@@ -219,7 +219,7 @@ public class CartActivity extends AppCompatActivity {
             data = (ArrayList<Cart>) obj;
             Log.v(TAG, "data.size() : " + data.size());
 
-            adapter = new CartAdapter(CartActivity.this, R.layout.lmw_activity_cart_recycler_item, data);
+            adapter = new CartAdapter(CartActivity.this, R.layout.lmw_activity_cart_recycler_item, data, macIP);
             recyclerView.setAdapter(adapter);
 
             total = 0;

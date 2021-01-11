@@ -1,12 +1,21 @@
 package com.android.tify_store.Minwoo.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,12 +28,19 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.android.tify_store.Minwoo.Bean.Store;
+import com.android.tify_store.Minwoo.NetworkTask.ImageNetworkTask_TaeHyun;
 import com.android.tify_store.Minwoo.NetworkTask.LMW_MenuNetworkTask;
 import com.android.tify_store.Minwoo.NetworkTask.LMW_StoreNetworkTask;
 import com.android.tify_store.R;
+import com.bumptech.glide.Glide;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -65,10 +81,34 @@ public class MenuUpdateActivity extends AppCompatActivity {
     int sizeUpRGCheck = 1;
     int addShotRGCheck = 1;
 
+    // 이미지
+    //image_server
+    //intent로 받을 이미지 DB (Mypage에서)
+    String mImage = null;
+    String imageurl = null;
+    //카메라, 갤러리
+    private final int REQ_CODE_SELECT_IMAGE = 300; // Gallery Return Code
+
+    String imgName = null;
+    ///////////
+    String img_path = null;// 최종 file name
+    String f_ext = null;
+    File tempSelectFile;
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //          Tomcat Server의 IP Address와 Package이름은 수정 하여야 함
+    //           2021.01.07 -태현
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    String devicePath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.android.tify/";
+    //// 외부쓰레드 에서 메인 UI화면을 그릴때 사용
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_menu_update);
+
+        ActivityCompat.requestPermissions(MenuUpdateActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
 
         SharedPreferences sharedPreferences = getSharedPreferences("openStatus", MODE_PRIVATE);
         strResult = sharedPreferences.getString("openResult", "null");
@@ -78,6 +118,7 @@ public class MenuUpdateActivity extends AppCompatActivity {
         macIP = intent.getStringExtra("macIP");
         skSeqNo = intent.getIntExtra("skSeqNo", 0);
         mNo = intent.getIntExtra("mNo", 0);
+        mImage = intent.getStringExtra("mImage");
 
 
         // layout 설정
@@ -104,7 +145,8 @@ public class MenuUpdateActivity extends AppCompatActivity {
 
         }else{ // 있다
 
-            civ_mImage.setImageResource(R.drawable.americano); // 이미지 받기
+            sendImageRequest(mImage);
+
             et_mName.setText(list.get(0).getmName());
             et_mPrice.setText(Integer.toString(list.get(0).getmPrice()));
             et_mCommnet.setText(list.get(0).getmComment());
@@ -237,14 +279,17 @@ public class MenuUpdateActivity extends AppCompatActivity {
 
         String mName = null;
         String mPrice = null;
-        String mImage = "2312323"; // 이미지값 받기
         String mComment = null;
 
         @Override
         public void onClick(View v) {
+            Intent intent = null;
             switch (v.getId()){
                 case R.id.activity_MenuUpdate_CIV_mImage: // 사진추가
-
+                    intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);// 2021.01.08 - 태현
                     break;
                 case R.id.activity_MenuUpdate_Btn_Update: // 입력
 
@@ -256,14 +301,14 @@ public class MenuUpdateActivity extends AppCompatActivity {
                         Toast.makeText(MenuUpdateActivity.this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
                     }else{
                         where = "update";
-                        urlAddr = "http://" + macIP + ":8080/tify/lmw_menu_update.jsp?mNo=" + mNo + "&mName=" + mName + "&mPrice=" + mPrice + "&mSizeUp=" + sizeUpRGCheck + "&mShut=" + addShotRGCheck + "&mImage=" + mImage + "&mType=" + typeRGCheck + "&mComment=" + mComment;
+                        urlAddr = "http://" + macIP + ":8080/tify/lmw_menu_update.jsp?mNo=" + mNo + "&mName=" + mName + "&mPrice=" + mPrice + "&mSizeUp=" + sizeUpRGCheck + "&mShut=" + addShotRGCheck + "&mImage=" + imgName + "&mType=" + typeRGCheck + "&mComment=" + mComment;
 
                         CResult = connectMenuUpdate();
 
                         if(CResult.equals("1")){
                             Toast.makeText(MenuUpdateActivity.this, "메뉴 수정 성공!", Toast.LENGTH_SHORT).show();
 
-                            Intent intent = new Intent(MenuUpdateActivity.this, MenuListActivity.class);
+                            intent = new Intent(MenuUpdateActivity.this, MenuListActivity.class);
                             intent.putExtra("macIP", macIP);
                             intent.putExtra("skSeqNo", skSeqNo);
                             startActivity(intent);
@@ -322,5 +367,109 @@ public class MenuUpdateActivity extends AppCompatActivity {
             menu.getItem(0).setIcon(R.drawable.ic_action_storeopen_open);
         }
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    // 이미지
+    private void sendImageRequest(String s) {
+
+        String url = "http://" + macIP + ":8080/tify/" + s;
+        Log.v(TAG, "ImageUrl : " + url);
+        Glide.with(this).load(url).into(civ_mImage);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQ_CODE_SELECT_IMAGE && resultCode == Activity.RESULT_OK) {
+            try {
+                //이미지의 URI를 얻어 경로값으로 반환.
+                img_path = getImagePathToUri(data.getData());
+                Log.v(TAG, "image path :" + img_path);
+                Log.v(TAG, "Data :" +String.valueOf(data.getData()));
+
+                //이미지를 비트맵형식으로 반환
+                Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+
+                //image_bitmap 으로 받아온 이미지의 사이즈를 임의적으로 조절함. width: 400 , height: 300
+                Bitmap image_bitmap_copy = Bitmap.createScaledBitmap(image_bitmap, 400, 300, true);
+                civ_mImage.setImageBitmap(image_bitmap_copy);
+
+                // 파일 이름 및 경로 바꾸기(임시 저장, 경로는 임의로 지정 가능)
+                String date = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());
+                String imageName = date + "." + f_ext;
+                tempSelectFile = new File(devicePath , imageName);
+                OutputStream out = new FileOutputStream(tempSelectFile);
+                image_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
+                // 임시 파일 경로로 위의 img_path 재정의
+                img_path = devicePath + imageName;
+                Log.v(TAG,"fileName :" + img_path);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public String getImagePathToUri(Uri data) {
+
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(data, proj, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+
+        //이미지의 경로 값
+        String imgPath = cursor.getString(column_index);
+        Log.v(TAG, "Image Path :" + imgPath);
+
+        //이미지의 이름 값
+        imgName = imgPath.substring(imgPath.lastIndexOf("/") + 1);
+
+        // 확장자 명 저장
+        f_ext = imgPath.substring(imgPath.length()-3, imgPath.length());
+
+        return imgPath;
+    }//end of getImagePathToUri()
+
+    private void connectImage(){
+        imageurl = "http://" + macIP + ":8080/tify/multipartRequest.jsp";
+        Log.v("찾는중", "1 imageurl :" + imageurl);
+        ImageNetworkTask_TaeHyun imageNetworkTask = new ImageNetworkTask_TaeHyun(MenuUpdateActivity.this,civ_mImage,img_path,imageurl);
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        //              NetworkTask Class의 doInBackground Method의 결과값을 가져온다.
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        try {
+            Integer result = imageNetworkTask.execute(100).get();
+            Log.v("찾는중", "2 result :" + result);
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            //              doInBackground의 결과값으로 Toast생성
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            switch (result){
+                case 1:
+                    Toast.makeText(MenuUpdateActivity.this, "이미지서버 저장 성공 !", Toast.LENGTH_SHORT).show();
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////
+                    //
+                    //              Device에 생성한 임시 파일 삭제
+                    //
+                    //////////////////////////////////////////////////////////////////////////////////////////////
+                    File file = new File(img_path);
+                    file.delete();
+                    break;
+                case 0:
+                    Toast.makeText(MenuUpdateActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+            //////////////////////////////////////////////////////////////////////////////////////////////
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
