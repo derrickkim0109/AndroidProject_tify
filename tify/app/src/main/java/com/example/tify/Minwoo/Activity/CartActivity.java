@@ -88,21 +88,9 @@ public class CartActivity extends AppCompatActivity {
 
         orders = OrderConnectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
         if (orders.size() != 0) {
-            oNo = orders.get(0).getoNo() + 1;
+            oNo = orders.get(0).getMax() + 1;
             Log.v(TAG, "마지막 oNo + 1: " + oNo);
         }
-
-
-        // NetworkTask 세팅
-
-//        data = new ArrayList<Cart>();
-//
-//        data.add(new Cart("아메리카노(COLD)","+사이즈업",null, "얼음 조금만 넣어주세요", 5,4000));
-//        data.add(new Cart("아메리카노(HOT)","+사이즈업","+샷추가", "미지근하게 해주세요", 1,5000));
-//        data.add(new Cart("라떼(COLD)","+사이즈업",null, null, 3,4000));
-//        data.add(new Cart("라떼(HOT)","+사이즈업","+샷추가", null, 1,4000));
-//        data.add(new Cart("치즈케이크","+사이즈업",null, "포크 2개 넣어주세요", 1,5500));
-//        data.add(new Cart("밀크티(COLD)","+사이즈업",null, null, 1,5000));
 
         //리사이클러뷰에 있는 아이디를 찾기
         recyclerView = findViewById(R.id.cart_recycler_view);
@@ -257,7 +245,7 @@ public class CartActivity extends AppCompatActivity {
     private ArrayList<Order> OrderConnectGetData(){
         ArrayList<Order> beanList = new ArrayList<Order>();
 
-        where = "select";
+        where = "oNo";
         urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
 
         try {
@@ -268,7 +256,7 @@ public class CartActivity extends AppCompatActivity {
             //  - NetworkTask의 생성자 추가 : where <- "select"
             //
             ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(CartActivity.this, urlAddr, where);
+            LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(CartActivity.this, urlAddr, "oNo");
             ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();

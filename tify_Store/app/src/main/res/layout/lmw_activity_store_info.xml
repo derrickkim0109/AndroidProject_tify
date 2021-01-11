@@ -21,9 +21,12 @@
         <ImageView
             android:id="@+id/activity_StoreInfo_IV_StorePhoto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:maxWidth="80dp"
+            android:maxHeight="80dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/starbucks"
-            android:clickable="false"
             />
         <TextView
             android:id="@+id/activity_StoreInfo_TV_sName"

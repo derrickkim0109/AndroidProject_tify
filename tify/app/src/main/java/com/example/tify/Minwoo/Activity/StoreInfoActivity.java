@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.tify.Minwoo.Fragment.InfoFragment;
 import com.example.tify.Minwoo.Fragment.MenuFragment;
 import com.example.tify.Minwoo.Fragment.ReviewFragment;
@@ -42,9 +43,6 @@ public class StoreInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_storeinfo);
-
-
-
 
         // 기본 설정 값 (지석씨에게 받는다)
 //        Intent intent = getIntent();
@@ -80,10 +78,19 @@ public class StoreInfoActivity extends AppCompatActivity {
         menuFragment.setArguments(bundle);
 
         // 테스트 값
-        macIP = "172.30.1.27";
-        sName = "스타벅스 강남점";
-        user_uSeqNo = 2;
-        store_sSeqNo = 1;
+        Intent intent = getIntent();
+        if(intent.getStringExtra("macIP") != null){
+            macIP = intent.getStringExtra("macIP");
+            user_uSeqNo = intent.getIntExtra("user_uSeqNo", 0);
+            store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
+            sName = "스타벅스 강남점";
+        }else{
+            macIP = "172.30.1.27";
+            sName = "스타벅스 강남점";
+            user_uSeqNo = 2;
+            store_sSeqNo = 1;
+        }
+
         //-----------------------------
 
         getSupportFragmentManager().beginTransaction().add(R.id.frame, menuFragment).commit(); // 초기 시작 프래그먼트
@@ -91,9 +98,6 @@ public class StoreInfoActivity extends AppCompatActivity {
         tabs.addTab(tabs.newTab().setText("메뉴"));
         tabs.addTab(tabs.newTab().setText("정보"));
         tabs.addTab(tabs.newTab().setText("리뷰"));
-        Log.v(TAG, "구간1---");
-
-        Log.v(TAG, "구간2---");
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -102,13 +106,10 @@ public class StoreInfoActivity extends AppCompatActivity {
 
                 Fragment selected = null;
                 if(position == 0){
-                    Log.v(TAG, "구간3---");
                     selected = menuFragment;
                 }else if (position == 1){
-                    Log.v(TAG, "구간4---");
                     selected = infoFragment;
                 }else if (position == 2) {
-                    Log.v(TAG, "구간5---");
                     selected = reviewFragment;
                 }
                 Log.v(TAG, "구간6---");

@@ -148,7 +148,7 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
     //
     ///////////////////////////////////////////////////////////////////////////////////////
     private void parserSelect(String s){
-        Log.v(TAG,"Parser()");
+        Log.v(TAG,"parserSelect()");
 
         try {
             JSONObject jsonObject = new JSONObject(s);
@@ -180,7 +180,7 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
     //
     ///////////////////////////////////////////////////////////////////////////////////////
     private String parserAction(String s){
-        Log.v(TAG,"Parser()");
+        Log.v(TAG,"parserAction()");
         String returnValue = null;
 
         try {
