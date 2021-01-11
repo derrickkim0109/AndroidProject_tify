@@ -205,6 +205,8 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                                 //디비에 회원정보 저장
                                 insertUserInfo();
                                 String userseq = Integer.toString(selectUserSeq());
+                                insertRewardTable(userseq);
+
                                //자동로그인
                                 SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
                                 SharedPreferences.Editor autoLogin = auto.edit();
@@ -348,6 +350,17 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
         }
         return utc;
+    }
+    private void insertRewardTable(String seq){
+        try {
+            String urlAddr = "http://" + MacIP + ":8080/tify/insertReward.jsp?uNo="+seq;
+            CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinPayPasswordActivity.this, urlAddr, "insertReward");
+            cjs_networkTask.execute().get();
+
+        }catch (Exception e){
+
+        }
+
     }
 
 
