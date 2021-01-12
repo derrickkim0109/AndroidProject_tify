@@ -135,9 +135,10 @@ public class MyLocationActivity extends AppCompatActivity implements OnMapReadyC
                     SharedPreferences.Editor autoLogin = auto.edit();
                     autoLogin.putString("myLocation", myAddress);
                     autoLogin.commit();
+                    Log.v("내위치",""+myAddress);
                     break;
                 case R.id.myLocation_img_backBtn:
-                    onBackPressed();
+                    startActivity(new Intent(MyLocationActivity.this,JiseokMainActivity.class));
                     break;
             }
 

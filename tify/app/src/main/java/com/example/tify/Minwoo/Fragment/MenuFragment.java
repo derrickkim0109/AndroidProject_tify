@@ -20,6 +20,7 @@ import com.example.tify.Minwoo.Adapter.MenuAdapter;
 import com.example.tify.Minwoo.Bean.Menu;
 import com.example.tify.Minwoo.NetworkTask.LMW_MenuNetworkTask;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 
 import java.util.ArrayList;
 
@@ -52,7 +53,8 @@ public class MenuFragment extends Fragment {
 
             // StoreInfoActivity로 부터 값을 받는다.
             Bundle bundle = getArguments();
-            macIP = bundle.getString("macIP");
+            ShareVar shareVar = new ShareVar();
+            macIP = shareVar.getMacIP();
             user_uSeqNo = bundle.getInt("user_uSeqNo");
             store_sSeqNo = bundle.getInt("store_sSeqNo");
             sName = bundle.getString("sName");
@@ -95,6 +97,7 @@ public class MenuFragment extends Fragment {
                     intent.putExtra("mShot", menuList.get(position).getmShot());
                     intent.putExtra("mImage", menuList.get(position).getmImage());
                     intent.putExtra("mType", menuList.get(position).getmType());
+                    intent.putExtra("mComment", menuList.get(position).getmComment());
 
                     intent.putExtra("macIP", macIP);
                     intent.putExtra("user_uSeqNo", user_uSeqNo);

@@ -10,8 +10,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 
 public class AddressSearchActivity extends AppCompatActivity {
+    ShareVar shareVar =new ShareVar();
+    String macIP = shareVar.getMacIP();
+
     private WebView webView;
 
     class MyJavaScriptInterface
@@ -65,7 +69,7 @@ public class AddressSearchActivity extends AppCompatActivity {
 
 
         // webview url
-        webView.loadUrl("http://192.168.219.100:8080/maptest/daum.html");
+        webView.loadUrl("http://"+macIP+":8080/tify/daum.html");
 
     }
 

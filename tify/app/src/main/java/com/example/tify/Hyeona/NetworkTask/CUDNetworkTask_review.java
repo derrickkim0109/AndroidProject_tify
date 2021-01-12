@@ -191,6 +191,7 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
             JSONArray jsonArray = new JSONArray(jsonObject.getString("review_store"));
 
             for (int i=0; i<jsonArray.length(); i++){
+
                     JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
                     int storekeeper_skSeqNo = jsonObject1.getInt("storekeeper_skSeqNo");
                     String sName = jsonObject1.getString("sName");
