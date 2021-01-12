@@ -98,7 +98,7 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
                 if(where.equals("userTelCount")) userTelCount(stringBuffer.toString());
                 if(where.equals("userEmailCount")) userEmailCount(stringBuffer.toString());
                 if(where.equals("uNoSelect")) uNoSelect(stringBuffer.toString());
-                if(where.equals("insertUserInfo")) parserAction(stringBuffer.toString());;
+                if(where.equals("insertUserInfo")) parserAction(stringBuffer.toString());
                 if(where.equals("emailLogin")) emailLogin(stringBuffer.toString());
             }
         }catch (Exception e){

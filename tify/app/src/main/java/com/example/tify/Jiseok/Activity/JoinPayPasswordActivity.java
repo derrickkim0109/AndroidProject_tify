@@ -31,7 +31,8 @@ import java.util.Random;
 public class JoinPayPasswordActivity extends AppCompatActivity {
     String TAG = "여기, JoinPayPasswordActivity";
     Context context ;
-    String MacIP= ShareVar.getMacIP();
+    ShareVar shareVar =new ShareVar();
+    String MacIP= shareVar.getMacIP();
 
     Button btnRearrangement;
     ImageButton btnDelete;
@@ -109,8 +110,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
     }
 
