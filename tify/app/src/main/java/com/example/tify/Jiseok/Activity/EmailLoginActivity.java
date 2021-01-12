@@ -55,10 +55,6 @@ public class EmailLoginActivity extends AppCompatActivity {
         tvJoin.setOnClickListener(ClickListener);
 
 
-
-
-
-
     }
 
     View.OnClickListener ClickListener = new View.OnClickListener() {

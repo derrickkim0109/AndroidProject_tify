@@ -1,8 +1,12 @@
 package com.example.tify.Jiseok.Activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -18,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,11 +43,14 @@ import com.example.tify.Minwoo.Activity.StoreInfoActivity;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Activity.MypageActivity;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class JiseokMainActivity extends AppCompatActivity {
     ShareVar shareVar =new ShareVar();
@@ -255,6 +263,7 @@ public class JiseokMainActivity extends AppCompatActivity {
             return utc;
         }
 
+
         private void selectCafeList(){
             try {
                 String urlAddr = "http://" + MacIP + ":8080/tify/mainCafeLocationList.jsp";
@@ -273,18 +282,79 @@ public class JiseokMainActivity extends AppCompatActivity {
                 layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManager);
 
-                mainCafeListAdapter = new MainCafeListAdapter(JiseokMainActivity.this,R.layout.cha_maincafe_content,arrayList,"강남");
+                LatLng Location1,Location2;
+                double latitude;
+                double longitude;
+                double latitude2;
+                double longitude2;
+
+                latitude=findGeoPoint(JiseokMainActivity.this,myLocation).getLatitude();
+                longitude=findGeoPoint(JiseokMainActivity.this,myLocation).getLongitude();
+                Location1= new LatLng(latitude,longitude);
+
+
+                // 1000미터 안에있는 매장의 수 구하기
+                int arrayCount = 0;
+                for(int i=0;i<arrayList.size();i++){
+                    latitude2=findGeoPoint(JiseokMainActivity.this,arrayList.get(i).getsAddress()).getLatitude();
+                    longitude2=findGeoPoint(JiseokMainActivity.this,arrayList.get(i).getsAddress()).getLongitude();
+                    Location2=new LatLng(latitude2,longitude2);
+                    if(getDistance(Location1,Location2)<1000.0) arrayCount++;
+                }
+
+                mainCafeListAdapter = new MainCafeListAdapter(JiseokMainActivity.this,R.layout.cha_maincafe_content,arrayList,myLocation,arrayCount);
                 recyclerView.setAdapter(mainCafeListAdapter);
-
-
 
             } catch (Exception e) {
 
             }
         }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        selectCafeList();
+
+    }
 
 
+    // 주소 -> 위도,경도
+    public static Location findGeoPoint(Context mcontext, String address) {
+        Location loc = new Location("");
+        Geocoder coder = new Geocoder(mcontext);
+        List<Address> addr = null;// 한좌표에 대해 두개이상의 이름이 존재할수있기에 주소배열을 리턴받기 위해 설정
+        try {
+            addr = coder.getFromLocationName(address, 5);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }// 몇개 까지의 주소를 원하는지 지정 1~5개 정도가 적당
+        if (addr != null) {
+            for (int i = 0; i < addr.size(); i++) {
+                Address lating = addr.get(i);
+                double lat = lating.getLatitude(); // 위도가져오기
+                double lon = lating.getLongitude(); // 경도가져오기
+                loc.setLatitude(lat);
+                loc.setLongitude(lon);
+            }
+        }
+        return loc;
+    }
+
+    // 거리계산
+    public double getDistance(LatLng LatLng1, LatLng LatLng2) {
+        double distance = 0;
+        Location locationA = new Location("A");
+        locationA.setLatitude(LatLng1.latitude);
+        locationA.setLongitude(LatLng1.longitude);
+        Location locationB = new Location("B");
+        locationB.setLatitude(LatLng2.latitude);
+        locationB.setLongitude(LatLng2.longitude);
+        distance = locationA.distanceTo(locationB);
+
+        return Math.round(distance);
+
+    }
 }
 
 
