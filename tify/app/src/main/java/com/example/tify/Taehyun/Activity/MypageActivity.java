@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Activity.LoginActivity;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Adapter.MypageListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_MypageList;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
@@ -53,7 +54,10 @@ public class MypageActivity extends AppCompatActivity {
     String urlAddr = null;
     //
     String urlAddress = null;
-    String macIP = "192.168.2.21";
+//    String macIP = "192.168.2.21";
+    //IP
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
     //Bean
     Bean_Mypage_userinfo userinfo = null;
 
@@ -69,7 +73,7 @@ public class MypageActivity extends AppCompatActivity {
         email = findViewById(R.id.mypage_email);
 
         //url
-        urlAddr = "http://" + macIP + ":8080/tify/mypage.jsp?";
+        urlAddr = "http://" + MacIP + ":8080/tify/mypage.jsp?";
         //listview
         data = new ArrayList<Bean_MypageList>();
         userinfo = new Bean_Mypage_userinfo();
@@ -107,7 +111,7 @@ public class MypageActivity extends AppCompatActivity {
                             .putExtra("uTelNo", uTelNo)
                             .putExtra("uImage", uImage)
                             .putExtra("uPayPassword", uPayPassword)
-                            .putExtra("macIP", macIP);
+                            .putExtra("MacIP", MacIP);
 
                     startActivity(intent);
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -121,7 +125,7 @@ public class MypageActivity extends AppCompatActivity {
                     Log.v("ㄲㄲㄲ여기기기기", ":"+cardcount);
                     intent = new Intent(MypageActivity.this, Mypage_CardRegistrationActivity.class)
                             .putExtra("uNo", uNo)
-                            .putExtra("macIP", macIP)
+                            .putExtra("MacIP", MacIP)
                             .putExtra("cardcount",cardcount);
 
                     startActivity(intent);
@@ -221,7 +225,7 @@ public class MypageActivity extends AppCompatActivity {
 
     public void sendImageRequest(String s) {
 
-        String url = "http://" + macIP + ":8080/tify/" + s;
+        String url = "http://" + MacIP + ":8080/tify/" + s;
 
         Glide.with(this).load(url).into(profileIv);
 
@@ -243,7 +247,7 @@ public class MypageActivity extends AppCompatActivity {
         int cardcount = 0;
         try {
             uNo = 1;
-            String urlAddr = "http://" + macIP + ":8080/tify/mypage_cardcountselect.jsp?uNo="+ uNo;
+            String urlAddr = "http://" + MacIP + ":8080/tify/mypage_cardcountselect.jsp?uNo="+ uNo;
             NetworkTask_TaeHyun countnetworkTask = new NetworkTask_TaeHyun(MypageActivity.this, urlAddr, "count");
             Object obj = countnetworkTask.execute().get();
 

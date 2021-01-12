@@ -32,6 +32,7 @@ import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.bumptech.glide.Glide;
 import com.example.tify.Jiseok.Activity.JoinActivity;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.NetworkTask.ImageNetworkTask_TaeHyun;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
@@ -62,8 +63,9 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
     String uTelNo = null;
     String uPayPassword = null;
     String uNickName, uImage = null;
-    String macIP = null;
-
+    //IP
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
     //image
     CircularImageView profileIv;
     TextView profile_tv_change;
@@ -132,7 +134,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(Mypage_ProfileChageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
 
         //url + jsp
-        urlAddr = "http://" + macIP + ":8080/tify/mypage_update.jsp?";
+        urlAddr = "http://" + MacIP + ":8080/tify/mypage_update.jsp?";
 
         //카메라, 갤러리 허용
 
@@ -153,7 +155,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void sendImageRequest(String s) {
 
-        String url = "http://" + macIP + ":8080/tify/" + s;
+        String url = "http://" + MacIP + ":8080/tify/" + s;
         Glide.with(this).load(url).into(profileIv);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,9 +172,6 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
         nickname.setText(intent.getStringExtra("uNickName"));
         telNo.setText(intent.getStringExtra("uTelNo"));
         mImage = intent.getStringExtra("uImage");
-
-        //IP
-        macIP = intent.getStringExtra("macIP");
 
         //보낼 data
         uNo = intent.getIntExtra("uNo",0);
@@ -399,7 +398,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
                     break;
 
                 case R.id.profile_withdraw:
-                    Mypage_WithdrawActivity myPage_customDialog = new Mypage_WithdrawActivity(Mypage_ProfileChageActivity.this,uNo,macIP);
+                    Mypage_WithdrawActivity myPage_customDialog = new Mypage_WithdrawActivity(Mypage_ProfileChageActivity.this,uNo,MacIP);
                     myPage_customDialog.callFunction(userDeleteMessage);
 
                     break;
@@ -503,7 +502,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
     }
 
     private void connectImage(){
-        imageurl = "http://" + macIP + ":8080/tify/multipartRequest.jsp";
+        imageurl = "http://" + MacIP + ":8080/tify/multipartRequest.jsp";
         ImageNetworkTask_TaeHyun imageNetworkTask = new ImageNetworkTask_TaeHyun(Mypage_ProfileChageActivity.this,profileIv,img_path,imageurl);
         //////////////////////////////////////////////////////////////////////////////////////////////
         //

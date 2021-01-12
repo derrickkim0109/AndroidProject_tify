@@ -1,9 +1,15 @@
 <component name="libraryTable">
   <library name="Gradle: com.kakao.sdk:usermgmt:1.15.1@aar">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/721468c3445f60d3163ef8c89c25cdbc/jetified-usermgmt-1.15.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/721468c3445f60d3163ef8c89c25cdbc/jetified-usermgmt-1.15.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/721468c3445f60d3163ef8c89c25cdbc/jetified-usermgmt-1.15.1/AndroidManifest.xml" />
+=======
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3b8b0ddcc4912baaee2e1406bc39bc3a/jetified-usermgmt-1.15.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3b8b0ddcc4912baaee2e1406bc39bc3a/jetified-usermgmt-1.15.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3b8b0ddcc4912baaee2e1406bc39bc3a/jetified-usermgmt-1.15.1/AndroidManifest.xml" />
+>>>>>>> ab341b4864d25d54e98020e19c0d038a5875c98b
     </CLASSES>
     <JAVADOC />
     <SOURCES>

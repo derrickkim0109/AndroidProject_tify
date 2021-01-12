@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
 import java.util.regex.Pattern;
@@ -56,7 +57,9 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
 
     //DB
     int uNo = 0;
-    String macIP = null;
+    //IP
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
     //카드 번호, 비번, 유효기간, 생년월일, 카드결제 회사, 카드 정보(개인,법인)
     String cCardNo, cPassword, cYear, cMM, cBirthday, cCardCompany= "";
     String cInfo = "개인";
@@ -73,7 +76,7 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         intent = getIntent();
         inheritance();
 
-        urlAddr = "http://" + macIP + ":8080/tify/mypage_card_insert.jsp?";
+        urlAddr = "http://" + MacIP + ":8080/tify/mypage_card_insert.jsp?";
 
         //글자수 제한
         function();
@@ -96,8 +99,6 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
 
 
     private void inheritance() {
-        macIP = intent.getStringExtra("macIP");
-
         //보낼 data
         uNo = intent.getIntExtra("uNo",0);    }
 
@@ -278,7 +279,7 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                         }
                         intent = new Intent(Mypage_CardDetailActivity.this,Mypage_CardRegistrationActivity.class)
                                 .putExtra("uNo",uNo)
-                                .putExtra("macIP",macIP);
+                                .putExtra("MacIP",MacIP);
                         setResult(RValue,intent);
                     }
                     }
@@ -287,7 +288,7 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                 case R.id.card_cancel:
                     intent = new Intent(Mypage_CardDetailActivity.this,MypageActivity.class)
                             .putExtra("uNo",uNo)
-                            .putExtra("macIP",macIP);
+                            .putExtra("MacIP",MacIP);
                     startActivity(intent);
                     finish();
                     break;
