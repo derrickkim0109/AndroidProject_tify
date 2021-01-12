@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Bean.Bean_review_store;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_review;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 
 import org.w3c.dom.Text;
 
@@ -30,8 +31,10 @@ public class review_white_dialoge extends Dialog {
     private int sSeqNo;
     //데이터상 storekeeper_skSeqNo 임 확인필수
     private int uNo;
-    private String macIP = "192.168.0.55";
-    private String urlAddr = "http://" + macIP + ":8080/tify/review_white_storeinfo.jsp?";
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
+
+    private String urlAddr = "http://" + MacIP + ":8080/tify/review_white_storeinfo.jsp?";
     private Bean_review_store bean_review_store = new Bean_review_store();
     private String sName;
     private String sImage;
@@ -112,7 +115,7 @@ public class review_white_dialoge extends Dialog {
             Log.v("이거다",sImage);
             sName = bean_review_store.getsName();
             final ImageView review_store_image = findViewById(R.id.review_store_image);
-            Glide.with(context).load("http://" + macIP + ":8080/tify/"+ sImage).into(review_store_image);
+            Glide.with(context).load("http://" + MacIP  + ":8080/tify/"+ sImage).into(review_store_image);
             // 가게이름이랑 이미지 받아옴
 
 

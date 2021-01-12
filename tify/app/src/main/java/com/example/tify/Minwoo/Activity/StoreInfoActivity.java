@@ -68,6 +68,7 @@ public class StoreInfoActivity extends AppCompatActivity {
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
+
         ShareVar shareVar = new ShareVar();
         macIP = shareVar.getMacIP();
 
