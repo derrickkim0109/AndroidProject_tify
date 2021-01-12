@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
+    android:layout_width="wrap_content"
     android:orientation="vertical"
+    android:id="@+id/detail_ll_hide"
+    android:layout_marginBottom="20dp"
     android:background="@color/black"
     android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
 
+    android:orientation="horizontal">
+<FrameLayout
+    android:layout_width="150dp"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:background="@color/black">
     <ImageView
+        android:id="@+id/main_cafeList_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alpha="0.4"
@@ -15,6 +28,7 @@
     </ImageView>
 
     <TextView
+        android:id="@+id/main_cafeList_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="상도커피"
@@ -33,6 +47,7 @@
         android:layout_gravity="bottom">
 
         <TextView
+            android:id="@+id/main_cafeList_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ff005a"
@@ -43,6 +58,7 @@
 
         </TextView>
         <TextView
+            android:id="@+id/main_cafeList_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fff"
@@ -52,6 +68,7 @@
 
         </TextView>
         <TextView
+            android:id="@+id/main_cafeList_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fff"
@@ -62,5 +79,9 @@
         </TextView>
 
     </LinearLayout>
-
 </FrameLayout>
+</LinearLayout>
+
+
+
+</LinearLayout>

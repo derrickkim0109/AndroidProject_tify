@@ -7,7 +7,7 @@
     String uEmail = request.getParameter("uEmail");
   
 //-----
-	String url_mysql = "jdbc:mysql://tifyproject.cmh5zgollnjh.us-east-2.rds.amazonaws.com/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
+	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
     String WhereDefault = "SELECT uNo from user where uEmail = ?";

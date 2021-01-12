@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.NetworkTask.ImageNetworkTask_TaeHyun;
 
 import java.io.File;
@@ -30,7 +31,8 @@ import java.util.Random;
 public class JoinPayPasswordActivity extends AppCompatActivity {
     String TAG = "여기, JoinPayPasswordActivity";
     Context context ;
-    String MacIP="192.168.219.100";
+    ShareVar shareVar =new ShareVar();
+    String MacIP= shareVar.getMacIP();
 
     Button btnRearrangement;
     ImageButton btnDelete;
@@ -328,6 +330,9 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
     private void insertUserInfo(){
        try {
+           if(userProfile==null){
+                userProfile="ic_person.png";
+           }
            String urlAddr = "http://" + MacIP + ":8080/tify/insertUserInfo.jsp?uEmail=" + userEmail + "&uNickName=" + userNickName + "&uTelNo=" + userTel + "&uImage=" + userProfile + "&uPayPassword=" + payPassword2;
            Log.v("여기", "insertUserInfo : " + urlAddr);
            CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinPayPasswordActivity.this, urlAddr, "insertUserInfo");

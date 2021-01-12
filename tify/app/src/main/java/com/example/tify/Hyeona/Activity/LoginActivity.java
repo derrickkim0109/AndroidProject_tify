@@ -1,11 +1,13 @@
 package com.example.tify.Hyeona.Activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.se.omapi.Session;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cha_activity_login);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         sessionCallback = new SessionCallback(); // SessionCallback 초기화
         Session.getCurrentSession().addCallback(sessionCallback); // 현재 세션에 콜백 붙임
@@ -118,8 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intentk = new Intent(getApplicationContext(), JoinActivity.class);
                     intentk.putExtra("userEmail", result.getKakaoAccount().getEmail().toString());
                     intentk.putExtra("userNickName", result.getNickname().toString());
-                    intentk.putExtra("userTel", result.getKakaoAccount().getPhoneNumber().toString());
-
+                    if(result.getKakaoAccount().getPhoneNumber()!=null) intentk.putExtra("userTel", result.getKakaoAccount().getPhoneNumber().toString());
                     startActivity(intentk);
                     finish();
                 }

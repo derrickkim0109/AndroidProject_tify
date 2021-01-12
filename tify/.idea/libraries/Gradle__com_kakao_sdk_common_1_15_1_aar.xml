@@ -1,12 +1,21 @@
 <component name="libraryTable">
   <library name="Gradle: com.kakao.sdk:common:1.15.1@aar">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eb4ca5825c1d39748fd310e3900f9794/jetified-common-1.15.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eb4ca5825c1d39748fd310e3900f9794/jetified-common-1.15.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eb4ca5825c1d39748fd310e3900f9794/jetified-common-1.15.1/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dca42b05aa3baca3b3ea64d4e02fea0e/jetified-common-1.15.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dca42b05aa3baca3b3ea64d4e02fea0e/jetified-common-1.15.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dca42b05aa3baca3b3ea64d4e02fea0e/jetified-common-1.15.1/AndroidManifest.xml" />
+=======
+<<<<<<< HEAD
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0469ea4e6ba876518e04a561a4e7cc08/jetified-common-1.15.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0469ea4e6ba876518e04a561a4e7cc08/jetified-common-1.15.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0469ea4e6ba876518e04a561a4e7cc08/jetified-common-1.15.1/AndroidManifest.xml" />
+=======
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/133360cde9c1be45157c093e5e278231/jetified-common-1.15.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/133360cde9c1be45157c093e5e278231/jetified-common-1.15.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/133360cde9c1be45157c093e5e278231/jetified-common-1.15.1/AndroidManifest.xml" />
+>>>>>>> 5c1282c67fc9c0b047eb7432de8c89e6d8acd96c
+>>>>>>> 9979af551551bda2b97085f3c902faf9a223fc1a
     </CLASSES>
     <JAVADOC />
     <SOURCES>

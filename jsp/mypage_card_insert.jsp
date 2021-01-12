@@ -4,14 +4,16 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	
-    int user_uNo = Integer.parseInt(request.getParameter("user_uNo"));
+    int user_uNo = Integer.parseInt(request.getParameter("uNo"));
 
 	String cCardNo = request.getParameter("cCardNo");
-	String cYMM = request.getParameter("cYMM");
     String cPassword = request.getParameter("cPassword");
+    String cYear = request.getParameter("cYear");
+    String cMM = request.getParameter("cMM");
     String cBirthday = request.getParameter("cBirthday");
-    String cInfo = request.getParameter("cInfo");
     String cCardCompany = request.getParameter("cCardCompany");
+    String cInfo = request.getParameter("cInfo");
+
 
 	
 
@@ -27,16 +29,18 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-		String A = "insert into tify.creditcard(user_uNo, cCardNo, cYMM, cPassword, cBirthday, cInfo, cCardCompany) values (?, ?, ?, ?, ?, ?, ?)";
+		String A = "insert into tify.creditcard(user_uNo, cCardNo, cPassword, cYear, cMM, cBirthday, cCardCompany, cInfo) values (?, ?, ?, ?, ?, ?, ?)";
 	
 	    ps = conn_mysql.prepareStatement(A);
 		ps.setInt(1, user_uNo);
 		ps.setString(2, cCardNo);
-        ps.setString(3, cYMM);
-        ps.setString(4, cPassword);
-        ps.setString(5, cBirthday);
-        ps.setString(6, cInfo);
-		ps.setString(7, cCardCompany);
+        ps.setString(3, cPassword);
+        ps.setString(4, cYear);
+		ps.setString(5, cMM);
+        ps.setString(6, cBirthday);
+        ps.setString(7, cCardCompany);
+        ps.setString(8, cInfo);
+
 	
 
 		

@@ -128,6 +128,7 @@ public class MyLocationActivity extends AppCompatActivity implements OnMapReadyC
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));//카메라위치
 
                     lyMap.setVisibility(View.VISIBLE);
+                    btnMyLocation.setVisibility(View.VISIBLE);
 
                     break;
                 case R.id.myLocation_btn_myLocationSetting:
@@ -135,9 +136,10 @@ public class MyLocationActivity extends AppCompatActivity implements OnMapReadyC
                     SharedPreferences.Editor autoLogin = auto.edit();
                     autoLogin.putString("myLocation", myAddress);
                     autoLogin.commit();
+                    Log.v("내위치",""+myAddress);
                     break;
                 case R.id.myLocation_img_backBtn:
-                    onBackPressed();
+                    startActivity(new Intent(MyLocationActivity.this,JiseokMainActivity.class));
                     break;
             }
 

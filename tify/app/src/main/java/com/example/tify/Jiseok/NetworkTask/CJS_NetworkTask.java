@@ -98,7 +98,7 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
                 if(where.equals("userTelCount")) userTelCount(stringBuffer.toString());
                 if(where.equals("userEmailCount")) userEmailCount(stringBuffer.toString());
                 if(where.equals("uNoSelect")) uNoSelect(stringBuffer.toString());
-                if(where.equals("insertUserInfo")) parserAction(stringBuffer.toString());;
+                if(where.equals("insertUserInfo")) parserAction(stringBuffer.toString());
                 if(where.equals("emailLogin")) emailLogin(stringBuffer.toString());
             }
         }catch (Exception e){
@@ -114,16 +114,6 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
             }
         }
 
-        Log.v("where",where);
-//        switch (where){
-//            case "userTelCount":
-//                return userTelCount;
-//            case "userEmailCount":
-//                return userEmailCount;
-//            case "uNoSelect":
-//                return uNo;
-//
-//        }
         if(where.equals("userTelCount")) return userTelCount;
         if(where.equals("userEmailCount")) return userEmailCount;
         if(where.equals("uNoSelect")) return uNo;
