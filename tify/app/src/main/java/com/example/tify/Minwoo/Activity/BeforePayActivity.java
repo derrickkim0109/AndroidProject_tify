@@ -17,6 +17,7 @@ import com.example.tify.Minwoo.Bean.OrderList;
 import com.example.tify.Minwoo.NetworkTask.LMW_OrderListNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_OrderNetworkTask;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -68,7 +69,8 @@ public class BeforePayActivity extends AppCompatActivity {
         // OrderSummaryActivity로 부터 값을 받는다.
         Intent intent = getIntent();
 
-        macIP = intent.getStringExtra("macIP");
+        ShareVar shareVar = new ShareVar();
+        macIP = shareVar.getMacIP();
         user_uSeqNo = intent.getIntExtra("user_uSeqNo", 0);
         store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
         totalPrice = intent.getIntExtra("totalPrice", 0);

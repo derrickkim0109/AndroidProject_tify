@@ -21,11 +21,13 @@ import com.bumptech.glide.Glide;
 import com.example.tify.Jiseok.Bean.Bean_Login_cjs;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 
 import java.util.regex.Pattern;
 
 public class EmailLoginActivity extends AppCompatActivity {
-    String MacIP = "192.168.219.100";
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
     EditText userEmail,userPwd;
     Button btnLogin;
     TextView tvJoin;

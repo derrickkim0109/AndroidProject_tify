@@ -21,22 +21,32 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Activity.LoginActivity;
 import com.example.tify.Hyeona.Activity.PointActivity;
 import com.example.tify.Hyeona.Activity.StampActivity;
+import com.example.tify.Jiseok.Adapta.MainCafeListAdapter;
+import com.example.tify.Jiseok.Bean.Bean_Login_cjs;
+import com.example.tify.Jiseok.Bean.Bean_MainCafeList_cjs;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
+import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask_CafeList;
 import com.example.tify.Minwoo.Activity.OrderListActivity;
+import com.example.tify.Minwoo.Activity.StoreInfoActivity;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Activity.MypageActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
+import java.util.ArrayList;
+
 public class JiseokMainActivity extends AppCompatActivity {
-    String MacIP = "192.168.219.100";
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
     LinearLayout ll_hide;
     InputMethodManager inputMethodManager;
 
@@ -46,8 +56,12 @@ public class JiseokMainActivity extends AppCompatActivity {
     AutoCompleteTextView etSearch;
 
 
+
     private RecyclerView recyclerView = null;
     private RecyclerView.LayoutManager layoutManager = null;
+    MainCafeListAdapter mainCafeListAdapter =null;
+    Bean_MainCafeList_cjs bean_mainCafeList_cjs = new Bean_MainCafeList_cjs();
+    ArrayList<Bean_MainCafeList_cjs> arrayList = null;
     String userEmail;
     String userSeq;
     String userNickName;
@@ -74,6 +88,10 @@ public class JiseokMainActivity extends AppCompatActivity {
         imgRecommend = findViewById(R.id.main_img_recommend);
         imgSearch = findViewById(R.id.main_img_SearchBtn);
         etSearch = findViewById(R.id.main_Edit_SearchText);
+        recyclerView = findViewById(R.id.main_rcv_cafeList);
+
+        // 리스트 띄우기
+        selectCafeList();
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -160,8 +178,29 @@ public class JiseokMainActivity extends AppCompatActivity {
         gps_setting.setOnClickListener(mapListener);
         imgSearch.setOnClickListener(mapListener);
 
+        mainCafeListAdapter.setOnItemClickListener(rcvClick);
 
     }
+
+    MainCafeListAdapter.OnItemClickListener rcvClick = new MainCafeListAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View v, int position) {
+
+            Intent intent = new Intent(JiseokMainActivity.this, StoreInfoActivity.class);
+            intent.putExtra("sName",arrayList.get(position).getsName());
+            intent.putExtra("sAddress",arrayList.get(position).getsAddress());
+            intent.putExtra("sImage",arrayList.get(position).getsImage());
+            intent.putExtra("sTime",arrayList.get(position).getsRunningTime());
+            intent.putExtra("sTelNo",arrayList.get(position).getsTelNo());
+            intent.putExtra("sPackaging",arrayList.get(position).getsPackaging());
+            intent.putExtra("sComment",arrayList.get(position).getsComment());
+            intent.putExtra("skSeqNo",arrayList.get(position).getsName());
+            startActivity(intent);
+
+
+        }
+    };
+
 
     View.OnClickListener imgClickListener = new View.OnClickListener() {
         @Override
@@ -181,6 +220,8 @@ public class JiseokMainActivity extends AppCompatActivity {
             }
         }
     };
+
+
 
     View.OnClickListener mapListener = new View.OnClickListener() {
         @Override
@@ -212,6 +253,34 @@ public class JiseokMainActivity extends AppCompatActivity {
 
             }
             return utc;
+        }
+
+        private void selectCafeList(){
+            try {
+                String urlAddr = "http://" + MacIP + ":8080/tify/mainCafeLocationList.jsp";
+                CJS_NetworkTask_CafeList cjs_networkTask_cafeList = new CJS_NetworkTask_CafeList(JiseokMainActivity.this,urlAddr,"selectCafeList");
+                Object obj = cjs_networkTask_cafeList.execute().get();
+
+                arrayList = (ArrayList<Bean_MainCafeList_cjs>) obj;
+
+                Log.v("리사이클",""+arrayList.get(1).getsAddress());
+                Log.v("리사이클",""+arrayList.size());
+
+                //리사이클러뷰 규격 만들기
+                recyclerView.setHasFixedSize(true);
+
+                //레이아웃 매니저 만들기
+                layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                recyclerView.setLayoutManager(layoutManager);
+
+                mainCafeListAdapter = new MainCafeListAdapter(JiseokMainActivity.this,R.layout.cha_maincafe_content,arrayList,"강남");
+                recyclerView.setAdapter(mainCafeListAdapter);
+
+
+
+            } catch (Exception e) {
+
+            }
         }
 
 
