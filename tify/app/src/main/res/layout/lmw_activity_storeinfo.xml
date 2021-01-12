@@ -25,8 +25,9 @@
             <ImageView
                 android:id="@+id/activity_StoreInfo_IV_sPhoto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/starbucks"
+                android:layout_height="250dp"
+                android:src="@drawable/cafe1"
+                android:scaleType="centerCrop"
                 android:foreground="@drawable/main_iv_opacity"
                 />
             <TextView

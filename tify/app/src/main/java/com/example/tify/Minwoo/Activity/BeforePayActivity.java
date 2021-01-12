@@ -1,12 +1,17 @@
 package com.example.tify.Minwoo.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +21,7 @@ import com.example.tify.Minwoo.Bean.Order;
 import com.example.tify.Minwoo.Bean.OrderList;
 import com.example.tify.Minwoo.NetworkTask.LMW_OrderListNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_OrderNetworkTask;
+import com.example.tify.Minwoo.NetworkTask.LMW_PointNetworkTask;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 
@@ -34,8 +40,10 @@ public class BeforePayActivity extends AppCompatActivity {
     // layout
     TextView tv_totalOrderPrice;
     TextView tv_totalPayPrice;
+    TextView tv_totalDiscount;
+    EditText et_point;
     Button cardBtn;
-    Button kakaoPay;
+    Button btn_point;
 
     // order Insert (카드이름이랑 카드번호 받기)
     String macIP;
@@ -58,8 +66,14 @@ public class BeforePayActivity extends AppCompatActivity {
 
     String from;
     String strTotal;
+    String strPoint;
+    String strDiscountPoint;
+    String strRemainPoint;
     int number;
     int oNo;
+    int point;
+
+    String tempText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,38 +97,78 @@ public class BeforePayActivity extends AppCompatActivity {
         olQuantity = intent.getIntExtra("olQuantity", 0);
         sName = intent.getStringExtra("sName");
 
-        from = intent.getStringExtra("from"); // CartActivity에서 오는지 OrderSummaryActivity에서 오는지 확인
-        Log.v(TAG, from);
-
-        switch (from){
-            case "OrderSummaryActivity":
-                break;
-            case "CartActivity":
-                break;
-            default:
-                Intent intent1 = new Intent(BeforePayActivity.this, StoreInfoActivity.class);
-                startActivity(intent1);
-                break;
-
-        }
+        connectPoint();
 
         // 콤마 찍어서 원화로 바꿔줌!
         NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
         strTotal = moneyFormat.format(totalPrice);
+        strPoint = moneyFormat.format(point);
 
         // layout 설정
         cardBtn = findViewById(R.id.beforePay_Btn_Card);
         tv_totalOrderPrice = findViewById(R.id.beforePay_TV_totalOrderPrice);
         tv_totalPayPrice = findViewById(R.id.beforePay_TV_totalPayPrice);
-        kakaoPay = findViewById(R.id.beforePay_Btn_Kakaopay);
-
-        // 클릭 리스너
-        cardBtn.setOnClickListener(mClickListener);
-        kakaoPay.setOnClickListener(mClickListener);
+        tv_totalDiscount = findViewById(R.id.beforePay_TV_Discount);
+        et_point = findViewById(R.id.beforePay_TV_Point);
+        btn_point = findViewById(R.id.activity_Before_Btn_Point);
 
         // 값 대입
         tv_totalOrderPrice.setText(strTotal + "원");
         tv_totalPayPrice.setText(strTotal + "원");
+
+        if(point == 0){
+            btn_point.setEnabled(false);
+        }
+        et_point.setHint("보유 포인트 : " + strPoint + "p");
+
+        // et_point 값 제한
+
+        et_point.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.v(TAG, " 입력값 : " + et_point.getText().toString());
+                if(et_point.getText().length() == 0){ // 아무것도 입력되지 않았을 때 입력처리
+                    btn_point.setEnabled(false);
+                }else { // 입력했을 때
+                    Log.v(TAG, " 값!! : " + Integer.parseInt(et_point.getText().toString()));
+                    if (Integer.parseInt(et_point.getText().toString()) < 1) { // 1보다 작게 입력했을 때 예외처리
+
+                    } else {
+                        int temp = Integer.parseInt(s.toString());
+
+                        if (point < temp) { // 사용하려는 포인트가 보유 포인트보다 클 때
+                            et_point.setText("");
+                            Toast.makeText(BeforePayActivity.this, "보유하신 포인트는 " + strPoint + "p 입니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (totalPrice < temp) { // 사용하려는 포인트가 totalPrice를 초과했을 때!
+                                btn_point.setEnabled(false);
+                                btn_point.setBackgroundColor(Color.parseColor("#28979595"));
+                                Toast.makeText(BeforePayActivity.this, "최대 " + strTotal + "p 까지 사용가능합니다.", Toast.LENGTH_SHORT).show();
+                            } else if (totalPrice >= temp){
+                                btn_point.setEnabled(true);
+                                btn_point.setBackgroundColor(Color.parseColor("#0084ff"));
+                            }else if(point < temp){
+                                et_point.setText("");
+                                Toast.makeText(BeforePayActivity.this, "보유하신 포인트는 " + strPoint + "p 입니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        // 클릭 리스너
+        cardBtn.setOnClickListener(mClickListener);
+        btn_point.setOnClickListener(mClickListener);
 
         // 툴바 생성
         Toolbar toolbar = (Toolbar)findViewById(R.id.order_toolbar); // 상단 툴바
@@ -139,10 +193,44 @@ public class BeforePayActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent intent = null;
 
+            int getPoint;
+            int discountedPrice;
+            int remainPoint;
+            NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
+
             switch (v.getId()){
-                case R.id.beforePay_Btn_Kakaopay:
+                case R.id.activity_Before_Btn_Point:
 
+                    if(btn_point.getText().toString().equals("적용")){
+                        getPoint = Integer.parseInt(et_point.getText().toString());
+                        discountedPrice = totalPrice - getPoint;
+                        remainPoint = point - getPoint;
 
+                        strTotal = moneyFormat.format(discountedPrice);
+                        strDiscountPoint = moneyFormat.format(getPoint);
+                        strRemainPoint = moneyFormat.format(remainPoint);
+
+                        et_point.setEnabled(false);
+                        et_point.setText("");
+                        et_point.setHint("남은 포인트 : " + strRemainPoint + "p");
+                        tv_totalDiscount.setText(strDiscountPoint + "p");
+                        tv_totalPayPrice.setText(strTotal + "원");
+                        btn_point.setEnabled(true);
+                        btn_point.setText("초기화");
+                    }else{
+
+                        strTotal = moneyFormat.format(totalPrice);
+
+                        Log.v(TAG, "totalPrice : " + totalPrice);
+
+                        et_point.setEnabled(true);
+                        et_point.setText("");
+                        et_point.setHint("보유 포인트 : " + strPoint + "p");
+                        tv_totalDiscount.setText("0p");
+                        tv_totalPayPrice.setText(strTotal + "원");
+                        btn_point.setText("적용");
+                        btn_point.setEnabled(false);
+                    }
                     break;
                 case R.id.beforePay_Btn_Card:
 
@@ -268,5 +356,29 @@ public class BeforePayActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return beanList;
+    }
+
+    private void connectPoint(){
+        where = "select";
+        urlAddr = "http://" + macIP + ":8080/tify/lmw_point_select.jsp?user_uSeqNo=" + user_uSeqNo;
+        try {
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // Date : 2020.12.25
+            //
+            // Description:
+            //  - NetworkTask의 생성자 추가 : where <- "select"
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////
+            LMW_PointNetworkTask networkTask = new LMW_PointNetworkTask(BeforePayActivity.this, urlAddr, where);
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            Object obj = networkTask.execute().get();
+            point = (Integer) obj;
+            Log.v(TAG, "point) : " + point);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

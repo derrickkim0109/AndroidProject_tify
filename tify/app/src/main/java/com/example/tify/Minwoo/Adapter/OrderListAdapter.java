@@ -34,6 +34,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     private ArrayList<Order> mDataset;
     private OrderListAdapter.OnItemClickListener mListener = null;
 
+    int uNo = 0;
+    int skSeqNo = 0;
+
     //인터페이스 선언
     public interface OnItemClickListener{
         void onItemClick(View v, int position);
@@ -47,9 +50,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     }
 
     // 메인 액티비티에서 받은 myDataset을 가져오
-    public OrderListAdapter(OrderListActivity orderListActivity, int layout, ArrayList<Order> myDataset) {
+    public OrderListAdapter(OrderListActivity orderListActivity, int layout, ArrayList<Order> myDataset, int uNo, int skSeqNo) {
         mDataset = myDataset;
         this.context = orderListActivity;
+        this.uNo = uNo;
+        this.skSeqNo = skSeqNo;
         Log.v(TAG, "OrderListAdapter Constructor");
 
     }
@@ -177,8 +182,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         holder.btn_Review.setOnClickListener(new View.OnClickListener() { // 리뷰쓰기 버튼 클릭
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), com.example.tify.Hyeona.Activity.reviewActivity.class); // 정확한 주소 필요!
+                Intent intent = new Intent(v.getContext(), com.example.tify.Hyeona.Activity.review_white.class); // 정확한 주소 필요!
+                intent.putExtra("uNo ", uNo);
+                intent.putExtra("sSeqNo ", skSeqNo);
                 context.startActivity(intent);
+
             }
         });
     }

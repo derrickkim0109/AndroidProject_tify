@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,14 +44,15 @@ public class MenuFragment extends Fragment {
     int user_uSeqNo = 0;
     int store_sSeqNo = 0;
 
+    RecyclerView RV = null;
+    LinearLayout LL = null;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
             // Inflate the layout for this fragment
             View v =  inflater.inflate(R.layout.lmw_fragment_menu, container, false);
-
-
 
             // StoreInfoActivity로 부터 값을 받는다.
             Bundle bundle = getArguments();
@@ -63,17 +66,17 @@ public class MenuFragment extends Fragment {
             where = "select";
             urlAddr = "http://" + macIP + ":8080/tify/lmw_menulist.jsp?store_sSeqNo=" + store_sSeqNo;
             Log.v(TAG, "urlAddr : " + urlAddr);
-
             Log.v(TAG, "macIP : " + macIP);
             Log.v(TAG, "user_uSeqNo : " + user_uSeqNo);
             Log.v(TAG, "store_sSeqNo : " + store_sSeqNo);
             Log.v(TAG, "sName : " + sName);
             //----------------------
 
-
+            RV = v.findViewById(R.id.fragment_recycler_view);
+            LL = v.findViewById(R.id.fragment_Menu_LL);
 
             //recyclerview
-            recyclerView = v.findViewById(R.id.recycler_view);
+            recyclerView = v.findViewById(R.id.fragment_recycler_view);
             recyclerView.setHasFixedSize(true);
             mAdapter = new MenuAdapter(MenuFragment.this, R.layout.lmw_fragment_menu , menuList, macIP);
 
@@ -84,6 +87,11 @@ public class MenuFragment extends Fragment {
 
             list = new ArrayList<Menu>();
             list = connectGetData(); // db를 통해 받은 데이터를 담는다.
+
+            if(list.size() == 0){
+                RV.setVisibility(View.GONE);
+                LL.setVisibility(View.VISIBLE);
+            }
 
             mAdapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
                 @Override
@@ -145,14 +153,6 @@ public class MenuFragment extends Fragment {
 
 
     }
-
-//    private void prepareData() {
-//        menuList.add(new Menu("아메리카노(HOT)",3500));
-//        menuList.add(new Menu("아메리카노(COLD)",4000));
-//        menuList.add(new Menu("라떼(HOT)",4000));
-//        menuList.add(new Menu("라떼(COLD)",4500));
-//        menuList.add(new Menu("치즈케이크",5000));
-//    }
 
     @Override
     public void onResume() {
