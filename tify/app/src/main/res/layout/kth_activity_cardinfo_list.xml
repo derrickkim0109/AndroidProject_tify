@@ -28,7 +28,8 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        />
     <!--카드 번호 -->
     <TextView
         android:layout_weight="6"

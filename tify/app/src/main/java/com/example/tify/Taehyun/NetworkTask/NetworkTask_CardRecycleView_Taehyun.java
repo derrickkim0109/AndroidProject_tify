@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.tify.Taehyun.Bean.Bean_Mypage_CardInfo;
+import com.example.tify.Taehyun.Bean.Bean_Mypage_cardlist;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,15 +25,15 @@ public class NetworkTask_CardRecycleView_Taehyun extends AsyncTask<Integer, Stri
         Context context = null;
         String mAddr = null;
         ProgressDialog progressDialog = null;
-        Bean_Mypage_CardInfo cardInfo = null;
-        ArrayList<Bean_Mypage_CardInfo> cardInfos = null;
+        Bean_Mypage_cardlist cardlist = null;
+        ArrayList<Bean_Mypage_cardlist> cardlists = null;
         String where = null;
 
 
         public NetworkTask_CardRecycleView_Taehyun(String mAddr, String where) {
                 this.mAddr = mAddr;
-                this.cardInfo = new Bean_Mypage_CardInfo();
-                this.cardInfos = new ArrayList<Bean_Mypage_CardInfo>();
+                this.cardlist = new Bean_Mypage_cardlist();
+                this.cardlists = new ArrayList<Bean_Mypage_cardlist>();
                 this.where = where;
 
                 }
@@ -89,7 +90,7 @@ public class NetworkTask_CardRecycleView_Taehyun extends AsyncTask<Integer, Stri
                 //  - 입력, 수정, 삭제로 들어온 Task는 parserAction()으로 구분
                 //
                 ///////////////////////////////////////////////////////////////////////////////////////
-                if (where.equals("select_cardInfo")) {
+                if (where.equals("select_cardList")) {
                 parserSelect(stringBuffer.toString());
                 }else {
                 }
@@ -119,7 +120,7 @@ public class NetworkTask_CardRecycleView_Taehyun extends AsyncTask<Integer, Stri
                 //
                 ///////////////////////////////////////////////////////////////////////////////////////
                 if (where.equals("select_cardInfo")) {
-                return cardInfos;
+                return cardlists;
                 } else {
                 return result;
                 }
@@ -159,12 +160,15 @@ public class NetworkTask_CardRecycleView_Taehyun extends AsyncTask<Integer, Stri
             for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
 
-            String cImage = jsonObject1.getString("cCardCompany");
-
             String cCardNo = jsonObject1.getString("cCardNo");
-
+            String cCardCompany = jsonObject1.getString("cCardCompany");
+            String cYear = jsonObject1.getString("cYear");
+            String cMM = jsonObject1.getString("cMM");
+            String uName = jsonObject1.getString("uName");
             int cNo = jsonObject1.getInt("cNo");
 
+            cardlist = new Bean_Mypage_cardlist(cCardCompany, cCardNo, cYear, cMM, cNo, uName);
+            cardlists.add(cardlist);
 
             }
 
