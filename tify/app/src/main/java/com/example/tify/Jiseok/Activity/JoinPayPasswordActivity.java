@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.NetworkTask.ImageNetworkTask_TaeHyun;
 
 import java.io.File;
@@ -30,7 +31,7 @@ import java.util.Random;
 public class JoinPayPasswordActivity extends AppCompatActivity {
     String TAG = "여기, JoinPayPasswordActivity";
     Context context ;
-    String MacIP="192.168.219.100";
+    String MacIP= ShareVar.getMacIP();
 
     Button btnRearrangement;
     ImageButton btnDelete;

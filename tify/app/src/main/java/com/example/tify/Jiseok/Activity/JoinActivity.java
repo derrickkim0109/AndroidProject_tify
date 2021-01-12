@@ -37,6 +37,7 @@ import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.example.tify.Hyeona.Activity.review_white;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.NetworkTask.ImageNetworkTask_TaeHyun;
 
 import java.io.File;
@@ -73,7 +74,7 @@ public class JoinActivity extends AppCompatActivity {
 
     String getTextCheck = null; // editText null 체크용 변수
 
-    String MacIP="192.168.219.100";
+    String MacIP= ShareVar.getMacIP();
 
     String imageurl;
     String img_path = null;// 최종 file name

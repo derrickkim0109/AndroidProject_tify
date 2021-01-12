@@ -30,13 +30,14 @@ import com.example.tify.Hyeona.Activity.StampActivity;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.Minwoo.Activity.OrderListActivity;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Activity.MypageActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 public class JiseokMainActivity extends AppCompatActivity {
-    String MacIP = "192.168.219.100";
+    String MacIP = ShareVar.getMacIP();
     LinearLayout ll_hide;
     InputMethodManager inputMethodManager;
 
