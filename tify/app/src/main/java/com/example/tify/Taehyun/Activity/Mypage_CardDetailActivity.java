@@ -169,8 +169,6 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                         card_personal_IV.setImageResource(R.drawable.personal_light);
                         cInfo = "개인";
                         Toast.makeText(Mypage_CardDetailActivity.this,cInfo,Toast.LENGTH_SHORT).show();
-
-
                     }
                     break;
                     //법인

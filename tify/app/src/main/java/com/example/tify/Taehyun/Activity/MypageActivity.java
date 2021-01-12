@@ -50,7 +50,7 @@ public class MypageActivity extends AppCompatActivity {
     String urlAddr = null;
     //
     String urlAddress = null;
-    String macIP = "192.168.0.80";
+    String macIP = "192.168.2.21";
     //Bean
     Bean_Mypage_userinfo userinfo = null;
 
@@ -85,7 +85,7 @@ public class MypageActivity extends AppCompatActivity {
         intent = getIntent();
         uNo = intent.getIntExtra("uNo", 0);
         mypage_uImage = intent.getStringExtra("uImage");
-
+//        macIP = intent.getStringExtra("macIP");
 
 
     }
@@ -136,9 +136,9 @@ public class MypageActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             intent = new Intent(MypageActivity.this, LoginActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
                             SharedPreferences.Editor autoLogin = auto.edit();
-
                             autoLogin.clear();
                             autoLogin.commit();
                             startActivity(intent);
@@ -165,6 +165,7 @@ public class MypageActivity extends AppCompatActivity {
             uNo = 1;
 
             urlAddress = urlAddr + "uNo=" + uNo;
+            Log.v("dddd","dd"+urlAddress);
             NetworkTask_TaeHyun myPageNetworkTask = new NetworkTask_TaeHyun(MypageActivity.this, urlAddress, "select");
             Object obj = myPageNetworkTask.execute().get();
             userinfo = (Bean_Mypage_userinfo) obj;
@@ -213,7 +214,7 @@ public class MypageActivity extends AppCompatActivity {
     public void sendImageRequest(String s) {
 
         String url = "http://" + macIP + ":8080/tify/" + s;
-        Log.v(TAG, url);
+
         Glide.with(this).load(url).into(profileIv);
 
     }
@@ -226,7 +227,6 @@ public class MypageActivity extends AppCompatActivity {
             case MypageActivity.RValue:
                 uImage = data.getStringExtra("uImage");
                 nickName.setText(data.getStringExtra("uNickName"));
-
                 break;
         }
     }
@@ -236,7 +236,6 @@ public class MypageActivity extends AppCompatActivity {
         try {
             uNo = 1;
             String urlAddr = "http://" + macIP + ":8080/tify/mypage_cardcountselect.jsp?uNo="+ uNo;
-            Log.v("urlAddr",""+urlAddr);
             NetworkTask_TaeHyun countnetworkTask = new NetworkTask_TaeHyun(MypageActivity.this, urlAddr, "count");
             Object obj = countnetworkTask.execute().get();
 

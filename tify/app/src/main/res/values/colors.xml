@@ -11,6 +11,12 @@
 
 
 
+    <!--태현 2021.01.12-->
+    <color name="colorPrimary">#282C43</color>
+    <color name="colorPrimaryDark">#212538</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="color_background">#FAFAFA</color>
+
 
 
 
