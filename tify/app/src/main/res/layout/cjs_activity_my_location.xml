@@ -80,6 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="내위치로 설정하기"
+                android:visibility="invisible"
                 />
 
 
