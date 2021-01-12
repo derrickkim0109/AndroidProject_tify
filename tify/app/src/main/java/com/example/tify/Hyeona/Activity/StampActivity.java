@@ -4,13 +4,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,21 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Adapter.review_adapter;
 import com.example.tify.Hyeona.Adapter.stampOrder_adapter;
-import com.example.tify.Hyeona.Bean.Bean_review_review;
-import com.example.tify.Hyeona.Bean.Bean_stamp_orderlist;
-import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_review;
-import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_stamp;
+import com.example.tify.Hyeona.Bean.Bean_reward_stamphistory;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_stampCount;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
-import com.example.tify.Jiseok.Activity.JoinPayPasswordActivity;
-import com.example.tify.MainActivity;
 import com.example.tify.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -46,7 +36,7 @@ public class StampActivity extends AppCompatActivity {
     // 인텐트로 받아와야함
 
     TextView user_name;
-    private ArrayList<Bean_stamp_orderlist> orderlists = null;
+    private ArrayList<Bean_reward_stamphistory> stamphistory = null;
     private stampOrder_adapter adapter;
     private RecyclerView recyclerView = null;
     private RecyclerView.LayoutManager layoutManager = null;
@@ -54,6 +44,7 @@ public class StampActivity extends AppCompatActivity {
     String urlAddr = "http://" + macIP + ":8080/tify/stamp_count.jsp?";
     String urlAddr2 = "http://" + macIP + ":8080/tify/stamp_update.jsp?";
     String urlAddr3 = "http://" + macIP + ":8080/tify/rewardhistory_insert.jsp?";
+    String urlAddr4 = "http://" + macIP + ":8080/tify/stamphistory.jsp?";
     int stamp_count;
 
     ImageView[] img = new ImageView[10];
@@ -126,11 +117,15 @@ public class StampActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        connectGetData2();
+
         stamp_count = connectGetData();
         Log.v("테스트","ㅇㅇ"+stamp_count);
         //스탬프 관련 작업은 여기서!!
         //stamp_count = 11;
         // 스탬프 수 만큼 색칠
+        TextView total_stamp = findViewById(R.id.total_stamp);
+        total_stamp.setText("Total : " + stamp_count);
         if(stamp_count<10) {
             for (int i = 0; i < stamp_count; i++) {
                 img[i].setImageResource(R.drawable.stamp00);
@@ -154,7 +149,7 @@ public class StampActivity extends AppCompatActivity {
                             .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(StampActivity.this, "10개 이상의 스탬프는 현황을 확인할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(StampActivity.this, "스탬프는 포인트로 교환해야만 사용할 수 있습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -169,14 +164,13 @@ public class StampActivity extends AppCompatActivity {
                                        intent.putExtra("user_uNo",user_uNo);
                                        //  포인트 창에 값 전달
                                        startActivity(intent);
-                                       finish();
+                                       //finish();
                                    }else{
                                        Toast.makeText(StampActivity.this, "에러발생", Toast.LENGTH_SHORT).show();
                                    }
                                 }
                             })
                             .show();
-
                 }
             });
 
@@ -200,9 +194,12 @@ public class StampActivity extends AppCompatActivity {
     private int connectInsertData() {
         int result = 0;
         try {
-            String hContent = "스탬프 교환";
+            String rhContent = "스탬프적립";
+            int rhChoice = 1; // 이 경우는 적립이니까
+            String rhPointHow = "1,000p";
+
             // 스탬프로 인한 적립 히스토리 저장
-            String urlAddress3 = urlAddr3 + "user_uNo=" + user_uNo;
+            String urlAddress3 = urlAddr3 + "user_uNo=" + user_uNo +"&rhContent="+rhContent +"&rhChoice="+rhChoice+"&rhPointHow="+rhPointHow;
             CUDNetworkTask_stampCount CUDNetworkTask_stampCount =  new CUDNetworkTask_stampCount(urlAddress3,"insert_stamp");
             Object obj = CUDNetworkTask_stampCount.execute().get();
             result = (int) obj;
@@ -224,17 +221,28 @@ public class StampActivity extends AppCompatActivity {
 
             Log.v("테스트","ㅇㅇ"+result);
 
-//            orderlists = (ArrayList<Bean_stamp_orderlist>) obj;
-//            //리사이클러뷰 어댑터를 넣기
-//            adapter = new stampOrder_adapter(StampActivity.this, R.layout.cha_reviewcontent, orderlists,user_uNo);
-//            //어댑터에게 보내기
-//            recyclerView.setAdapter(adapter);
-
         }catch (Exception e){
             e.printStackTrace();
         }return result;
     }
+    private void connectGetData2(){
+        try {
+            String urlAddress = urlAddr4 + "user_uNo=" + user_uNo;
+            CUDNetworkTask_stampCount CUDNetworkTask_stampCount = new CUDNetworkTask_stampCount(urlAddress,"select_orderhistory");
+            Object obj = CUDNetworkTask_stampCount.execute().get();
 
+            stamphistory = (ArrayList<Bean_reward_stamphistory>) obj;
+            Log.v("dddd","dd"+stamphistory);
+
+            //리사이클러뷰 어댑터를 넣기
+            adapter = new stampOrder_adapter(StampActivity.this, R.layout.cha_reviewcontent, stamphistory);
+            //어댑터에게 보내기
+            recyclerView.setAdapter(adapter);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 

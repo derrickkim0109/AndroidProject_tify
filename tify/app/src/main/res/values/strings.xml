@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">tify</string>
+    <string name="app_name">GlobalApplication</string>
 
     <!-- 민우 -->
     <string name="orderSummary_ActionBar">주문하기</string>
@@ -15,5 +15,6 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
 
 </resources>

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -56,6 +57,9 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         setContentView(R.layout.cjs_activity_join_pay_password);
 
         Intent intent = getIntent();
@@ -201,11 +205,14 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                                 //디비에 회원정보 저장
                                 insertUserInfo();
                                 String userseq = Integer.toString(selectUserSeq());
+                                insertRewardTable(userseq);
+
                                //자동로그인
                                 SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
                                 SharedPreferences.Editor autoLogin = auto.edit();
                                 autoLogin.putString("userEmail", userEmail);
                                 autoLogin.putString("userSeq", userseq);
+                                autoLogin.putString("userNickName", userNickName);
                                 autoLogin.commit();
 
                                 new AlertDialog.Builder(JoinPayPasswordActivity.this)
@@ -343,6 +350,17 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
         }
         return utc;
+    }
+    private void insertRewardTable(String seq){
+        try {
+            String urlAddr = "http://" + MacIP + ":8080/tify/insertReward.jsp?uNo="+seq;
+            CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinPayPasswordActivity.this, urlAddr, "insertReward");
+            cjs_networkTask.execute().get();
+
+        }catch (Exception e){
+
+        }
+
     }
 
 

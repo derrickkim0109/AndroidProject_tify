@@ -24,9 +24,13 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+<<<<<<< HEAD
                                                 <entry key="imagePath" value="C:\Users\test\AppData\Local\Temp\baseline_check_circle_outline_24.xml" />
+=======
+                                                <entry key="imagePath" value="C:\Users\jiseok\AppData\Local\Temp\baseline_arrow_back_24.xml" />
+>>>>>>> ffc8abd6140492df063187cc074a44884eca5eda
                                                 <entry key="opacityPercent" value="80" />
-                                                <entry key="paddingPercent" value="50" />
+                                                <entry key="paddingPercent" value="-5" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -37,7 +41,11 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+<<<<<<< HEAD
                                                 <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/check_circle_outline/baseline_check_circle_outline_24.xml" />
+=======
+                                                <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/arrow_back/baseline_arrow_back_24.xml" />
+>>>>>>> ffc8abd6140492df063187cc074a44884eca5eda
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -83,9 +91,15 @@
                                   </option>
                                   <option name="values">
                                     <map>
+<<<<<<< HEAD
                                       <entry key="outputName" value="ic_action_progress_unchecked" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="0084ff" />
+=======
+                                      <entry key="outputName" value="jiseok_backBtn" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="128aff" />
+>>>>>>> ffc8abd6140492df063187cc074a44884eca5eda
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -101,7 +115,11 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+<<<<<<< HEAD
                                                 <entry key="imagePath" value="C:\Users\test\AppData\Local\Temp\ic_android_black_24dp.xml" />
+=======
+                                                <entry key="imagePath" value="C:\Users\jiseok\AppData\Local\Temp\ic_android_black_24dp.xml" />
+>>>>>>> ffc8abd6140492df063187cc074a44884eca5eda
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -156,7 +174,11 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+<<<<<<< HEAD
                                                 <entry key="imagePath" value="C:\Users\test\AppData\Local\Temp\ic_android_black_24dp.xml" />
+=======
+                                                <entry key="imagePath" value="C:\Users\jiseok\AppData\Local\Temp\ic_android_black_24dp.xml" />
+>>>>>>> ffc8abd6140492df063187cc074a44884eca5eda
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -200,7 +222,11 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+<<<<<<< HEAD
                                                 <entry key="imagePath" value="C:\Users\test\AppData\Local\Temp\ic_android_black_24dp.xml" />
+=======
+                                                <entry key="imagePath" value="C:\Users\jiseok\AppData\Local\Temp\ic_android_black_24dp.xml" />
+>>>>>>> ffc8abd6140492df063187cc074a44884eca5eda
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -264,7 +290,11 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+<<<<<<< HEAD
                                                 <entry key="imagePath" value="C:\Users\test\AppData\Local\Temp\ic_android_black_24dp.xml" />
+=======
+                                                <entry key="imagePath" value="C:\Users\jiseok\AppData\Local\Temp\ic_android_black_24dp.xml" />
+>>>>>>> ffc8abd6140492df063187cc074a44884eca5eda
                                               </map>
                                             </option>
                                           </PersistentState>
