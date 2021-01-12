@@ -19,6 +19,7 @@ import com.example.tify.Minwoo.Fragment.InfoFragment;
 import com.example.tify.Minwoo.Fragment.MenuFragment;
 import com.example.tify.Minwoo.Fragment.ReviewFragment;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.google.android.material.tabs.TabLayout;
 
 public class StoreInfoActivity extends AppCompatActivity {
@@ -84,12 +85,14 @@ public class StoreInfoActivity extends AppCompatActivity {
         // 테스트 값
         Intent intent = getIntent();
         if(intent.getStringExtra("macIP") != null){
-            macIP = intent.getStringExtra("macIP");
+            ShareVar shareVar = new ShareVar();
+            macIP = shareVar.getMacIP();
             user_uSeqNo = intent.getIntExtra("user_uSeqNo", 0);
             store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
             sName = "스타벅스 강남점";
         }else{
-            macIP = "172.30.1.27";
+            ShareVar shareVar = new ShareVar();
+            macIP = shareVar.getMacIP();
             sName = "스타벅스 강남점";
             user_uSeqNo = 2;
             store_sSeqNo = 1;

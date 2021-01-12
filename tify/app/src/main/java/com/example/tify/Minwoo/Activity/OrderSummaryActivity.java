@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.bumptech.glide.Glide;
 import com.example.tify.Minwoo.NetworkTask.LMW_CartNetworkTask;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -90,7 +91,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
         mComment = intent.getStringExtra("mComment");
         sName = intent.getStringExtra("sName");
 
-        macIP = intent.getStringExtra("macIP");
+        ShareVar shareVar = new ShareVar();
+        macIP = shareVar.getMacIP();
         user_uSeqNo = intent.getIntExtra("user_uSeqNo", 0);
         store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
 
