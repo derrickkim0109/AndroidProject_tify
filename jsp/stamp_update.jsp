@@ -3,10 +3,7 @@
 
 <%
 	request.setCharacterEncoding("utf-8");
-    String rContent = request.getParameter("rContent");
-    String rImage = request.getParameter("rImage");
     int user_uNo = Integer.parseInt(request.getParameter("user_uNo"));
-    int storekeeper_skSeqNo = Integer.parseInt(request.getParameter("storekeeper_skSeqNo"));
 
 //------
 
@@ -22,18 +19,10 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-        String A = "insert into tify.review(rContent,rImage,user_uNo,storekeeper_skSeqNo,rInsertDate) value (?, ?, ?, ?,now())";
-
-
+        String A = "UPDATE reward set rwStamp = (rwStamp-10), rwPoint = (rwPoint+1000) where user_uNo =?";
         ps = conn_mysql.prepareStatement(A);
-
-        ps.setString(1, rContent);
-        ps.setString(2, rImage);
-        ps.setInt(3, user_uNo);
-        ps.setInt(4, storekeeper_skSeqNo);
-
+        ps.setInt(1, user_uNo);
         result = ps.executeUpdate();
-        
 %>
 		{
 			"result" : "<%=result%>"

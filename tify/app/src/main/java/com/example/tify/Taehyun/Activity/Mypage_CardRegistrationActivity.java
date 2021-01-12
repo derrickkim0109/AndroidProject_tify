@@ -25,6 +25,7 @@ import com.example.tify.Hyeona.Adapter.pointHistory_adapter;
 import com.example.tify.Hyeona.Bean.Bean_point_history;
 import com.example.tify.R;
 import com.example.tify.Taehyun.Adapter.Mypage_CardInfoAdapter;
+import com.example.tify.Taehyun.Adapter.Mypage_CardListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_CardInfo;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_cardlist;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_CardRecycleView_Taehyun;
@@ -38,6 +39,7 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
     //field
     final static private String TAG = "Mypage_CardRegistrationActivity";
     private Mypage_CardInfoAdapter cardInfoAdapter;
+    private Mypage_CardListAdapter cardListAdapter;
     private RecyclerView recyclerView = null;
 
     private RecyclerView.LayoutManager layoutManager = null;
@@ -52,7 +54,7 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
     Intent intent;
     LinearLayout card_firstll,cardRG_ll_list;
     //화면 전환을 위한 변수
-    int number = 0;
+
 
     String macIP = null;
     int uNo = 0;
@@ -62,13 +64,7 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
     int cardcount = 0;
 
 
-    //가로 레이아웃  - 카드 그림
-//    LinearLayoutManager horizonalLayoutManager
-//            = new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false);
 
-    //세로 레이아웃 - 카드 정보
-//    LinearLayoutManager linearLayoutManager
-//            = new LinearLayoutManager(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,12 +185,42 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
         connectData(uNo);
     }
 
+
+
+    private void connectCardView(int s){
+
+        try {
+
+            String urlAddr = "http://" + macIP + ":8080/tify/mypage_card_view_select.jsp?";
+            String urlAddress = urlAddr + "user_uNo=" + s;
+            Log.v("dddd",urlAddress);
+
+            NetworkTask_CardRecycleView_Taehyun networkTask_taeHyun = new NetworkTask_CardRecycleView_Taehyun(urlAddress,"select_cardList");
+            Object obj = networkTask_taeHyun.execute().get();
+
+            bean_mypage_cardlists = (ArrayList<Bean_Mypage_cardlist>) obj;
+
+            recyclerView_card_image.setHasFixedSize(true);
+
+            //레이아웃 매니저 만들기            //가로 레이아웃  - 카드 그림
+            layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+            recyclerView_card_image.setLayoutManager(layoutManager);
+            cardListAdapter = new Mypage_CardListAdapter(Mypage_CardRegistrationActivity.this, R.layout.kth_activity_mypage_cardimagelist,bean_mypage_cardlists,macIP);
+
+            //어댑터에게 보내기
+            recyclerView_card_image.setAdapter(cardListAdapter);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private void connectData(int s){
 
         try {
 
             String urlAddr = "http://" + macIP + ":8080/tify/mypage_card_info_select.jsp?";
-            String urlAddress = urlAddr + "user_uNo=" + s;
+            String urlAddress = urlAddr + "user_uNo=" + s ;
 
             NetworkTask_RecycleView_Taehyun networkTask_taeHyun = new NetworkTask_RecycleView_Taehyun(urlAddress,"select_cardInfo");
             Object obj = networkTask_taeHyun.execute().get();
@@ -213,35 +239,6 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
             e.printStackTrace();
 
         }
+
     }
-
-    private void connectCardView(int s){
-
-        try {
-
-            String urlAddr = "http://" + macIP + ":8080/tify/mypage_card_view_select.jsp?";
-            String urlAddress = urlAddr + "user_uNo=" + s;
-            Log.v("dddd",urlAddress);
-
-            NetworkTask_CardRecycleView_Taehyun networkTask_taeHyun = new NetworkTask_CardRecycleView_Taehyun(urlAddress,"select_cardInfo");
-            Object obj = networkTask_taeHyun.execute().get();
-
-            bean_mypage_cardlists = (ArrayList<Bean_Mypage_cardlist>) obj;
-
-            recyclerView_card_image.setHasFixedSize(true);
-
-            //레이아웃 매니저 만들기
-            layoutManager = new LinearLayoutManager(this);
-            recyclerView_card_image.setLayoutManager(layoutManager);
-            cardInfoAdapter = new Mypage_CardInfoAdapter(Mypage_CardRegistrationActivity.this, R.layout.kth_activity_cardinfo_list,bean_mypage_cardInfos,macIP);
-
-            //어댑터에게 보내기
-            recyclerView_card_image.setAdapter(cardInfoAdapter);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-
 }//END

@@ -3,25 +3,32 @@
     pageEncoding="UTF-8"%>
 
 <%
-    request.setCharacterEncoding("utf-8");
-    int storekeeper_skSeqNo = Integer.parseInt(request.getParameter("storekeeper_skSeqNo"));
-	
-//-----
+    
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
     String pw_mysql = "qwer1234";
-    String WhereDefault = "select * from store where storekeeper_skSeqNo = " + storekeeper_skSeqNo;
+    
+    String uNo = request.getParameter("user_uNo");
+    
+    String WhereDefault = "SELECT l.order_oNo, o.oInsertDate, o.store_sName, Sum(l.olQuantity) from tify.order o, orderlist l where l.order_oNo = o.oNo and l.user_uNo="+uNo+" Group by l.order_oNo";
+    
     int count = 0;
     
-    try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
-        Statement stmt_mysql = conn_mysql.createStatement();
 
-        ResultSet rs = stmt_mysql.executeQuery(WhereDefault); // 
+    
+    try {
+       
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        
+        Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+       
+        Statement stmt_mysql = conn_mysql.createStatement();
+       
+        ResultSet rs = stmt_mysql.executeQuery(WhereDefault); 
+        
 %>
 		{ 
-  			"review_store"  : [ 
+  			"order_history"  : [ 
 <%
         while (rs.next()) {
             if (count == 0) {
@@ -33,14 +40,11 @@
             }
 %>            
 			{
-			"storekeeper_skSeqNo" : "<%=rs.getInt(1) %>",
-            "sName" : "<%=rs.getString(2) %>",
-            "sTelNo" : "<%=rs.getString(3) %>",
-            "sRunningTime" : "<%=rs.getString(4) %>",
-            "sAddress" : "<%=rs.getString(5) %>",
-            "sImage" : "<%=rs.getString(6) %>",
-            "sPackaging" : "<%=rs.getString(7) %>",
-            "sComment" : "<%=rs.getString(8) %>"
+            "user_uNo" : "<%=rs.getInt(1) %>", 
+            "oInsertDate" : "<%=rs.getString(2) %>",
+            "store_sName" : "<%=rs.getString(3) %>",
+            "total" : "<%=rs.getInt(4) %>"
+	
 			}
 
 <%		

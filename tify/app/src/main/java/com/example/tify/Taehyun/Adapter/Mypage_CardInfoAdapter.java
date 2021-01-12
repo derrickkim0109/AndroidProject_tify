@@ -58,10 +58,9 @@ public class Mypage_CardInfoAdapter extends RecyclerView.Adapter<Mypage_CardInfo
             //connectGetData(user_uNo);
             String card_Image = cardInfo.get(position).getcImage();
             String card_cNo = cardInfo.get(position).getcCardNo();
+            String cInfo = cardInfo.get(position).getcInfo();
             int cNo = cardInfo.get(position).getcNo();
 
-
-            holder.card_delete.setImageResource(R.drawable.ic_action_x);
 
             holder.card_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -102,6 +101,9 @@ public class Mypage_CardInfoAdapter extends RecyclerView.Adapter<Mypage_CardInfo
             }
 
             holder.card_text_view.setText(card_cNo);
+            holder.card_cInfo.setText(cInfo);
+            holder.card_delete.setImageResource(R.drawable.ic_action_x);
+
         }
 
 
