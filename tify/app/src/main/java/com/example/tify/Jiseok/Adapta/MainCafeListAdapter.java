@@ -81,6 +81,7 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
         return vh;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
