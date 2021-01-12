@@ -26,12 +26,12 @@ public class Mypage_CardListAdapter extends RecyclerView.Adapter<Mypage_CardList
     ///field
     private ArrayList<Bean_Mypage_cardlist> cardlists ;
     private Context mContext = null;
-    private String macIP = null;
+    private String MacIP = null;
 
 
-    public Mypage_CardListAdapter (Context mContext, int layout, ArrayList<Bean_Mypage_cardlist> cardlists, String macIP) {
+    public Mypage_CardListAdapter (Context mContext, int layout, ArrayList<Bean_Mypage_cardlist> cardlists, String MacIP) {
         this.cardlists = cardlists;
-        this.macIP = macIP;
+        this.MacIP = MacIP;
         this.mContext = mContext;
     }
 
@@ -58,7 +58,7 @@ public class Mypage_CardListAdapter extends RecyclerView.Adapter<Mypage_CardList
         String card_cNo = cardlists.get(position).getcCardNo();
         int cNo = cardlists.get(position).getcNo();
 
-        
+
     }
 
 

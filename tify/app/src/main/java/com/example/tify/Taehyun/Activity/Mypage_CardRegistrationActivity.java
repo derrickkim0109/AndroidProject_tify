@@ -24,6 +24,7 @@ import com.example.tify.Hyeona.Activity.PointActivity;
 import com.example.tify.Hyeona.Adapter.pointHistory_adapter;
 import com.example.tify.Hyeona.Bean.Bean_point_history;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Adapter.Mypage_CardInfoAdapter;
 import com.example.tify.Taehyun.Adapter.Mypage_CardListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_CardInfo;
@@ -56,7 +57,10 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
     //화면 전환을 위한 변수
 
 
-    String macIP = null;
+    //IP
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
+
     int uNo = 0;
     ActionBar actionBar = null;
     final static int RValue = 0;
@@ -111,8 +115,6 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
 
     private void inheritance() {
 
-        //IP
-        macIP = intent.getStringExtra("macIP");
         cardcount = intent.getIntExtra("cardcount",0);
         //보낼 data
         uNo = intent.getIntExtra("uNo",0);
@@ -127,7 +129,7 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
                 case R.id.cardadd_btn:
                     intent = new Intent(Mypage_CardRegistrationActivity.this,Mypage_CardDetailActivity.class)
                             .putExtra("uNo",uNo)
-                            .putExtra("macIP",macIP);
+                            .putExtra("MacIP",MacIP);
                     startActivity(intent);
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
@@ -137,7 +139,7 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
 
                     intent = new Intent(Mypage_CardRegistrationActivity.this,Mypage_CardDetailActivity.class)
                             .putExtra("uNo",uNo)
-                            .putExtra("macIP",macIP);
+                            .putExtra("MacIP",MacIP);
                     startActivity(intent);
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
@@ -167,7 +169,7 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
             case R.id.action_card_enroll:
                 intent = new Intent(Mypage_CardRegistrationActivity.this,Mypage_CardDetailActivity.class)
                         .putExtra("uNo",uNo)
-                        .putExtra("macIP",macIP);;
+                        .putExtra("MacIP",MacIP);;
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
@@ -191,7 +193,7 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
 
         try {
 
-            String urlAddr = "http://" + macIP + ":8080/tify/mypage_card_view_select.jsp?";
+            String urlAddr = "http://" + MacIP + ":8080/tify/mypage_card_view_select.jsp?";
             String urlAddress = urlAddr + "user_uNo=" + s;
             Log.v("dddd",urlAddress);
 
@@ -205,7 +207,7 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
             //레이아웃 매니저 만들기            //가로 레이아웃  - 카드 그림
             layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
             recyclerView_card_image.setLayoutManager(layoutManager);
-            cardListAdapter = new Mypage_CardListAdapter(Mypage_CardRegistrationActivity.this, R.layout.kth_activity_mypage_cardimagelist,bean_mypage_cardlists,macIP);
+            cardListAdapter = new Mypage_CardListAdapter(Mypage_CardRegistrationActivity.this, R.layout.kth_activity_mypage_cardimagelist,bean_mypage_cardlists,MacIP);
 
             //어댑터에게 보내기
             recyclerView_card_image.setAdapter(cardListAdapter);
@@ -219,7 +221,7 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
 
         try {
 
-            String urlAddr = "http://" + macIP + ":8080/tify/mypage_card_info_select.jsp?";
+            String urlAddr = "http://" + MacIP + ":8080/tify/mypage_card_list_select.jsp?";
             String urlAddress = urlAddr + "user_uNo=" + s ;
 
             NetworkTask_RecycleView_Taehyun networkTask_taeHyun = new NetworkTask_RecycleView_Taehyun(urlAddress,"select_cardInfo");
@@ -230,7 +232,7 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
             //레이아웃 매니저 만들기
             layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
-            cardInfoAdapter = new Mypage_CardInfoAdapter(Mypage_CardRegistrationActivity.this, R.layout.kth_activity_cardinfo_list,bean_mypage_cardInfos,macIP);
+            cardInfoAdapter = new Mypage_CardInfoAdapter(Mypage_CardRegistrationActivity.this, R.layout.kth_activity_cardinfo_list,bean_mypage_cardInfos,MacIP);
             //어댑터에게 보내기
             recyclerView.setAdapter(cardInfoAdapter);
 

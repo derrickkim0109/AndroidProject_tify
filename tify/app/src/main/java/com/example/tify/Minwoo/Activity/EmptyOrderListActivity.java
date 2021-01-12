@@ -13,7 +13,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.R;
+import com.example.tify.Taehyun.Activity.MypageActivity;
 
 public class EmptyOrderListActivity extends AppCompatActivity {
 
@@ -66,7 +68,7 @@ public class EmptyOrderListActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(EmptyOrderListActivity.this, JiseokMainActivity.class));
             }
         });
 

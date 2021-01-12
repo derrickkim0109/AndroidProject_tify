@@ -17,6 +17,7 @@ import com.example.tify.Hyeona.Bean.Bean_review_review;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_reward;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_stampCount;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -28,7 +29,10 @@ public class PointActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager = null;
     private ArrayList<Bean_point_history> point_history = null;
 
-    String macIP = "172.30.1.27";
+
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
+
 
     private int user_uNo = 1;
     private String user_uName = "지돌지돌";
@@ -65,7 +69,7 @@ public class PointActivity extends AppCompatActivity {
     //여기에서 해당 고객의 리워드 히스토리를 띄워야함
     private void connectGetData(int s){
         try {
-            String urlAddr = "http://" + macIP + ":8080/tify/pointHistory_select.jsp?";
+            String urlAddr = "http://" + MacIP + ":8080/tify/pointHistory_select.jsp?";
             //여기 변경 포인트
             String urlAddress = urlAddr + "uNo=" + s;
             CUDNetworkTask_reward CUDNetworkTask_reward = new CUDNetworkTask_reward(urlAddress,"pointHistory_select");
@@ -90,7 +94,7 @@ public class PointActivity extends AppCompatActivity {
     private int connectGetData2(int s){
         int result =0;
         try {
-            String urlAddr = "http://" + macIP + ":8080/tify/point_select.jsp?";
+            String urlAddr = "http://" + MacIP + ":8080/tify/point_select.jsp?";
             String urlAddress = urlAddr + "uNo=" + s;
             CUDNetworkTask_reward CUDNetworkTask_reward = new CUDNetworkTask_reward(urlAddress,"select_point");
             Object obj = CUDNetworkTask_reward.execute().get();

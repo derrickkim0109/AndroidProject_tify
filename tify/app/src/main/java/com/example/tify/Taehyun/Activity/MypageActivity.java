@@ -6,20 +6,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Activity.LoginActivity;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Adapter.MypageListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_MypageList;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
@@ -53,7 +59,10 @@ public class MypageActivity extends AppCompatActivity {
     String urlAddr = null;
     //
     String urlAddress = null;
-    String macIP = "192.168.2.21";
+//    String macIP = "192.168.2.21";
+    //IP
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
     //Bean
     Bean_Mypage_userinfo userinfo = null;
 
@@ -69,10 +78,16 @@ public class MypageActivity extends AppCompatActivity {
         email = findViewById(R.id.mypage_email);
 
         //url
-        urlAddr = "http://" + macIP + ":8080/tify/mypage.jsp?";
+        urlAddr = "http://" + MacIP + ":8080/tify/mypage.jsp?";
         //listview
         data = new ArrayList<Bean_MypageList>();
         userinfo = new Bean_Mypage_userinfo();
+
+
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor autoLogin = auto.edit();
+
+        uNo = Integer.parseInt(auto.getString("userSeq", null));
 
 
         data.add(new Bean_MypageList("프로필 변경", R.drawable.ic_action_go));
@@ -86,7 +101,6 @@ public class MypageActivity extends AppCompatActivity {
         profileIv = findViewById(R.id.mypage_profileIv);
 
         intent = getIntent();
-        uNo = intent.getIntExtra("uNo", 0);
         mypage_uImage = intent.getStringExtra("uImage");
 //        macIP = intent.getStringExtra("macIP");
 
@@ -107,7 +121,7 @@ public class MypageActivity extends AppCompatActivity {
                             .putExtra("uTelNo", uTelNo)
                             .putExtra("uImage", uImage)
                             .putExtra("uPayPassword", uPayPassword)
-                            .putExtra("macIP", macIP);
+                            .putExtra("MacIP", MacIP);
 
                     startActivity(intent);
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -121,7 +135,7 @@ public class MypageActivity extends AppCompatActivity {
                     Log.v("ㄲㄲㄲ여기기기기", ":"+cardcount);
                     intent = new Intent(MypageActivity.this, Mypage_CardRegistrationActivity.class)
                             .putExtra("uNo", uNo)
-                            .putExtra("macIP", macIP)
+                            .putExtra("MacIP", MacIP)
                             .putExtra("cardcount",cardcount);
 
                     startActivity(intent);
@@ -170,7 +184,7 @@ public class MypageActivity extends AppCompatActivity {
     private void connectGetData() {
         try {
             //임시값
-            uNo = 1;
+
 
             urlAddress = urlAddr + "uNo=" + uNo;
             Log.v("dddd","dd"+urlAddress);
@@ -221,7 +235,7 @@ public class MypageActivity extends AppCompatActivity {
 
     public void sendImageRequest(String s) {
 
-        String url = "http://" + macIP + ":8080/tify/" + s;
+        String url = "http://" + MacIP + ":8080/tify/" + s;
 
         Glide.with(this).load(url).into(profileIv);
 
@@ -242,8 +256,7 @@ public class MypageActivity extends AppCompatActivity {
     private int cardCountselect(){
         int cardcount = 0;
         try {
-            uNo = 1;
-            String urlAddr = "http://" + macIP + ":8080/tify/mypage_cardcountselect.jsp?uNo="+ uNo;
+            String urlAddr = "http://" + MacIP + ":8080/tify/mypage_cardcountselect.jsp?uNo="+ uNo;
             NetworkTask_TaeHyun countnetworkTask = new NetworkTask_TaeHyun(MypageActivity.this, urlAddr, "count");
             Object obj = countnetworkTask.execute().get();
 
@@ -254,4 +267,55 @@ public class MypageActivity extends AppCompatActivity {
         return cardcount;
     }
 
+    @Override
+    public void onBackPressed() {
+
+        startActivity(new Intent(MypageActivity.this,JiseokMainActivity.class));
+
+
+    }
+    // 액션바----------------------------------
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.show();
+        // Custom Actionbar를 사용하기 위해 CustomEnabled을 true 시키고 필요 없는 것은 false 시킨다
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);            //액션바 아이콘을 업 네비게이션 형태로 표시합니다.
+        actionBar.setDisplayShowTitleEnabled(false);        //액션바에 표시되는 제목의 표시유무를 설정합니다.
+        actionBar.setDisplayShowHomeEnabled(false);            //홈 아이콘을 숨김처리합니다.
+
+        //layout을 가지고 와서 actionbar에 포팅을 시킵니다.
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View actionbar = inflater.inflate(R.layout.cha_custom_actionbar, null);
+
+        actionBar.setCustomView(actionbar);
+        TextView title = findViewById(R.id.title);
+        title.setText("주문내역");
+
+        ImageButton cart = findViewById(R.id.cart);
+        cart.setVisibility(View.INVISIBLE);
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+//         장바구니 없애려면 위에거 살리면 됨
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        //액션바 양쪽 공백 없애기
+        Toolbar parent = (Toolbar) actionbar.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+        return true;
+    }
+    //---------------------------------
 }////---END

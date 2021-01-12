@@ -79,7 +79,7 @@
                 android:id="@+id/login_btn_emailLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_shape"
+                android:background="@drawable/login_shape"
                 app:backgroundTint="#fff"
                 android:layout_marginStart="50dp"
                 android:text="이메일로 로그인하기"

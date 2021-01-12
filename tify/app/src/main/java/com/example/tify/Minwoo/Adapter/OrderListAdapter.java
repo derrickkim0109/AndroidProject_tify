@@ -130,11 +130,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 
         switch (mDataset.get(position).getoStatus()){ // 0 주문요청 1 주문접수 2 제조완료 3 픽업완료 4 고객이 취소 5 매장이 취소
             case 0:
-                holder.tv_right1.setImageResource(R.drawable.ic_action_progress_checked);
+                Glide.with(holder.tv_right1).load(R.drawable.dotdot).into(holder.tv_right1);
                 holder.tv_orderRequest.setTextColor(Color.parseColor("#0084ff"));
                 break;
             case 1:
-                holder.tv_right2.setImageResource(R.drawable.ic_action_progress_checked);
+                Glide.with(holder.tv_right2).load(R.drawable.dotdot).into(holder.tv_right2);
                 holder.tv_orderGet.setTextColor(Color.parseColor("#0084ff"));
                 break;
             case 2:

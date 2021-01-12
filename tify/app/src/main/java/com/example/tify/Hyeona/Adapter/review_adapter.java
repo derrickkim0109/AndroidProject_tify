@@ -19,6 +19,7 @@ import com.example.tify.Hyeona.Bean.Bean_review_review;
 import com.example.tify.Hyeona.Bean.Bean_review_userinfo;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_userinfo;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,8 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
     Bean_review_userinfo bean_review_userinfo =new Bean_review_userinfo();
     private String uImage;
     private String uNickName;
-    String macIP = "192.168.0.55";
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
     Intent intent = null;
 
     //
@@ -59,9 +61,9 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
        // if(uImage.equals("null")){
        //     holder.review_profileIv.setImageResource(R.drawable.ic_person);
        // }else {
-            Glide.with(mContext).load("http://" + macIP + ":8080/tify/"+ uImage).into(holder.review_profileIv);
+            Glide.with(mContext).load("http://" + MacIP + ":8080/tify/"+ uImage).into(holder.review_profileIv);
         //}
-        Glide.with(mContext).load("http://" + macIP + ":8080/tify/"+ reviews.get(position).getrImage()).into(holder.review_image);
+        Glide.with(mContext).load("http://" + MacIP + ":8080/tify/"+ reviews.get(position).getrImage()).into(holder.review_image);
         Log.v("TT","ddddddddddddd"+user_uNo);
         holder.review_day.setText(reviews.get(position).getrInsertDate());
 
@@ -117,7 +119,7 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
 
     private void connectGetData(int s){
         try {
-            String urlAddr = "http://" + macIP + ":8080/tify/user_info.jsp?";
+            String urlAddr = "http://" + MacIP + ":8080/tify/user_info.jsp?";
             //여기 변경 포인트
             String urlAddress = urlAddr + "uNo=" + s;
             CUDNetworkTask_userinfo mCUDNetworkTask_userinfo = new CUDNetworkTask_userinfo(review_adapter.this, urlAddress,"select");

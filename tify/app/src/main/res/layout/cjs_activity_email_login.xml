@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
-                android:background="@drawable/button_shape"
+                android:background="@drawable/login_shape"
                 android:text="이메일로 로그인하기"
                 android:textColor="@color/TextColor"
                 android:textStyle="bold"

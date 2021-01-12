@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.Minwoo.Fragment.InfoFragment;
 import com.example.tify.Minwoo.Fragment.MenuFragment;
 import com.example.tify.Minwoo.Fragment.ReviewFragment;
@@ -72,6 +73,7 @@ public class StoreInfoActivity extends AppCompatActivity {
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
+
         ShareVar shareVar = new ShareVar();
         macIP = shareVar.getMacIP();
 
@@ -233,7 +235,9 @@ public class StoreInfoActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+              Intent intent = new Intent(StoreInfoActivity.this, JiseokMainActivity.class);
+              startActivity(intent);
+
             }
         });
 

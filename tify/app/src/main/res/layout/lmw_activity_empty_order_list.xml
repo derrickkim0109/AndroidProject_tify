@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Minwoo.Activity.EmptyOrderListActivity">
 
-    <include
-        layout="@layout/lmw_emptyorderlist_toolbar"
-        android:id="@+id/emptyorderlist_toolbar"
-        app:layout_scrollFlags="scroll|snap"
-        />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -24,6 +24,7 @@ import com.example.tify.Hyeona.Bean.Bean_reward_stamphistory;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_stampCount;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -40,11 +41,13 @@ public class StampActivity extends AppCompatActivity {
     private stampOrder_adapter adapter;
     private RecyclerView recyclerView = null;
     private RecyclerView.LayoutManager layoutManager = null;
-    String macIP = "192.168.0.55";
-    String urlAddr = "http://" + macIP + ":8080/tify/stamp_count.jsp?";
-    String urlAddr2 = "http://" + macIP + ":8080/tify/stamp_update.jsp?";
-    String urlAddr3 = "http://" + macIP + ":8080/tify/rewardhistory_insert.jsp?";
-    String urlAddr4 = "http://" + macIP + ":8080/tify/stamphistory.jsp?";
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
+
+    String urlAddr = "http://" + MacIP + ":8080/tify/stamp_count.jsp?";
+    String urlAddr2 = "http://" + MacIP + ":8080/tify/stamp_update.jsp?";
+    String urlAddr3 = "http://" + MacIP + ":8080/tify/rewardhistory_insert.jsp?";
+    String urlAddr4 = "http://" + MacIP + ":8080/tify/stamphistory.jsp?";
     int stamp_count;
 
     ImageView[] img = new ImageView[10];

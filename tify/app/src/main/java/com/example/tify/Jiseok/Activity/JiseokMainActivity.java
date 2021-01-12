@@ -146,6 +146,7 @@ public class JiseokMainActivity extends AppCompatActivity {
                     }
                     case R.id.action3: {
 
+
                         Toast.makeText(getApplicationContext(), "정상적으로 로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
 //                        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
 //                            @Override
