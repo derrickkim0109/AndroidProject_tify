@@ -18,11 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Activity.LoginActivity;
+import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.R;
 import com.example.tify.Taehyun.Adapter.MypageListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_MypageList;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 import java.util.ArrayList;
 
@@ -135,13 +138,18 @@ public class MypageActivity extends AppCompatActivity {
                     builder.setPositiveButton("예", new DialogInterface.OnClickListener() { // 예를 눌렀을 경우 로그인 창으로 이동
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            intent = new Intent(MypageActivity.this, LoginActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-                            SharedPreferences.Editor autoLogin = auto.edit();
-                            autoLogin.clear();
-                            autoLogin.commit();
-                            startActivity(intent);
+                            UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+                                @Override
+                                public void onCompleteLogout() {
+                                    SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                                    SharedPreferences.Editor autoLogin = auto.edit();
+                                    autoLogin.clear();
+                                    autoLogin.commit();
+                                    Intent intent = new Intent(MypageActivity.this, LoginActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
+                            });
 
                         }
                     });
