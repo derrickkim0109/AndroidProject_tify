@@ -100,6 +100,7 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
 
 
             double distance1 = getDistance(Location1,Location2);
+            String strdistance = Double.toString(distance1);
 
             Log.v("위치","거리 :" +distance1);
 
@@ -107,7 +108,7 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
                     holder.cafeTitle.setText(arrayList.get(position).getsName());
                     holder.cafeLike.setText(arrayList.get(position).getLikeCount());
                     holder.cafeReviewCount.setText(arrayList.get(position).getReviewCount());
-                    holder.distance.setText("" + distance1 + "m");
+                    holder.distance.setText(strdistance.substring(0,strdistance.indexOf("."))+" m");
                     Log.v("위치", "" + arrayList.get(position).getsAddress());
                 }
 
