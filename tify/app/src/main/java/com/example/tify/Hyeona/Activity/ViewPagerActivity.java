@@ -17,12 +17,13 @@ import com.example.tify.R;
 
 import me.relex.circleindicator.CircleIndicator;
 
+
 public class ViewPagerActivity extends AppCompatActivity {
 
     private FragmentPagerAdapter fragmentPagerAdapter;
     private ViewPager vp;
    // private CircleIndicator indicator;
-    private CircleIndicator indicator;
+   private CircleIndicator indicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

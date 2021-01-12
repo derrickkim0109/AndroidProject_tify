@@ -1,6 +1,8 @@
 package com.android.tify_store.Minwoo.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +15,15 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.tify_store.Minwoo.Activity.StoreInfoActivity;
 import com.android.tify_store.Minwoo.Bean.OrderRequest;
+import com.android.tify_store.Minwoo.Bean.Store;
 import com.android.tify_store.Minwoo.Fragment.DialogFragment_OrderRequest_Cancel;
 import com.android.tify_store.Minwoo.Fragment.DialogFragment_OrderRequest_Ok;
 import com.android.tify_store.Minwoo.Fragment.OrderRequestFragment;
+import com.android.tify_store.Minwoo.NetworkTask.LMW_OrderListNetworkTask;
+import com.android.tify_store.Minwoo.NetworkTask.LMW_OrderNetworkTask;
+import com.android.tify_store.Minwoo.NetworkTask.LMW_StoreNetworkTask;
 import com.android.tify_store.R;
 
 import java.text.NumberFormat;
@@ -28,6 +35,15 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
     String TAG = "OrderRequestAdapter";
     Context context;
     Fragment fragment;
+
+    String macIP;
+    int skSeqNo;
+    int oNo;
+    String where;
+    String urlAddr;
+
+    private ArrayList<OrderRequest> orderRequests = new ArrayList<>();
+    private ArrayList<Integer> list = new ArrayList<Integer>();
 
     //인터페이스 선언
     public interface OnItemClickListener{
@@ -93,8 +109,33 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
 
 
     // 메인 액티비티에서 받은 myDataset을 가져오
-    public OrderRequestAdapter(OrderRequestFragment MenuFragment, int member, ArrayList<OrderRequest> myDataset) {
+    public OrderRequestAdapter(OrderRequestFragment MenuFragment, int member, ArrayList<OrderRequest> myDataset, String macIP, int skSeqNo) {
         this.mDataset = myDataset;
+        this.fragment = MenuFragment;
+        this.macIP = macIP;
+        this.skSeqNo = skSeqNo;
+
+
+        where = "select";
+        urlAddr = "http://" + macIP + ":8080/tify/lmw_order_select_ostatus.jsp?skSeqNo=" + skSeqNo;
+        orderRequests = connectOrderGetData();
+
+        for(int i = 0; i < orderRequests.size(); i++){ // 선언하면 바로 oStatus가 0인 데이터 뽑아낸다.
+            list.add(orderRequests.get(i).getOrder_oNo());
+        }
+        Log.v(TAG, "list : " + list);
+
+        ArrayList<Integer> integers = new ArrayList<Integer>();
+
+        for(int i = 0; i < mDataset.size(); i++){
+            if(!list.contains(mDataset.get(i).getOrder_oNo())){
+                mDataset.remove(i);
+            }else{
+                integers.add(mDataset.get(i).getOrder_oNo());
+            }
+        }
+
+        Log.v(TAG, "integers : " + integers);
         Log.v(TAG, "mDataset size : " + mDataset.size());
         Log.v(TAG, "MenuAdapter Constructor");
 
@@ -116,53 +157,74 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
     public void onBindViewHolder(@NonNull OrderRequestAdapter.MyViewHolder holder, int position) {
         Log.v(TAG, "onBindViewHolder");
 
-        holder.oSeqno.setText("주문번호 : " + mDataset.get(position).getOrder_oNo());
-        holder.oDate.setText("2021-01-10 13:13"); // 고객이 요청할 때 보내주는 입력 시간으로 받기
-        holder.sName.setText(mDataset.get(position).getStore_sName());
-        holder.mName.setText(mDataset.get(position).getMenu_mName());
+        if(list.contains(mDataset.get(position).getOrder_oNo())){ // oStatus가 0인 oNo가 담겨있는 list라는 ArrayList의 oNo와 같다면 화면에 띄운다.
+            holder.oSeqno.setText("주문번호 : " + mDataset.get(position).getOrder_oNo());
+            holder.oDate.setText(mDataset.get(position).getoInsertDate());
+            holder.sName.setText(mDataset.get(position).getStore_sName());
+            holder.mName.setText(mDataset.get(position).getMenu_mName());
 
-        if(mDataset.get(position).getOlAddShot() != 0){
-            holder.addOrder1.setVisibility(View.VISIBLE);
-            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlSizeUp());
+            if (mDataset.get(position).getOlAddShot() != 0) {
+                holder.addOrder1.setVisibility(View.VISIBLE);
+                holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlAddShot());
+            }
+            if (mDataset.get(position).getOlSizeUp() != 0) {
+                holder.addOrder2.setVisibility(View.VISIBLE);
+                holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlSizeUp());
+            }
+            if (mDataset.get(position).getOlRequest() != null) {
+                holder.request.setVisibility(View.VISIBLE);
+                holder.request.setText(mDataset.get(position).getOlRequest());
+            }
+
+            NumberFormat moneyFormat = null;
+            moneyFormat = NumberFormat.getInstance(Locale.KOREA);
+            String strTotal = moneyFormat.format(mDataset.get(position).getOlPrice());
+
+            holder.subTotalPrice.setText(strTotal + "원");
+
+            oNo = mDataset.get(position).getOrder_oNo(); // 주문번호
+            holder.reject.setOnClickListener(mClickListener);
+            holder.accept.setOnClickListener(mClickListener);
         }
-        if(mDataset.get(position).getOlSizeUp() != 0){
-            holder.addOrder2.setVisibility(View.VISIBLE);
-            holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlAddShot());
-        }
-        if(mDataset.get(position).getOlRequest() != null){
-            holder.request.setVisibility(View.VISIBLE);
-            holder.request.setText(mDataset.get(position).getOlRequest());
-        }
 
-        NumberFormat moneyFormat = null;
-        moneyFormat = NumberFormat.getInstance(Locale.KOREA);
-        String strTotal = moneyFormat.format(mDataset.get(position).getOlPrice());
 
-        holder.subTotalPrice.setText(strTotal + "원");
 
-        holder.reject.setOnClickListener(btnClickListener);
-        holder.accept.setOnClickListener(btnClickListener);
 
     }
 
-    View.OnClickListener btnClickListener = new View.OnClickListener() {
+    View.OnClickListener mClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Bundle bundle = new Bundle();
+            OrderRequest orderRequest = new OrderRequest();
             switch (v.getId()){
                 case R.id.orderRequest_CV_Btn_Cancel:
                     Log.v(TAG, "거절");
 
-                    DialogFragment_OrderRequest_Cancel dialogFragment_orderRequestCancel = new DialogFragment_OrderRequest_Cancel();
-                    dialogFragment_orderRequestCancel.show(fragment.getFragmentManager(),"tag");
+                    DialogFragment_OrderRequest_Cancel dialogFragment_orderRequest_cancel = new DialogFragment_OrderRequest_Cancel();
+                    bundle.putString("macIP", macIP);
+                    bundle.putInt("skSeqNo", skSeqNo);
+                    bundle.putInt("oNo", oNo);
+
+                    Log.v(TAG, "oNo : " + oNo);
+
+                    dialogFragment_orderRequest_cancel.setArguments(bundle);
+                    dialogFragment_orderRequest_cancel.show(fragment.getActivity().getSupportFragmentManager(),"tag");
                     break;
                 case R.id.orderRequest_CV_Btn_Accept:
                     Log.v(TAG, "접수");
 
                     DialogFragment_OrderRequest_Ok dialogFragment_orderRequest_ok = new DialogFragment_OrderRequest_Ok();
-                    dialogFragment_orderRequest_ok.show(fragment.getFragmentManager(), "tag");
+                    bundle.putString("macIP", macIP);
+                    bundle.putInt("skSeqNo", skSeqNo);
+                    bundle.putInt("oNo", oNo);
+
+                    Log.v(TAG, "oNo : " + oNo);
+
+                    dialogFragment_orderRequest_ok.setArguments(bundle);
+                    dialogFragment_orderRequest_ok.show(fragment.getActivity().getSupportFragmentManager(),"tag");
                     break;
             }
-
         }
     };
 
@@ -173,5 +235,29 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
     }
 
 
+    private ArrayList<OrderRequest> connectOrderGetData(){
+        ArrayList<OrderRequest> beanList = new ArrayList<OrderRequest>();
 
+        try {
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // Date : 2020.12.25
+            //
+            // Description:
+            //  - NetworkTask의 생성자 추가 : where <- "select"
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////
+            LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(fragment.getActivity(), urlAddr, where);
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            Object obj = networkTask.execute().get();
+            orderRequests = (ArrayList<OrderRequest>) obj;
+            Log.v(TAG, "orderRequests.size() : " + orderRequests.size());
+
+            beanList = orderRequests;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return beanList;
+    }
 }

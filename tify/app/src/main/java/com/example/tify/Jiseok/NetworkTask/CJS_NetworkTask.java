@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.tify.Hyeona.Bean.Bean_review_review;
 import com.example.tify.Hyeona.Bean.Bean_review_store;
+import com.example.tify.Jiseok.Bean.Bean_Login_cjs;
 import com.example.tify.Minwoo.Bean.Menu;
 
 import org.json.JSONArray;
@@ -29,6 +30,8 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
 
     int userTelCount = 0;
     int userEmailCount=0;
+    int uNo=0;
+    Bean_Login_cjs bean_login_cjs = null;
 
 
     public CJS_NetworkTask(Context context, String mAddr, String where) {
@@ -75,15 +78,28 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
                     stringBuffer.append(strline + "\n");
                 }
 
-                switch (where){
-                    case "userTelCount":
-                        userTelCount(stringBuffer.toString());
-                        break;
-                    case "userEmailCount":
-                        userEmailCount(stringBuffer.toString());
-                        break;
-                }
-
+//                switch (where){
+//                    case "userTelCount":
+//                        userTelCount(stringBuffer.toString());
+//                        break;
+//                    case "userEmailCount":
+//                        userEmailCount(stringBuffer.toString());
+//                        break;
+//                    case "uNoSelect":
+//                        uNoSelect(stringBuffer.toString());
+//                        break;
+//                    case "insertUserInfo":
+//                        parserAction(stringBuffer.toString());
+//                        break;
+//                    default:
+//
+//                        break;
+//                }
+                if(where.equals("userTelCount")) userTelCount(stringBuffer.toString());
+                if(where.equals("userEmailCount")) userEmailCount(stringBuffer.toString());
+                if(where.equals("uNoSelect")) uNoSelect(stringBuffer.toString());
+                if(where.equals("insertUserInfo")) parserAction(stringBuffer.toString());;
+                if(where.equals("emailLogin")) emailLogin(stringBuffer.toString());
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -98,13 +114,20 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
             }
         }
 
-        switch (where){
-            case "userTelCount":
-                return userTelCount;
-            case "userEmailCount":
-                return userEmailCount;
-        }
-
+        Log.v("where",where);
+//        switch (where){
+//            case "userTelCount":
+//                return userTelCount;
+//            case "userEmailCount":
+//                return userEmailCount;
+//            case "uNoSelect":
+//                return uNo;
+//
+//        }
+        if(where.equals("userTelCount")) return userTelCount;
+        if(where.equals("userEmailCount")) return userEmailCount;
+        if(where.equals("uNoSelect")) return uNo;
+        if(where.equals("emailLogin")) return bean_login_cjs;
 
 
        return null;
@@ -161,12 +184,83 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
                 int storekeeper_skSeqNo = jsonObject1.getInt("EmailCount");
 
                 userEmailCount = storekeeper_skSeqNo;
+                Log.v("여기","userEmailCount_parser : "+userEmailCount);
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
+
+    private void uNoSelect(String s){
+        try {
+            Log.v("왜안떠","1");
+            JSONObject jsonObject = new JSONObject(s);
+            Log.v("왜안떠","2");
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
+            Log.v("왜안떠","3");
+            Log.v("왜안떠",""+jsonArray.length());
+            for (int i=0; i<jsonArray.length(); i++){
+                Log.v("왜안떠","4");
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                Log.v("왜안떠","5");
+                int storekeeper_skSeqNo = jsonObject1.getInt("uNo");
+
+                uNo = storekeeper_skSeqNo;
+                Log.v("왜안떠","no : "+uNo);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.v("왜안떠",""+e);
+        }
+
+    }
+
+    private void emailLogin(String s){
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
+            Log.v("왜안떠",""+jsonArray.length());
+            for (int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                int count = jsonObject1.getInt("count");
+                int uNo = jsonObject1.getInt("uNo");
+                String uEmail = jsonObject1.getString("uEmail");
+                String uNickName = jsonObject1.getString("uNickName");
+
+                bean_login_cjs = new Bean_Login_cjs(count,uNo,uEmail,uNickName);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.v("왜안떠",""+e);
+        }
+
+    }
+
+
+
+    private String parserAction(String s){
+        Log.v(TAG,"Parser()");
+        String returnValue = null;
+
+        try {
+            Log.v(TAG, s);
+
+            JSONObject jsonObject = new JSONObject(s);
+            returnValue = jsonObject.getString("result");
+            Log.v(TAG, returnValue);
+            Log.v("여기","returnValue : "+returnValue);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return returnValue;
+    }
+
 
 
 

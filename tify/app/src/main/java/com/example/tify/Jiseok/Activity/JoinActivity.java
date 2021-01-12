@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -66,8 +67,8 @@ public class JoinActivity extends AppCompatActivity {
     int timeout = 0; // 타임아웃된 횟수
     String passPhone=null;
     String patternTel="^\\d{2,3}-\\d{3,4}-\\d{4}$";
-    String patternEmail="/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;";
-    String patternNickName="/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\\*]+$/";
+    String patternEmail="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    String patternNickName="^[가-힣ㄱ-ㅎa-zA-Z0-9._ -]{2,}\\$";
 
 
     String getTextCheck = null; // editText null 체크용 변수
@@ -85,13 +86,18 @@ public class JoinActivity extends AppCompatActivity {
     private final int REQ_CODE_SELECT_IMAGE = 300; // Gallery Return Code
 
 
-
+    String userEmail=null;
+    String userNickName=null;
+    String userTel=null;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         setContentView(R.layout.cjs_activity_join);
         ActivityCompat.requestPermissions(JoinActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
 
@@ -112,6 +118,11 @@ public class JoinActivity extends AppCompatActivity {
         etNickName = findViewById(R.id.join_et_nickName);
         btnGoGo = findViewById(R.id.join_btn_gogo);
 
+        Intent intent = getIntent();
+        userEmail = intent.getStringExtra("userEmail");
+        userNickName = intent.getStringExtra("userNickName");
+        userTel = intent.getStringExtra("userTel");
+
 
         btnAuthentication.setOnClickListener(firstFrameClickListener);
         btnGo.setOnClickListener(firstFrameClickListener);
@@ -127,6 +138,10 @@ public class JoinActivity extends AppCompatActivity {
                 inputMethodManager.hideSoftInputFromWindow(ly.getWindowToken(),0);
             }
         });
+
+        if(userTel!=null){
+            etTel.setText(userTel);
+        }
 
 
         etTel.addTextChangedListener(new TextWatcher() {//자동으로 "-" 생성해서 전화번호에 붙여주기
@@ -296,6 +311,10 @@ public class JoinActivity extends AppCompatActivity {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 ly1.setVisibility(View.INVISIBLE);
                                                 ly2.setVisibility(View.VISIBLE);
+                                                if(userEmail!=null&&userNickName!=null) {
+                                                    etEmail.setText(userEmail);
+                                                    etNickName.setText(userNickName);
+                                                }
                                             }
                                         })
                                         .show();
@@ -360,14 +379,17 @@ public class JoinActivity extends AppCompatActivity {
                         etNickName.requestFocus();
                         break;
                     }
-//                    if(!Pattern.matches(patternEmail,etEmail.getText().toString())){
-//                        new AlertDialog.Builder(JoinActivity.this)
-//                                .setTitle("이메일형식을 확인해 주세요.")
-//                                .setPositiveButton("확인",null)
-//                                .show();
-//                        etEmail.requestFocus();
-//                        break;
-//                    }
+
+                    if(!Pattern.matches(patternEmail,etEmail.getText().toString())){
+                        new AlertDialog.Builder(JoinActivity.this)
+                                .setTitle("이메일형식을 확인해 주세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        etEmail.requestFocus();
+                        break;
+                    }
+
+//                    Log.v("제발",""+Pattern.matches(patternNickName,etNickName.getText().toString()));
 //                    if(!Pattern.matches(patternNickName,etNickName.getText().toString())){
 //                        new AlertDialog.Builder(JoinActivity.this)
 //                                .setTitle("한글,영어,숫자만 입력 가능합니다.")
@@ -387,6 +409,7 @@ public class JoinActivity extends AppCompatActivity {
                     }
 
 
+
                     // 페이 페스워드로 이동
                     connectImage();
                     Intent intent2 = new Intent(JoinActivity.this,JoinPayPasswordActivity.class);
@@ -403,9 +426,12 @@ public class JoinActivity extends AppCompatActivity {
         }
     };
 
+
+    // 인텐트가 새로 들어왓을때 실행되는 매소드
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        //인증번호 setText
         processCommand(intent);
     }
 
@@ -443,7 +469,7 @@ public class JoinActivity extends AppCompatActivity {
     }
 
 
-    //인증번호 받아서 띄움
+    //인증번호 setText
     private void processCommand(Intent intent){
         if(intent != null){
             String sender = intent.getStringExtra("sender");
@@ -452,7 +478,6 @@ public class JoinActivity extends AppCompatActivity {
             Log.v("번호확인",content.substring(0,3));
             etAuthentication.setText(content.substring(6,14));
             etAuthentication.requestFocus();
-
         }
     }
 
@@ -539,10 +564,12 @@ public class JoinActivity extends AppCompatActivity {
         int utc= 0;
         try {
             String urlAddr = "http://" + MacIP + ":8080/tify/userEmailSelect.jsp?uEmail="+ etEmail.getText().toString();
+            Log.v("여기","urlAddr : "+urlAddr);
             CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinActivity.this, urlAddr, "userEmailCount");
             Object obj = cjs_networkTask.execute().get();
 
             utc= (int) obj;
+            Log.v("여기","userEmailCheck : "+utc);
         }catch (Exception e){
 
         }

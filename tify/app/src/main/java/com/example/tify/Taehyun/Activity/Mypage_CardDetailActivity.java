@@ -8,8 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.text.TextUtils;
-import android.util.Log;
+
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -46,8 +45,6 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
     TextView card_agree_exp;
     Button card_cancel,card_success;
 
-
-
     //카드 개인, 법인, 동의 여부 위해.
     int limit = 1;
     int limitT1 = 0;
@@ -68,7 +65,6 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
     String getNumberCheck = "";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +74,9 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         inheritance();
 
         urlAddr = "http://" + macIP + ":8080/tify/mypage_card_insert.jsp?";
-        function();
 
+        //글자수 제한
+        function();
     }
 
     private void function() {
@@ -92,7 +89,11 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         card_validmm.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
         card_birth.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
         card_password.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+
     }
+
+
+
 
     private void inheritance() {
         macIP = intent.getStringExtra("macIP");
@@ -154,7 +155,7 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                 //개인
                 case R.id.card_personal_IV:
 
-                    if(limitT1 == 0 && limit < 2) {
+                    if(limitT1 == 0) {
                         limit--;
                         limitT1++;
                         card_personal_IV.setImageResource(R.drawable.personal_black);
@@ -162,17 +163,19 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                         //DB에 보낼값.@drawable/
 
 
-                    }else if(limitT1 == 1) {
+                    }else if(limitT1 == 1 && limit < 1) {
                         limit++;
                         limitT1--;
                         card_personal_IV.setImageResource(R.drawable.personal_light);
                         cInfo = "개인";
                         Toast.makeText(Mypage_CardDetailActivity.this,cInfo,Toast.LENGTH_SHORT).show();
+
+
                     }
                     break;
                     //법인
                 case R.id.card_corporation_IV:
-                    if(limitT2 == 0 && limit < 2) {
+                    if(limitT2 == 0 && limit < 1) {
                         limit++;
                         limitT2++;
                         //DB에 보낼값.
@@ -202,7 +205,9 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                         card_check_agree.setImageResource(R.drawable.ic_action_agree_check);
                     }
                     break;
+                //키보드 화면 터치시 숨김.
                 case R.id.card_detail_ll:
+
                     inputMethodManager.hideSoftInputFromWindow(card_detail_ll.getWindowToken(),0);
                     break;
             }
@@ -231,19 +236,42 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                     cMM = card_validmm.getText().toString().trim();
                     cBirthday = card_birth.getText().toString().trim();
 
-                    if (cPassword.length() == 0){
-                        Toast.makeText(Mypage_CardDetailActivity.this,"카드 비밀번호를 입력하세요",Toast.LENGTH_SHORT).show();
-                    }else if (cYear.length() == 0 ) {
-                        Toast.makeText(Mypage_CardDetailActivity.this, "만기 날짜를 입력하세요", Toast.LENGTH_SHORT).show();
-                    }else if (cMM.length() == 0 ){
-                        Toast.makeText(Mypage_CardDetailActivity.this,"만기 날짜를 입력하세요",Toast.LENGTH_SHORT).show();
-
-                    } else if (cBirthday.length() == 0){
-                        Toast.makeText(Mypage_CardDetailActivity.this,"생년월일을 입력하세요",Toast.LENGTH_SHORT).show();
-                    } else {
-
                         //insert NetworkTask
-                       String result = connectInset();
+                    if (getNumberCheck == "" || getNumberCheck == "null" || getNumberCheck.length() <= 16 || 13 <= getNumberCheck.length() ){
+                        new AlertDialog.Builder(Mypage_CardDetailActivity.this)
+                                .setTitle("카드 정보를 다시 확인하세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        card_Number1.requestFocus();
+                    }else {
+                    if (cPassword.length() <= 0 && cPassword.length() < 2){
+                        new AlertDialog.Builder(Mypage_CardDetailActivity.this)
+                                .setTitle("카드 비밀번호를 입력하세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        card_password.requestFocus();
+                    } else if (cYear.length() <= 0){
+                        new AlertDialog.Builder(Mypage_CardDetailActivity.this)
+                                .setTitle("유효 날짜를 입력하세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        card_validyear.requestFocus();
+
+                    } else if (cMM.length() <= 0){
+                        new AlertDialog.Builder(Mypage_CardDetailActivity.this)
+                                .setTitle("유효 날짜를 입력하세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        card_validmm.requestFocus();
+
+                    } else if (cBirthday.length() <= 0 && cBirthday.length() < 6){
+                        new AlertDialog.Builder(Mypage_CardDetailActivity.this)
+                                .setTitle("생년월일을 입력하세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        card_birth.requestFocus();
+                    } else {
+                       String result = connectInsert();
                         if(result.equals("1")){
                             Toast.makeText(Mypage_CardDetailActivity.this,"성공 .",Toast.LENGTH_SHORT).show();
                         }else{
@@ -251,10 +279,10 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
 
                         }
                         intent = new Intent(Mypage_CardDetailActivity.this,Mypage_CardRegistrationActivity.class)
-                                .putExtra("result",result)
                                 .putExtra("uNo",uNo)
                                 .putExtra("macIP",macIP);
                         setResult(RValue,intent);
+                    }
                     }
                     break;
                     //취소하기
@@ -269,7 +297,8 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         }
     };
 
-    private String connectInset() {
+    //카드 등록 네트워크 타스크
+    private String connectInsert() {
 
         String result = null;
 
@@ -288,6 +317,7 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         return result;
     }
 
+    //카드 정규식
     public void Validate(){
 
         getNumberCheck = card_Number1.getText().toString().trim() + card_Number2.getText().toString().trim()
@@ -318,6 +348,7 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
           }
           else {
               Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
+
           }
 
           //Amex
@@ -354,11 +385,9 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
             Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
         }
         if(cCardCompany == ""){
-
             Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
         }
 
       }///---if END
-
 
 }//--end

@@ -1,17 +1,26 @@
 package com.android.tify_store.Minwoo.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,10 +29,19 @@ import android.widget.Toast;
 
 import com.android.tify_store.Minwoo.Adapter.MenuListAdapter;
 import com.android.tify_store.Minwoo.Bean.Menu;
+import com.android.tify_store.Minwoo.NetworkTask.ImageNetworkTask_TaeHyun;
 import com.android.tify_store.Minwoo.NetworkTask.LMW_MenuNetworkTask;
 import com.android.tify_store.R;
+import com.bumptech.glide.Glide;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MenuListActivity extends AppCompatActivity {
 
@@ -35,6 +53,28 @@ public class MenuListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager = null;
 
     private ArrayList<Menu> list;
+
+    // 이미지
+    //image_server
+    //intent로 받을 이미지 DB (Mypage에서)
+    String mImage = null;
+    String imageurl = null;
+    //카메라, 갤러리
+    private final int REQ_CODE_SELECT_IMAGE = 300; // Gallery Return Code
+
+    String imgName = null;
+    ///////////
+    String img_path = null;// 최종 file name
+    String f_ext = null;
+    File tempSelectFile;
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //          Tomcat Server의 IP Address와 Package이름은 수정 하여야 함
+    //           2021.01.07 -태현
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    String devicePath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.android.tify/";
+    //// 외부쓰레드 에서 메인 UI화면을 그릴때 사용
 
     // DB Connect
     String macIP;
@@ -49,6 +89,8 @@ public class MenuListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_menu_list);
+
+        ActivityCompat.requestPermissions(MenuListActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
 
         SharedPreferences sharedPreferences = getSharedPreferences("openStatus", MODE_PRIVATE);
         strResult = sharedPreferences.getString("openResult", "null");
@@ -148,7 +190,7 @@ public class MenuListActivity extends AppCompatActivity {
             menuList = (ArrayList<Menu>) obj;
             Log.v(TAG, "menuList.size() : " + menuList.size());
 
-            mAdapter = new MenuListAdapter(MenuListActivity.this, R.layout.lmw_activity_menulist_recycler_item, menuList);
+            mAdapter = new MenuListAdapter(MenuListActivity.this, R.layout.lmw_activity_menulist_recycler_item, menuList, macIP);
             recyclerView.setAdapter(mAdapter);
 
             beanList = menuList;
@@ -227,6 +269,7 @@ public class MenuListActivity extends AppCompatActivity {
                         intent.putExtra("macIP", macIP);
                         intent.putExtra("skSeqNo", skSeqNo);
                         intent.putExtra("mNo", list.get(position).getmNo());
+                        intent.putExtra("mImage", list.get(position).getmImage());
 
                         startActivity(intent);
 

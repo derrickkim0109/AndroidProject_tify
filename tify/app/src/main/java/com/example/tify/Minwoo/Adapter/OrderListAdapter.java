@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         // layout
+        LinearLayout linearLayout;
         TextView tv_orderNo;
         TextView tv_orderDate;
         ImageView tv_right1;
@@ -69,6 +71,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         MyViewHolder(View v) {
             super(v);
             Log.v(TAG, "MyViewHolder");
+            linearLayout = v.findViewById(R.id.orderList_RV_LL);
             tv_orderNo = v.findViewById(R.id.activity_OrderList_CV_OSeqno);
             tv_orderDate = v.findViewById(R.id.activity_OrderList_CV_ODate);
             tv_sName = v.findViewById(R.id.activity_OrderList_CV_sName);
@@ -119,7 +122,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         holder.tv_orderDate.setText(mDataset.get(position).getoInsertDate());
         holder.tv_sName.setText(mDataset.get(position).getStore_sName());
 
-        switch (mDataset.get(position).getoStatus()){ // 0 주문요청 1 주문접수 2 제조완료 3 픽업완료
+        switch (mDataset.get(position).getoStatus()){ // 0 주문요청 1 주문접수 2 제조완료 3 픽업완료 4 고객이 취소 5 매장이 취소
             case 0:
                 holder.tv_right1.setBackgroundColor(Color.BLUE);
                 holder.tv_orderRequest.setBackgroundColor(Color.BLUE);
@@ -143,6 +146,22 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             holder.btn_Review.setVisibility(View.VISIBLE);
             holder.btn_Review.setText("픽업완료");
             holder.btn_Review.setEnabled(false);
+        }
+
+        if(mDataset.get(position).getoStatus() == 4 || mDataset.get(position).getoStatus() == 5){
+            holder.linearLayout.setBackgroundColor(Color.parseColor("#16000000"));
+            holder.btn_Review.setVisibility(View.GONE);
+            holder.tv_right1.setVisibility(View.GONE);
+            holder.tv_right2.setVisibility(View.GONE);
+            holder.tv_right3.setVisibility(View.GONE);
+            holder.tv_orderRequest.setVisibility(View.GONE);
+            holder.tv_complete.setVisibility(View.GONE);
+            if(mDataset.get(position).getoStatus() == 4){
+                holder.tv_orderGet.setText("취소 사유 : 고객 요청 \n취소 날짜 : " + mDataset.get(position).getoDeleteDate());
+            }
+            if(mDataset.get(position).getoStatus() == 5){
+                holder.tv_orderGet.setText("취소 사유 : 매장 요청\n취소 날짜 : " + mDataset.get(position).getoDeleteDate());
+            }
         }
 
         holder.btn_Review.setOnClickListener(new View.OnClickListener() { // 리뷰쓰기 버튼 클릭

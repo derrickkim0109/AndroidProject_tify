@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tify.Minwoo.Bean.Menu;
 import com.example.tify.Minwoo.Fragment.MenuFragment;
 import com.example.tify.R;
@@ -24,9 +26,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> {
 
     String TAG = "MenuAdapter";
-    Context context;
+    Fragment fragment;
 
     private ArrayList<Menu> mDataset;
+
+    String macIP;
 
     //인터페이스 선언
     public interface OnItemClickListener{
@@ -76,8 +80,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
     }
 
     // 메인 액티비티에서 받은 myDataset을 가져오
-    public MenuAdapter(MenuFragment MenuFragment, int member, ArrayList<Menu> myDataset) {
+    public MenuAdapter(MenuFragment MenuFragment, int member, ArrayList<Menu> myDataset, String macIP) {
         this.mDataset = myDataset;
+        this.fragment = MenuFragment;
+        this.macIP = macIP;
         Log.v(TAG, "mDataset size : " + mDataset.size());
         Log.v(TAG, "MenuAdapter Constructor");
 
@@ -112,7 +118,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         String price = moneyFormat.format(mDataset.get(position).getmPrice());
 
         holder.mPrice.setText(price + "원");
-        holder.mPhoto.setImageResource(R.drawable.ic_launcher_foreground);
+        Glide.with(fragment).load("http://" + macIP + ":8080/tify/"+ mDataset.get(position).getmImage()).into(holder.mPhoto);
 
 
     }

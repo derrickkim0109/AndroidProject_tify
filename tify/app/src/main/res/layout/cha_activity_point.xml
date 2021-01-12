@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context=".Hyeona.Activity.StampActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/radius_border"
+                android:backgroundTint="#fff"
+                android:text="TIFY Point"
+                android:padding="5dp"
+                android:textColor="@color/mainColor"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:backgroundTint="#FFFFFF"></Button>
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지돌지돌님의"
+                android:textColor="#333"
+                android:textSize="35dp"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="티피 포인트"
+                android:textColor="#333"
+                android:textSize="35dp"
+                android:textStyle="bold"></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2,000p"
+                android:layout_gravity="right"
+                android:textColor="#fff"
+                android:shadowColor="@color/SubColor"
+                android:shadowDx="10"
+                android:id="@+id/how_point"
+                android:layout_marginRight="5dp"
+                android:shadowDy="10"
+                android:shadowRadius="1"
+
+                android:textSize="45dp"
+                android:textStyle="bold"></TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="티피 가맹점 어디에서나 사용가능한  "
+                    android:textColor="#333"
+                    android:textSize="12dp"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="티피포인트!"
+                    android:textColor="#fff"
+                    android:textSize="12dp"
+                    android:textStyle="bold"></TextView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="날짜"
+                android:textAlignment="center"
+                android:layout_weight="1"
+                android:textColor="@color/mainColor"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="내용"
+                android:textAlignment="center"
+                android:layout_weight="3"
+                android:textColor="@color/mainColor"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="적립/사용"
+                android:textAlignment="center"
+                android:layout_weight="2"
+                android:textColor="@color/mainColor"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/mainColor"
+                    app:backgroundTint="@color/mainColor">
+
+                </View>
+            </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="match_parent"
+            android:id="@+id/point_history">
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="wrap_content">
+        <include
+            layout="@layout/cha_bottom_bar"
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></include>
+    </FrameLayout>
+
+
+</LinearLayout>

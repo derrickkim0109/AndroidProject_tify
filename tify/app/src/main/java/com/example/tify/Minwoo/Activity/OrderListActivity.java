@@ -121,8 +121,6 @@ public class OrderListActivity extends AppCompatActivity {
             intent.putExtra("order_oNo", order_oNo);
             intent.putExtra("order_oInsertDate", order_oInsertDate);
 
-
-
             startActivity(intent);
         }
     };
@@ -192,5 +190,17 @@ public class OrderListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(OrderListActivity.this, StoreInfoActivity.class);
+        intent.putExtra("macIP", macIP);
+        intent.putExtra("user_uSeqNo", user_uSeqNo);
+        intent.putExtra("store_sSeqNo", store_sSeqNo);
+        startActivity(intent);
+
     }
 }

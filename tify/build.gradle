@@ -16,7 +16,8 @@ allprojects {
     repositories {
         google()
         jcenter()
-
+        mavenCentral()
+        maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
 
         //태현 2020.12.27
         maven { url 'https://jitpack.io' }

@@ -10,7 +10,7 @@
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "select * from tify.order where user_uNo = " + user_uNo + " order by oNo desc limit 1";
+    String WhereDefault = "select max(oNo) as max from tify.order where user_uNo = " + user_uNo;
     int count = 0;
     
     try {
@@ -33,17 +33,8 @@
             }
 %>            
 			{
-			"user_uNo" : "<%=rs.getInt(1) %>",
-            "oNo" : "<%=rs.getInt(2) %>",  
-            "store_sSeqNo" : "<%=rs.getInt(3) %>",
-            "store_sName" : "<%=rs.getString(4) %>",
-            "oInsertDate" : "<%=rs.getString(5) %>",    
-			"oDeleteDate" : "<%=rs.getString(6) %>", 
-            "oSum" : "<%=rs.getInt(7) %>",
-            "oCardName" : "<%=rs.getString(8) %>",
-            "oCardNo" : "<%=rs.getInt(9) %>",
-            "oReview" : "<%=rs.getInt(10) %>",
-            "oStatus" : "<%=rs.getInt(11) %>"
+			"max" : "<%=rs.getInt(1) %>"
+            
      
           
 			}

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tify">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,10 +14,10 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
-        android:allowBackup="true"
+        android:name=".Jiseok.Activity.KaKaoLogin"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -33,7 +36,10 @@
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
         <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />
-        <activity android:name=".Jiseok.Activity.JiseokMainActivity"/>
+        <activity android:name=".Jiseok.Activity.JiseokMainActivity" />
+        <activity android:name=".Jiseok.Activity.EmailLoginActivity" />
+        <activity android:name=".Jiseok.Activity.MyLocationActivity" />
+        <activity android:name=".Jiseok.Activity.AddressSearchActivity"/>
         <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.BeforePayActivity2" />
@@ -45,19 +51,14 @@
         <activity android:name=".Minwoo.Activity.OrderListActivity" />
         <activity android:name=".Minwoo.Activity.OrderSummaryActivity" />
         <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
-        <!-- 현아 -->
-        <activity
-            android:name=".Hyeona.Activity.StampActivity"
-            android:label="@string/title_activity_stamp"
-            android:theme="@style/NoActionBar"/>
         <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- 현아 -->
-        <activity android:name=".Hyeona.Activity.review_white" />
         <activity android:name=".Hyeona.Activity.LoginActivity" />
+        <activity android:name=".Hyeona.Activity.review_white" />
+        <activity android:name=".Hyeona.Activity.PointActivity" />
+        <activity android:name=".Hyeona.Activity.StampActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Hyeona.Activity.test" />
-
-
         <activity android:name=".Hyeona.Activity.reviewActivity" />
+        <activity android:name=".Hyeona.Activity.test" />
         <activity android:name=".Hyeona.Activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -75,7 +76,13 @@
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
-        </receiver>
+        </receiver> <!-- 지석 (카카오로그인) -->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="e68469112110a2dd687fa7501d0cf1de" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCh1UTA5eyfdXecKthFsbVgROLOpiLsXFQ" />
     </application>
 
 </manifest>

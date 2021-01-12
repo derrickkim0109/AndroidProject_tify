@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Jiseok.Activity.MyLocationActivity"
+    android:orientation="horizontal"
+    >
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="8"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:id="@+id/myLocation_img_backBtn"
+                android:layout_marginTop="10dp"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_action_before"
+                />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:id="@+id/join_pay_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원하시는 위치를\n설정하세요요"
+               android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="@color/TextColor"
+                />
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/main_Linear_outer"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <EditText
+                    android:id="@+id/myLocation_et_search"
+                    android:layout_width="200dp"
+                    android:layout_weight="2"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:hint="서울시 서초구에 계신가요?"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:background="@null"
+                    android:textColorHint="#555555"
+                    android:completionThreshold="1"
+                    tools:ignore="Autofill,TextFields"
+                    android:textSize="17dp"
+                    />
+                <ImageView
+                    android:id="@+id/myLocation_img_search"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_action_search"
+                    />
+
+            </LinearLayout>
+            <Button
+                android:layout_marginTop="10dp"
+                android:id="@+id/myLocation_btn_myLocationSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="내위치로 설정하기"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/myLocation_ly_map"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            >
+
+            <fragment
+                android:id="@+id/myLocation_fragment_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MapsActivity"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                />
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

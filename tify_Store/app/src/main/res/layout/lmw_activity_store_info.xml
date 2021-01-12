@@ -13,18 +13,26 @@
         app:layout_scrollFlags="scroll|snap"
         />
 
-    <FrameLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
+        android:paddingLeft="35dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
-        <ImageView
-            android:id="@+id/activity_StoreInfo_IV_StorePhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/starbucks"
-            android:clickable="false"
-            />
+
+            <ImageView
+                android:id="@+id/activity_StoreInfo_IV_StorePhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/null_image"
+                />
+
         <TextView
             android:id="@+id/activity_StoreInfo_TV_sName"
             android:layout_width="wrap_content"
@@ -49,6 +57,7 @@
             android:layout_marginLeft="50dp"/>
 
     </FrameLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:layout_width="match_parent"
