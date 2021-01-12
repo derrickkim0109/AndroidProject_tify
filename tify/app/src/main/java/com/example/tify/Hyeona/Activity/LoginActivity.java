@@ -1,5 +1,6 @@
 package com.example.tify.Hyeona.Activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -36,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cha_activity_login);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         sessionCallback = new SessionCallback(); // SessionCallback 초기화
         Session.getCurrentSession().addCallback(sessionCallback); // 현재 세션에 콜백 붙임

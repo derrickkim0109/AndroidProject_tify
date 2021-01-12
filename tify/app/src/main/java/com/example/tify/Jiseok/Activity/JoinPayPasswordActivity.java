@@ -109,7 +109,8 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
     }
 
@@ -329,6 +330,9 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
     private void insertUserInfo(){
        try {
+           if(userProfile==null){
+
+           }
            String urlAddr = "http://" + MacIP + ":8080/tify/insertUserInfo.jsp?uEmail=" + userEmail + "&uNickName=" + userNickName + "&uTelNo=" + userTel + "&uImage=" + userProfile + "&uPayPassword=" + payPassword2;
            Log.v("여기", "insertUserInfo : " + urlAddr);
            CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinPayPasswordActivity.this, urlAddr, "insertUserInfo");

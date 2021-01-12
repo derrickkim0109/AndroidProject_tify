@@ -114,16 +114,6 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
             }
         }
 
-        Log.v("where",where);
-//        switch (where){
-//            case "userTelCount":
-//                return userTelCount;
-//            case "userEmailCount":
-//                return userEmailCount;
-//            case "uNoSelect":
-//                return uNo;
-//
-//        }
         if(where.equals("userTelCount")) return userTelCount;
         if(where.equals("userEmailCount")) return userEmailCount;
         if(where.equals("uNoSelect")) return uNo;

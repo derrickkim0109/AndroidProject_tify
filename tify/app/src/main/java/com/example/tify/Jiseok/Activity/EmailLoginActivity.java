@@ -26,7 +26,8 @@ import com.example.tify.ShareVar;
 import java.util.regex.Pattern;
 
 public class EmailLoginActivity extends AppCompatActivity {
-    String MacIP = ShareVar.getMacIP();
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
     EditText userEmail,userPwd;
     Button btnLogin;
     TextView tvJoin;
