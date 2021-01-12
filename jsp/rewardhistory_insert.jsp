@@ -3,11 +3,10 @@
 
 <%
 	request.setCharacterEncoding("utf-8");
-    String rContent = request.getParameter("rContent");
-    String rImage = request.getParameter("rImage");
+    String rhContent = request.getParameter("rhContent");
     int user_uNo = Integer.parseInt(request.getParameter("user_uNo"));
-    int storekeeper_skSeqNo = Integer.parseInt(request.getParameter("storekeeper_skSeqNo"));
-
+    int rhChoice = Integer.parseInt(request.getParameter("rhChoice"));
+    String rhPointHow = request.getParameter("rhPointHow");
 //------
 
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
@@ -22,15 +21,15 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-        String A = "insert into tify.review(rContent,rImage,user_uNo,storekeeper_skSeqNo,rInsertDate) value (?, ?, ?, ?,now())";
+        String A = "insert into tify.rewardhistory(rhContent,user_uNo,rhChoice,rhPointHow,rhDay) value (?, ?, ?, ?,now())";
 
 
         ps = conn_mysql.prepareStatement(A);
 
-        ps.setString(1, rContent);
-        ps.setString(2, rImage);
-        ps.setInt(3, user_uNo);
-        ps.setInt(4, storekeeper_skSeqNo);
+        ps.setString(1, rhContent);
+        ps.setInt(2, user_uNo);
+        ps.setInt(3, rhChoice);
+        ps.setString(4, rhPointHow);
 
         result = ps.executeUpdate();
         
