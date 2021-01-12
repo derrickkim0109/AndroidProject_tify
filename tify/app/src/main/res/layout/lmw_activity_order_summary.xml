@@ -8,12 +8,7 @@
     android:gravity="center"
     android:layout_gravity="center"
     tools:context=".Minwoo.Activity.OrderSummaryActivity">
-    <include
-        layout="@layout/lmw_order_toolbar"
-        android:id="@+id/order_toolbar"
-        app:layout_scrollFlags="scroll|snap"
-        >
-    </include>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20dp"

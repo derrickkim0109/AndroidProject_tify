@@ -28,7 +28,7 @@ public class PointActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager = null;
     private ArrayList<Bean_point_history> point_history = null;
 
-    String macIP = "192.168.0.55";
+    String macIP = "172.30.1.27";
 
     private int user_uNo = 1;
     private String user_uName = "지돌지돌";

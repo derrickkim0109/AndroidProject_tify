@@ -7,11 +7,7 @@
     android:orientation="vertical"
     tools:context=".Minwoo.Activity.BeforePayActivity2">
 
-    <include
-        layout="@layout/lmw_order_toolbar"
-        android:id="@+id/order_toolbar"
-        app:layout_scrollFlags="scroll|snap"
-        />
+
 
     <LinearLayout
         android:layout_width="match_parent"

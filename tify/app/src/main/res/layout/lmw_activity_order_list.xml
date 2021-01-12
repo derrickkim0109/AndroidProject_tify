@@ -11,11 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <include
-            layout="@layout/lmw_orderlist_toolbar"
-            android:id="@+id/orderlist_toolbar"
-            app:layout_scrollFlags="scroll|snap"
-            />
+
 
         <TextView
             android:layout_width="match_parent"

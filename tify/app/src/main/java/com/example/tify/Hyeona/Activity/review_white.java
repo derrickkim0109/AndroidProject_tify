@@ -54,7 +54,7 @@ public class review_white extends AppCompatActivity {
     private int sSeqNo;
     //데이터상 storekeeper_skSeqNo 임 확인필수
     private int uNo;
-    private String macIP = "192.168.0.55";
+    private String macIP = "172.30.1.27";
     private String urlAddr = "http://" + macIP + ":8080/tify/review_white_storeinfo.jsp?";
     private String urlAddr2 = "http://" + macIP + ":8080/tify/review_white_update.jsp?";
 

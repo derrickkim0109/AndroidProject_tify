@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Minwoo.Activity.EmptyCartActivity">
 
-    <include
-        layout="@layout/lmw_cart_toolbar"
-        android:id="@+id/cart_toolbar"
-        app:layout_scrollFlags="scroll|snap"
-        />
 
     <LinearLayout
         android:layout_width="match_parent"

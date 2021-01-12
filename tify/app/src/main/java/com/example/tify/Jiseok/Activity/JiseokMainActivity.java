@@ -28,6 +28,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Activity.LoginActivity;
@@ -88,8 +89,11 @@ public class JiseokMainActivity extends AppCompatActivity {
         userNickName = auto.getString("userNickName", null);
         myLocation = auto.getString("myLocation", null);
 
+
         Log.v("내위치",""+myLocation);
         Log.v("내위치",""+userEmail);
+        Log.v("내위치",""+userSeq);
+        Log.v("내위치",""+userNickName);
 
         imgPoint = findViewById(R.id.main_img_point);
         imgStamp = findViewById(R.id.main_img_stamp);
@@ -98,8 +102,15 @@ public class JiseokMainActivity extends AppCompatActivity {
         etSearch = findViewById(R.id.main_Edit_SearchText);
         recyclerView = findViewById(R.id.main_rcv_cafeList);
 
+        Log.v("내위치","구간 1-----");
+
         // 리스트 띄우기
-        selectCafeList();
+        if(myLocation != null){
+            selectCafeList();
+            Log.v("내위치","구간 2-----");
+        }
+        Log.v("내위치","구간 3-----");
+
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -107,6 +118,8 @@ public class JiseokMainActivity extends AppCompatActivity {
         // 상단 액션바 삭제
         gps_setting = findViewById(R.id.main_img_gps);
         Glide.with(this).load(R.drawable.gps_setting).into(gps_setting);
+
+        Log.v("내위치","구간 4-----");
 
         //////////////////////////////////////////////////////////////////////////////////
 
@@ -132,8 +145,7 @@ public class JiseokMainActivity extends AppCompatActivity {
                         return true;
                     }
                     case R.id.action3: {
-<<<<<<< HEAD
-=======
+
                         Toast.makeText(getApplicationContext(), "정상적으로 로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
 //                        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
 //                            @Override
@@ -147,7 +159,7 @@ public class JiseokMainActivity extends AppCompatActivity {
 //                                startActivity(intent);
 //                            }
 //                        });
->>>>>>> 9979af551551bda2b97085f3c902faf9a223fc1a
+
 
                         return true;
                     }
@@ -189,7 +201,13 @@ public class JiseokMainActivity extends AppCompatActivity {
         gps_setting.setOnClickListener(mapListener);
         imgSearch.setOnClickListener(mapListener);
 
-        mainCafeListAdapter.setOnItemClickListener(rcvClick);
+
+        if(myLocation != null){
+
+            mainCafeListAdapter.setOnItemClickListener(rcvClick);
+
+        }
+
 
     }
 
@@ -269,10 +287,14 @@ public class JiseokMainActivity extends AppCompatActivity {
         private void selectCafeList(){
             try {
                 String urlAddr = "http://" + MacIP + ":8080/tify/mainCafeLocationList.jsp";
+                Log.v("여기여기여기", "urlAddr : " + urlAddr);
                 CJS_NetworkTask_CafeList cjs_networkTask_cafeList = new CJS_NetworkTask_CafeList(JiseokMainActivity.this,urlAddr,"selectCafeList");
                 Object obj = cjs_networkTask_cafeList.execute().get();
 
                 arrayList = (ArrayList<Bean_MainCafeList_cjs>) obj;
+
+                Log.v("여기여기여기", "arrayList : " + arrayList.size());
+                Log.v("여기여기여기", "arrayList : " + arrayList);
 
                 Log.v("리사이클",""+arrayList.get(1).getsAddress());
                 Log.v("리사이클",""+arrayList.size());
@@ -280,9 +302,10 @@ public class JiseokMainActivity extends AppCompatActivity {
                 //리사이클러뷰 규격 만들기
                 recyclerView.setHasFixedSize(true);
 
+
                 //레이아웃 매니저 만들기
-                layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-                recyclerView.setLayoutManager(layoutManager);
+                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+                recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
                 LatLng Location1,Location2;
                 double latitude;
@@ -304,6 +327,9 @@ public class JiseokMainActivity extends AppCompatActivity {
                     if(getDistance(Location1,Location2)<1000.0) arrayCount++;
                 }
 
+                Log.v("여기여기여기", "arrayList : " + arrayList);
+                Log.v("여기여기여기", "myLocation : " + myLocation);
+                Log.v("여기여기여기", "arrayCount : " + arrayCount);
                 mainCafeListAdapter = new MainCafeListAdapter(JiseokMainActivity.this,R.layout.cha_maincafe_content,arrayList,myLocation,arrayCount);
                 recyclerView.setAdapter(mainCafeListAdapter);
 

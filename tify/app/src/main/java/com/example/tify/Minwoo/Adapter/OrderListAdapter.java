@@ -183,8 +183,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), com.example.tify.Hyeona.Activity.review_white.class); // 정확한 주소 필요!
-                intent.putExtra("uNo ", uNo);
-                intent.putExtra("sSeqNo ", skSeqNo);
+                intent.putExtra("uNo", uNo);
+                intent.putExtra("sSeqNo", skSeqNo);
                 context.startActivity(intent);
 
             }

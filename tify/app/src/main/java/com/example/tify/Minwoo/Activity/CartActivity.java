@@ -4,15 +4,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -124,14 +128,11 @@ public class CartActivity extends AppCompatActivity {
             finish();
 
             Intent intent1 = new Intent(CartActivity.this, EmptyCartActivity.class);
+            intent.putExtra("macIP", macIP);
+            intent.putExtra("user_uSeqNo", user_uSeqNo);
+            intent.putExtra("store_sSeqNo", store_sSeqNo);
             startActivity(intent1);
         }
-
-        // 툴바 생성
-        Toolbar toolbar = (Toolbar)findViewById(R.id.cart_toolbar); // 상단 툴바
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
         // 클릭 리스너
         payBtn.setOnClickListener(mClickListener);
@@ -342,5 +343,52 @@ public class CartActivity extends AppCompatActivity {
                 builder.create().show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.show();
+        // Custom Actionbar를 사용하기 위해 CustomEnabled을 true 시키고 필요 없는 것은 false 시킨다
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);            //액션바 아이콘을 업 네비게이션 형태로 표시합니다.
+        actionBar.setDisplayShowTitleEnabled(false);        //액션바에 표시되는 제목의 표시유무를 설정합니다.
+        actionBar.setDisplayShowHomeEnabled(false);            //홈 아이콘을 숨김처리합니다.
+
+        //layout을 가지고 와서 actionbar에 포팅을 시킵니다.
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View actionbar = inflater.inflate(R.layout.cha_custom_actionbar, null);
+
+        actionBar.setCustomView(actionbar);
+        TextView title = findViewById(R.id.title);
+        title.setText("장바구니");
+
+        ImageButton cart = findViewById(R.id.cart);
+        cart.setVisibility(View.INVISIBLE);
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+//         장바구니 없애려면 위에거 살리면 됨
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartActivity.this, StoreInfoActivity.class);
+                intent.putExtra("macIP", macIP);
+                intent.putExtra("user_uSeqNo", user_uSeqNo);
+                intent.putExtra("store_sSeqNo", store_sSeqNo);
+                startActivity(intent);
+            }
+        });
+
+        //액션바 양쪽 공백 없애기
+        Toolbar parent = (Toolbar) actionbar.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+        return true;
     }
 }

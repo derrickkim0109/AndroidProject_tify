@@ -75,7 +75,7 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        FrameLayout v = (FrameLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.cha_maincafe_content, parent, false);
+        LinearLayout v = (LinearLayout)LayoutInflater.from(parent.getContext()).inflate(R.layout.cha_maincafe_content, parent, false);
         //반복할 xml 파일
         MyViewHolder vh = new MyViewHolder(v);
         return vh;

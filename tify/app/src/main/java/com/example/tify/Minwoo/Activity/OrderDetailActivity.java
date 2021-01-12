@@ -3,11 +3,16 @@ package com.example.tify.Minwoo.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -83,17 +88,10 @@ public class OrderDetailActivity extends AppCompatActivity {
         list = new ArrayList<OrderList>();
         list = connectGetData(); // db를 통해 받은 데이터를 담는다.
 
-
-
         // 기본 구분선
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),new LinearLayoutManager(this).getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        // 툴바 생성
-        Toolbar toolbar = (Toolbar)findViewById(R.id.orderdetil_toolbar); // 상단 툴바
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
     }
 
     @Override
@@ -157,5 +155,48 @@ public class OrderDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return beanList;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.show();
+        // Custom Actionbar를 사용하기 위해 CustomEnabled을 true 시키고 필요 없는 것은 false 시킨다
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);            //액션바 아이콘을 업 네비게이션 형태로 표시합니다.
+        actionBar.setDisplayShowTitleEnabled(false);        //액션바에 표시되는 제목의 표시유무를 설정합니다.
+        actionBar.setDisplayShowHomeEnabled(false);            //홈 아이콘을 숨김처리합니다.
+
+        //layout을 가지고 와서 actionbar에 포팅을 시킵니다.
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View actionbar = inflater.inflate(R.layout.cha_custom_actionbar, null);
+
+        actionBar.setCustomView(actionbar);
+        TextView title = findViewById(R.id.title);
+        title.setText("주문내역");
+
+        ImageButton cart = findViewById(R.id.cart);
+        cart.setVisibility(View.INVISIBLE);
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+//         장바구니 없애려면 위에거 살리면 됨
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        //액션바 양쪽 공백 없애기
+        Toolbar parent = (Toolbar) actionbar.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+        return true;
     }
 }
