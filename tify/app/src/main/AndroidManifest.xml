@@ -21,7 +21,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight">
+        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         <activity android:name=".Hyeona.Activity.review_white"
             ></activity>
         <activity
@@ -54,7 +54,7 @@
         <activity android:name=".Minwoo.Activity.OrderDetailActivity" />
         <activity android:name=".Minwoo.Activity.OrderListActivity" />
         <activity android:name=".Minwoo.Activity.OrderSummaryActivity" />
-        <activity android:name=".Minwoo.Activity.StoreInfoActivity" /> <!-- 민우 -->
+        <activity android:name=".Hyeona.Activity.ViewPagerActivity" /> <!-- 민우 -->
 
         <activity android:name=".Hyeona.Activity.IntroActivity" /> <!-- 현아 -->
         <activity android:name=".Hyeona.Activity.LoginActivity" />
@@ -64,7 +64,7 @@
 
         <activity android:name=".Hyeona.Activity.test" />
 
-        <activity android:name=".Hyeona.Activity.ViewPagerActivity">
+        <activity android:name=".Minwoo.Activity.StoreInfoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

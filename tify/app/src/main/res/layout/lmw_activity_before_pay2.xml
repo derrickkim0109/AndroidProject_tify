@@ -202,7 +202,7 @@
             android:textSize="20dp"
             android:textColor="@color/black"
             android:gravity="center"
-            android:backgroundTint="#FFEB3B"
+            android:backgroundTint="#ffe800"
             android:layout_gravity="center"
             />
         <Button
@@ -215,7 +215,7 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:layout_gravity="center"
-            android:backgroundTint="#2180F3"
+            android:backgroundTint="@color/mainColor"
 
             />
     </LinearLayout>
