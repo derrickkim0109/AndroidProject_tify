@@ -34,10 +34,12 @@ public class StoreInfoActivity extends AppCompatActivity {
     String macIP;
     String urlAddr = null;
     String where = null;
-    int user_uSeqNo = 0;
     int store_sSeqNo = 0;
+    int user_uSeqNo = 0;
 
     String sName;
+    String sAddress;
+    String userName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,10 @@ public class StoreInfoActivity extends AppCompatActivity {
         // 기본 설정 값 (지석씨에게 받는다)
 //        Intent intent = getIntent();
 //        macIP = intent.getStringExtra("macIP");
-//        userSeqno = intent.getIntExtra("userSeqno", 0);
+//        userName = intent.getIntExtra("userName", 0);
 //        store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
+//        user_uSeqNo = intent.getIntExtra("user_uSeqNo", 0);
+//        sAddress = intent.getStringExtra("sAddress");
 //        sName = intent.getStringExtra("sName");
 
         // 가게사진, 가게이름, 가게주소
