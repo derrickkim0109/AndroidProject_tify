@@ -337,6 +337,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
        }
 
     }
+
     private int selectUserSeq(){
         int utc= 0;
         try {
@@ -351,6 +352,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         }
         return utc;
     }
+
     private void insertRewardTable(String seq){
         try {
             String urlAddr = "http://" + MacIP + ":8080/tify/insertReward.jsp?uNo="+seq;
