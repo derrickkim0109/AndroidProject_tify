@@ -1,6 +1,7 @@
 package com.example.tify.Hyeona.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +32,9 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
     private String uImage;
     private String uNickName;
     String macIP = "192.168.0.55";
-    //private CircularImageView review_profileIv;
+    Intent intent = null;
+
+    //
 
     @NonNull
     @Override
@@ -46,6 +49,7 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Log.v("TT","ddddddddddddd");
+
 
         user_uNo = reviews.get(position).getUser_uNo();
         connectGetData(reviews.get(position).getUser_uNo());

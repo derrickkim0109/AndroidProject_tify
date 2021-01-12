@@ -123,8 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intentk = new Intent(getApplicationContext(), JoinActivity.class);
                     intentk.putExtra("userEmail", result.getKakaoAccount().getEmail().toString());
                     intentk.putExtra("userNickName", result.getNickname().toString());
-                    intentk.putExtra("userTel", result.getKakaoAccount().getPhoneNumber().toString());
-
+                    if(result.getKakaoAccount().getPhoneNumber()!=null) intentk.putExtra("userTel", result.getKakaoAccount().getPhoneNumber().toString());
                     startActivity(intentk);
                     finish();
                 }

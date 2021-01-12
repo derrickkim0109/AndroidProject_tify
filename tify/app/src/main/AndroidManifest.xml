@@ -39,6 +39,7 @@
         <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_CardRegistrationActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity" /> <!-- 태현 -->
+
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
         <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />
@@ -83,7 +84,7 @@
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
-        </receiver> <!-- 지석 (카카오로그인) -->
+        </receiver> <!-- 지석 (카카오로그인,구글지도) -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="e68469112110a2dd687fa7501d0cf1de" />
