@@ -12,9 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tify.Hyeona.Activity.main_search;
 import com.example.tify.Hyeona.Bean.Bean_main_search;
 import com.example.tify.Hyeona.Bean.Bean_point_history;
 import com.example.tify.Minwoo.Activity.StoreInfoActivity;
@@ -46,6 +48,14 @@ import java.util.ArrayList;
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             Log.v("TT","ddddddddddddd");
             //connectGetData(user_uNo);
+
+            if (searchs.size()==0){
+                new AlertDialog.Builder(mContext)
+                        .setTitle("검색결과가 없습니다.")
+                        .setPositiveButton("확인",null)
+                        .show();
+
+            }
             String sName = searchs.get(position).getsName();
             String sTelNo = searchs.get(position).getsTelNo();
             String sRunningTime = searchs.get(position).getsRunningTime();
@@ -57,6 +67,8 @@ import java.util.ArrayList;
             String likeCount = searchs.get(position).getLikeCount();
             String reviewCount = searchs.get(position).getReviewCount();
             String skStatus = searchs.get(position).getSkStatus();
+
+
 
             holder.main_cafeList_title.setText(sName);
             ////////////////////////////////////////////////////////////////////////////////////////////////////
