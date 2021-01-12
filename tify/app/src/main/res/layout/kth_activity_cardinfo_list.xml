@@ -1,32 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:gravity="center"
-    android:layout_height="match_parent">
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground">
+
 
     <!--카드 이미지-->
-    <ImageView
-        android:layout_weight="1"
-        android:id="@+id/mypage_gointo_icon"
+
+    <ImageButton
+        android:layout_weight="2"
+        android:id="@+id/mypage_card_icon"
+        android:layout_width="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="6dp"
+        android:maxWidth="50dp"
+        android:scaleType="centerCrop"
+        android:maxHeight="50dp"
+        android:src="@drawable/mastercard"
+        android:layout_height="50dp"
+        />
+    <TextView
+        android:id="@+id/card_cInfo"
+        android:layout_marginLeft="30dp"
+        android:text="개인"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"/>
+        android:layout_height="wrap_content"/>
     <!--카드 번호 -->
     <TextView
         android:layout_weight="6"
-        android:text=""
+        android:text="@string/card_number"
         android:textSize="14dp"
         android:gravity="center"
         android:textStyle="bold"
+        android:maxLines="1"
         android:fontFamily="sans-serif-light"
-        android:id="@+id/mypage_text_view"
-        android:layout_width="wrap_content"
+        android:id="@+id/card_text_view"
+        android:layout_width="230dp"
         android:layout_height="60dp"/>
     <ImageView
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="4dp"
         android:layout_weight="1"
+        android:background="@color/white"
         android:id="@+id/card_delete"
         android:src="@drawable/ic_action_x"
-        android:layout_width="10dp"
-        android:layout_height="40dp"/>
-</LinearLayout>
+        android:layout_width="60dp"
+        android:layout_height="50dp"/>
+    </LinearLayout>
+
