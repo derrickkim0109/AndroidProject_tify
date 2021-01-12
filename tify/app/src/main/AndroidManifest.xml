@@ -25,7 +25,7 @@
         <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity"></activity>
 
         <!-- 태현 -->
-        <activity android:name=".Taehyun.Activity.MypageActivity" />
+        <activity android:name=".Hyeona.Activity.IntroActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_CardRegistrationActivity" />
@@ -58,7 +58,7 @@
 
 
         <activity android:name=".Hyeona.Activity.reviewActivity" />
-        <activity android:name=".Hyeona.Activity.IntroActivity">
+        <activity android:name=".Taehyun.Activity.MypageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

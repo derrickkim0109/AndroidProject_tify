@@ -4,13 +4,18 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +36,12 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
     String urlAddress = null;
 
     ActionBar actionBar = null;
+   //키패드 내리기
+    LinearLayout card_detail_ll ;
+    InputMethodManager inputMethodManager ;
 
-    EditText card_Number,card_valid,card_birth,card_password;
+
+    EditText card_Number1,card_Number2,card_Number3,card_Number4,card_validyear, card_validmm,card_birth,card_password;
     ImageView card_check_agree,card_personal_IV,card_corporation_IV;
     TextView card_agree_exp;
     Button card_cancel,card_success;
@@ -52,16 +61,11 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
     int uNo = 0;
     String macIP = null;
     //카드 번호, 비번, 유효기간, 생년월일, 카드결제 회사, 카드 정보(개인,법인)
-    String cCardNo,cPassword,cYMM, cBirthday,cCardCompany,cInfo = "";
+    String cCardNo, cPassword, cYear, cMM, cBirthday, cCardCompany= "";
+    String cInfo = "개인";
 
-    String ptVisa = "^4[0-9]{6,}$";
-    String ptMasterCard = "^5[1-5][0-9]{5,}$";
-    String ptAmeExp = "^3[47][0-9]{5,}$";
-    String ptDinClb = "^3(?:0[0-5]|[68][0-9])[0-9]{4,}$";
-    String ptCARTE_BLANCHE = "^3(?:0[0-5]|[68][0-9])[0-9]{4,}$";
-    String ptDiscover = "^6(?:011|5[0-9]{2})[0-9]{3,}$";
-    String ptJcb = "^(?:2131|1800|35[0-9]{3})[0-9]{3,}$";
-    String getNumberCheck = null;
+
+    String getNumberCheck = "";
 
 
 
@@ -74,7 +78,20 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         inheritance();
 
         urlAddr = "http://" + macIP + ":8080/tify/mypage_card_insert.jsp?";
+        function();
 
+    }
+
+    private void function() {
+        card_Number1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+        card_Number2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+        card_Number3.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+        card_Number4.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+
+        card_validyear.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+        card_validmm.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+        card_birth.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+        card_password.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
     }
 
     private void inheritance() {
@@ -87,8 +104,13 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
 
         //내용 작성할 곳.
-        card_Number = findViewById(R.id.card_Number);
-        card_valid = findViewById(R.id.card_valid);
+        card_Number1 = findViewById(R.id.card_Number1);
+        card_Number2 = findViewById(R.id.card_Number2);
+        card_Number3 = findViewById(R.id.card_Number3);
+        card_Number4= findViewById(R.id.card_Number4);
+
+        card_validyear = findViewById(R.id.card_validyear);
+        card_validmm = findViewById(R.id.card_validmm);
         card_birth = findViewById(R.id.card_birth);
         card_password = findViewById(R.id.card_password);
 
@@ -100,6 +122,10 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         card_personal_IV.setOnClickListener(cClickListener);
         card_corporation_IV.setOnClickListener(cClickListener);
         card_check_agree.setOnClickListener(cClickListener);
+        //키패드 내리기
+        card_detail_ll = findViewById(R.id.card_detail_ll);
+        card_detail_ll.setOnClickListener(cClickListener);
+        inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);  //OS에서 지원해주는 메소드이다.
 
         //더보기 버튼  - 다이얼
         card_agree_exp = findViewById(R.id.card_agree_exp);
@@ -113,6 +139,7 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         card_success.setOnClickListener(mClickListener);
 
     }
+
     //Back 버튼
     @Override
     public boolean onSupportNavigateUp() {
@@ -134,13 +161,13 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                         cInfo = "";
                         //DB에 보낼값.@drawable/
 
-                        Toast.makeText(Mypage_CardDetailActivity.this,cInfo,Toast.LENGTH_SHORT).show();
 
                     }else if(limitT1 == 1) {
                         limit++;
                         limitT1--;
                         card_personal_IV.setImageResource(R.drawable.personal_light);
                         cInfo = "개인";
+                        Toast.makeText(Mypage_CardDetailActivity.this,cInfo,Toast.LENGTH_SHORT).show();
                     }
                     break;
                     //법인
@@ -175,11 +202,15 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                         card_check_agree.setImageResource(R.drawable.ic_action_agree_check);
                     }
                     break;
+                case R.id.card_detail_ll:
+                    inputMethodManager.hideSoftInputFromWindow(card_detail_ll.getWindowToken(),0);
+                    break;
             }
         }
     };
 
     View.OnClickListener mClickListener = new View.OnClickListener() {
+        @SuppressLint("LongLogTag")
         @Override
         public void onClick(View v) {
             switch (v.getId()){
@@ -189,22 +220,29 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                     break;
                     //등록하기
                 case R.id.card_success:
-                    getNumberCheck = card_Number.getText().toString();
-                    Validate(getNumberCheck);
+                    getNumberCheck = card_Number1.getText().toString().trim() + card_Number2.getText().toString().trim()
+                            + card_Number3.getText().toString().trim() + card_Number4.getText().toString().trim();
+
+                    Validate();
 
                     cCardNo = getNumberCheck;
-                    cPassword = card_password.getText().toString();
-                    cYMM = card_valid.getText().toString();
-                    cBirthday = card_birth.getText().toString();
+                    cPassword = card_password.getText().toString().trim();
+                    cYear = card_validyear.getText().toString().trim();
+                    cMM = card_validmm.getText().toString().trim();
+                    cBirthday = card_birth.getText().toString().trim();
 
                     if (cPassword.length() == 0){
                         Toast.makeText(Mypage_CardDetailActivity.this,"카드 비밀번호를 입력하세요",Toast.LENGTH_SHORT).show();
-                    } else if (cYMM.length() == 0){
+                    }else if (cYear.length() == 0 ) {
+                        Toast.makeText(Mypage_CardDetailActivity.this, "만기 날짜를 입력하세요", Toast.LENGTH_SHORT).show();
+                    }else if (cMM.length() == 0 ){
                         Toast.makeText(Mypage_CardDetailActivity.this,"만기 날짜를 입력하세요",Toast.LENGTH_SHORT).show();
 
                     } else if (cBirthday.length() == 0){
                         Toast.makeText(Mypage_CardDetailActivity.this,"생년월일을 입력하세요",Toast.LENGTH_SHORT).show();
                     } else {
+
+                        //insert NetworkTask
                        String result = connectInset();
                         if(result.equals("1")){
                             Toast.makeText(Mypage_CardDetailActivity.this,"성공 .",Toast.LENGTH_SHORT).show();
@@ -236,7 +274,7 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         String result = null;
 
         urlAddress = urlAddr + "&cCardNo=" + cCardNo + "&cPassword=" + cPassword +
-                "&cYMM=" + cYMM + "&cBirthday=" + cBirthday + "&cInfo=" + cInfo;
+                "&cYear=" + cYear + "&cMM="+ cMM + "&cBirthday=" + cBirthday + "&cCardCompany=" + cCardCompany +"&cInfo=" + cInfo ;
 
         try {
             NetworkTask_TaeHyun insertNetworkTask = new NetworkTask_TaeHyun(Mypage_CardDetailActivity.this, urlAddress, "insert");
@@ -250,7 +288,10 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
         return result;
     }
 
-    public void Validate(String getNumberCheck){
+    public void Validate(){
+
+        getNumberCheck = card_Number1.getText().toString().trim() + card_Number2.getText().toString().trim()
+                + card_Number3.getText().toString().trim() + card_Number4.getText().toString().trim();
 
       //앞에 오는 숫자 체크 위해
       int prefix_master = Integer.parseInt(getNumberCheck.substring(0, 2));
@@ -261,74 +302,63 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                   .setTitle("신용카드 정보를 확인해 주세요.")
                   .setPositiveButton("확인",null)
                   .show();
-          card_Number.requestFocus();
+          card_Number1.requestFocus();
 
           //Visa
-          if (getNumberCheck.startsWith("4") && getNumberCheck.length() >= 13
-                  && getNumberCheck.length() <= 16){
-
-              if (!Pattern.matches(ptVisa,card_Number.getText().toString())){
-                  cCardCompany = "VISA";
-              }else {
-                  Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
-              }
+          if (getNumberCheck.startsWith("4") && (getNumberCheck.length() == 13 || getNumberCheck.length() == 16)){
+              cCardCompany = "VISA";
+          }else {
+              Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
+          }
           }
 
           //Master
-          if (prefix_master >= 51 && prefix_master<= 55){
-              if (!Pattern.matches(ptMasterCard,card_Number.getText().toString())){
-                  cCardCompany = "MASTERCARD";
-              }else {
-                  Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
-              }
+          if (prefix_master >= 51 && prefix_master<= 55 && getNumberCheck.length() == 14){
+              cCardCompany = "MASTERCARD";
+          }
+          else {
+              Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
           }
 
           //Amex
-          if (getNumberCheck.length() == 15 && (getNumberCheck.startsWith("34") || getNumberCheck
+          if (getNumberCheck.length() == 13 && (getNumberCheck.startsWith("34") || getNumberCheck
                   .startsWith("37"))){
-              if (!Pattern.matches(ptAmeExp,card_Number.getText().toString())){
-                  cCardCompany = "MASTERCARD";
-              }else {
-                  Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
-              }
+              cCardCompany = "AMEX";
+          }else {
+              Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
           }
+
 
           //DINERS_CLUB And CARTE_BLANCHE
           if (getNumberCheck.length() == 14  && (prefix_DINERS_CLUB >= 300 && prefix_DINERS_CLUB <= 305)
                   && (getNumberCheck.startsWith("36") || getNumberCheck.startsWith("38"))){
-              if (!Pattern.matches(ptDinClb,card_Number.getText().toString())){
-                  cCardCompany = "DINERS_CLUB And CARTE_BLANCHE";
-              }else {
-                  Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
-              }
+              cCardCompany = "DINERS_CLUB And CARTE_BLANCHE";
+          }else {
+              Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
           }
+
         ///DISCOVER
           if (getNumberCheck.length() == 16 && getNumberCheck.startsWith("6011")){
-              if (!Pattern.matches(ptDiscover,card_Number.getText().toString())){
-                  cCardCompany = "DISCOVER";
-              }else {
-                  Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
-              }
+              cCardCompany = "DISCOVER";
+          }else {
+              Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
           }
+
           //JCB
         if ((getNumberCheck.length() == 16 && getNumberCheck.startsWith("3"))
                 || (getNumberCheck.length() == 15 && (getNumberCheck
                 .startsWith("2131") || getNumberCheck
                 .startsWith("1800")))){
+            cCardCompany = "JCB";
+        }else {
+            Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
+        }
+        if(cCardCompany == ""){
 
-            if (!Pattern.matches(ptJcb,card_Number.getText().toString())){
-                cCardCompany = "JCB";
-            }else {
-                Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(Mypage_CardDetailActivity.this,"카드정보가 틀립니다.",Toast.LENGTH_SHORT).show();
         }
 
-
       }///---if END
-
-  }
-
-
 
 
 }//--end

@@ -242,8 +242,6 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
     //           2021.01.07 -태현
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void function() {
-        //하이픈
-        telNo.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         //글자수 제한
         nickname.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
         telNo.setFilters(new InputFilter[]{new InputFilter.LengthFilter(14)});
