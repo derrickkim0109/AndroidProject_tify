@@ -1,21 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.kakao.sdk:auth:1.15.1@aar">
     <CLASSES>
-<<<<<<< HEAD
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8868ee66ae67b70373fa258735de1651/jetified-auth-1.15.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8868ee66ae67b70373fa258735de1651/jetified-auth-1.15.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8868ee66ae67b70373fa258735de1651/jetified-auth-1.15.1/AndroidManifest.xml" />
-=======
-<<<<<<< HEAD
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c2449b11dcabe157f2d5f20100bba9a8/jetified-auth-1.15.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c2449b11dcabe157f2d5f20100bba9a8/jetified-auth-1.15.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c2449b11dcabe157f2d5f20100bba9a8/jetified-auth-1.15.1/AndroidManifest.xml" />
-=======
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d45e903695ba79036aabbf3b18bc0399/jetified-auth-1.15.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d45e903695ba79036aabbf3b18bc0399/jetified-auth-1.15.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d45e903695ba79036aabbf3b18bc0399/jetified-auth-1.15.1/AndroidManifest.xml" />
->>>>>>> 5c1282c67fc9c0b047eb7432de8c89e6d8acd96c
->>>>>>> 9979af551551bda2b97085f3c902faf9a223fc1a
     </CLASSES>
     <JAVADOC />
     <SOURCES>
