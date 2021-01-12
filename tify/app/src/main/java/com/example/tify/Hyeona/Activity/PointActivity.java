@@ -46,7 +46,6 @@ public class PointActivity extends AppCompatActivity {
         actionBar.hide();
         //액션바 삭제
 
-
     }
     @Override
     protected void onResume() {
