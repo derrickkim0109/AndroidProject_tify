@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_margin="20dp"
+    android:id="@+id/detail_ll_hide"
     android:layout_height="match_parent">
 <TextView
     android:layout_width="match_parent"
@@ -49,7 +50,7 @@
         android:layout_width="match_parent"
         android:padding="10dp"
         android:layout_height="match_parent"
-        android:id="@+id/point_history">
+        android:id="@+id/search_store">
     </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

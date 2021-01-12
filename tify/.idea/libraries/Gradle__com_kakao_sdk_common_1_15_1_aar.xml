@@ -1,18 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.kakao.sdk:common:1.15.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eb4ca5825c1d39748fd310e3900f9794/jetified-common-1.15.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eb4ca5825c1d39748fd310e3900f9794/jetified-common-1.15.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/eb4ca5825c1d39748fd310e3900f9794/jetified-common-1.15.1/AndroidManifest.xml" />
-<<<<<<< HEAD
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4ecf61f776e8c94fce24142cd35ca8a3/jetified-common-1.15.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4ecf61f776e8c94fce24142cd35ca8a3/jetified-common-1.15.1/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4ecf61f776e8c94fce24142cd35ca8a3/jetified-common-1.15.1/jars/classes.jar!/" />
-=======
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dca42b05aa3baca3b3ea64d4e02fea0e/jetified-common-1.15.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dca42b05aa3baca3b3ea64d4e02fea0e/jetified-common-1.15.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dca42b05aa3baca3b3ea64d4e02fea0e/jetified-common-1.15.1/AndroidManifest.xml" />
->>>>>>> 12b0e42d454833d5a56b2507fb92a0ad2c519e64
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0469ea4e6ba876518e04a561a4e7cc08/jetified-common-1.15.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0469ea4e6ba876518e04a561a4e7cc08/jetified-common-1.15.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0469ea4e6ba876518e04a561a4e7cc08/jetified-common-1.15.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
