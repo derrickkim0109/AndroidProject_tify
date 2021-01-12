@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/card_detail"
+    android:id="@+id/card_detail_ll"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,6 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Taehyun.Activity.Mypage_CardDetailActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -44,15 +45,62 @@
             android:text="카드번호"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <EditText
-            android:id="@+id/card_Number"
+            android:id="@+id/card_Number1"
             android:layout_marginLeft="30dp"
-            android:hint="1234 - 5678 - 9012 - 3456"
+            android:hint="1234"
             android:textSize="16dp"
             android:inputType="number"
-            android:layout_width="350dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             />
+        <TextView
+            android:gravity="center"
+            android:text="-"
+            android:textSize="25dp"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/card_Number2"
+            android:hint="5678"
+            android:textSize="16dp"
+            android:inputType="number"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            />
+            <TextView
+                android:gravity="center"
+                android:text="-"
+                android:textSize="25dp"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/card_Number3"
+            android:hint="9012"
+            android:textSize="16dp"
+            android:inputType="number"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            />
+            <TextView
+                android:gravity="center"
+                android:text="-"
+                android:textSize="25dp"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/card_Number4"
+            android:hint="3456"
+            android:textSize="16dp"
+            android:inputType="number"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            />
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -67,15 +115,36 @@
             android:text="유효기간"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <EditText
-            android:id="@+id/card_valid"
+            android:id="@+id/card_validyear"
             android:layout_marginLeft="30dp"
-            android:hint="월   /   년 "
+            android:hint="MM"
             android:textSize="16dp"
             android:inputType="number"
-            android:layout_width="150dp"
+            android:layout_width="60dp"
             android:layout_height="60dp"
             />
+            <TextView
+                android:gravity="center"
+                android:text="/"
+                android:textStyle="bold"
+                android:layout_marginTop="7dp"
+                android:textSize="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/card_validmm"
+            android:hint="Year"
+            android:textSize="16dp"
+            android:inputType="number"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            />
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/card_birNPass"
@@ -130,7 +199,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <ImageView
@@ -150,19 +219,20 @@
         <TextView
             android:id="@+id/card_agree_exp"
             android:textSize="15dp"
-            android:layout_marginLeft="80dp"
+            android:layout_marginLeft="50dp"
             android:textColor="@color/colorGray"
             android:gravity="center"
             android:textStyle="bold"
-            android:text=" 더보기 "
-            android:layout_width="wrap_content"
+            android:text="더보기 "
+            android:layout_width="65dp"
             android:layout_height="50dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:gravity="center"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="100dp">
 
         <Button
             android:id="@+id/card_cancel"

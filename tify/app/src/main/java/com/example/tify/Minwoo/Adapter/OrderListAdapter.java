@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tify.Minwoo.Activity.OrderListActivity;
 import com.example.tify.Minwoo.Activity.StoreInfoActivity;
 import com.example.tify.Minwoo.Bean.Order;
@@ -124,28 +125,37 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 
         switch (mDataset.get(position).getoStatus()){ // 0 주문요청 1 주문접수 2 제조완료 3 픽업완료 4 고객이 취소 5 매장이 취소
             case 0:
-                holder.tv_right1.setBackgroundColor(Color.BLUE);
-                holder.tv_orderRequest.setBackgroundColor(Color.BLUE);
+                holder.tv_right1.setImageResource(R.drawable.ic_action_progress_checked);
+                holder.tv_orderRequest.setTextColor(Color.parseColor("#0084ff"));
                 break;
             case 1:
-                holder.tv_right2.setBackgroundColor(Color.BLUE);
-                holder.tv_orderGet.setBackgroundColor(Color.BLUE);
+                holder.tv_right2.setImageResource(R.drawable.ic_action_progress_checked);
+                holder.tv_orderGet.setTextColor(Color.parseColor("#0084ff"));
                 break;
             case 2:
-                holder.tv_right3.setBackgroundColor(Color.BLUE);
-                holder.tv_complete.setBackgroundColor(Color.BLUE);
+                holder.tv_right3.setImageResource(R.drawable.ic_action_progress_checked);
+                holder.tv_complete.setTextColor(Color.parseColor("#0084ff"));
                 break;
             case 3:
-                holder.tv_right3.setBackgroundColor(Color.BLUE);
-                holder.tv_complete.setBackgroundColor(Color.BLUE);
+                holder.tv_right1.setImageResource(R.drawable.ic_action_progress_checked);
+                holder.tv_right2.setImageResource(R.drawable.ic_action_progress_checked);
+                holder.tv_right3.setImageResource(R.drawable.ic_action_progress_checked);
+                holder.tv_orderRequest.setTextColor(Color.parseColor("#0084ff"));
+                holder.tv_orderGet.setTextColor(Color.parseColor("#0084ff"));
+                holder.tv_complete.setTextColor(Color.parseColor("#0084ff"));
                 holder.btn_Review.setVisibility(View.VISIBLE);
                 break;
         }
 
         if(mDataset.get(position).getoReview() == 1 && mDataset.get(position).getoStatus() == 3){
-            holder.btn_Review.setVisibility(View.VISIBLE);
-            holder.btn_Review.setText("픽업완료");
-            holder.btn_Review.setEnabled(false);
+            holder.linearLayout.setBackgroundColor(Color.WHITE);
+            holder.btn_Review.setVisibility(View.GONE);
+            holder.tv_right1.setVisibility(View.GONE);
+            holder.tv_right2.setVisibility(View.GONE);
+            holder.tv_right3.setVisibility(View.GONE);
+            holder.tv_orderRequest.setVisibility(View.GONE);
+            holder.tv_complete.setVisibility(View.GONE);
+            holder.tv_orderGet.setText("픽업 완료된 주문입니다.");
         }
 
         if(mDataset.get(position).getoStatus() == 4 || mDataset.get(position).getoStatus() == 5){

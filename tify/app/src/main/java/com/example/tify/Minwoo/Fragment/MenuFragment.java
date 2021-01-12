@@ -95,6 +95,7 @@ public class MenuFragment extends Fragment {
                     intent.putExtra("mShot", menuList.get(position).getmShot());
                     intent.putExtra("mImage", menuList.get(position).getmImage());
                     intent.putExtra("mType", menuList.get(position).getmType());
+                    intent.putExtra("mComment", menuList.get(position).getmComment());
 
                     intent.putExtra("macIP", macIP);
                     intent.putExtra("user_uSeqNo", user_uSeqNo);

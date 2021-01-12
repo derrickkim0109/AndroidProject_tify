@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="주문하러 가기"
             android:textColor="@color/white"
-            android:backgroundTint="#2180F3"/>
+            android:backgroundTint="@color/mainColor"/>
 
     </LinearLayout>
 
