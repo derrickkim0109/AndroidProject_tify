@@ -148,7 +148,7 @@ public class OrderListActivity extends AppCompatActivity {
             data = (ArrayList<Order>) obj;
             Log.v(TAG, "data.size() : " + data.size());
 
-            adapter = new OrderListAdapter(OrderListActivity.this, R.layout.lmw_activity_orderlist_recycler_item, data);
+            adapter = new OrderListAdapter(OrderListActivity.this, R.layout.lmw_activity_orderlist_recycler_item, data, user_uSeqNo, store_sSeqNo);
             recyclerView.setAdapter(adapter);
 
             beanList = data;

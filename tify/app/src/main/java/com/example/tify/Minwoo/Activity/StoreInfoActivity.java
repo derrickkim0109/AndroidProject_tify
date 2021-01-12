@@ -1,6 +1,8 @@
 package com.example.tify.Minwoo.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -35,12 +37,19 @@ public class StoreInfoActivity extends AppCompatActivity {
     String macIP;
     String urlAddr = null;
     String where = null;
-    int store_sSeqNo = 0;
     int user_uSeqNo = 0;
+    String userNickName = null;
 
+    int store_sSeqNo = 0;
     String sName;
+    String userEmail;
     String sAddress;
-    String userName = null;
+    String sImage;
+    String sTime = null;
+    String sTelNo;
+    int sPackaging;
+    String sComment;
+    int skSeqNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +65,32 @@ public class StoreInfoActivity extends AppCompatActivity {
 //        sAddress = intent.getStringExtra("sAddress");
 //        sName = intent.getStringExtra("sName");
 
+
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor autoLogin = auto.edit();
+
+        ShareVar shareVar = new ShareVar();
+        macIP = shareVar.getMacIP();
+
+//        user_uSeqNo = auto.getString("userSeq",null); // 지석씨랑 화면 연결되면 쓰기
+//        userNickName = auto.getString("userNickName",null); // 지석씨랑 화면 연결되면 쓰기
+
+        user_uSeqNo = 2;
+        userNickName = "이민우";
+        store_sSeqNo = 1;
+        sName = "스타벅스 강남점";
+        sAddress = "서울 강남";
+
         // 가게사진, 가게이름, 가게주소
         iv_sPhoto = findViewById(R.id.activity_StoreInfo_IV_sPhoto);
         tv_sName = findViewById(R.id.activity_StoreInfo_TV_sName);
         tv_sAddress = findViewById(R.id.activity_StoreInfo_TV_sAddress);
 
         //지석씨에게 인텐트로 받는다.
-//        sPhoto.setImageResource();
-//        sName.setText();
-//        sAddress.setText();
+//        iv_sPhoto.setImageResource();
+//        tv_sName.setText();
+//        tv_sAddress.setText();
+
         //-----------------------------
 
         TabLayout tabs = findViewById(R.id.tabs);
@@ -75,28 +101,14 @@ public class StoreInfoActivity extends AppCompatActivity {
 
         // MenuFragment로 넘긴다. (지석씨에게 값 받으면 다시 설정해주자)
         Bundle bundle = new Bundle();
-        bundle.putString("macIP", "172.30.1.27");
-        bundle.putString("sName", "스타벅스 강남점");
-        bundle.putInt("user_uSeqNo", 2);
-        bundle.putInt("store_sSeqNo", 1);
+        bundle.putString("macIP", macIP);
+        bundle.putString("sName", sName);
+        bundle.putInt("user_uSeqNo", user_uSeqNo);
+        bundle.putInt("store_sSeqNo", store_sSeqNo);
 
         menuFragment.setArguments(bundle);
-
-        // 테스트 값
-        Intent intent = getIntent();
-        if(intent.getStringExtra("macIP") != null){
-            ShareVar shareVar = new ShareVar();
-            macIP = shareVar.getMacIP();
-            user_uSeqNo = intent.getIntExtra("user_uSeqNo", 0);
-            store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
-            sName = "스타벅스 강남점";
-        }else{
-            ShareVar shareVar = new ShareVar();
-            macIP = shareVar.getMacIP();
-            sName = "스타벅스 강남점";
-            user_uSeqNo = 2;
-            store_sSeqNo = 1;
-        }
+        infoFragment.setArguments(bundle);
+        reviewFragment.setArguments(bundle);
 
         //-----------------------------
 

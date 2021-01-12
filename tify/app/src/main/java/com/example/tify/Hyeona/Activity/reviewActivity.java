@@ -12,6 +12,7 @@ import com.example.tify.Hyeona.Adapter.review_adapter;
 import com.example.tify.Hyeona.Bean.Bean_review_review;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_review;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 
 import java.util.ArrayList;
 
@@ -26,8 +27,10 @@ public class reviewActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager = null;
     int storekeeper_skSeqNo = 1;
     // 가게 번호 넘겨야댐
-    String macIP = "192.168.0.55";
-    String urlAddr = "http://" + macIP + ":8080/tify/review.jsp?";
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
+
+    String urlAddr = "http://" + MacIP + ":8080/tify/review.jsp?";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

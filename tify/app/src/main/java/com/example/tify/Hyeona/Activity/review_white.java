@@ -37,6 +37,7 @@ import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Bean.Bean_review_store;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_review;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Activity.Mypage_ProfileChageActivity;
 import com.example.tify.Taehyun.NetworkTask.ImageNetworkTask_TaeHyun;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
@@ -54,9 +55,11 @@ public class review_white extends AppCompatActivity {
     private int sSeqNo;
     //데이터상 storekeeper_skSeqNo 임 확인필수
     private int uNo;
-    private String macIP = "192.168.0.55";
-    private String urlAddr = "http://" + macIP + ":8080/tify/review_white_storeinfo.jsp?";
-    private String urlAddr2 = "http://" + macIP + ":8080/tify/review_white_update.jsp?";
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
+
+    private String urlAddr = "http://" + MacIP + ":8080/tify/review_white_storeinfo.jsp?";
+    private String urlAddr2 = "http://" + MacIP + ":8080/tify/review_white_update.jsp?";
 
     private Bean_review_store bean_review_store = new Bean_review_store();
     private String sName;
@@ -232,7 +235,7 @@ public class review_white extends AppCompatActivity {
         }
 
     private void connectImage(){
-        imageurl = "http://" + macIP + ":8080/tify/multipartRequest.jsp";
+        imageurl = "http://" + MacIP + ":8080/tify/multipartRequest.jsp";
         ImageNetworkTask_TaeHyun imageNetworkTask = new ImageNetworkTask_TaeHyun(review_white.this,review_add_image,img_path,imageurl);
         try {
             Integer result = imageNetworkTask.execute(100).get();
@@ -277,7 +280,7 @@ public class review_white extends AppCompatActivity {
 
                 final ImageView review_store_image = findViewById(R.id.review_store_image);
                 sImage = bean_review_store.getsImage();
-                Glide.with(this).load("http://" + macIP + ":8080/tify/"+ sImage).into(review_store_image);
+                Glide.with(this).load("http://" + MacIP + ":8080/tify/"+ sImage).into(review_store_image);
 
                 final TextView review_store_name = findViewById(R.id.review_store_name);
                 sName = bean_review_store.getsName();

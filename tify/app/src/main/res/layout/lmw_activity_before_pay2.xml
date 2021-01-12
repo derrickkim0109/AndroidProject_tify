@@ -71,7 +71,7 @@
                     android:layout_width="0px"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="포인트 사용"
+                    android:text="포인트 할인"
                     android:gravity="center"
                     android:textSize="20dp"
                     android:textColor="@color/black"
@@ -84,17 +84,57 @@
                     android:orientation="horizontal"
                     android:gravity="center"
                     >
-                    <TextView
+                    <EditText
                         android:id="@+id/beforePay_TV_Point2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0p"
+                        android:hint="0p"
                         android:textSize="20dp"
-                        android:backgroundTint="@color/white"
                         android:gravity="center"
-
+                        android:inputType="number"
                         />
                 </LinearLayout>
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        >
+                        <Button
+                            android:id="@+id/activity_Before2_Btn_Point"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="적용"
+                            android:backgroundTint="#0084ff"
+                            android:enabled="false"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
 
             </LinearLayout>
             <TextView
@@ -193,18 +233,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-        <Button
-            android:id="@+id/beforePay_Btn_Kakaopay2"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:text="카카오페이"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:backgroundTint="#ffe800"
-            android:layout_gravity="center"
-            />
+
         <Button
             android:id="@+id/beforePay_Btn_Card2"
             android:layout_width="wrap_content"

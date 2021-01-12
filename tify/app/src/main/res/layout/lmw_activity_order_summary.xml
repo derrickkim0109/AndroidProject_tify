@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:text="음료 이름"
             android:textSize="20dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"/>
         <TextView
             android:id="@+id/orderSummary_TV_mPrice"

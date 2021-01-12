@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tify.Minwoo.Adapter.CartAdapter;
 import com.example.tify.Minwoo.Bean.Cart;
@@ -19,6 +24,7 @@ import com.example.tify.Minwoo.Bean.OrderList;
 import com.example.tify.Minwoo.NetworkTask.LMW_CartNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_OrderListNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_OrderNetworkTask;
+import com.example.tify.Minwoo.NetworkTask.LMW_PointNetworkTask;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 
@@ -27,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class BeforePayActivity2 extends AppCompatActivity {
+
+// 장바구니 결제할 때 사용되는 페이지(리스트를 모두 Insert해야하므로 과부하를 줄이기 위해 BeforeActivity와 구분했음.
 
     String TAG = "BeforePayActivity2";
 
@@ -37,8 +45,10 @@ public class BeforePayActivity2 extends AppCompatActivity {
     // layout
     TextView tv_totalOrderPrice2;
     TextView tv_totalPayPrice2;
+    TextView tv_totalDiscount2;
     Button cardBtn2;
-    Button kakaoPay2;
+    Button btn_point;
+    EditText et_point;
 
     // order Insert (카드이름이랑 카드번호 받기)
     String macIP;
@@ -46,7 +56,6 @@ public class BeforePayActivity2 extends AppCompatActivity {
     String where = null;
     int user_uSeqNo = 0;
     int store_sSeqNo = 0;
-    int totalPrice = 0;
     String oCardName;
     int oCardNo;
     String sName;
@@ -63,6 +72,12 @@ public class BeforePayActivity2 extends AppCompatActivity {
     int total;
     int number;
     int oNo;
+    int point;
+
+    String strPoint;
+    String strDiscountPoint;
+    String strRemainPoint;
+    String strTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +95,12 @@ public class BeforePayActivity2 extends AppCompatActivity {
         sName = intent.getStringExtra("sName");
         from = intent.getStringExtra("from");
 
+        Log.v(TAG, "유저번호 : " + user_uSeqNo);
+
         where = "oNo";
         urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
         list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
+        connectPoint(); // 포인트 불러오기 // 포인트 불러오기
         oNo = list.get(0).getMax() + 1;
         Log.v(TAG, "마지막 oNo : " + oNo);
 
@@ -91,19 +109,72 @@ public class BeforePayActivity2 extends AppCompatActivity {
         cardBtn2 = findViewById(R.id.beforePay_Btn_Card2);
         tv_totalOrderPrice2 = findViewById(R.id.beforePay_TV_totalOrderPrice2);
         tv_totalPayPrice2 = findViewById(R.id.beforePay_TV_totalPayPrice2);
-        kakaoPay2 = findViewById(R.id.beforePay_Btn_Kakaopay2);
-
-        // 클릭 리스너
-        cardBtn2.setOnClickListener(mClickListener);
-        kakaoPay2.setOnClickListener(mClickListener);
+        tv_totalDiscount2 = findViewById(R.id.beforePay_TV_Discount2);
+        btn_point = findViewById(R.id.activity_Before2_Btn_Point);
+        et_point = findViewById(R.id.beforePay_TV_Point2);
 
         // 값 대입
         NumberFormat moneyFormat = null;
         moneyFormat = NumberFormat.getInstance(Locale.KOREA);
-        String strTotal = moneyFormat.format(total);
+        strTotal = moneyFormat.format(total);
+        strPoint = moneyFormat.format(point);
 
         tv_totalOrderPrice2.setText(strTotal + "원");
         tv_totalPayPrice2.setText(strTotal + "원");
+
+        // et_point 값 제한
+
+        et_point.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.v(TAG, " 입력값 : " + et_point.getText().toString());
+                if(et_point.getText().length() == 0){ // 아무것도 입력되지 않았을 때 입력처리
+                    btn_point.setEnabled(false);
+                }else { // 입력했을 때
+                    Log.v(TAG, " 값!! : " + Integer.parseInt(et_point.getText().toString()));
+                    if (Integer.parseInt(et_point.getText().toString()) < 1) { // 1보다 작게 입력했을 때 예외처리
+
+                    } else {
+                        int temp = Integer.parseInt(s.toString());
+
+                        if (point < temp) { // 사용하려는 포인트가 보유 포인트보다 클 때
+                            et_point.setText("");
+                            Toast.makeText(BeforePayActivity2.this, "보유하신 포인트는 " + strPoint + "p 입니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (total < temp) { // 사용하려는 포인트가 totalPrice를 초과했을 때!
+                                btn_point.setEnabled(false);
+                                btn_point.setBackgroundColor(Color.parseColor("#28979595"));
+                                Toast.makeText(BeforePayActivity2.this, "최대 " + strTotal + "p 까지 사용가능합니다.", Toast.LENGTH_SHORT).show();
+                            } else if (total >= temp){
+                                btn_point.setEnabled(true);
+                                btn_point.setBackgroundColor(Color.parseColor("#0084ff"));
+                            }else if(point < temp){
+                                et_point.setText("");
+                                Toast.makeText(BeforePayActivity2.this, "보유하신 포인트는 " + strPoint + "p 입니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        // 클릭 리스너
+        cardBtn2.setOnClickListener(mClickListener);
+        btn_point.setOnClickListener(mClickListener);
+
+        if(point == 0){
+            btn_point.setEnabled(false);
+        }
+        et_point.setHint("보유 포인트 : " + strPoint + "p");
 
         // 툴바 생성
         Toolbar toolbar = (Toolbar)findViewById(R.id.order_toolbar); // 상단 툴바
@@ -144,45 +215,51 @@ public class BeforePayActivity2 extends AppCompatActivity {
 
             Intent intent = null;
 
+            int getPoint;
+            int discountedPrice;
+            int remainPoint;
+            NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
+
             switch (v.getId()){
-                case R.id.beforePay_Btn_Kakaopay2:
+                case R.id.activity_Before2_Btn_Point:
 
-                    // 결제 부분 완료되면 결제 부분에서 JSP 실행하기 (카드번호랑 카드이름 필요)
-                    // 1. 결제 완료되면 OrderListActivity로!
-                    // 1-1. order 테이블 Insert
-                    // 1-2. order oNo Select => oNo가 있어야 orderlist에 Insert 가능..
-                    // 1-3. orderlist 테이블 Insert
-                    // 2. 결제 실패하면 StoreInfoActivity로!
+                    if(btn_point.getText().toString().equals("적용")){
+                        getPoint = Integer.parseInt(et_point.getText().toString());
+                        discountedPrice = total - getPoint;
+                        remainPoint = point - getPoint;
 
-                    // order 테이블 Insert
-                    where = "insert";
-                    int cardNum2 = 13153123;
-                    String cardName2 = "신한은행";
-                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_insert.jsp?user_uNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&oSum=" + total + "&oCardName=" + cardName2 + "&oCardNo=" + cardNum2 + "&oReview=" + 0 + "&oStatus=" + 0;
+                        strTotal = moneyFormat.format(discountedPrice);
+                        strDiscountPoint = moneyFormat.format(getPoint);
+                        strRemainPoint = moneyFormat.format(remainPoint);
 
-                    connectInsertData(); // order Insert
+                        Log.v(TAG, "값 1 : " + strTotal);
+                        Log.v(TAG, "값 2 : " + strDiscountPoint);
+                        Log.v(TAG, "값 3 : " + strRemainPoint);
+
+                        et_point.setEnabled(false);
+                        et_point.setText("");
+                        et_point.setHint("남은 포인트 : " + strRemainPoint + "p");
+                        tv_totalDiscount2.setText(strDiscountPoint + "p");
+                        tv_totalPayPrice2.setText(strTotal + "원");
+                        btn_point.setEnabled(true);
+                        btn_point.setText("초기화");
+                    }else{
 
 
-                    // orderlist 테이블 Insert
+                        strTotal = moneyFormat.format(total);
 
-                    for(int i = 0; i < carts.size(); i++){ // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
-                        where = "insert";
-                        urlAddr = "http://" + macIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uSeqNo + "&order_oNo=" + oNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp() + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice() + "&olQuantity=" + carts.get(i).getcLQuantity();
-                        connectInsertData(); // orderlist Insert
+                        Log.v(TAG, "totalPrice : " + total);
+
+                        et_point.setEnabled(true);
+                        et_point.setText("");
+                        et_point.setHint("보유 포인트 : " + strPoint + "p");
+                        tv_totalDiscount2.setText("0p");
+                        tv_totalPayPrice2.setText(strTotal + "원");
+                        btn_point.setText("적용");
+                        btn_point.setEnabled(false);
                     }
-
-
-                    // 테스트용
-                    intent = new Intent(BeforePayActivity2.this, OrderListActivity.class);
-                    intent.putExtra("macIP", macIP);
-                    intent.putExtra("user_uSeqNo", user_uSeqNo);
-                    intent.putExtra("store_sSeqNo", store_sSeqNo);
-                    intent.putExtra("totalPrice", totalPrice);
-                    intent.putExtra("user_uSeqNo", user_uSeqNo);
-                    intent.putExtra("from", from);
-                    startActivity(intent);
-
                     break;
+
                 case R.id.beforePay_Btn_Card2:
 
 
@@ -214,7 +291,7 @@ public class BeforePayActivity2 extends AppCompatActivity {
                     intent.putExtra("macIP", macIP);
                     intent.putExtra("user_uSeqNo", user_uSeqNo);
                     intent.putExtra("store_sSeqNo", store_sSeqNo);
-                    intent.putExtra("totalPrice", totalPrice);
+                    intent.putExtra("totalPrice", total);
                     intent.putExtra("user_uSeqNo", user_uSeqNo);
                     intent.putExtra("from", from);
                     startActivity(intent);
@@ -318,6 +395,30 @@ public class BeforePayActivity2 extends AppCompatActivity {
             e.printStackTrace();
         }
         return beanList;
+    }
+
+    private void connectPoint(){
+        where = "select";
+        urlAddr = "http://" + macIP + ":8080/tify/lmw_point_select.jsp?user_uSeqNo=" + user_uSeqNo;
+        try {
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // Date : 2020.12.25
+            //
+            // Description:
+            //  - NetworkTask의 생성자 추가 : where <- "select"
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////
+            LMW_PointNetworkTask networkTask = new LMW_PointNetworkTask(BeforePayActivity2.this, urlAddr, where);
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            Object obj = networkTask.execute().get();
+            point = (Integer) obj;
+            Log.v(TAG, "point) : " + point);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 
