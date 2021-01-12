@@ -3,16 +3,13 @@
 
 <%
 	request.setCharacterEncoding("utf-8");
-    String uNo = request.getParameter("uNo");
-    String uImage = request.getParameter("uImage");
-    String uTelNo = request.getParameter("uTelNo");
-    String uNickName = request.getParameter("uNickName");
+    String cNo = request.getParameter("cNo");
 
 //------
 
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
-	String id_mysql = "root";
-	String pw_mysql = "qwer1234";
+ 	String id_mysql = "root";
+    String pw_mysql = "qwer1234";
 	int result = 0; // 수정 확인 
 
 	PreparedStatement ps = null;
@@ -22,17 +19,11 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-        String A = "update user set uImage = ?, uTelNo =?, uNickName =? where uNo=" + uNo;
+		String A = "update tify.creditcard set cDeleteDate = now() where cNo=" + cNo;
 
 
-        ps = conn_mysql.prepareStatement(A);
-
-        ps.setString(1, uImage);
-        ps.setString(2, uTelNo);
-        ps.setString(3, uNickName);
-        
-        result = ps.executeUpdate();
-        
+	    ps = conn_mysql.prepareStatement(A);
+		result = ps.executeUpdate();
 %>
 		{
 			"result" : "<%=result%>"
