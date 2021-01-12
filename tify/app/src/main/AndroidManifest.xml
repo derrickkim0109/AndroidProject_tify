@@ -57,6 +57,7 @@
         <activity android:name=".Hyeona.Activity.PointActivity" />
         <activity android:name=".Hyeona.Activity.StampActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".Hyeona.Activity.main_search"/>
         <activity android:name=".Hyeona.Activity.reviewActivity" />
         <activity android:name=".Hyeona.Activity.test" />
         <activity android:name=".Hyeona.Activity.IntroActivity">

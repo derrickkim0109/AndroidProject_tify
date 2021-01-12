@@ -58,9 +58,12 @@ import java.util.ArrayList;
             String rhContent = point_history.get(position).getRhContent();
             String rhPointHow = point_history.get(position).getRhPointHow();
 
+
             holder.rhDay.setText(rhDay);
             holder.rhContent.setText(rhContent);
             holder.rhPointHow.setText(rhPointHow);
+
+
         }
 
         @Override
@@ -70,7 +73,7 @@ import java.util.ArrayList;
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             final static String TAG = "MemberAdapter";
-            private CircularImageView point_history1;
+           // private CircularImageView point_history1;
 
             private TextView rhDay;
             private TextView rhContent;
@@ -79,7 +82,7 @@ import java.util.ArrayList;
 
             MyViewHolder(View v) {
                 super(v);
-                point_history1 = v.findViewById(R.id.point_history);
+              //  point_history1 = v.findViewById(R.id.point_history);
 
                 rhDay = v.findViewById(R.id.rhDay);
                 rhContent = v.findViewById(R.id.rhContent);
