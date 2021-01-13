@@ -33,12 +33,9 @@ public class LoginActivity extends AppCompatActivity {
     String urlAddr = null;
     String where = null;
 
-    int result = -1;
-    String strResult = null;
-
     String id;
     String pw;
-    int skStatus = 1;
+
 
 
 
@@ -80,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         intent.putExtra("macIP", "172.30.1.27");
                         intent.putExtra("skSeqNo", datas.get(0).getSkSeqNo());
+                        Log.v(TAG, "skSeqNo : " + datas.get(0).getSkSeqNo());
 
                         startActivity(intent);
                     }

@@ -108,44 +108,54 @@ public class DialogFragment_OrderRequest_Cancel extends DialogFragment {
     View.OnClickListener mClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            switch (v.getId()){
-                case R.id.dialog_cancel_Btn_Dismiss: // 취소 버튼 눌렀을 때!
-                    dismiss();
-                    break;
-                case R.id.dialog_cancel_Btn_Send: // 전송 버튼 눌렀을 때!
+            Log.v(TAG, "입력값 : " + et_why);
 
-                    String why = et_why.getText().toString(); // 거절 이유! 고객에게 알림으로 전달하기!
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                switch (v.getId()){
+                    case R.id.dialog_cancel_Btn_Dismiss: // 취소 버튼 눌렀을 때!
+                        dismiss();
+                        break;
+                    case R.id.dialog_cancel_Btn_Send: // 전송 버튼 눌렀을 때!
 
-                    where = "update";
-                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_cancel.jsp?oNo=" + oNo + "&oStatus=" + 5;
-                    int result1 = Integer.parseInt(connectData());
+                        if(et_why.getText().toString().length() > 0){
+                            String why = et_why.getText().toString(); // 거절 이유! 고객에게 알림으로 전달하기!
 
-                    if(result1 == 1){
-                        // 고객에게 주문 최소됐다고 알림 띄우기 & 거절 사유 전송!
-                        Toast.makeText(getActivity(), "고객에게 거절 사유가 전송되었습니다.", Toast.LENGTH_SHORT).show();
-                    }else{
-                        // DB Action중 문제 발생!
-                        Toast.makeText(getActivity(), "정상적으로 전송되지 않았습니다. \n 관리자에게 문의바랍니다.", Toast.LENGTH_SHORT).show();
-                    }
+                            where = "update";
+                            urlAddr = "http://" + macIP + ":8080/tify/lmw_order_cancel.jsp?oNo=" + oNo + "&oStatus=" + 5;
+                            int result1 = Integer.parseInt(connectData());
 
-                    intent.putExtra("macIP", macIP);
-                    intent.putExtra("skSeqNo", skSeqNo);
-                    intent.putExtra("oNo", oNo);
+                            if(result1 == 1){
+                                // 고객에게 주문 최소됐다고 알림 띄우기 & 거절 사유 전송!
+                                Toast.makeText(getActivity(), "고객에게 거절 사유가 전송되었습니다.", Toast.LENGTH_SHORT).show();
+                            }else{
+                                // DB Action중 문제 발생!
+                                Toast.makeText(getActivity(), "정상적으로 전송되지 않았습니다. \n 관리자에게 문의바랍니다.", Toast.LENGTH_SHORT).show();
+                            }
 
-                    startActivity(intent);
-                    dismiss();
+                            intent.putExtra("macIP", macIP);
+                            intent.putExtra("skSeqNo", skSeqNo);
+                            intent.putExtra("oNo", oNo);
 
-                    break;
+                            startActivity(intent);
+                            dismiss();
+                        }else{
+                            Toast.makeText(getActivity(), "거절사유를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+                        break;
                     // --------------------------
 
-                case R.id.dialog_cancel_Btn_Close:
-                    et_why.setText("영업종료");
-                    break;
-                case R.id.dialog_cancel_Btn_Soldout:
-                    et_why.setText("재료부족");
-                    break;
-            }
+                    case R.id.dialog_cancel_Btn_Close:
+                        et_why.setText("영업종료");
+                        break;
+                    case R.id.dialog_cancel_Btn_Soldout:
+                        et_why.setText("재료부족");
+                        break;
+                }
+
+
 
         }
     };

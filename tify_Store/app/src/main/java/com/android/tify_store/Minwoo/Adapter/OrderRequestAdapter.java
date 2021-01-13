@@ -41,12 +41,13 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
     int oNo;
     String where;
     String urlAddr;
+    int positionNum;
 
     private ArrayList<OrderRequest> orderRequests = new ArrayList<>();
     private ArrayList<Integer> list = new ArrayList<Integer>();
 
     //인터페이스 선언
-    public interface OnItemClickListener{
+    public interface  OnItemClickListener{
         void onItemClick(View v, int position);
 
     }
@@ -55,6 +56,7 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
     //메인에서 사용할 클릭메서드 선언
     public void setOnItemClickListener(OnItemClickListener listener){
         this.mListener = listener;
+
         Log.v(TAG, "setOnItemClickListener");
     }
 
@@ -95,6 +97,7 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
                     Log.v(TAG, "MyViewHolder onClick");
 
                     int position=getAdapterPosition();//어뎁터 포지션값
+                    Log.v(TAG, "position : " + position);
                     // 뷰홀더에서 사라지면 NO_POSITION 을 리턴
                     if(position!=RecyclerView.NO_POSITION){
                         if(mListener !=null){
@@ -114,7 +117,6 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
         this.fragment = MenuFragment;
         this.macIP = macIP;
         this.skSeqNo = skSeqNo;
-
 
         where = "select";
         urlAddr = "http://" + macIP + ":8080/tify/lmw_order_select_ostatus.jsp?skSeqNo=" + skSeqNo;
@@ -182,52 +184,46 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
 
             holder.subTotalPrice.setText(strTotal + "원");
 
-            oNo = mDataset.get(position).getOrder_oNo(); // 주문번호
-            holder.reject.setOnClickListener(mClickListener);
-            holder.accept.setOnClickListener(mClickListener);
-        }
+            holder.reject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.v(TAG, "클릭값 : " + mDataset.get(position).getOrder_oNo());
 
-
-
-
-    }
-
-    View.OnClickListener mClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Bundle bundle = new Bundle();
-            OrderRequest orderRequest = new OrderRequest();
-            switch (v.getId()){
-                case R.id.orderRequest_CV_Btn_Cancel:
+                    Bundle bundle = new Bundle();
                     Log.v(TAG, "거절");
 
                     DialogFragment_OrderRequest_Cancel dialogFragment_orderRequest_cancel = new DialogFragment_OrderRequest_Cancel();
                     bundle.putString("macIP", macIP);
                     bundle.putInt("skSeqNo", skSeqNo);
-                    bundle.putInt("oNo", oNo);
+                    bundle.putInt("oNo", mDataset.get(position).getOrder_oNo());
 
-                    Log.v(TAG, "oNo : " + oNo);
+                    Log.v(TAG, "oNo1 : " + mDataset.get(position).getOrder_oNo());
 
                     dialogFragment_orderRequest_cancel.setArguments(bundle);
                     dialogFragment_orderRequest_cancel.show(fragment.getActivity().getSupportFragmentManager(),"tag");
-                    break;
-                case R.id.orderRequest_CV_Btn_Accept:
+                }
+            });
+            holder.accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
                     Log.v(TAG, "접수");
 
                     DialogFragment_OrderRequest_Ok dialogFragment_orderRequest_ok = new DialogFragment_OrderRequest_Ok();
                     bundle.putString("macIP", macIP);
                     bundle.putInt("skSeqNo", skSeqNo);
-                    bundle.putInt("oNo", oNo);
+                    bundle.putInt("oNo", mDataset.get(position).getOrder_oNo());
 
-                    Log.v(TAG, "oNo : " + oNo);
+                    Log.v(TAG, "oNo : " + mDataset.get(position).getOrder_oNo());
 
                     dialogFragment_orderRequest_ok.setArguments(bundle);
                     dialogFragment_orderRequest_ok.show(fragment.getActivity().getSupportFragmentManager(),"tag");
-                    break;
-            }
-        }
-    };
+                }
+            });
 
+        }
+    }
+    
     @Override
     public int getItemCount() {
         Log.v(TAG, "getItemCount");

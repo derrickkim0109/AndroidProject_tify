@@ -179,7 +179,7 @@ public class StoreInfoActivity extends AppCompatActivity {
                             builder1.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    urlAddr = "http://" + macIP + ":8080/tify/lmw_storekeeper_update.jsp?skSeqNo=" + skSeqNo + "&skStatus=" + skStatus;
+                                    urlAddr = "http://" + macIP + ":8080/tify/lmw_storekeeper_update.jsp?skSeqNo=" + skSeqNo + "&skStatus=" + 1;
                                     where = "update";
                                     strResult = connectStore();
                                     Log.v(TAG, "strResult : " + strResult);
@@ -243,7 +243,6 @@ public class StoreInfoActivity extends AppCompatActivity {
 
     private String connectStore(){ // skStatus 1로 바꾸기
         String result = null;
-        skStatus = 1;
 
         try {
             ///////////////////////////////////////////////////////////////////////////////////////
