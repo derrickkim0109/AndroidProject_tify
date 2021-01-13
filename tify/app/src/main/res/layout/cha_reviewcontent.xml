@@ -89,7 +89,7 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:id="@+id/review_image"
             android:layout_height="200dp"
             android:src="@drawable/test01">
