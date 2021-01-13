@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.RequestManager;
 import com.example.tify.Hyeona.Adapter.stampOrder_adapter;
 import com.example.tify.Hyeona.Bean.Bean_reward_stamphistory;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
@@ -45,6 +46,8 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
     double longitude2;
 
 
+
+
     //-----------------Click Event---------------------
     //-----------------Click Event---------------------
     //인터페이스 선언
@@ -61,7 +64,10 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
     //-----------------Click Event---------------------
 
 
-    public MainCafeListAdapter(Context mContext, int layout, ArrayList<Bean_MainCafeList_cjs> bean_mainCafeList_cjs,String myLocation,int arrayCount){
+    public MainCafeListAdapter() {
+    }
+
+    public MainCafeListAdapter(Context mContext, int layout, ArrayList<Bean_MainCafeList_cjs> bean_mainCafeList_cjs, String myLocation, int arrayCount){
         this.context = mContext;
         this.arrayList=bean_mainCafeList_cjs;
         this.myLocation=myLocation;
@@ -81,10 +87,20 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
         return vh;
     }
 
+    public void clearRequestManager(RequestManager requestManager){
+        //requestManager.clear();
+    }
+
+
+    @Override
+    public void onViewRecycled(@NonNull MyViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.cafeTitle.clearComposingText();
+
+    }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
 
 
             latitude2=findGeoPoint(context,arrayList.get(position).getsAddress()).getLatitude();
@@ -105,11 +121,12 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
 
             Log.v("위치","거리 :" +distance1);
 
-                if(distance1<1000.0) {
+
+                if (distance1 < 1000.0) {
                     holder.cafeTitle.setText(arrayList.get(position).getsName());
                     holder.cafeLike.setText(arrayList.get(position).getLikeCount());
                     holder.cafeReviewCount.setText(arrayList.get(position).getReviewCount());
-                    holder.distance.setText(strdistance.substring(0,strdistance.indexOf("."))+" m");
+                    holder.distance.setText(strdistance.substring(0, strdistance.indexOf(".")) + " m");
                     Log.v("위치", "" + arrayList.get(position).getsAddress());
                 }
 
@@ -191,6 +208,9 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
         return loc;
     }
 
+
+
+
     // 거리계산
     public double getDistance(LatLng LatLng1, LatLng LatLng2) {
         double distance = 0;
@@ -205,6 +225,9 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
         return Math.round(distance);
 
     }
+
+
+
 
     // 위도,경도 -> 주소
     public String getCurrentAddress(LatLng latlng) {

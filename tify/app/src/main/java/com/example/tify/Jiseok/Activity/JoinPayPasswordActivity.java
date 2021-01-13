@@ -187,6 +187,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                     switch (payCheck){
                         // 첫번째 비밀번호 입력
                         case 0:
+                            rearrangement();
                             payPassword1=result.substring(1,7);
                             result="0";
                             payCheck=1;
@@ -228,6 +229,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
                             }else{
                                 Toast.makeText(JoinPayPasswordActivity.this,"no",Toast.LENGTH_SHORT).show();
+                                rearrangement();
                                 count++;
                                 result="0";
                                 resultToStar();
@@ -247,6 +249,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                                                         tvComment.setVisibility(View.INVISIBLE);
                                                         tvCount.setVisibility(View.INVISIBLE);
                                                         tvTitle.setText("결제 비밀번호를\n입력해주세요");
+                                                        rearrangement();
                                                         payCheck=0;
                                                         count=0;
                                                         result="0";
