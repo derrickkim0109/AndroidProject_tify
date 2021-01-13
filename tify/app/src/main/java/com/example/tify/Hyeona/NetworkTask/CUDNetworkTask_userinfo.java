@@ -27,7 +27,7 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
     String where = null;
     Bean_review_userinfo bean_review_userinfo = null;
 
-    public CUDNetworkTask_userinfo(review_adapter context, String mAddr, String where) {
+    public CUDNetworkTask_userinfo(String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
         this.where = where;
@@ -56,6 +56,7 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
         BufferedReader bufferedReader = null;
 
         String result = null;
+        int result_coffee = 0;
 
         try {
             URL url = new URL(mAddr);
@@ -75,7 +76,10 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
 
                 if(where.equals("select")){
                     parserSelect(stringBuffer.toString());
-                }else{
+                }else if(where.equals("cha_main_coffee_count")){
+                    result_coffee = parserAction_coffeCount(stringBuffer.toString());
+                }
+                else{
                     result = parserAction(stringBuffer.toString());
                 }
 
@@ -95,7 +99,10 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
 
         if(where.equals("select")){
             return bean_review_userinfo;
-        }else{
+        }else if(where.equals("cha_main_coffee_count")){
+            return result_coffee;
+        }
+        else{
             return result;
         }
     }
@@ -165,5 +172,26 @@ public class CUDNetworkTask_userinfo extends AsyncTask<Integer, String, Object> 
             e.printStackTrace();
         }
     }
+
+
+    private int parserAction_coffeCount(String s){
+        int user_rwStamp = 0;
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("coffee_count"));
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                user_rwStamp = jsonObject1.getInt("coffee");
+                Log.v("네트워크","ㅇㅇ"+user_rwStamp);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }return user_rwStamp;
+    }
+
+
+
+
 
 } // ----------

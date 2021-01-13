@@ -45,7 +45,7 @@ public class main_search extends AppCompatActivity {
     private EditText main_SearchText;
     LinearLayout ll_hide;
     InputMethodManager inputMethodManager ;
-    String userSeq;
+    int userSeq;
     private ArrayList<Bean_main_search> searchs = null;
     String userNickName;
     String myLocation;
@@ -77,7 +77,7 @@ public class main_search extends AppCompatActivity {
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
 
-        userSeq = auto.getString("userSeq", null);
+        //userSeq = auto.getInt("userSeq", 0);
         userNickName = auto.getString("userNickName", null);
         myLocation = auto.getString("myLocation", null);
 

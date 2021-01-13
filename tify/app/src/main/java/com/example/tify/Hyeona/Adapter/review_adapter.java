@@ -122,7 +122,7 @@ public class review_adapter extends RecyclerView.Adapter<review_adapter.MyViewHo
             String urlAddr = "http://" + MacIP + ":8080/tify/user_info.jsp?";
             //여기 변경 포인트
             String urlAddress = urlAddr + "uNo=" + s;
-            CUDNetworkTask_userinfo mCUDNetworkTask_userinfo = new CUDNetworkTask_userinfo(review_adapter.this, urlAddress,"select");
+            CUDNetworkTask_userinfo mCUDNetworkTask_userinfo = new CUDNetworkTask_userinfo(urlAddress,"select");
             Object obj = mCUDNetworkTask_userinfo.execute().get();
             bean_review_userinfo = (Bean_review_userinfo) obj;
 
