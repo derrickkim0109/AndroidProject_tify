@@ -38,7 +38,7 @@
                 android:id="@+id/join_pay_tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="원하시는 위치를\n설정하세요요"
+                android:text="원하시는 위치를\n설정하세요"
                android:textSize="30dp"
                 android:textStyle="bold"
                 android:textColor="@color/TextColor"

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,6 +51,10 @@ public class PointActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         //액션바 삭제
+
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        user_uNo = auto.getInt("userSeq",0);
+        user_uName= auto.getString("userNickName",null);
 
     }
     @Override

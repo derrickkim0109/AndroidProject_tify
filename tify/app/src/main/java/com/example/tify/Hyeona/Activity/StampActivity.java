@@ -1,7 +1,9 @@
 package com.example.tify.Hyeona.Activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 public class StampActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView; // 바텀네비게이션 뷰
     Menu menu;
+
     int user_uNo = 1;
     String user_uName = "지돌지돌";
     // 인텐트로 받아와야함
@@ -57,6 +60,11 @@ public class StampActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cha_activity_stamp);
+
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        user_uNo = auto.getInt("userSeq",0);
+        user_uName= auto.getString("userNickName",null);
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();

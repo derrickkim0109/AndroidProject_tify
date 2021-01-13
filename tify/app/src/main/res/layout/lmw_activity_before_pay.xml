@@ -31,8 +31,8 @@
                 android:layout_height="60dp"
                 android:text="총 주문금액"
                 android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textColor="@color/TextColor"
+                android:textSize="18dp"
                 />
 
             <LinearLayout
@@ -49,7 +49,7 @@
                     android:layout_height="60dp"
                     android:text="10,000원"
                     android:gravity="center"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     />
 
             </LinearLayout>
@@ -68,8 +68,8 @@
                 android:layout_height="wrap_content"
                 android:text="포인트 사용"
                 android:gravity="center"
-                android:textSize="20dp"
-                android:textColor="@color/black"
+                android:textColor="@color/TextColor"
+                android:textSize="18dp"
                 />
 
             <LinearLayout
@@ -83,8 +83,9 @@
                     android:id="@+id/beforePay_TV_Point"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="0p"
-                    android:textSize="20dp"
+                    android:hint="0"
+                    android:textSize="18dp"
+                    android:drawableRight="@drawable/point_tag"
                     android:gravity="center"
                     android:inputType="number"
                     />
@@ -121,7 +122,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="적용"
-                        android:backgroundTint="#0084ff"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/mainColor"
                         android:enabled="false"
                         />
                 </LinearLayout>
@@ -142,8 +144,8 @@
                 android:layout_height="60dp"
                 android:text="할인합계"
                 android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textColor="@color/TextColor"
+                android:textSize="18dp"
                 />
 
             <LinearLayout
@@ -160,7 +162,7 @@
                     android:layout_height="60dp"
                     android:text="0원"
                     android:gravity="center"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     />
 
             </LinearLayout>
@@ -209,7 +211,8 @@
             android:text="10,000원"
             android:textSize="20dp"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textColor="@color/TextColor"
             />
     </LinearLayout>
 

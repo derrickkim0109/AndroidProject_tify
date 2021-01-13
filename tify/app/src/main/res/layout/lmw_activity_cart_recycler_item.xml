@@ -55,8 +55,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="아메리카노(COLD)"
-                    android:textSize="20dp"
-                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textColor="@color/TextColor"
                     />
 
 
@@ -79,7 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:textColor="@color/black"
+                        android:textColor="@color/TextColor"
                         android:text="+사이즈업" />
                     <TextView
                         android:id="@+id/activity_Cart_CV_AddOrder2"
@@ -97,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:textColor="@color/black"
+                        android:textColor="@color/SubColor"
                         android:text="얼음 조금만 넣어주세요" />
 
                     <LinearLayout
@@ -120,8 +120,8 @@
                             android:layout_height="60dp"
                             android:text="1"
                             android:gravity="center"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"
+                            android:textColor="@color/TextColor"
+                            android:textSize="18dp"
                             />
 <!--                        <Button-->
 <!--                            android:id="@+id/activity_Cart_CV_PlusBtn"-->
@@ -137,9 +137,9 @@
                             android:layout_height="60dp"
                             android:text="4000원"
                             android:gravity="center"
-                            android:textColor="@color/black"
+                            android:textColor="@color/TextColor"
                             android:paddingLeft="30dp"
-                            android:textSize="20dp"
+                            android:textSize="18dp"
                             />
 
                     </LinearLayout>

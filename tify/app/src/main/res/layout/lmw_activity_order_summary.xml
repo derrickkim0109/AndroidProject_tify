@@ -41,14 +41,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="음료 이름"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:layout_marginTop="20dp"
             android:gravity="center"/>
         <TextView
             android:id="@+id/orderSummary_TV_mPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:text="음료 가격"
@@ -80,8 +80,8 @@
                 android:layout_height="60dp"
                 android:text="수량"
                 android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textColor="@color/TextColor"
+                android:textSize="18dp"
                 />
 
             <LinearLayout
@@ -106,9 +106,8 @@
                 android:layout_height="60dp"
                 android:text="1"
                 android:gravity="center"
-
-                android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textColor="@color/TextColor"
+                android:textSize="18dp"
                 />
             <Button
                 android:id="@+id/orderSummary_Btn_Plus"
@@ -134,8 +133,8 @@
                 android:layout_height="wrap_content"
                 android:text="사이즈업"
                 android:gravity="center"
-                android:textSize="20dp"
-                android:textColor="@color/black"
+                android:textColor="@color/TextColor"
+                android:textSize="18dp"
                 />
 
             <LinearLayout
@@ -151,7 +150,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="+1000원"
-                android:textColor="@color/black"
+                android:textColor="@color/SubColor"
                 android:backgroundTint="@color/white"
 
                 />
@@ -170,8 +169,8 @@
                 android:layout_height="wrap_content"
                 android:text="샷추가"
                 android:gravity="center"
-                android:textSize="20dp"
-                android:textColor="@color/black"
+                android:textColor="@color/TextColor"
+                android:textSize="18dp"
                 />
             <LinearLayout
                 android:layout_width="0px"
@@ -185,7 +184,7 @@
                     android:id="@+id/orderSummary_Btn_Shot"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/SubColor"
                     android:text="+500원"
                     android:backgroundTint="@color/white"
 
@@ -209,11 +208,13 @@
         android:id="@+id/orderSummary_ET_Request"
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:textSize="13dp"
+        android:textSize="15dp"
         android:lines="8"
         android:minLines="6"
         android:maxLines="10"
         android:paddingBottom="100dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:background="@drawable/ordersummary_edittext_border"
         android:hint="요청사항을 입력해주세요."
         />

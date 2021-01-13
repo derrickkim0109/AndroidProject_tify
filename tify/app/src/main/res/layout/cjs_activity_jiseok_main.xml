@@ -156,6 +156,7 @@
                 android:textStyle="bold"
                 android:text="지돌지돌님 근처에 있는 카페"
                 android:textSize="25dp"
+                android:paddingBottom="20dp"
                 android:textColor="@color/TextColor">
             </TextView>
 

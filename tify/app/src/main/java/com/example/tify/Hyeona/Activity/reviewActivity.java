@@ -1,4 +1,5 @@
 package com.example.tify.Hyeona.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -43,6 +44,9 @@ public class reviewActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         //reviews = new ArrayList<Bean_review>();
+
+        Intent intent = getIntent();
+        storekeeper_skSeqNo = intent.getIntExtra("sSeqNo",0);
     }
 
     @Override
