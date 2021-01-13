@@ -20,7 +20,7 @@
             android:smoothScrollbar="true"
             android:stretchMode="columnWidth"
             android:verticalSpacing="3dp"
-            android:id="@+id/card_cardListView"
+            android:id="@+id/orderPay_cardListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
