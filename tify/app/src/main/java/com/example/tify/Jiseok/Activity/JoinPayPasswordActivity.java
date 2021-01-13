@@ -213,7 +213,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                                 SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
                                 SharedPreferences.Editor autoLogin = auto.edit();
                                 autoLogin.putString("userEmail", userEmail);
-                                autoLogin.putString("userSeq", userseq);
+                                autoLogin.putInt("userSeq", Integer.parseInt(userseq));
                                 autoLogin.putString("userNickName", userNickName);
                                 autoLogin.commit();
 

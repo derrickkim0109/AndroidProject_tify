@@ -30,7 +30,7 @@ public class EmptyOrderListActivity extends AppCompatActivity {
         orderNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EmptyOrderListActivity.this, StoreInfoActivity.class);
+                Intent intent  = new Intent(EmptyOrderListActivity.this, JiseokMainActivity.class);
                 startActivity(intent);
             }
         });

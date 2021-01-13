@@ -99,6 +99,9 @@ import java.util.ArrayList;
                     intent.putExtra("sPackaging",sPackaging);
                     intent.putExtra("sComment",sComment);
                     intent.putExtra("skSeqNo",storekeeper_skSeqNo);
+                    intent.putExtra("skStatus", skStatus);
+
+
                     mContext.startActivity(intent);
                 }
             });

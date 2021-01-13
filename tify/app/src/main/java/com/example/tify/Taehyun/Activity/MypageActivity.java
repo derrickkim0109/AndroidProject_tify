@@ -87,7 +87,7 @@ public class MypageActivity extends AppCompatActivity {
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
 
-        uNo = Integer.parseInt(auto.getString("userSeq", null));
+        uNo = auto.getInt("userSeq", 0);
 
 
         data.add(new Bean_MypageList("프로필 변경", R.drawable.ic_action_go));

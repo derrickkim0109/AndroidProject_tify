@@ -98,7 +98,7 @@ public class EmailLoginActivity extends AppCompatActivity {
                             SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
                             SharedPreferences.Editor autoLogin = auto.edit();
                             autoLogin.putString("userEmail",bean_login_cjs.getuEmail() );
-                            autoLogin.putString("userSeq", Integer.toString(bean_login_cjs.getuNo()));
+                            autoLogin.putInt("userSeq", bean_login_cjs.getuNo());
                             autoLogin.putString("userNickName", bean_login_cjs.getuNickName());
                             autoLogin.commit();
                             startActivity(new Intent(EmailLoginActivity.this,JiseokMainActivity.class));

@@ -132,6 +132,7 @@ public class StoreInfoActivity extends AppCompatActivity {
         }else{ // 있다
             Log.v(TAG, "list.get(0).getsImage() : " + list.get(0).getsImage());
             mImage = list.get(0).getsImage();
+
             sendImageRequest(mImage);
 
             tv_storeName.setText(list.get(0).getsName());
@@ -289,43 +290,44 @@ public class StoreInfoActivity extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.activity_StoreInfo_Btn_Insert:
 
-                    if(btn_Insert.getText().toString().equals("입력")){ // 처음 입력할 경우
-                        sName = et_storeName.getText().toString();
-                        sAddress = et_storeAddress.getText().toString();
-                        sTelNo = et_storeTel.getText().toString();
-                        sComment = et_storeComment.getText().toString();
-                        sRunningTime = et_storeTime.getText().toString();
+                    sName = et_storeName.getText().toString();
+                    sAddress = et_storeAddress.getText().toString();
+                    sTelNo = et_storeTel.getText().toString();
+                    sComment = et_storeComment.getText().toString();
+                    sRunningTime = et_storeTime.getText().toString();
 
-                        urlAddr = "http://" + macIP + ":8080/tify/lmw_store_insert.jsp?storekeeper_skSeqNo=" + skSeqNo + "&sName=" + sName + "&sTelNo=" + sTelNo + "&sRunningTime=" + sRunningTime + "&sAddress=" + sAddress + "&sImage=" + imgName + "&sPackaging=" + rgCheck + "&sComment=" + sComment;
-                        where = "insert";
-                        strResult = connectStore();
-                        connectImage();
+                    if(sName == null || sAddress == null || sTelNo == null || sComment == null || sRunningTime == null){
+                        Toast.makeText(StoreInfoActivity.this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        if(btn_Insert.getText().toString().equals("입력")){ // 처음 입력할 경우
 
-                        Toast.makeText(StoreInfoActivity.this, "입력 완료!", Toast.LENGTH_SHORT).show();
+                            urlAddr = "http://" + macIP + ":8080/tify/lmw_store_insert.jsp?storekeeper_skSeqNo=" + skSeqNo + "&sName=" + sName + "&sTelNo=" + sTelNo + "&sRunningTime=" + sRunningTime + "&sAddress=" + sAddress + "&sImage=" + imgName + "&sPackaging=" + rgCheck + "&sComment=" + sComment;
+                            where = "insert";
+                            strResult = connectStore();
+                            connectImage();
 
-                        intent.putExtra("macIP", macIP);
-                        intent.putExtra("skSeqNo", skSeqNo);
-                        startActivity(intent);
+                            Toast.makeText(StoreInfoActivity.this, "입력 완료!", Toast.LENGTH_SHORT).show();
 
-                    }else { // 수정일 경우
-                        sName = et_storeName.getText().toString();
-                        sAddress = et_storeAddress.getText().toString();
-                        sTelNo = et_storeTel.getText().toString();
-                        sComment = et_storeComment.getText().toString();
-                        sRunningTime = et_storeTime.getText().toString();
+                            intent.putExtra("macIP", macIP);
+                            intent.putExtra("skSeqNo", skSeqNo);
+                            startActivity(intent);
 
-                        urlAddr = "http://" + macIP + ":8080/tify/lmw_store_update.jsp?storekeeper_skSeqNo=" + skSeqNo + "&sName=" + sName + "&sTelNo=" + sTelNo + "&sRunningTime=" + sRunningTime + "&sAddress=" + sAddress + "&sImage=" + imgName + "&sPackaging=" + rgCheck + "&sComment=" + sComment;
-                        where = "update";
-                        strResult = connectStore();
-                        connectImage();
+                        }else { // 수정일 경우
 
-                        Toast.makeText(StoreInfoActivity.this, "수정 완료!", Toast.LENGTH_SHORT).show();
+                            urlAddr = "http://" + macIP + ":8080/tify/lmw_store_update.jsp?storekeeper_skSeqNo=" + skSeqNo + "&sName=" + sName + "&sTelNo=" + sTelNo + "&sRunningTime=" + sRunningTime + "&sAddress=" + sAddress + "&sImage=" + imgName + "&sPackaging=" + rgCheck + "&sComment=" + sComment;
+                            where = "update";
+                            strResult = connectStore();
+                            connectImage();
 
-                        intent.putExtra("macIP", macIP);
-                        intent.putExtra("skSeqNo", skSeqNo);
-                        startActivity(intent);
+                            Toast.makeText(StoreInfoActivity.this, "수정 완료!", Toast.LENGTH_SHORT).show();
 
+                            intent.putExtra("macIP", macIP);
+                            intent.putExtra("skSeqNo", skSeqNo);
+                            startActivity(intent);
+
+                        }
                     }
+
                     break;
 
                 case R.id.activity_StoreInfo_IV_StorePhoto: // 사진 선택했을 경우 수정
@@ -471,10 +473,17 @@ public class StoreInfoActivity extends AppCompatActivity {
         Log.v(TAG, "Image Path :" + imgPath);
 
         //이미지의 이름 값
-        imgName = imgPath.substring(imgPath.lastIndexOf("/") + 1);
+        Log.v(TAG, "imaName : " + imgName);
+        if(imgName == null){
+            imgName = "null_image.jpg";
+        }else{
+            imgName = imgPath.substring(imgPath.lastIndexOf("/") + 1);
 
-        // 확장자 명 저장
-        f_ext = imgPath.substring(imgPath.length()-3, imgPath.length());
+            // 확장자 명 저장
+            f_ext = imgPath.substring(imgPath.length()-3, imgPath.length());
+        }
+
+
 
         return imgPath;
     }//end of getImagePathToUri()

@@ -72,7 +72,7 @@ public class JiseokMainActivity extends AppCompatActivity {
     Bean_MainCafeList_cjs bean_mainCafeList_cjs = new Bean_MainCafeList_cjs();
     ArrayList<Bean_MainCafeList_cjs> arrayList = null;
     String userEmail;
-    String userSeq;
+    int userSeq;
     String userNickName;
     String myLocation;
 
@@ -85,10 +85,9 @@ public class JiseokMainActivity extends AppCompatActivity {
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
         userEmail = auto.getString("userEmail", null);
-        userSeq = auto.getString("userSeq", null);
+        userSeq = auto.getInt("userSeq", 0);
         userNickName = auto.getString("userNickName", null);
         myLocation = auto.getString("myLocation", null);
-
 
         Log.v("내위치",""+myLocation);
         Log.v("내위치",""+userEmail);
@@ -110,8 +109,6 @@ public class JiseokMainActivity extends AppCompatActivity {
             Log.v("내위치","구간 2-----");
         }
         Log.v("내위치","구간 3-----");
-
-
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -138,6 +135,8 @@ public class JiseokMainActivity extends AppCompatActivity {
                     }
                     case R.id.action2: {
                         //주문내역
+
+
                         Intent intent = new Intent(JiseokMainActivity.this, OrderListActivity.class);
                         startActivity(intent);
                         finish();
@@ -173,7 +172,7 @@ public class JiseokMainActivity extends AppCompatActivity {
                         //마이페이지
                         Intent intent = new Intent(JiseokMainActivity.this, MypageActivity.class);
                         startActivity(intent);
-                        finish();
+
                         return true;
                     }
                     default:
@@ -224,7 +223,9 @@ public class JiseokMainActivity extends AppCompatActivity {
             intent.putExtra("sTelNo",arrayList.get(position).getsTelNo());
             intent.putExtra("sPackaging",arrayList.get(position).getsPackaging());
             intent.putExtra("sComment",arrayList.get(position).getsComment());
-            intent.putExtra("skSeqNo",arrayList.get(position).getsName());
+            intent.putExtra("skSeqNo",arrayList.get(position).getStorekeeper_skSeqNo());
+            intent.putExtra("skStatus",arrayList.get(position).getSkStatus());
+
             startActivity(intent);
 
         }

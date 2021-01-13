@@ -223,6 +223,10 @@ public class MenuInsertActivity extends AppCompatActivity {
                     mPrice = et_mPrice.getText().toString();
                     mComment = et_mCommnet.getText().toString();
 
+                    if(imgName == null){
+                        imgName = "null_image.jpg";
+                    }
+
                     if(mName.length() == 0 || mPrice.length() == 0 || mComment.length() == 0){
                         Toast.makeText(MenuInsertActivity.this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
                     }else{

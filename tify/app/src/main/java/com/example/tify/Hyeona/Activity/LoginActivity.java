@@ -29,7 +29,7 @@ import com.kakao.util.exception.KakaoException;
 
 public class LoginActivity extends AppCompatActivity {
     String userEmail;
-    String userSeq;
+    int userSeq;
     TextView emailJoin;
     Button btnEmailLogin;
     private SessionCallback sessionCallback;
@@ -50,8 +50,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
         userEmail = auto.getString("userEmail",null);
-        userSeq = auto.getString("userSeq",null);
-        if(userEmail !=null && userSeq!=null){
+        userSeq = auto.getInt("userSeq",0);
+        if(userEmail !=null && userSeq!= 0){
             startActivity(new Intent(LoginActivity.this, JiseokMainActivity.class));
         }
         //자동로그인 끝

@@ -35,6 +35,8 @@ public class PointActivity extends AppCompatActivity {
     ShareVar shareVar =new ShareVar();
     String MacIP = shareVar.getMacIP();
 
+    TextView userName;
+
 
     private int user_uNo = 1;
     private String user_uName = "지돌지돌";
@@ -55,6 +57,9 @@ public class PointActivity extends AppCompatActivity {
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         user_uNo = auto.getInt("userSeq",0);
         user_uName= auto.getString("userNickName",null);
+
+        userName = findViewById(R.id.user_name);
+        userName.setText(user_uName + "님의");
 
     }
     @Override

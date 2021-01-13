@@ -108,7 +108,6 @@ public class BeforePayActivity2 extends AppCompatActivity {
         oNo = list.get(0).getMax() + 1;
         Log.v(TAG, "마지막 oNo : " + oNo);
 
-
         // layout 설정
         cardBtn2 = findViewById(R.id.beforePay_Btn_Card2);
         tv_totalOrderPrice2 = findViewById(R.id.beforePay_TV_totalOrderPrice2);
@@ -182,18 +181,6 @@ public class BeforePayActivity2 extends AppCompatActivity {
 
         carts = new ArrayList<Cart>();
         carts = CartConnectGetData(); // db를 통해 받은 데이터를 담는다.
-
-
-//        for(int i = 0; i < carts.size(); i++){
-//            Log.v(TAG, carts.get(i).getcLNo() + "");
-//            Log.v(TAG, carts.get(i).getMenu_mName() + "");
-//            Log.v(TAG, carts.get(i).getcLRequest() + "");
-//            Log.v(TAG, carts.get(i).getcLAddShot() + "");
-//            Log.v(TAG, carts.get(i).getcLPrice() + "");
-//            Log.v(TAG, carts.get(i).getcLQuantity() + "");
-//            Log.v(TAG, carts.get(i).getcLSizeUp() + "");
-//        }
-
     }
 
     @Override
@@ -259,7 +246,6 @@ public class BeforePayActivity2 extends AppCompatActivity {
                     break;
 
                 case R.id.beforePay_Btn_Card2:
-
 
                     // 결제 부분 완료되면 결제 부분에서 JSP 실행하기 (카드번호랑 카드이름 필요)
                     // 1. 결제 완료되면 OrderListActivity로!

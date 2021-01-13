@@ -70,38 +70,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:gravity="center"
+                android:layout_weight="1"
                 >
 
                 <ImageView
                     android:id="@+id/activity_OrderList_CV_right1"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:src="@drawable/ic_action_progress_unchecked"/>
-                <ImageView
-                    android:id="@+id/activity_OrderList_CV_right2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_action_progress_unchecked"
-                    />
-                <ImageView
-                    android:id="@+id/activity_OrderList_CV_right3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_action_progress_unchecked"
-                    />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                >
                 <TextView
                     android:id="@+id/activity_OrderList_CV_TV_OrderRequest"
                     android:layout_width="wrap_content"
@@ -109,16 +92,45 @@
                     android:text="주문요청"
                     android:gravity="center"
                     android:layout_weight="1"
-                   />
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1"
+                >
 
+                <ImageView
+                    android:id="@+id/activity_OrderList_CV_right2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_progress_unchecked"/>
                 <TextView
                     android:id="@+id/activity_OrderList_CV_TV_OrderConfirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:text="주문접수"
                     android:gravity="center"
-                    android:text="주문접수"/>
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1"
+                >
 
+                <ImageView
+                    android:id="@+id/activity_OrderList_CV_right3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_progress_unchecked"/>
                 <TextView
                     android:id="@+id/activity_OrderList_CV_TV_OrderComplete"
                     android:layout_width="wrap_content"
@@ -127,8 +139,10 @@
                     android:gravity="center"
                     android:layout_weight="1"
                     />
+            </LinearLayout>
 
             </LinearLayout>
+
             <TextView
                 android:layout_width="96dp"
                 android:layout_height="wrap_content"

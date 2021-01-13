@@ -100,15 +100,9 @@ public class OrderSummaryActivity extends AppCompatActivity {
         user_uSeqNo = intent.getIntExtra("user_uSeqNo", 0);
         store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
 
-
-
-//        sName = intent.getStringExtra("sName");
-//        sTel = intent.getStringExtra("sTel");
-
         Log.v(TAG, "mSizeUp : " + mSizeUp);
         Log.v(TAG, "mShot : " + mShot);
         Log.v(TAG, "mType : " + mType);
-
 
         // 기본 세팅------------------------
         tv_mPhoto = findViewById(R.id.orderSummary_CIV_mPhoto);
@@ -127,7 +121,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
         cart = findViewById(R.id.orderSummary_Btn_Cart);
         tv_Content = findViewById(R.id.orderSummary_TV_Content);
 
-//        tv_mPhoto.setImageResource(); // 태현형한테 사진 받기
         tv_mName.setText(mName);
         tv_Content.setText(mComment);
         sendImageRequest(mImage);

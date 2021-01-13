@@ -55,6 +55,9 @@ public class StoreInfoActivity extends AppCompatActivity {
     int sPackaging;
     String sComment;
     int skSeqNo;
+    int skStatus;
+    String userName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,34 +65,32 @@ public class StoreInfoActivity extends AppCompatActivity {
         setContentView(R.layout.lmw_activity_storeinfo);
 
         // 기본 설정 값 (지석씨에게 받는다)
-//        Intent intent = getIntent();
-//        macIP = intent.getStringExtra("macIP");
-//        userName = intent.getIntExtra("userName", 0);
-//        store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
-//        user_uSeqNo = intent.getIntExtra("user_uSeqNo", 0);
-//        sAddress = intent.getStringExtra("sAddress");
-//        sName = intent.getStringExtra("sName");
+        Intent intent = getIntent();
+        ShareVar shareVar = new ShareVar();
+        macIP = shareVar.getMacIP();
 
+        store_sSeqNo = Integer.parseInt(intent.getStringExtra("skSeqNo"));
+        sImage = intent.getStringExtra("sImage");
+        sAddress = intent.getStringExtra("sAddress");
+        sName = intent.getStringExtra("sName");
+        sTime = intent.getStringExtra("sTime");
+        sTelNo = intent.getStringExtra("sTelNo");
+        sPackaging = Integer.parseInt(intent.getStringExtra("sPackaging"));
+        sComment = intent.getStringExtra("sComment");
+        skStatus = Integer.parseInt(intent.getStringExtra("skStatus"));
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
 
-        ShareVar shareVar = new ShareVar();
-        macIP = shareVar.getMacIP();
-
-//        user_uSeqNo = auto.getString("userSeq",null); // 지석씨랑 화면 연결되면 쓰기
-//        userNickName = auto.getString("userNickName",null); // 지석씨랑 화면 연결되면 쓰기
-
-        user_uSeqNo = 2;
-        userNickName = "이민우";
-        store_sSeqNo = 1;
-        sName = "스타벅스 강남점";
-        sAddress = "서울 강남";
+        user_uSeqNo = auto.getInt("userSeq",0); // 지석씨랑 화면 연결되면 쓰기
+        userNickName = auto.getString("userNickName",null); // 지석씨랑 화면 연결되면 쓰기
 
         // 가게사진, 가게이름, 가게주소
         iv_sPhoto = findViewById(R.id.activity_StoreInfo_IV_sPhoto);
         tv_sName = findViewById(R.id.activity_StoreInfo_TV_sName);
         tv_sAddress = findViewById(R.id.activity_StoreInfo_TV_sAddress);
+
+        sendImageRequest(sImage);
 
         //지석씨에게 인텐트로 받는다.
 //        iv_sPhoto.setImageResource();
@@ -245,5 +246,13 @@ public class StoreInfoActivity extends AppCompatActivity {
         Toolbar parent = (Toolbar) actionbar.getParent();
         parent.setContentInsetsAbsolute(0, 0);
         return true;
+    }
+
+    // 이미지
+    private void sendImageRequest(String s) {
+
+        String url = "http://" + macIP + ":8080/tify/" + s;
+        Log.v(TAG, "ImageUrl : " + url);
+        Glide.with(this).load(url).into(iv_sPhoto);
     }
 }
