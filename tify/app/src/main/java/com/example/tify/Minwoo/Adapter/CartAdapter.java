@@ -219,4 +219,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         return mDataset.size();
     }
 
+    @Override
+    public void onViewRecycled(@NonNull MyViewHolder holder) {
+        super.onViewRecycled(holder);
+
+        holder.mName.clearComposingText();
+        holder.addOrder1.clearComposingText();
+        holder.addOrder2.clearComposingText();
+        holder.request.clearComposingText();
+        holder.cLQuantity.clearComposingText();
+        holder.cLPrice.clearComposingText();
+        holder.cLPhoto.clearColorFilter();
+
+
+
+    }
 }

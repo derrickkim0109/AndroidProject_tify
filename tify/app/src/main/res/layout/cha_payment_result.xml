@@ -68,6 +68,7 @@
                         android:textSize="20dp"
                         android:gravity="right"
                         android:textStyle="bold"
+                        android:id="@+id/payment_money"
                         android:textColor="@color/mainColor"
                         android:layout_height="wrap_content">
                     </TextView>
@@ -93,6 +94,7 @@
                         android:text="2021-01-13 14:37:22"
                         android:layout_weight="1"
                         android:textSize="15dp"
+                        android:id="@+id/payment_day"
                         android:gravity="right"
                         android:textColor="@color/SubColor"
                         android:layout_height="wrap_content">
@@ -120,6 +122,7 @@
                         android:layout_weight="1"
                         android:textSize="15dp"
                         android:gravity="right"
+                        android:id="@+id/payment_card"
                         android:textColor="@color/TextColor"
                         android:layout_height="wrap_content">
                     </TextView>
@@ -144,6 +147,7 @@
                         android:layout_width="wrap_content"
                         android:text="1234 **** **** 567*"
                         android:layout_weight="1"
+                        android:id="@+id/payment_card_number"
                         android:textSize="15dp"
                         android:gravity="right"
                         android:textColor="@color/TextColor"
@@ -174,6 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="확인"
+                android:id="@+id/payment_result_btn"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_shape"
                 app:backgroundTint="@color/mainColor">

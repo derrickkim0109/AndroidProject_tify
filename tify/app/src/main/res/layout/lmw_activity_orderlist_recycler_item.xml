@@ -145,8 +145,7 @@
 
             <TextView
                 android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="30dp" />
 
             <Button
                 android:id="@+id/activity_OrderList_CV_Btn_InsertReview"

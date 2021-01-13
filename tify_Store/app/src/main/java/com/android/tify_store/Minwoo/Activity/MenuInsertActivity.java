@@ -236,7 +236,7 @@ public class MenuInsertActivity extends AppCompatActivity {
                         CResult = connectMenuInsert();
 
                         if(CResult.equals("1")){
-                            Toast.makeText(MenuInsertActivity.this, "메뉴 등록 성공!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MenuInsertActivity.this, "메뉴 등록 성공!", Toast.LENGTH_SHORT).show();
 
                             connectImage();
 
@@ -245,7 +245,7 @@ public class MenuInsertActivity extends AppCompatActivity {
                             intent.putExtra("skSeqNo", skSeqNo);
                             startActivity(intent);
                         }else{
-                            Toast.makeText(MenuInsertActivity.this, "메뉴 등록 실패! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MenuInsertActivity.this, "메뉴 등록 실패! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show();
 
                         }
                     }

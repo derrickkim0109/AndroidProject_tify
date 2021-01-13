@@ -109,7 +109,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
        holder.oSeqno.setText("주문번호 : " + order_oNo);
        holder.oDate.setText(order_oInsertDate);
-//       holder.sName.setText("가게이름");
+       holder.sName.setText(mDataset.get(position).getStore_sName());
         holder.mName.setText(mDataset.get(position).getMenu_mName() + " X " + mDataset.get(position).getOlQuantity());
 
         //데이터를 받은걸 올리기
@@ -142,5 +142,20 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     public int getItemCount() {
         Log.v(TAG, "getItemCount");
         return mDataset.size();
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull MyViewHolder holder) {
+        super.onViewRecycled(holder);
+
+        holder.mName.clearComposingText();
+        holder.addOrder1.clearComposingText();
+        holder.addOrder2.clearComposingText();
+        holder.request.clearComposingText();
+        holder.sName.clearComposingText();
+        holder.oDate.clearComposingText();
+        holder.oSeqno.clearComposingText();
+        holder.subTotalPrice.clearComposingText();
+
     }
 }

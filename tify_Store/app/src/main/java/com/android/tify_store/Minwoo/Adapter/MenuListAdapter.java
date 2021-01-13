@@ -143,5 +143,12 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MyView
         return mDataset.size();
     }
 
+    @Override
+    public void onViewRecycled(@NonNull MyViewHolder holder) {
+        super.onViewRecycled(holder);
 
+        holder.mName.clearComposingText();
+        holder.mPrice.clearComposingText();
+        holder.mPhoto.clearColorFilter();
+    }
 }
