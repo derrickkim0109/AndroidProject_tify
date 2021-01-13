@@ -173,7 +173,9 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
         // 띄울 Data
         nickname.setText(intent.getStringExtra("uNickName"));
         telNo.setText(intent.getStringExtra("uTelNo"));
+        uTelNo = intent.getStringExtra("uTelNo");
         mImage = intent.getStringExtra("uImage");
+        Log.v("mImage",mImage);
 
         //보낼 data
         uNo = intent.getIntExtra("uNo",0);
@@ -390,16 +392,23 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 //결제
+
                 case R.id.profile_payPasswordCG:
                     intent = new Intent(Mypage_ProfileChageActivity.this, Mypage_PayPasswordActivity.class)
-                            .putExtra("uNo",uNo)
-                            .putExtra("uPayPassword", uPayPassword);
-                    startActivity(intent);
+                            .putExtra("uNo", uNo)
+                            .putExtra("uNickName", uNickName)
+                            .putExtra("uTelNo", uTelNo)
+                            .putExtra("uImage", uImage)
+                            .putExtra("uPayPassword", uPayPassword)
+                            .putExtra("MacIP", MacIP);
+
+                    startActivityForResult(intent,REQ_CODE_SELECT_IMAGE);
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
                     break;
 
                 case R.id.profile_withdraw:
+
                     Mypage_WithdrawActivity myPage_customDialog = new Mypage_WithdrawActivity(Mypage_ProfileChageActivity.this,uNo,MacIP);
                     myPage_customDialog.callFunction(userDeleteMessage);
 
@@ -420,6 +429,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        inheritance();
         if (requestCode == REQ_CODE_SELECT_IMAGE && resultCode == Activity.RESULT_OK) {
             try {
                 //이미지의 URI를 얻어 경로값으로 반환.
@@ -449,9 +459,30 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
             }
 
         }
+//        putExtra("uTelNo", uTelNo)
+//                .putExtra("uImage", uImage)
+//                .putExtra("MacIP", MacIP)
+//                .putExtra("uNo", userSeq)
+//                .putExtra("uNickName", userNickName);
+
+        if (requestCode==2){
+             data.getStringExtra("result");
+            nickname.setText(data.getStringExtra("userNickName"));
+            telNo.setText(data.getStringExtra("uTelNo"));
+            mImage = data.getStringExtra("uImage");
+            sendImageRequest(mImage);
+            Log.v("mImage2",mImage);
+
+//            //보낼 data
+//            uNo = intent.getIntExtra("uNo",0);
+//            uPayPassword = intent.getStringExtra("uPayPassword");
+
+
+        }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -502,6 +533,7 @@ public class Mypage_ProfileChageActivity extends AppCompatActivity {
         }
         return result;
     }
+
 
     private void connectImage(){
         imageurl = "http://" + MacIP + ":8080/tify/multipartRequest.jsp";
