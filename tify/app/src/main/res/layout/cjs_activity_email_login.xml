@@ -67,26 +67,36 @@
                 android:textColorHint="#fff"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                app:backgroundTint="#fff"></EditText>
+                app:backgroundTint="#fff"
 
+                ></EditText>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
+                app:hintEnabled="true"
+                app:boxStrokeWidth="0px"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingBottom="20dp"
+                app:backgroundTint="#fff"
+                >
             <EditText
                 android:id="@+id/email_join_et_userPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="20dp"
                 android:hint="비밀번호"
-                android:paddingLeft="20dp"
-                android:paddingBottom="20dp"
                 android:textColor="#fff"
                 android:textColorHint="#fff"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                app:backgroundTint="#fff"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:maxLength="6"
                 ></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/email_join_btn_login"

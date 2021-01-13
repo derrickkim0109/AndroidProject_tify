@@ -26,6 +26,7 @@ import com.android.tify_store.Minwoo.NetworkTask.LMW_OrderListNetworkTask;
 import com.android.tify_store.Minwoo.NetworkTask.LMW_OrderNetworkTask;
 import com.android.tify_store.R;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -77,6 +78,12 @@ public class OrderRequestFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),new LinearLayoutManager(getContext()).getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+        mAdapter.setOnItemClickListener(new OrderRequestAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+
+            }
+        });
         return v;
     }
 

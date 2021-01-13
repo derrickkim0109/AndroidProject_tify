@@ -224,8 +224,8 @@ public class JoinActivity extends AppCompatActivity {
                                 .show();
                         etTel.requestFocus();
                         break;
-
                     }
+
                     if(!Pattern.matches(patternTel,etTel.getText().toString())){
                         new AlertDialog.Builder(JoinActivity.this)
                                 .setTitle("전화번호를 확인해 주세요.")
@@ -233,7 +233,6 @@ public class JoinActivity extends AppCompatActivity {
                                 .show();
                         etTel.requestFocus();
                         break;
-
                     }
 
                     if(userTelCount()==1){

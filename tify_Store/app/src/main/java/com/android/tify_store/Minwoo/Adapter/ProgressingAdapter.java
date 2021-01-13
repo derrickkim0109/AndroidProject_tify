@@ -46,6 +46,8 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
 
     int switchNum = -1;
 
+    OnItemClickListener onItemClickListener = null;
+
     //인터페이스 선언
     public interface OnItemClickListener{
         void onItemClick(View v, int position);
@@ -166,6 +168,7 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
         String strTotal = moneyFormat.format(mDataset.get(position).getOlPrice());
 
         holder.subTotalPrice.setText(strTotal + "원");
+        holder.oSeqno.setTag(position);
 
         Log.v(TAG, "mDataset.get(position).getoStatus() : " + mDataset.get(position).getoStatus());
 
@@ -185,6 +188,8 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
         holder.makeDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Log.v(TAG, "mDataset.get(position).getOrder_oNo() : " + mDataset.get(position).getOrder_oNo());
 
                 holder.makeDone.setEnabled(false);
                 holder.makeDone.setBackgroundColor(Color.parseColor("#48000000"));

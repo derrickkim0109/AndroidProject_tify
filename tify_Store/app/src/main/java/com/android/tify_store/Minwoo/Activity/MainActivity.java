@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,9 +27,28 @@ import com.android.tify_store.Minwoo.NetworkTask.LMW_LoginNetworkTask;
 import com.android.tify_store.R;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+
 public class MainActivity extends AppCompatActivity {
 
     String TAG = "MainActivity";
+
+    // 통신
+    private Handler mHandler;
+    InetAddress serverAddr;
+    Socket socket;
+    PrintWriter sendWriter;
+    private String ip = "172.30.1.27";
+    private int port = 8888;
+    String strStatus = null;
+    String sendStatus = null;
 
     // DB Connect
     String macIP;
@@ -40,10 +60,50 @@ public class MainActivity extends AppCompatActivity {
 
     Fragment CompleteFragment, OrderRequestFragment, ProgressingFragment;
 
+    // 통신 ---------------------- 소켓 끊기
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        try {
+//            sendWriter.close();
+//            socket.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+    // ----------------------------------
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_main);
+
+        // 통신 --------------------------
+        //////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////
+        mHandler = new Handler();
+
+        new Thread() {
+            public void run() { // 받는 스레드
+                try {
+                    InetAddress serverAddr = InetAddress.getByName(ip);
+                    socket = new Socket(serverAddr, port);
+                    sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
+                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
+                    while(true){
+                        strStatus = input.readLine();
+                        Log.v(TAG, "Store 받은 값 : " + strStatus);
+
+                        if(strStatus!=null){ // 고객이 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
+                            mHandler.post(new showOrder(strStatus));
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } }}.start();
+
+        //////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////
 
         SharedPreferences sharedPreferences = getSharedPreferences("openStatus", MODE_PRIVATE);
         strResult = sharedPreferences.getString("openResult", "null");
@@ -214,4 +274,27 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onPrepareOptionsMenu(menu);
     }
+
+
+    // 통신 --------------------------------------------
+    class showOrder implements Runnable{ // 받아서 작동하는 메소드
+        private String msg;
+        public showOrder(String str) {this.msg=str;}
+
+        @Override
+        public void run() {
+//            status.setText(status.getText().toString()+msg+"\n");
+
+            if(sendStatus.equals(msg)){
+                Log.v(TAG, "sendStatus = strStatus");
+            }else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("주문이 들어왔습니다");
+                builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
+                builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
+                builder.show();
+            }
+        }
+    }
+    /////////////////////////////////////////////////////////
 }
