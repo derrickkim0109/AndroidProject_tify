@@ -15,32 +15,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.example.tify.Hyeona.Activity.LoginActivity;
 import com.example.tify.Hyeona.Activity.PointActivity;
 import com.example.tify.Hyeona.Activity.StampActivity;
 import com.example.tify.Hyeona.Activity.main_search;
 import com.example.tify.Hyeona.Activity.qrActivity;
-import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_stampCount;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_userinfo;
 import com.example.tify.Jiseok.Adapta.MainCafeListAdapter;
-import com.example.tify.Jiseok.Bean.Bean_Login_cjs;
 import com.example.tify.Jiseok.Bean.Bean_MainCafeList_cjs;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask_CafeList;
@@ -51,10 +44,6 @@ import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Activity.MypageActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;

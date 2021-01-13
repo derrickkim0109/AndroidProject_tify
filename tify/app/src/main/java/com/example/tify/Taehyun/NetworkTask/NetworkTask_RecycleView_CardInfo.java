@@ -1,12 +1,9 @@
 package com.example.tify.Taehyun.NetworkTask;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.example.tify.Taehyun.Bean.Bean_Mypage_CardInfo;
-import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class NetworkTask_RecycleView_Taehyun extends AsyncTask<Integer, String, Object> {
+public class NetworkTask_RecycleView_CardInfo extends AsyncTask<Integer, String, Object> {
 
        final static String TAG = "NetworkTask_RecycleView_Taehyun";
         Context context = null;
@@ -29,7 +26,7 @@ public class NetworkTask_RecycleView_Taehyun extends AsyncTask<Integer, String, 
         String where = null;
 
 
-        public NetworkTask_RecycleView_Taehyun(String mAddr, String where) {
+        public NetworkTask_RecycleView_CardInfo(String mAddr, String where) {
 
                 this.mAddr = mAddr;
                 this.cardInfo = new Bean_Mypage_CardInfo();
@@ -163,12 +160,14 @@ public class NetworkTask_RecycleView_Taehyun extends AsyncTask<Integer, String, 
             String cCardNo = jsonObject1.getString("cCardNo");
 
             int cNo = jsonObject1.getInt("cNo");
+
             String cInfo = jsonObject1.getString("cInfo");
 
             cardInfo = new Bean_Mypage_CardInfo(cImage, cCardNo, cNo, cInfo);
             cardInfos.add(cardInfo);
 
             }
+
             } catch (Exception e) {
             e.printStackTrace();
             }

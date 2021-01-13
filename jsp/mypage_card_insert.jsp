@@ -28,8 +28,7 @@
 	    Class.forName("com.mysql.jdbc.Driver");
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
-	
-		String A = "insert into tify.creditcard(user_uNo, cCardNo, cPassword, cYear, cMM, cBirthday, cCardCompany, cInfo) values (?, ?, ?, ?, ?, ?, ?)";
+		String A = "insert into tify.creditcard(user_uNo, cCardNo, cPassword, cYear, cMM, cBirthday, cCardCompany, cInfo) values (?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	    ps = conn_mysql.prepareStatement(A);
 		ps.setInt(1, user_uNo);
@@ -60,11 +59,6 @@
 	} 
 	
 	catch (Exception e){
-%>
-		{
-			"result" : "<%=result%>"
-		}
-<%	
 %>
 		{
 			"result" : "<%=result%>"

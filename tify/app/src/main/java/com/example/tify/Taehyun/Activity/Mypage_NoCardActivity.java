@@ -1,39 +1,53 @@
-package com.example.tify.Minwoo.Activity;
+package com.example.tify.Taehyun.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 
-public class EmptyOrderListActivity extends AppCompatActivity {
+public class Mypage_NoCardActivity extends AppCompatActivity {
 
-    Button orderNow;
+    Intent intent;
+    int uNo;
+    //IP
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
+
+    ImageView nocard_firstbtn, nocard_cardadd_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lmw_activity_empty_order_list);
+        setContentView(R.layout.kth_activity_mypage__no_card);
+        init();
+        intent = getIntent();
+        inheritance();
 
-        orderNow = findViewById(R.id.activity_EmptyOrderList_Btn_OrderNow);
-        orderNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent  = new Intent(EmptyOrderListActivity.this, JiseokMainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
+
+    private void inheritance() {
+        uNo = intent.getIntExtra("uNo",0);
+    }
+
+    private void init() {
+
+    }
+
+
+    //액션바에 등록하기 버튼 만들기
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         ActionBar actionBar = getSupportActionBar();
@@ -50,7 +64,7 @@ public class EmptyOrderListActivity extends AppCompatActivity {
 
         actionBar.setCustomView(actionbar);
         TextView title = findViewById(R.id.title);
-        title.setText("주문내역");
+        title.setText("카드등록");
 
         ImageButton cart = findViewById(R.id.cart);
         cart.setVisibility(View.INVISIBLE);
@@ -67,7 +81,7 @@ public class EmptyOrderListActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(EmptyOrderListActivity.this, JiseokMainActivity.class));
+                finish();
             }
         });
 
@@ -76,4 +90,13 @@ public class EmptyOrderListActivity extends AppCompatActivity {
         parent.setContentInsetsAbsolute(0, 0);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

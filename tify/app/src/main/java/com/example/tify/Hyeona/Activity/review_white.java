@@ -9,7 +9,6 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,14 +21,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,9 +35,7 @@ import com.example.tify.Hyeona.Bean.Bean_review_store;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_review;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
-import com.example.tify.Taehyun.Activity.Mypage_ProfileChageActivity;
 import com.example.tify.Taehyun.NetworkTask.ImageNetworkTask_TaeHyun;
-import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
 import java.io.File;
 import java.io.FileOutputStream;

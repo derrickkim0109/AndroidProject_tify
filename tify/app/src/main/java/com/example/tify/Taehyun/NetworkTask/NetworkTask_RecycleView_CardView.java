@@ -1,11 +1,10 @@
 package com.example.tify.Taehyun.NetworkTask;
 
-import android.app.ProgressDialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.tify.Taehyun.Bean.Bean_Mypage_CardInfo;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_cardlist;
 
 import org.json.JSONArray;
@@ -18,19 +17,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class NetworkTask_CardRecycleView_Taehyun extends AsyncTask<Integer, String, Object> {
+public class NetworkTask_RecycleView_CardView extends AsyncTask<Integer, String, Object> {
 
 
-       final static String TAG = "NetworkTask_RecycleView_Taehyun";
+       final static String TAG = "NetworkTask_RecycleView_CardView";
         Context context = null;
         String mAddr = null;
-        ProgressDialog progressDialog = null;
+//        ProgressDialog progressDialog = null;
         Bean_Mypage_cardlist cardlist = null;
         ArrayList<Bean_Mypage_cardlist> cardlists = null;
         String where = null;
 
 
-        public NetworkTask_CardRecycleView_Taehyun(String mAddr, String where) {
+        public NetworkTask_RecycleView_CardView(String mAddr, String where) {
                 this.mAddr = mAddr;
                 this.cardlist = new Bean_Mypage_cardlist();
                 this.cardlists = new ArrayList<Bean_Mypage_cardlist>();
@@ -41,11 +40,11 @@ public class NetworkTask_CardRecycleView_Taehyun extends AsyncTask<Integer, Stri
 
         @Override
         protected void onPreExecute() {
-                progressDialog = new ProgressDialog(context);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.setTitle("Dialogue");
-                progressDialog.setMessage("Get ....");
-                progressDialog.show();
+//                progressDialog = new ProgressDialog(context);
+//                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//                progressDialog.setTitle("Dialogue");
+//                progressDialog.setMessage("Get ....");
+//                progressDialog.show();
 
                 }
 
@@ -119,8 +118,10 @@ public class NetworkTask_CardRecycleView_Taehyun extends AsyncTask<Integer, Stri
                 //  - 입력, 수정, 삭제로 들어온 Task는 result를 return
                 //
                 ///////////////////////////////////////////////////////////////////////////////////////
-                if (where.equals("select_cardInfo")) {
+                if (where.equals("select_cardList")) {
+
                 return cardlists;
+
                 } else {
                 return result;
                 }
@@ -131,7 +132,7 @@ public class NetworkTask_CardRecycleView_Taehyun extends AsyncTask<Integer, Stri
             @Override
         protected void onPostExecute (Object o){
                 super.onPostExecute(o);
-                progressDialog.dismiss();
+//                progressDialog.dismiss();
 
                 }
 
@@ -151,6 +152,7 @@ public class NetworkTask_CardRecycleView_Taehyun extends AsyncTask<Integer, Stri
 
         ///////////////////////////////////////////////////////////////////////////////////////
 
+    @SuppressLint("LongLogTag")
     private void parserSelect (String s){
 
             try {
@@ -164,12 +166,16 @@ public class NetworkTask_CardRecycleView_Taehyun extends AsyncTask<Integer, Stri
             String cCardCompany = jsonObject1.getString("cCardCompany");
             String cYear = jsonObject1.getString("cYear");
             String cMM = jsonObject1.getString("cMM");
-            String uName = jsonObject1.getString("uName");
             int cNo = jsonObject1.getInt("cNo");
 
-            cardlist = new Bean_Mypage_cardlist(cCardCompany, cCardNo, cYear, cMM, cNo, uName);
+            cardlist = new Bean_Mypage_cardlist(cCardCompany, cCardNo, cYear, cMM, cNo);
             cardlists.add(cardlist);
-
+            Log.v(TAG,"cardlist" + cardlist);
+            Log.v(TAG,"cCardNo" + cCardNo);
+            Log.v(TAG,"cCardNo" + cCardCompany);
+            Log.v(TAG,"cCardNo" + cYear);
+            Log.v(TAG,"cCardNo" + cMM);
+            Log.v(TAG,"cCardNo" + cNo);
             }
 
             } catch (Exception e) {

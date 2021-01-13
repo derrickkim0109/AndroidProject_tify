@@ -4,50 +4,49 @@
 
 <%
     request.setCharacterEncoding("utf-8");
-    String user_uNo = request.getParameter("uNo");
-  
+    int user_uNo = Integer.parseInt(request.getParameter("user_uNo"));
+	
 //-----
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "select count(*) from tify.creditcard where user_uNo = ?";
+    String WhereDefault = "select count(*) from tify.creditcard where user_uNo = " + user_uNo;
     int count = 0;
-
-	PreparedStatement preparedStatement = null; //검색하는거 pre이거있어야됨
-	ResultSet resultSet = null;
+    
     
     try {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
-        preparedStatement = connection.prepareStatement(WhereDefault);
-		preparedStatement.setString(1, user_uNo);
-       
-       
-        count = preparedStatement.executeUpdate();
+        Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+        Statement stmt_mysql = conn_mysql.createStatement();
 
+        ResultSet rs = stmt_mysql.executeQuery(WhereDefault); // 
+%>
+		{ 
+  			"cardCount"  : [ 
+<%
+        while (rs.next()) {
+            if (count == 0) {
 
+            }else{
 %>
-	    {
-			"cardCount" : "<%=count%>"
-		}
+            , 
+<%
+            }
+%>            
+			{
+            "cardCountResult" : "<%=rs.getString(1) %>"
+			}
 
-<%	
-	
-	    connection.close();
-	} 
-	
-	catch (Exception e){
+<%		
+        count++;
+        }
 %>
-		{
-			"cardCount" : "<%=count%>"
-		}
-<%	
-%>
-		{
-			"cardCount" : "<%=count%>"
-		}
-<%	
+		  ] 
+		} 
+<%		
+        conn_mysql.close();
+    } catch (Exception e) {
         e.printStackTrace();
-	}
+    }
 	
 %>

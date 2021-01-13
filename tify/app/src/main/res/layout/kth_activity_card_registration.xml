@@ -10,73 +10,59 @@
 
 
     <LinearLayout
-        android:visibility="invisible"
-        android:id="@+id/card_firstll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        >
-        <ImageView
-            android:id="@+id/card_firstbtn"
-            android:src="@drawable/card_enrooool"
-            android:layout_width="300dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="250dp"
-
-            />
-        <ImageView
-            android:id="@+id/cardadd_btn"
-            android:src="@drawable/card_enroll"
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="30dp"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/cardRG_ll_list"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="55dp"
-            android:layout_width="300dp"
-            android:layout_height="178dp">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:alwaysDrawnWithCache="true"
-                    android:dividerHeight="1dp"
-                    android:horizontalSpacing="3dp"
-                    android:scrollingCache="true"
-                    android:smoothScrollbar="true"
-                    android:stretchMode="columnWidth"
-                    android:verticalSpacing="3dp"
-                    android:id="@+id/card_cardListView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginLeft="55dp"
-            android:layout_marginTop="60dp"
-            android:orientation="vertical"
-            android:layout_width="300dp"
-            android:layout_height="350dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/card_cardListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:alwaysDrawnWithCache="true"
                 android:dividerHeight="1dp"
                 android:horizontalSpacing="3dp"
                 android:scrollingCache="true"
                 android:smoothScrollbar="true"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="3dp"
+                android:verticalSpacing="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="330dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/card_name_delete"
                 android:layout_width="300dp"
-                android:layout_height="350dp"
-                />
+                android:layout_height="250dp"
+                android:alwaysDrawnWithCache="true"
+                android:dividerHeight="1dp"
+                android:horizontalSpacing="3dp"
+                android:scrollingCache="true"
+                android:smoothScrollbar="true"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="3dp" />
+
+            <Button
+                android:id="@+id/card_RG_updatebtn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_shape"
+                android:text="결제"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:backgroundTint="@color/mainColor" />
         </LinearLayout>
 
     </LinearLayout>
