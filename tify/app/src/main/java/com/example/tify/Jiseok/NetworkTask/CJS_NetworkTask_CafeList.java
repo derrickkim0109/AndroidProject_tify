@@ -91,7 +91,9 @@ public class CJS_NetworkTask_CafeList extends AsyncTask<Integer, String, Object>
         }
 
 
-       return arrayList;
+        return arrayList;
+
+
     }
 
     @Override
