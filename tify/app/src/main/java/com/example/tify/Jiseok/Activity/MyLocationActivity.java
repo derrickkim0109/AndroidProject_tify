@@ -1,5 +1,6 @@
 package com.example.tify.Jiseok.Activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -24,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,7 +44,7 @@ import java.util.Locale;
 
 public class MyLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
     ImageView imgBackBtn,imgSearch;
-    EditText etSearch;
+    TextView etSearch;
     LinearLayout lyMap;
     Button btnMyLocation;
     //우편검색
@@ -66,6 +68,10 @@ public class MyLocationActivity extends AppCompatActivity implements OnMapReadyC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cjs_activity_my_location);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        //액션바 삭제
 
         imgBackBtn = findViewById(R.id.myLocation_img_backBtn);
         imgSearch = findViewById(R.id.myLocation_img_search);
@@ -172,6 +178,7 @@ public class MyLocationActivity extends AppCompatActivity implements OnMapReadyC
 
         }
     }
+
 
     // 맵읽어오는 매서드 실행되자마자 켜짐.
     @Override

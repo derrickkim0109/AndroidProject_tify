@@ -14,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,7 +58,6 @@ public class MypageActivity extends AppCompatActivity {
     String urlAddr = null;
     //
     String urlAddress = null;
-//    String macIP = "192.168.2.21";
     //IP
     ShareVar shareVar =new ShareVar();
     String MacIP = shareVar.getMacIP();
@@ -102,7 +100,6 @@ public class MypageActivity extends AppCompatActivity {
 
         intent = getIntent();
         mypage_uImage = intent.getStringExtra("uImage");
-//        macIP = intent.getStringExtra("macIP");
 
 
     }
@@ -132,14 +129,25 @@ public class MypageActivity extends AppCompatActivity {
                 case 1:
                     //카드 등록햇나 유무 파악
                     int cardcount = cardCountselect();
-                    Log.v("ㄲㄲㄲ여기기기기", ":"+cardcount);
-                    intent = new Intent(MypageActivity.this, Mypage_CardRegistrationActivity.class)
-                            .putExtra("uNo", uNo)
-                            .putExtra("MacIP", MacIP)
-                            .putExtra("cardcount",cardcount);
+                    Log.v(TAG,"cardcount : " + cardcount);
+                    //카드 있을떄.
+                    if (cardcount > 0){
+                        Log.v("ㄲㄲㄲ여기기기기", ":"+cardcount);
+                        intent = new Intent(MypageActivity.this, Mypage_CardRegistrationActivity.class)
+                                .putExtra("uNo", uNo)
+                                .putExtra("MacIP", MacIP);
 
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    }
+                    //카드 없을때
+                    if (cardcount == 0 ){
+                        intent = new Intent(MypageActivity.this, Mypage_NoCardActivity.class)
+                                .putExtra("uNo", uNo)
+                                .putExtra("MacIP", MacIP);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    }
 
                     break;
 
@@ -215,13 +223,8 @@ public class MypageActivity extends AppCompatActivity {
             ////////////////////////////////////////////////////////////
 
 
-            ///////
-//            if(uImage.equals("null") || uImage.equals("")){
-//                profileIv.setImageResource(R.drawable.ic_person);
-//            }else {
+
             sendImageRequest(uImage);
-//            }
-            ///////
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -241,22 +244,13 @@ public class MypageActivity extends AppCompatActivity {
 
     }
 
-    //값들 돌려받기 .
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case MypageActivity.RValue:
-                uImage = data.getStringExtra("uImage");
-                nickName.setText(data.getStringExtra("uNickName"));
-                break;
-        }
-    }
     // 전화번호 중복체크
     private int cardCountselect(){
         int cardcount = 0;
         try {
-            String urlAddr = "http://" + MacIP + ":8080/tify/mypage_cardcountselect.jsp?uNo="+ uNo;
+
+            String urlAddr = "http://" + MacIP + ":8080/tify/mypage_cardcountselect.jsp?user_uNo="+ uNo;
+
             NetworkTask_TaeHyun countnetworkTask = new NetworkTask_TaeHyun(MypageActivity.this, urlAddr, "count");
             Object obj = countnetworkTask.execute().get();
 
@@ -270,8 +264,7 @@ public class MypageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        startActivity(new Intent(MypageActivity.this,JiseokMainActivity.class));
-
+        startActivity(new Intent(MypageActivity.this, JiseokMainActivity.class));
 
     }
     // 액션바----------------------------------
@@ -291,10 +284,10 @@ public class MypageActivity extends AppCompatActivity {
 
         actionBar.setCustomView(actionbar);
         TextView title = findViewById(R.id.title);
-        title.setText("주문내역");
+        title.setText("마이페이지");
 
         ImageButton cart = findViewById(R.id.cart);
-        cart.setVisibility(View.INVISIBLE);
+        cart.setVisibility(View.VISIBLE);
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -14,28 +14,20 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.tify.Hyeona.Adapter.pointHistory_adapter;
 import com.example.tify.Hyeona.Adapter.search_storeAdapter;
-import com.example.tify.Hyeona.Adapter.stampOrder_adapter;
 import com.example.tify.Hyeona.Bean.Bean_main_search;
-import com.example.tify.Hyeona.Bean.Bean_point_history;
-import com.example.tify.Hyeona.Bean.Bean_review_review;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_mainsearch;
-import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_reward;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
-import com.example.tify.Taehyun.Activity.Mypage_CardDetailActivity;
 
 import java.util.ArrayList;
 
@@ -153,9 +145,9 @@ public class main_search extends AppCompatActivity {
             recyclerView.setHasFixedSize(true);
             //레이아웃 매니저 만들기
             //layoutManager = new LinearLayoutManager(this);
-            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
 
-            recyclerView.setLayoutManager(staggeredGridLayoutManager);
+            recyclerView.setLayoutManager(gridLayoutManager);
             adapter = new search_storeAdapter(main_search.this, R.layout.cha_maincafe_content,searchs);
             //어댑터에게 보내기
             recyclerView.setAdapter(adapter);

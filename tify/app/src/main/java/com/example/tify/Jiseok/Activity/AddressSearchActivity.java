@@ -1,5 +1,6 @@
 package com.example.tify.Jiseok.Activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -35,7 +36,13 @@ public class AddressSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cjs_activity_address_search);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        //액션바 삭제
+
         init_webView();
+
+
     }
 
     public void init_webView() {

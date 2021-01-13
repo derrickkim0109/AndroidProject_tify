@@ -34,12 +34,13 @@ import java.util.ArrayList;
 
         public search_storeAdapter(Context mContext, int layout, ArrayList<Bean_main_search> searchs) {
             this.searchs = searchs;
+            this.mContext = mContext;
         }
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cha_maincafe_content, parent, false);
+                    .inflate(R.layout.cha_searchcafe_content, parent, false);
             //     반복할 xml 파일
             MyViewHolder vh = new MyViewHolder(v);
             return vh;
@@ -78,29 +79,25 @@ import java.util.ArrayList;
             //Glide.with(mContext).load("http://" + MacIP + ":8080/tify/"+sImage).into(holder.main_cafeList_img);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+            Glide.with(mContext).load("http://" + MacIP + ":8080/tify/"+ sImage).into(holder.main_cafeList_img);
             holder.main_cafeList_like.setText(likeCount);
             holder.main_cafeList_review.setText(reviewCount);
             //여기에 거리측정 넣어야댐
             //holder.main_cafeList_distance.setText(reviewCount);
 
-
-
-
             holder.main_cafeList_img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, StoreInfoActivity.class);
-                    intent.putExtra("sName",sName);
-                    intent.putExtra("sAddress", sAddress);
-                    intent.putExtra("sImage",sImage);
-                    intent.putExtra("sTime",sRunningTime);
-                    intent.putExtra("sTelNo",sTelNo);
-                    intent.putExtra("sPackaging",sPackaging);
-                    intent.putExtra("sComment",sComment);
-                    intent.putExtra("skSeqNo",storekeeper_skSeqNo);
-                    intent.putExtra("skStatus", skStatus);
-
+                    intent.putExtra("sName",searchs.get(position).getsName());
+                    intent.putExtra("sAddress",searchs.get(position).getsAddress());
+                    intent.putExtra("sImage",searchs.get(position).getsImage());
+                    intent.putExtra("sTime",searchs.get(position).getsRunningTime());
+                    intent.putExtra("sTelNo",searchs.get(position).getsTelNo());
+                    intent.putExtra("sPackaging",searchs.get(position).getsPackaging());
+                    intent.putExtra("sComment",searchs.get(position).getsComment());
+                    intent.putExtra("skSeqNo",searchs.get(position).getStorekeeper_skSeqNo());
+                    intent.putExtra("skStatus",searchs.get(position).getSkStatus());
 
                     mContext.startActivity(intent);
                 }

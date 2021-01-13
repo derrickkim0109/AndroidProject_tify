@@ -10,8 +10,9 @@
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "select cCardCompany, cCardNo, cNo from tify.creditcard where cDeleteDate IS NULL and user_uNo = " + user_uNo;
+    String WhereDefault = "select cCardCompany, cCardNo, cNo, cInfo from tify.creditcard where cDeleteDate IS NULL and user_uNo = " + user_uNo;
     int count = 0;
+    
     
     try {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -36,7 +37,9 @@
 			
             "cCardCompany" : "<%=rs.getString(1) %>",
             "cCardNo" : "<%=rs.getString(2) %>",
-            "cNo" : "<%=rs.getInt(3) %>"
+            "cNo" : "<%=rs.getInt(3) %>",
+            "cInfo" : "<%=rs.getString(4) %>"
+
             
 			}
 

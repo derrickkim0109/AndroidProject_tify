@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.tify.R;
 import com.example.tify.Taehyun.Activity.Mypage_CardRegistrationActivity;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_CardInfo;
@@ -31,12 +30,16 @@ public class Mypage_CardInfoAdapter extends RecyclerView.Adapter<Mypage_CardInfo
         ///field
         private ArrayList<Bean_Mypage_CardInfo> cardInfo ;
         private Context mContext = null;
-        private String macIP = null;
+        //IP
+        /*ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();*/
+    String MacIP = "";
+    int uNo = 0;
 
-
-        public Mypage_CardInfoAdapter (Context mContext, int layout, ArrayList<Bean_Mypage_CardInfo> cardInfo, String macIP) {
+        public Mypage_CardInfoAdapter (Context mContext, int layout, ArrayList<Bean_Mypage_CardInfo> cardInfo, String MacIP, int uNo) {
             this.cardInfo = cardInfo;
-            this.macIP = macIP;
+            this.uNo = uNo;
+            this.MacIP = MacIP;
             this.mContext = mContext;
         }
 
@@ -58,7 +61,9 @@ public class Mypage_CardInfoAdapter extends RecyclerView.Adapter<Mypage_CardInfo
             //connectGetData(user_uNo);
             String card_Image = cardInfo.get(position).getcImage();
             String card_cNo = cardInfo.get(position).getcCardNo();
+
             String cInfo = cardInfo.get(position).getcInfo();
+
             int cNo = cardInfo.get(position).getcNo();
 
 
@@ -72,7 +77,10 @@ public class Mypage_CardInfoAdapter extends RecyclerView.Adapter<Mypage_CardInfo
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             connectDelete(cNo);
-                            Intent intent = new Intent(mContext,Mypage_CardRegistrationActivity.class);
+                            Intent intent = new Intent(mContext, Mypage_CardRegistrationActivity.class)
+                                    .putExtra("MacIP",MacIP)
+                                    .putExtra("uNo",uNo);
+
                             mContext.startActivity(intent);
 
                         }
@@ -135,10 +143,11 @@ public class Mypage_CardInfoAdapter extends RecyclerView.Adapter<Mypage_CardInfo
 
         public void connectDelete(int cNo){
 
-            String urlAddr = "http://" + macIP + ":8080/tify/mypage_card_info_delete.jsp?";
+            String urlAddr = "http://" + MacIP + ":8080/tify/mypage_card_info_delete.jsp?";
             String urlAddress = urlAddr + "cNo=" + cNo;
 
             try {
+
                 NetworkTask_TaeHyun networkTask_taeHyun = new NetworkTask_TaeHyun(mContext,urlAddress,"delete");
                 Object obj = networkTask_taeHyun.execute().get();
 

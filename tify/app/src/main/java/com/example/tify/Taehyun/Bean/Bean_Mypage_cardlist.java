@@ -8,18 +8,16 @@ public class Bean_Mypage_cardlist {
     private String cYear ;
     private String cMM ;
     private int cNo;
-    private String uName;
 
 
     //constructor
 
-    public Bean_Mypage_cardlist(String cCardCompany, String cCardNo, String cYear, String cMM, int cNo, String uName) {
+    public Bean_Mypage_cardlist(String cCardCompany, String cCardNo, String cYear, String cMM, int cNo) {
         this.cCardCompany = cCardCompany;
         this.cCardNo = cCardNo;
         this.cYear = cYear;
         this.cMM = cMM;
         this.cNo = cNo;
-        this.uName = uName;
     }
 
     public Bean_Mypage_cardlist() {
@@ -66,11 +64,5 @@ public class Bean_Mypage_cardlist {
         this.cNo = cNo;
     }
 
-    public String getuName() {
-        return uName;
-    }
 
-    public void setuName(String uName) {
-        this.uName = uName;
-    }
 }

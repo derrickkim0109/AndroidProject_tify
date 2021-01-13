@@ -1,8 +1,5 @@
 package com.example.tify.Taehyun.Activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -17,9 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
-import com.example.tify.Jiseok.Activity.JoinPayPasswordActivity;
-import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 
@@ -185,7 +183,7 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
                                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    Intent intent = new Intent(Mypage_PayPasswordActivity.this,JiseokMainActivity.class);
+                                                    Intent intent = new Intent(Mypage_PayPasswordActivity.this, JiseokMainActivity.class);
                                                     startActivityForResult(intent,2);
                                                 }
                                             })

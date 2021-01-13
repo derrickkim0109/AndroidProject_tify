@@ -15,32 +15,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.example.tify.Hyeona.Activity.LoginActivity;
 import com.example.tify.Hyeona.Activity.PointActivity;
 import com.example.tify.Hyeona.Activity.StampActivity;
 import com.example.tify.Hyeona.Activity.main_search;
 import com.example.tify.Hyeona.Activity.qrActivity;
-import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_stampCount;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_userinfo;
 import com.example.tify.Jiseok.Adapta.MainCafeListAdapter;
-import com.example.tify.Jiseok.Bean.Bean_Login_cjs;
 import com.example.tify.Jiseok.Bean.Bean_MainCafeList_cjs;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask_CafeList;
@@ -51,10 +44,6 @@ import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Activity.MypageActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,6 +65,7 @@ public class JiseokMainActivity extends AppCompatActivity {
     TextView user_coffee_count;
     TextView nickname_main;
 
+
     private RecyclerView recyclerView = null;
     private RecyclerView.LayoutManager layoutManager = null;
     MainCafeListAdapter mainCafeListAdapter =null;
@@ -85,7 +75,6 @@ public class JiseokMainActivity extends AppCompatActivity {
     int userSeq;
     String userNickName;
     String myLocation;
-
     int coffeeCount = 0;
 
 
@@ -101,6 +90,8 @@ public class JiseokMainActivity extends AppCompatActivity {
         userNickName = auto.getString("userNickName", null);
         myLocation = auto.getString("myLocation", null);
 
+
+
         Log.v("내위치",""+myLocation);
         Log.v("내위치",""+userEmail);
         Log.v("내위치",""+userSeq);
@@ -114,22 +105,25 @@ public class JiseokMainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.main_rcv_cafeList);
         real_click = findViewById(R.id.real_click);
         main_Edit_SearchText = findViewById(R.id.main_Edit_SearchText);
-
         user_coffee_count = findViewById(R.id.user_coffee_count);
         real_click = findViewById(R.id.real_click);
 
         nickname_main = findViewById(R.id.nickname_main);
 
         nickname_main.setText(userNickName+"님 근처에 있는 카페");
+        nickname_main.clearComposingText();
         // 만약 주소값이 없으면 이부분 변경 해야 한다.
 
 
         Log.v("내위치","구간 1-----");
 
+
+
         // 리스트 띄우기
         if(myLocation != null){
             selectCafeList();
             Log.v("내위치","구간 2-----");
+            main_Edit_SearchText.setText(myLocation.substring(0,myLocation.indexOf(" ",3))+"에 계신가요?");
         }
         Log.v("내위치","구간 3-----");
 
@@ -246,7 +240,6 @@ public class JiseokMainActivity extends AppCompatActivity {
             intent.putExtra("sComment",arrayList.get(position).getsComment());
             intent.putExtra("skSeqNo",arrayList.get(position).getStorekeeper_skSeqNo());
             intent.putExtra("skStatus",arrayList.get(position).getSkStatus());
-
             startActivity(intent);
 
         }
@@ -308,8 +301,15 @@ public class JiseokMainActivity extends AppCompatActivity {
 
 
         private void selectCafeList(){
+            String urlAddr="";
+
             try {
-                String urlAddr = "http://" + MacIP + ":8080/tify/mainCafeLocationList.jsp";
+               if(myLocation==null){
+                   urlAddr = "http://" + MacIP + ":8080/tify/cjs_mainCafeListTOP10.jsp";
+               }else {
+                   urlAddr = "http://" + MacIP + ":8080/tify/mainCafeLocationList.jsp";
+               }
+
                 Log.v("여기여기여기", "urlAddr : " + urlAddr);
                 CJS_NetworkTask_CafeList cjs_networkTask_cafeList = new CJS_NetworkTask_CafeList(JiseokMainActivity.this,urlAddr,"selectCafeList");
                 Object obj = cjs_networkTask_cafeList.execute().get();
@@ -346,13 +346,18 @@ public class JiseokMainActivity extends AppCompatActivity {
                 for(int i=0;i<arrayList.size();i++){
                     latitude2=findGeoPoint(JiseokMainActivity.this,arrayList.get(i).getsAddress()).getLatitude();
                     longitude2=findGeoPoint(JiseokMainActivity.this,arrayList.get(i).getsAddress()).getLongitude();
+                    Log.v("여기여기여기",arrayList.get(i).getsAddress());
+
                     Location2=new LatLng(latitude2,longitude2);
+                    Log.v("여기여기여기",""+getDistance(Location1,Location2));
                     if(getDistance(Location1,Location2)<1000.0) arrayCount++;
                 }
 
                 Log.v("여기여기여기", "arrayList : " + arrayList);
                 Log.v("여기여기여기", "myLocation : " + myLocation);
                 Log.v("여기여기여기", "arrayCount : " + arrayCount);
+                String cc = "ok";
+
                 mainCafeListAdapter = new MainCafeListAdapter(JiseokMainActivity.this,R.layout.cha_maincafe_content,arrayList,myLocation,arrayCount);
                 recyclerView.setAdapter(mainCafeListAdapter);
 
@@ -360,6 +365,9 @@ public class JiseokMainActivity extends AppCompatActivity {
 
             }
         }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

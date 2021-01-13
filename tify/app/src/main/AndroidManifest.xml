@@ -26,12 +26,14 @@
         android:theme="@style/Theme.MaterialComponents.DayNight">
         <activity android:name=".Hyeona.Activity.qrActivity"></activity>
         <!-- 태현 -->
-        <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity" />
-        <activity android:name=".Taehyun.Activity.MypageActivity" />
-        <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity" />
-        <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />
-        <activity android:name=".Taehyun.Activity.Mypage_CardRegistrationActivity" />
-        <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity" /> <!-- 태현 -->
+        <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity"/>
+        <activity android:name=".Taehyun.Activity.Mypage_CardRegistrationActivity"/>
+        <activity android:name=".Taehyun.Activity.Mypage_NoCardActivity"/>
+        <activity android:name=".Taehyun.Activity.MypageActivity"/>
+        <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity"/>
+        <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity"/>
+        <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity"/>
+        <!-- 태현 -->
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
         <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />
@@ -57,7 +59,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Hyeona.Activity.main_search" />
         <activity android:name=".Hyeona.Activity.test" />
-        <activity android:name=".Hyeona.Activity.IntroActivity">
+        <activity android:name=".Hyeona.Activity.IntroActivity"/>
+        <activity android:name=".Taehyun.Activity.OrderPage_PaymentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

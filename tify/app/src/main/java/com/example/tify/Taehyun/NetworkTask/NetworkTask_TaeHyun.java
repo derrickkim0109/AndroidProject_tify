@@ -5,9 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-
-import com.example.tify.Hyeona.Bean.Bean_review_userinfo;
-import com.example.tify.Taehyun.Bean.Bean_MypageList;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
 
 import org.json.JSONArray;
@@ -73,7 +70,7 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
         //
         ///////////////////////////////////////////////////////////////////////////////////////
         String result = null;
-        String count = null;
+        int count = 0;
         ///////////////////////////////////////////////////////////////////////////////////////
 
         try {
@@ -193,9 +190,7 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                 Log.v("ddddddd","uNo : "+uPayPassword);
                 Log.v("ddddddd",where);
 
-
                 userinfo = new Bean_Mypage_userinfo(uNo, uEmail, uNickName, uTelNo, uImage, uPayPassword);
-
 
                 // Log.v(TAG, member.toString());
                 Log.v(TAG, "----------------------------------");
@@ -211,22 +206,29 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
     //  -//카드 등록한 갯수 파악
     //
     ///////////////////////////////////////////////////////////////////////////////////////
-    private String parserCardSelect(String s){
+    private int parserCardSelect(String s){
+
         Log.v(TAG,"Parser()");
-        String returnValue = null;
+        int cardCountResult = 0;
 
         try {
-            Log.v(TAG, s);
-
             JSONObject jsonObject = new JSONObject(s);
-            returnValue = jsonObject.getString("cardCount");
-            Log.v(TAG, returnValue);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("cardCount"));
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Log.v(TAG, s);
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                cardCountResult = jsonObject1.getInt("cardCountResult");
+                Log.v(TAG,"cardCountResult" + cardCountResult );
+
+            }
+
 
             }
         catch (Exception e){
             e.printStackTrace();
         }
-        return returnValue;
+        return cardCountResult;
 
     }
 
