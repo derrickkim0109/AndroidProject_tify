@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,10 @@ import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Activity.LoginActivity;
 import com.example.tify.Hyeona.Activity.PointActivity;
 import com.example.tify.Hyeona.Activity.StampActivity;
+import com.example.tify.Hyeona.Activity.main_search;
+import com.example.tify.Hyeona.Activity.qrActivity;
+import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_stampCount;
+import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_userinfo;
 import com.example.tify.Jiseok.Adapta.MainCafeListAdapter;
 import com.example.tify.Jiseok.Bean.Bean_Login_cjs;
 import com.example.tify.Jiseok.Bean.Bean_MainCafeList_cjs;
@@ -48,6 +53,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +71,10 @@ public class JiseokMainActivity extends AppCompatActivity {
     ImageView gps_setting, imgStamp, imgPoint, imgRecommend, imgSearch;
     AutoCompleteTextView etSearch;
 
-
+    LinearLayout real_click;
+    TextView main_Edit_SearchText;
+    TextView user_coffee_count;
+    TextView nickname_main;
 
     private RecyclerView recyclerView = null;
     private RecyclerView.LayoutManager layoutManager = null;
@@ -75,6 +85,8 @@ public class JiseokMainActivity extends AppCompatActivity {
     int userSeq;
     String userNickName;
     String myLocation;
+
+    int coffeeCount = 0;
 
 
     @Override
@@ -98,8 +110,19 @@ public class JiseokMainActivity extends AppCompatActivity {
         imgStamp = findViewById(R.id.main_img_stamp);
         imgRecommend = findViewById(R.id.main_img_recommend);
         imgSearch = findViewById(R.id.main_img_SearchBtn);
-        etSearch = findViewById(R.id.main_Edit_SearchText);
+        //etSearch = findViewById(R.id.main_Edit_SearchText);
         recyclerView = findViewById(R.id.main_rcv_cafeList);
+        real_click = findViewById(R.id.real_click);
+        main_Edit_SearchText = findViewById(R.id.main_Edit_SearchText);
+
+        user_coffee_count = findViewById(R.id.user_coffee_count);
+        real_click = findViewById(R.id.real_click);
+
+        nickname_main = findViewById(R.id.nickname_main);
+
+        nickname_main.setText(userNickName+"님 근처에 있는 카페");
+        // 만약 주소값이 없으면 이부분 변경 해야 한다.
+
 
         Log.v("내위치","구간 1-----");
 
@@ -120,6 +143,14 @@ public class JiseokMainActivity extends AppCompatActivity {
 
         //////////////////////////////////////////////////////////////////////////////////
 
+        real_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(JiseokMainActivity.this, main_search.class);
+                startActivity(intent);
+            }
+        });
+
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         //하단 네비게이션 선언
         menu = bottomNavigationView.getMenu();
@@ -135,37 +166,27 @@ public class JiseokMainActivity extends AppCompatActivity {
                     }
                     case R.id.action2: {
                         //주문내역
-
-
                         Intent intent = new Intent(JiseokMainActivity.this, OrderListActivity.class);
+                        intent.putExtra("from", "JiseokMainActivity"); // value에 어디서 보내는지를 적어주세요
                         startActivity(intent);
                         finish();
 
                         return true;
                     }
                     case R.id.action3: {
-
-
-                        Toast.makeText(getApplicationContext(), "정상적으로 로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
-//                        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
-//                            @Override
-//                            public void onCompleteLogout() {
-//                                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-//                                SharedPreferences.Editor autoLogin = auto.edit();
-//                                autoLogin.clear();
-//                                autoLogin.commit();
-//                                Intent intent = new Intent(JiseokMainActivity.this, LoginActivity.class);
-//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                startActivity(intent);
-//                            }
-//                        });
-
-
+                        Intent intent = new Intent(JiseokMainActivity.this, qrActivity.class);
+                        startActivity(intent);
+                        finish();
+                        //준비중 페이지 뜸 여기는 즐겨찾기 부분
                         return true;
                     }
 
                     case R.id.action4: {
-                        //큐알결제
+                        Intent intent = new Intent(JiseokMainActivity.this, qrActivity.class);
+                        startActivity(intent);
+                        finish();
+                        //준비중 페이지 뜸
+
                         return true;
                     }
                     case R.id.action5: {
@@ -384,6 +405,29 @@ public class JiseokMainActivity extends AppCompatActivity {
 
         return Math.round(distance);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        coffeeCount = connectGetData();
+        user_coffee_count.setText("지금까지 주문한 커피는 "+coffeeCount+"잔 입니다.");
+    }
+
+    private int connectGetData(){
+        int result =0;
+        try {
+            //  얼마나 커피 주문했는지 받아오기
+            String urlAddr = "http://" + MacIP + ":8080/tify/cha_main_coffee_count.jsp?user_uNo="+userSeq;
+            CUDNetworkTask_userinfo CUDNetworkTask_userinfo = new CUDNetworkTask_userinfo(urlAddr,"cha_main_coffee_count");
+            Object obj = CUDNetworkTask_userinfo.execute().get();
+            result = (int)obj;
+
+            Log.v("테스트","ㅇㅇ"+result);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }return result;
     }
 }
 

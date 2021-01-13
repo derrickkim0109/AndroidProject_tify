@@ -378,11 +378,12 @@ public class CartActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, StoreInfoActivity.class);
-                intent.putExtra("macIP", macIP);
-                intent.putExtra("user_uSeqNo", user_uSeqNo);
-                intent.putExtra("store_sSeqNo", store_sSeqNo);
-                startActivity(intent);
+                finish();
+//                Intent intent = new Intent(CartActivity.this, StoreInfoActivity.class);
+//                intent.putExtra("macIP", macIP);
+//                intent.putExtra("user_uSeqNo", user_uSeqNo);
+//                intent.putExtra("store_sSeqNo", store_sSeqNo);
+//                startActivity(intent);
             }
         });
 

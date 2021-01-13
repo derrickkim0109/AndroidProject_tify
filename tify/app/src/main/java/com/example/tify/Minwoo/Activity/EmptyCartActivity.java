@@ -40,8 +40,7 @@ public class EmptyCartActivity extends AppCompatActivity {
         orderNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EmptyCartActivity.this, StoreInfoActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }
@@ -76,14 +75,11 @@ public class EmptyCartActivity extends AppCompatActivity {
 
 //         장바구니 없애려면 위에거 살리면 됨
         ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setVisibility(View.INVISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(EmptyCartActivity.this, StoreInfoActivity.class);
-                intent.putExtra("user_uSeqNo", user_uSeqNo);
-                intent.putExtra("store_sSeqNo", store_sSeqNo);
-                startActivity(intent);
+                finish();
             }
         });
 

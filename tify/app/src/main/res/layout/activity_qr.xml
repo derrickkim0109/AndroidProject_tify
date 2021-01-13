@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Hyeona.Activity.qrActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="100dp"
+    android:layout_gravity="center">
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_action_commingsoon"
+        android:layout_height="100dp">
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="서비스"
+            android:textSize="20dp"
+            android:layout_height="wrap_content">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text=" 준비중 "
+            android:textColor="@color/mainColor"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_height="wrap_content">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="입니다"
+            android:textSize="20dp"
+            android:layout_height="wrap_content">
+        </TextView>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:paddingTop="20dp"
+        android:textSize="12dp"
+        android:textAlignment="center"
+        android:text="보다 좋은 서비스를 드리기 위해 준비중입니다."
+        android:layout_height="wrap_content">
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:textSize="12dp"
+        android:text="빠른시일 내로 서비스를 제공할 수 있도록 노력하겠습니다."
+        android:layout_height="wrap_content">
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:textSize="12dp"
+        android:text="감사합니다."
+        android:layout_height="wrap_content">
+    </TextView>
+</LinearLayout>
+
+</LinearLayout>

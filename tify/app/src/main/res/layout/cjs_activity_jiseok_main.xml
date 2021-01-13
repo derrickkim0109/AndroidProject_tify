@@ -28,10 +28,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
-                <AutoCompleteTextView
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/real_click"
+                android:layout_height="wrap_content">
+                <TextView
                     android:id="@+id/main_Edit_SearchText"
                     android:layout_width="200dp"
-                    android:layout_weight="2"
+                    android:gravity="center"
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
                     android:hint="서울시 서초구에 계신가요?"
@@ -43,6 +48,7 @@
                     tools:ignore="Autofill,TextFields"
                     android:textSize="17dp"
                     />
+            </LinearLayout>
                 <ImageView
                     android:id="@+id/main_img_SearchBtn"
                     android:layout_width="50dp"
@@ -60,6 +66,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/user_coffee_count"
                 android:text="지금까지 주문한 커피는 32잔 입니다."
                 android:paddingTop="20dp">
 
@@ -156,6 +163,7 @@
                 android:textStyle="bold"
                 android:text="지돌지돌님 근처에 있는 카페"
                 android:textSize="25dp"
+                android:id="@+id/nickname_main"
                 android:paddingBottom="20dp"
                 android:textColor="@color/TextColor">
             </TextView>

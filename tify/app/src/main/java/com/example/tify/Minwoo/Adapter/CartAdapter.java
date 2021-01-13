@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
 
     String TAG = "CartAdapter 확인용";
+    CardView cardView;
+    private int positionCheck;
+    private boolean isStartViewCheck = true;
+
 
     private ArrayList<Cart> mDataset;
     private ArrayList<Menu> menuNames;
@@ -42,7 +48,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     Context context = null;
     String macIP;
-
 
     //인터페이스 선언
     public interface OnItemClickListener{
@@ -67,7 +72,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     }
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView mName;
@@ -77,6 +81,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         public TextView cLQuantity;
         public TextView cLPrice;
         public CircleImageView cLPhoto;
+        public CardView cardView;
 
         MyViewHolder(View v) {
             super(v);
@@ -88,6 +93,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
             request = v.findViewById(R.id.activity_Cart_CV_Request);
             cLQuantity = v.findViewById(R.id.activity_Cart_CV_Quantity);
             cLPrice = v.findViewById(R.id.activity_Cart_CV_SubTotalPrice);
+            cardView = v.findViewById(R.id.activity_Cart_CardView);
 
             // 뷰홀더에서만 리스트 포지션값을 불러올 수 있음.
             v.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +128,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Log.v(TAG, "onBindViewHolder");
+
+        if (isStartViewCheck) {
+            if (position > 6) isStartViewCheck = false;
+        } else {
+            if (position > positionCheck) { holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.down));
+            } else {
+                holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.up)); }
+        } // 어뎁터 데이터 화면 표시 구간 holder.textview.setText("데이터 표시"); // 현재 위치값을 positionCheck에 저장 - onBindViewHolder 마지막 부분에 구현 positionCheck = position;
+
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
@@ -203,4 +218,5 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         Log.v(TAG, "getItemCount");
         return mDataset.size();
     }
+
 }

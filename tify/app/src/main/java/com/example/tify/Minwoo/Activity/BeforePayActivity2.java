@@ -137,6 +137,7 @@ public class BeforePayActivity2 extends AppCompatActivity {
                 Log.v(TAG, " 입력값 : " + et_point.getText().toString());
                 if(et_point.getText().length() == 0){ // 아무것도 입력되지 않았을 때 입력처리
                     btn_point.setEnabled(false);
+                    btn_point.setBackgroundColor(Color.parseColor("#FF999999"));
                 }else { // 입력했을 때
                     Log.v(TAG, " 값!! : " + Integer.parseInt(et_point.getText().toString()));
                     if (Integer.parseInt(et_point.getText().toString()) < 1) { // 1보다 작게 입력했을 때 예외처리
@@ -177,7 +178,7 @@ public class BeforePayActivity2 extends AppCompatActivity {
         if(point == 0){
             btn_point.setEnabled(false);
         }
-        et_point.setHint("보유 포인트 : " + strPoint + "p");
+        et_point.setHint(strPoint);
 
         carts = new ArrayList<Cart>();
         carts = CartConnectGetData(); // db를 통해 받은 데이터를 담는다.
@@ -223,11 +224,12 @@ public class BeforePayActivity2 extends AppCompatActivity {
 
                         et_point.setEnabled(false);
                         et_point.setText("");
-                        et_point.setHint("남은 포인트 : " + strRemainPoint + "p");
-                        tv_totalDiscount2.setText(strDiscountPoint + "p");
+                        et_point.setHint(strRemainPoint);
+                        tv_totalDiscount2.setText(strDiscountPoint + "원");
                         tv_totalPayPrice2.setText(strTotal + "원");
                         btn_point.setEnabled(true);
                         btn_point.setText("초기화");
+                        btn_point.setBackgroundColor(Color.parseColor("#0084ff"));
                     }else{
 
 
@@ -237,8 +239,8 @@ public class BeforePayActivity2 extends AppCompatActivity {
 
                         et_point.setEnabled(true);
                         et_point.setText("");
-                        et_point.setHint("보유 포인트 : " + strPoint + "p");
-                        tv_totalDiscount2.setText("0p");
+                        et_point.setHint(strPoint);
+                        tv_totalDiscount2.setText("0원");
                         tv_totalPayPrice2.setText(strTotal + "원");
                         btn_point.setText("적용");
                         btn_point.setEnabled(false);
