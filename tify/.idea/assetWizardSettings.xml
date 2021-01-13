@@ -24,7 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\choi_hyeona\AppData\Local\Temp\baseline_check_circle_24.xml" />
+                                                <entry key="imagePath" value="C:\Users\choi_hyeona\AppData\Local\Temp\baseline_announcement_24.xml" />
                                                 <entry key="opacityPercent" value="80" />
                                                 <entry key="paddingPercent" value="-5" />
                                               </map>
@@ -37,7 +37,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/check_circle/baseline_check_circle_24.xml" />
+                                                <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/announcement/baseline_announcement_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -69,7 +69,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_action_h_check" />
+                                      <entry key="outputName" value="ic_action_commingsoon" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="128aff" />
                                     </map>

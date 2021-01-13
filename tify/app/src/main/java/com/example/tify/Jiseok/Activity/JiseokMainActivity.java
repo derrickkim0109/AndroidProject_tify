@@ -135,8 +135,6 @@ public class JiseokMainActivity extends AppCompatActivity {
                     }
                     case R.id.action2: {
                         //주문내역
-
-
                         Intent intent = new Intent(JiseokMainActivity.this, OrderListActivity.class);
                         startActivity(intent);
                         finish();
@@ -144,23 +142,7 @@ public class JiseokMainActivity extends AppCompatActivity {
                         return true;
                     }
                     case R.id.action3: {
-
-
                         Toast.makeText(getApplicationContext(), "정상적으로 로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
-//                        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
-//                            @Override
-//                            public void onCompleteLogout() {
-//                                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-//                                SharedPreferences.Editor autoLogin = auto.edit();
-//                                autoLogin.clear();
-//                                autoLogin.commit();
-//                                Intent intent = new Intent(JiseokMainActivity.this, LoginActivity.class);
-//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                startActivity(intent);
-//                            }
-//                        });
-
-
                         return true;
                     }
 
