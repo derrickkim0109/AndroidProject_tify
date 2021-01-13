@@ -135,9 +135,8 @@ public class JiseokMainActivity extends AppCompatActivity {
                     }
                     case R.id.action2: {
                         //주문내역
-
-
                         Intent intent = new Intent(JiseokMainActivity.this, OrderListActivity.class);
+                        intent.putExtra("from", "JiseokMainActivity"); // value에 어디서 보내는지를 적어주세요
                         startActivity(intent);
                         finish();
 

@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.tify.Hyeona.Activity.reviewActivity;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.Minwoo.Fragment.InfoFragment;
 import com.example.tify.Minwoo.Fragment.MenuFragment;
@@ -69,21 +70,48 @@ public class StoreInfoActivity extends AppCompatActivity {
         ShareVar shareVar = new ShareVar();
         macIP = shareVar.getMacIP();
 
-        store_sSeqNo = Integer.parseInt(intent.getStringExtra("skSeqNo"));
-        sImage = intent.getStringExtra("sImage");
-        sAddress = intent.getStringExtra("sAddress");
-        sName = intent.getStringExtra("sName");
-        sTime = intent.getStringExtra("sTime");
-        sTelNo = intent.getStringExtra("sTelNo");
-        sPackaging = Integer.parseInt(intent.getStringExtra("sPackaging"));
-        sComment = intent.getStringExtra("sComment");
-        skStatus = Integer.parseInt(intent.getStringExtra("skStatus"));
+        if(intent.getStringExtra("from") == null){
+            store_sSeqNo = Integer.parseInt(intent.getStringExtra("skSeqNo"));
+            sImage = intent.getStringExtra("sImage");
+            sAddress = intent.getStringExtra("sAddress");
+            sName = intent.getStringExtra("sName");
+            sTime = intent.getStringExtra("sTime");
+            sTelNo = intent.getStringExtra("sTelNo");
+            sPackaging = Integer.parseInt(intent.getStringExtra("sPackaging"));
+            sComment = intent.getStringExtra("sComment");
+            skStatus = Integer.parseInt(intent.getStringExtra("skStatus"));
+        }else{
+            SharedPreferences sharedPreferences = getSharedPreferences("storeInfo", MODE_PRIVATE);
+            store_sSeqNo = sharedPreferences.getInt("skSeqNo", 0);
+            sImage = sharedPreferences.getString("sImage", null);
+            sAddress = sharedPreferences.getString("sAddress", null);
+            sName = sharedPreferences.getString("sName", null);
+            sTime = sharedPreferences.getString("sTime", null);
+            sTelNo = sharedPreferences.getString("sTelNo", null);
+            sPackaging = sharedPreferences.getInt("sPackaging", 0);
+            sComment = sharedPreferences.getString("sComment", null);
+            skStatus = sharedPreferences.getInt("skStatus", 0);
+        }
+
+        Log.v(TAG, "sPackaging : " + sPackaging);
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
-
         user_uSeqNo = auto.getInt("userSeq",0); // 지석씨랑 화면 연결되면 쓰기
         userNickName = auto.getString("userNickName",null); // 지석씨랑 화면 연결되면 쓰기
+
+        SharedPreferences sharedPreferences = getSharedPreferences("storeInfo",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("skSeqNo", store_sSeqNo);
+        editor.putString("sImage", sImage);
+        editor.putString("sAddress", sAddress);
+        editor.putString("sName", sName);
+        editor.putString("sTime", sTime);
+        editor.putString("sTelNo", sTelNo);
+        editor.putString("sComment", sComment);
+        editor.putInt("sPackaging", sPackaging);
+        editor.putInt("skStatus", skStatus);
+        editor.commit();
 
         // 가게사진, 가게이름, 가게주소
         iv_sPhoto = findViewById(R.id.activity_StoreInfo_IV_sPhoto);
@@ -111,10 +139,22 @@ public class StoreInfoActivity extends AppCompatActivity {
         bundle.putString("sName", sName);
         bundle.putInt("user_uSeqNo", user_uSeqNo);
         bundle.putInt("store_sSeqNo", store_sSeqNo);
+        bundle.putInt("skStatus", skStatus);
+
+        bundle.putString("sAddress", sAddress);
+        bundle.putString("sName", sName);
+        bundle.putString("sTime", sTime);
+        bundle.putString("sTelNo", sTelNo);
+        bundle.putString("sComment", sComment);
+        bundle.putString("sAddress", sAddress);
+        bundle.putInt("sPackaging", sPackaging);
+        bundle.putInt("skStatus", skStatus);
 
         menuFragment.setArguments(bundle);
         infoFragment.setArguments(bundle);
         reviewFragment.setArguments(bundle);
+        com.example.tify.Hyeona.Activity.reviewActivity reviewActivity = new reviewActivity();
+        reviewActivity.setArguments(bundle);
 
         //-----------------------------
 
@@ -135,7 +175,7 @@ public class StoreInfoActivity extends AppCompatActivity {
                 } else if (position == 1) {
                     selected = infoFragment;
                 } else if (position == 2) {
-                    selected = reviewFragment;
+                    selected = reviewActivity;
                 }
                 Log.v(TAG, "구간6---");
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame, selected).commit();

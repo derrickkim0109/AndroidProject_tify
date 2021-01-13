@@ -1,7 +1,9 @@
 
 package com.example.tify.Minwoo.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.Minwoo.Adapter.CartAdapter;
 import com.example.tify.Minwoo.Adapter.OrderListAdapter;
 import com.example.tify.Minwoo.Bean.Cart;
@@ -50,10 +53,22 @@ public class OrderListActivity extends AppCompatActivity {
     String urlAddr = null;
     String where = null;
     int user_uSeqNo = 0;
-    int store_sSeqNo = 0;
     String from;
 
     TextView tv_UserName;
+
+    int store_sSeqNo = 0;
+    String sName;
+    String userEmail;
+    String sAddress;
+    String sImage;
+    String sTime = null;
+    String sTelNo;
+    int sPackaging;
+    String sComment;
+    int skStatus;
+    String userName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,20 +76,25 @@ public class OrderListActivity extends AppCompatActivity {
         setContentView(R.layout.lmw_activity_order_list);
         Log.v(TAG, "OrderListActivity onCreate");
 
-        // 고객 이름
-//        tv_UserName = findViewById(R.id.activity_OrderList_TV_cName);
-//        tv_UserName.setText(); // 값 받아서 넣기
-
         // 받은 값 저장
         Intent intent = getIntent();
         ShareVar shareVar = new ShareVar();
         macIP = shareVar.getMacIP();
-        user_uSeqNo = intent.getIntExtra("user_uSeqNo", 0);
-        store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
 
-        if (intent.getStringExtra("from") == null){
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor autoLogin = auto.edit();
+        user_uSeqNo = auto.getInt("userSeq",0); // 지석씨랑 화면 연결되면 쓰기
+        userName = auto.getString("userNickName",null); // 지석씨랑 화면 연결되면 쓰기
 
-        }else{
+        // 고객 이름
+        tv_UserName = findViewById(R.id.activity_OrderList_TV_cName);
+        tv_UserName.setText(userName + "님의 주문내역"); // 값 받아서 넣기
+
+        from = intent.getStringExtra("from");
+
+        if (from == null){
+
+        }else if(from.equals("CartActivity")){
             from = intent.getStringExtra("from");
             connectDeleteData(); // 카트 비우기
         }
@@ -239,11 +259,32 @@ public class OrderListActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OrderListActivity.this, StoreInfoActivity.class);
-                intent.putExtra("macIP", macIP);
-                intent.putExtra("user_uSeqNo", user_uSeqNo);
-                intent.putExtra("store_sSeqNo", store_sSeqNo);
-                startActivity(intent);
+                Log.v(TAG, "from : " + from); // from에 따라 다르게 보내주기 (EmptyOrderList에도 똑같이 해주기)
+
+                Intent intent = null;
+
+                if(from.equals("JiseokMainActivity")){
+                    intent = new Intent(OrderListActivity.this, JiseokMainActivity.class);
+                    startActivity(intent);
+                }else{
+                    SharedPreferences sharedPreferences = getSharedPreferences("storeInfo", MODE_PRIVATE);
+                    store_sSeqNo = sharedPreferences.getInt("skSeqNo", 0);
+                    sImage = sharedPreferences.getString("sImage", null);
+                    sAddress = sharedPreferences.getString("sAddress", null);
+                    sName = sharedPreferences.getString("sName", null);
+                    sTime = sharedPreferences.getString("sTime", null);
+                    sTelNo = sharedPreferences.getString("sTelNo", null);
+                    sPackaging = sharedPreferences.getInt("sPackaging", 0);
+                    sComment = sharedPreferences.getString("sComment", null);
+                    skStatus = sharedPreferences.getInt("skStatus", 0);
+
+                    intent = new Intent(OrderListActivity.this, StoreInfoActivity.class);
+                    intent.putExtra("skSeqNo", Integer.toString(store_sSeqNo));
+                    intent.putExtra("from", "OrderListActivity");
+                    startActivity(intent);
+                }
+
+
             }
         });
 

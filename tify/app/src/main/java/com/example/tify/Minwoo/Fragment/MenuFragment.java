@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +44,7 @@ public class MenuFragment extends Fragment {
     String sName = null;
     int user_uSeqNo = 0;
     int store_sSeqNo = 0;
+    int skStatus = 0;
 
     RecyclerView RV = null;
     LinearLayout LL = null;
@@ -61,6 +63,7 @@ public class MenuFragment extends Fragment {
             user_uSeqNo = bundle.getInt("user_uSeqNo");
             store_sSeqNo = bundle.getInt("store_sSeqNo");
             sName = bundle.getString("sName");
+            skStatus = bundle.getInt("skStatus");
 
             // 초기 설정 값
             where = "select";
@@ -92,30 +95,32 @@ public class MenuFragment extends Fragment {
                 RV.setVisibility(View.GONE);
                 LL.setVisibility(View.VISIBLE);
             }
+                mAdapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        if(skStatus == 0){
+                            Toast.makeText(getContext(), "영업 준비중입니다.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Intent intent = new Intent(getActivity(), OrderSummaryActivity.class);
 
-            mAdapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View v, int position) {
-                    Intent intent = new Intent(getActivity(), OrderSummaryActivity.class);
+                            intent.putExtra("mNo", menuList.get(position).getmNo());
+                            intent.putExtra("mName", menuList.get(position).getmName());
+                            intent.putExtra("mPrice", menuList.get(position).getmPrice());
+                            intent.putExtra("mSizeUp", menuList.get(position).getmSizeUp());
+                            intent.putExtra("mShot", menuList.get(position).getmShot());
+                            intent.putExtra("mImage", menuList.get(position).getmImage());
+                            intent.putExtra("mType", menuList.get(position).getmType());
+                            intent.putExtra("mComment", menuList.get(position).getmComment());
 
-                    intent.putExtra("mNo", menuList.get(position).getmNo());
-                    intent.putExtra("mName", menuList.get(position).getmName());
-                    intent.putExtra("mPrice", menuList.get(position).getmPrice());
-                    intent.putExtra("mSizeUp", menuList.get(position).getmSizeUp());
-                    intent.putExtra("mShot", menuList.get(position).getmShot());
-                    intent.putExtra("mImage", menuList.get(position).getmImage());
-                    intent.putExtra("mType", menuList.get(position).getmType());
-                    intent.putExtra("mComment", menuList.get(position).getmComment());
+                            intent.putExtra("macIP", macIP);
+                            intent.putExtra("user_uSeqNo", user_uSeqNo);
+                            intent.putExtra("store_sSeqNo", store_sSeqNo);
+                            intent.putExtra("sName", sName);
 
-                    intent.putExtra("macIP", macIP);
-                    intent.putExtra("user_uSeqNo", user_uSeqNo);
-                    intent.putExtra("store_sSeqNo", store_sSeqNo);
-                    intent.putExtra("sName", sName);
-
-                    startActivity(intent);
-                }
-            });
-
+                            startActivity(intent);
+                        }
+                    }
+                });
         return v;
     }
 
