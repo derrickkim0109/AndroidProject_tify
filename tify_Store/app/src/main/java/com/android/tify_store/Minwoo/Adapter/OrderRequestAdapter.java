@@ -25,6 +25,7 @@ import com.android.tify_store.Minwoo.NetworkTask.LMW_OrderListNetworkTask;
 import com.android.tify_store.Minwoo.NetworkTask.LMW_OrderNetworkTask;
 import com.android.tify_store.Minwoo.NetworkTask.LMW_StoreNetworkTask;
 import com.android.tify_store.R;
+import com.bumptech.glide.RequestManager;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+
         public TextView mName;
         public TextView addOrder1;
         public TextView addOrder2;
@@ -74,7 +76,6 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
         public TextView subTotalPrice;
         public Button reject;
         public Button accept;
-
 
         MyViewHolder(View v) {
             super(v);
@@ -110,6 +111,9 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
         }
     }
 
+
+    public OrderRequestAdapter() {
+    }
 
     // 메인 액티비티에서 받은 myDataset을 가져오
     public OrderRequestAdapter(OrderRequestFragment MenuFragment, int member, ArrayList<OrderRequest> myDataset, String macIP, int skSeqNo) {
@@ -158,6 +162,8 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
     @Override
     public void onBindViewHolder(@NonNull OrderRequestAdapter.MyViewHolder holder, int position) {
         Log.v(TAG, "onBindViewHolder");
+
+        holder.setIsRecyclable(false);
 
         if(list.contains(mDataset.get(position).getOrder_oNo())){ // oStatus가 0인 oNo가 담겨있는 list라는 ArrayList의 oNo와 같다면 화면에 띄운다.
             holder.oSeqno.setText("주문번호 : " + mDataset.get(position).getOrder_oNo());
@@ -230,6 +236,25 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
         return mDataset.size();
     }
 
+
+
+
+    @Override
+    public void onViewRecycled(@NonNull MyViewHolder holder) {
+        super.onViewRecycled(holder);
+
+        holder.oSeqno.clearComposingText();
+        holder.oDate.clearComposingText();
+        holder.sName.clearComposingText();
+        holder.mName.clearComposingText();
+        holder.addOrder1.clearComposingText();
+        holder.addOrder2.clearComposingText();
+        holder.request.clearComposingText();
+        holder.subTotalPrice.clearComposingText();
+        holder.reject.clearComposingText();
+        holder.accept.clearComposingText();
+
+    }
 
     private ArrayList<OrderRequest> connectOrderGetData(){
         ArrayList<OrderRequest> beanList = new ArrayList<OrderRequest>();

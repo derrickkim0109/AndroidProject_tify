@@ -132,14 +132,17 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             case 0:
                 Glide.with(holder.tv_right1).load(R.drawable.dotdot).into(holder.tv_right1);
                 holder.tv_orderRequest.setTextColor(Color.parseColor("#0084ff"));
+                holder.btn_Review.setVisibility(View.INVISIBLE);
                 break;
             case 1:
                 Glide.with(holder.tv_right2).load(R.drawable.dotdot).into(holder.tv_right2);
                 holder.tv_orderGet.setTextColor(Color.parseColor("#0084ff"));
+                holder.btn_Review.setVisibility(View.INVISIBLE);
                 break;
             case 2:
                 holder.tv_right3.setImageResource(R.drawable.ic_action_progress_checked);
                 holder.tv_complete.setTextColor(Color.parseColor("#0084ff"));
+                holder.btn_Review.setVisibility(View.INVISIBLE);
                 break;
             case 3:
                 holder.tv_right1.setImageResource(R.drawable.ic_action_progress_checked);
@@ -196,4 +199,20 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         Log.v(TAG, "getItemCount");
         return mDataset.size();
     }
+
+    @Override
+    public void onViewRecycled(@NonNull MyViewHolder holder) {
+        super.onViewRecycled(holder);
+
+        holder.tv_orderNo.clearComposingText();
+        holder.tv_orderDate.clearComposingText();
+        holder.tv_orderRequest.clearComposingText();
+        holder.tv_orderGet.clearComposingText();
+        holder.tv_complete.clearComposingText();
+        holder.tv_sName.clearComposingText();
+        holder.tv_right1.clearColorFilter();
+        holder.tv_right2.clearColorFilter();
+        holder.tv_right3.clearColorFilter();
+
+   }
 }

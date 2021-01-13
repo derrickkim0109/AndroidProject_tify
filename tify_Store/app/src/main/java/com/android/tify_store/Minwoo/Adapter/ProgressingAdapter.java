@@ -150,11 +150,11 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
         holder.sName.setText(mDataset.get(position).getStore_sName());
         holder.mName.setText(mDataset.get(position).getMenu_mName());
 
-        if(mDataset.get(position).getOlAddShot() != 0){
-            holder.addOrder1.setVisibility(View.VISIBLE);
-            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlAddShot());
-        }
         if(mDataset.get(position).getOlSizeUp() != 0){
+            holder.addOrder1.setVisibility(View.VISIBLE);
+            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlSizeUp());
+        }
+        if(mDataset.get(position).getOlAddShot() != 0){
             holder.addOrder2.setVisibility(View.VISIBLE);
             holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlAddShot());
         }
@@ -176,10 +176,10 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
             holder.makeDone.setEnabled(true);
             holder.makeDone.setBackgroundColor(Color.WHITE);
             holder.pickUpDone.setEnabled(false);
-            holder.pickUpDone.setBackgroundColor(Color.parseColor("#48000000"));
+            holder.pickUpDone.setBackgroundColor(Color.parseColor("#1D000000"));
         }else{
             holder.makeDone.setEnabled(false);
-            holder.makeDone.setBackgroundColor(Color.parseColor("#48000000"));
+            holder.makeDone.setBackgroundColor(Color.parseColor("#1D000000"));
             holder.pickUpDone.setBackgroundColor(Color.WHITE);
             holder.pickUpDone.setEnabled(true);
             holder.pickUpDone.setTextColor(Color.BLACK);
@@ -192,8 +192,8 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
                 Log.v(TAG, "mDataset.get(position).getOrder_oNo() : " + mDataset.get(position).getOrder_oNo());
 
                 holder.makeDone.setEnabled(false);
-                holder.makeDone.setBackgroundColor(Color.parseColor("#48000000"));
-                holder.pickUpDone.setBackgroundColor(Color.BLACK);
+                holder.makeDone.setBackgroundColor(Color.parseColor("#1D000000"));
+                holder.pickUpDone.setBackgroundColor(Color.WHITE);
                 holder.pickUpDone.setEnabled(true);
 
                 urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus1.jsp?oNo=" + mDataset.get(position).getOrder_oNo() + "&oStatus=" + 2;
@@ -212,7 +212,7 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
             @Override
             public void onClick(View v) {
                 holder.pickUpDone.setEnabled(false);
-                holder.pickUpDone.setBackgroundColor(Color.parseColor("#48000000"));
+                holder.pickUpDone.setBackgroundColor(Color.parseColor("#1D000000"));
                 holder.makeDone.setVisibility(View.GONE);
                 holder.pickUpDone.setText("완료탭에서 확인해주세요");
 
@@ -243,11 +243,25 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
 
     }
 
-
     @Override
     public int getItemCount() {
         Log.v(TAG, "getItemCount");
         return mDataset.size();
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull MyViewHolder holder) {
+        super.onViewRecycled(holder);
+
+        holder.oSeqno.setText("");
+        holder.oDate.setText("");
+        holder.sName.setText("");
+        holder.mName.setText("");
+        holder.addOrder1.setText("");
+        holder.addOrder2.setText("");
+        holder.request.setText("");
+        holder.subTotalPrice.setText("");
+
     }
 
     private String connectUpdateData(){ // oStatus 2,3으로 바꾸기

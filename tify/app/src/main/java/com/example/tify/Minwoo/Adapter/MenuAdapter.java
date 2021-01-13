@@ -129,4 +129,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         Log.v(TAG, "getItemCount");
         return mDataset.size();
     }
+
+    @Override
+    public void onViewRecycled(@NonNull MyViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.mName.clearComposingText();
+        holder.mPrice.clearComposingText();
+        holder.mPhoto.clearColorFilter();
+    }
 }

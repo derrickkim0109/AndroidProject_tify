@@ -166,4 +166,20 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
         Log.v(TAG, "getItemCount");
         return mDataset.size();
     }
+
+    @Override
+    public void onViewRecycled(@NonNull MyViewHolder holder) {
+        super.onViewRecycled(holder);
+
+            holder.oSeqno.setText("");
+            holder.oDate.setText("");
+            holder.sName.setText("");
+            holder.mName.setText("");
+            holder.addOrder1.setText("");
+            holder.addOrder2.setText("");
+            holder.request.setText("");
+            holder.subTotalPrice.setText("");
+            holder.oStatus.setText("");
+        }
+
 }

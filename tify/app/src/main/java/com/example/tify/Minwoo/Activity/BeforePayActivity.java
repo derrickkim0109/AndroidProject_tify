@@ -53,7 +53,7 @@ public class BeforePayActivity extends AppCompatActivity {
     InetAddress serverAddr;
     Socket socket;
     PrintWriter sendWriter;
-    private String ip = "172.30.1.27";
+    private String ip = "211.195.53.163";
     private int port = 8888;
     String strStatus = null;
 
@@ -120,24 +120,25 @@ public class BeforePayActivity extends AppCompatActivity {
         ///////////////////////////////////////////////////////////////////////
         mHandler = new Handler();
 
-        new Thread() {
-            public void run() { // 받는 스레드
-                try {
-                    InetAddress serverAddr = InetAddress.getByName(ip);
-                    socket = new Socket(serverAddr, port);
-                    sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
-                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
-                    while(true){
-                        strStatus = input.readLine();
-                        Log.v(TAG, "Customer 받은 값 : " + strStatus);
-
-                        if(strStatus!=null){ // 점주가 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
-                            mHandler.post(new msgUpdate(strStatus));
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } }}.start();
+//        new Thread() {
+//            public void run() { // 받는 스레드
+//                try {
+//                    Log.v("통신 순서", "순서 1 - showOrder");
+//                    InetAddress serverAddr = InetAddress.getByName(ip);
+//                    socket = new Socket(serverAddr, port);
+//                    sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
+//                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
+//                    while(true){
+//                        strStatus = input.readLine();
+//                        Log.v(TAG, "Customer 받은 값 : " + strStatus);
+//
+//                        if(strStatus!=null){ // 점주가 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
+//                            mHandler.post(new msgUpdate(strStatus));
+//                        }
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                } }}.start();
 
 //        if(strStatus != null){ // 점주가 요청에 반응했을 때
 //            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
@@ -298,7 +299,7 @@ public class BeforePayActivity extends AppCompatActivity {
                 case R.id.beforePay_Btn_Card:
 
                     // 통신 -------------------------- 점주에게 접수 요청
-                    strStatus = sName;
+                    strStatus = "주문이 들어왔습니다!! \n주문내역을 확인해주세요.";
                     Log.v(TAG, "Customer 주는 값 : " + strStatus);
                     new Thread() { // 주는 스레드
                         @Override
@@ -332,8 +333,6 @@ public class BeforePayActivity extends AppCompatActivity {
 
                     connectInsertData(); // order Insert
 
-
-
                     where = "oNo";
                     urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
                     list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
@@ -343,7 +342,6 @@ public class BeforePayActivity extends AppCompatActivity {
                         oNo = list.get(0).getMax();
                     }
                     Log.v(TAG, "마지막 oNo : " + oNo);
-
 
 //                    // oNo Select
 //                    where = "select";
@@ -513,16 +511,17 @@ public class BeforePayActivity extends AppCompatActivity {
 
         @Override
         public void run() {
+            Log.v("통신 순서", "순서 2 - msgUpdate");
             Log.v(TAG, "msgUpdate msg : " + msg);
 //            status.setText(status.getText().toString()+msg+"\n");
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(BeforePayActivity.this);
-            builder.setTitle("주문 결과");
-            builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
-            builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
-            builder.show();
-
-            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
+//            AlertDialog.Builder builder = new AlertDialog.Builder(BeforePayActivity.this);
+//            builder.setTitle("주문 결과");
+//            builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
+//            builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
+//            builder.show();
+//
+//            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
 
         }
     }
