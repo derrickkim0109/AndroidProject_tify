@@ -70,19 +70,15 @@
         android:gravity="center"
         android:layout_margin="10dp"
         android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/card_check_agree"
-        android:src="@drawable/ic_action_agree_check"
-        android:layout_width="40dp"
-        android:layout_gravity="center"
-        android:layout_height="40dp"/>
-        <TextView
-            android:layout_gravity="center"
+        <CheckBox
+            android:id="@+id/login_cb_AutoLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="위 구매조건을 확인, 결제진행에 동의합니다.">
-
-        </TextView>
+            android:text="위 구매조건을 확인, 결제진행에 동의합니다."
+            android:textColor="@color/input_login"
+            android:textSize="11dp"
+            android:buttonTint="@color/mainColor"
+            />
     </LinearLayout>
 
     <LinearLayout
