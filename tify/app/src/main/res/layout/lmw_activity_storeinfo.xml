@@ -33,9 +33,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="스타벅스"
+                android:layout_weight="2"
                 android:layout_gravity="left"
                 android:textSize="45dp"
-                android:paddingTop="100dp"
+                android:gravity="bottom"
                 android:textColor="@color/white"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="50dp"/>
@@ -44,10 +45,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="서울 어디어디"
+                android:layout_weight="1"
                 android:layout_gravity="left"
                 android:textSize="20dp"
                 android:textColor="@color/white"
-                android:layout_marginBottom="20dp"
+
                 android:layout_marginLeft="50dp"/>
             </LinearLayout>
 

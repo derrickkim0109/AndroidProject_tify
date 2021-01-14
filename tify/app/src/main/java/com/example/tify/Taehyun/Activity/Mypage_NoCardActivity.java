@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,8 +27,8 @@ public class Mypage_NoCardActivity extends AppCompatActivity {
     ShareVar shareVar =new ShareVar();
     String MacIP = shareVar.getMacIP();
 
-    ImageView nocard_firstbtn, nocard_cardadd_btn;
-
+    ImageView nocard_firstbtn;
+    Button nocard_cardadd_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

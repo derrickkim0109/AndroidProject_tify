@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Activity.LoginActivity;
+import com.example.tify.Hyeona.Activity.MypageActivity_paymentlist;
 import com.example.tify.Hyeona.Activity.qrActivity;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.Minwoo.Activity.BeforePayActivity;
@@ -149,6 +150,7 @@ public class MypageActivity extends AppCompatActivity {
 
         data.add(new Bean_MypageList("프로필 변경", R.drawable.ic_action_go));
         data.add(new Bean_MypageList("카드등록   ", R.drawable.ic_action_go));
+        data.add(new Bean_MypageList("내 결제 내역", R.drawable.ic_action_go));
         data.add(new Bean_MypageList("로그아웃   ", R.drawable.ic_action_go));
 
         adapter = new MypageListAdapter(MypageActivity.this, R.layout.kth_activity_mypage_list, data);
@@ -212,8 +214,13 @@ public class MypageActivity extends AppCompatActivity {
 
                     break;
 
-                //로그아웃
+                //내 주문 내역
                 case 2:
+                    intent = new Intent(MypageActivity.this, MypageActivity_paymentlist.class);
+                    startActivity(intent);
+
+                    //로그아웃
+                case 3:
                     AlertDialog.Builder builder = new AlertDialog.Builder(MypageActivity.this);
                     builder.setTitle("로그아웃");
                     builder.setMessage("로그아웃 하시겠습니까?");

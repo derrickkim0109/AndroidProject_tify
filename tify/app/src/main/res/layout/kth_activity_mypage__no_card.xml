@@ -13,22 +13,36 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
+        android:layout_margin="20dp"
         >
+
         <ImageView
             android:id="@+id/nocard_firstbtn"
-            android:src="@drawable/card_enrooool"
+            android:src="@drawable/cardimg01"
             android:layout_width="300dp"
             android:layout_height="120dp"
             android:layout_marginTop="250dp"
 
             />
-        <ImageView
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:gravity="center"
+            android:text="결제수단을 등록해주세요">
+
+        </TextView>
+        <Button
+            android:layout_width="match_parent"
+            android:text="결제수단 등록하기"
+            android:drawableRight="@drawable/ic_action_h_0211"
+            android:background="@drawable/button_shape"
+            app:backgroundTint="@color/mainColor"
             android:id="@+id/nocard_cardadd_btn"
-            android:src="@drawable/card_enroll"
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="30dp"
-            />
+            android:layout_height="wrap_content">
+        </Button>
+
 
     </LinearLayout>
 </LinearLayout>
