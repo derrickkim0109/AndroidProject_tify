@@ -77,7 +77,9 @@ public class LoginActivity extends AppCompatActivity {
 
                         intent.putExtra("macIP", "172.30.1.27");
                         intent.putExtra("skSeqNo", datas.get(0).getSkSeqNo());
+                        intent.putExtra("skStatus", datas.get(0).getSkStatus());
                         Log.v(TAG, "skSeqNo : " + datas.get(0).getSkSeqNo());
+                        Log.v(TAG, "skStatus : " + datas.get(0).getSkStatus());
 
                         startActivity(intent);
                     }

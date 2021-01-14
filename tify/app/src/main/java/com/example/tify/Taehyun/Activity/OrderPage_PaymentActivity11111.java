@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +27,6 @@ import com.example.tify.R;
 import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Adapter.Mypage_CardListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_cardlist;
-import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_RecycleView_CardView;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 import com.kakao.usermgmt.UserManagement;
@@ -40,7 +36,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class OrderPage_PaymentActivity extends AppCompatActivity {
+public class OrderPage_PaymentActivity11111 extends AppCompatActivity {
 
     //field
     final static String TAG = "OrderPage_PaymentActivity";
@@ -79,6 +75,20 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
     CheckBox orderPay_CB;
     Button orderPay_insertbtn;
 
+    // BeforePayActivity2 (Cart)
+    ArrayList<Cart> carts = null;
+    String from = null;
+    int totalPrice = 0;
+
+    // BeforePayActivity
+    String menu_mName;
+    int olSizeUp;
+    int olAddShot;
+    String olRequest;
+    int olPrice;
+    int olQuantity;
+    int store_SeqNo; // 옮겨 넣기
+    String sName;
 
 
     //jsp적을 주소
@@ -117,7 +127,6 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
 
     @SuppressLint("LongLogTag")
     private void inheritance() {
-
         point = intent.getIntExtra("point",0);
         from = intent.getStringExtra("from");
         totalPrice = intent.getIntExtra("total", 0);
@@ -128,6 +137,18 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
             carts = (ArrayList<Cart>) getIntent().getSerializableExtra("Carts");
 
         }else { //
+        Log.v(TAG, "from : " + from);
+        Log.v(TAG, "totalPrice : " + totalPrice);
+        Log.v(TAG, "point : " + point);
+        Log.v(TAG, "store_SeqNo : " + store_SeqNo); // 옮겨 넣기
+        if(from.equals("BeforePayActivity2")){ // 장바구니에서 왔음
+            carts = (ArrayList<Cart>) getIntent().getSerializableExtra("Carts");
+
+            for(int i = 0; i < carts.size(); i++){
+                Log.v(TAG, "carts : " + carts.get(i).getMenu_mName());
+            }
+
+        }else { // 바로결제에서 왔음
             menu_mName = intent.getStringExtra("menu_mName");
             olSizeUp = intent.getIntExtra("olSizeUp", 0);
             olAddShot = intent.getIntExtra("olAddShot", 0);
@@ -136,7 +157,13 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
             olQuantity = intent.getIntExtra("olQuantity", 0);
             sName = intent.getStringExtra("sName");
 
-
+            Log.v(TAG, "menu_mName : " + menu_mName);
+            Log.v(TAG, "olSizeUp : " + olSizeUp);
+            Log.v(TAG, "olAddShot : " + olAddShot);
+            Log.v(TAG, "olRequest : " + olRequest);
+            Log.v(TAG, "olPrice : " + olPrice);
+            Log.v(TAG, "olQuantity : " + olQuantity);
+            Log.v(TAG, "sName : " + sName);
         }
     }
 
@@ -147,6 +174,13 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
         oderPay_oPriceTV = findViewById(R.id.oderPay_oPrice);
         orderPay_CB = findViewById(R.id.orderPay_CB);
         orderPay_insertbtn = findViewById(R.id.orderPay_insertbtn);
+
+        // 결제 가격
+        Log.v("TAG", " 최종 totalPrice : " + totalPrice);
+        NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
+        String strTotal = moneyFormat.format(totalPrice);
+        oderPay_oPriceTV.setText(strTotal + "원");
+        // --------------------
 
         orderPay_CB.setOnClickListener(mClickListener);
         orderPay_insertbtn.setOnClickListener(mClickListener);
@@ -236,7 +270,9 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
             //레이아웃 매니저 만들기            //가로 레이아웃  - 카드 그림
             layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
             recyclerView.setLayoutManager(layoutManager);
-            cardListAdapter = new Mypage_CardListAdapter(OrderPage_PaymentActivity.this, R.layout.kth_activity_mypage_cardimagelist,bean_mypage_cardlists,MacIP,user_uNo);
+            cardListAdapter = new Mypage_CardListAdapter(OrderPage_PaymentActivity11111.this, R.layout.kth_activity_mypage_cardimagelist,bean_mypage_cardlists,MacIP,user_uNo);
+
+
 
             //어댑터에게 보내기
             recyclerView.setAdapter(cardListAdapter);

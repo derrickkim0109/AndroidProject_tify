@@ -19,23 +19,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.tify.Minwoo.Bean.Order;
-import com.example.tify.Minwoo.Bean.OrderList;
 import com.example.tify.Minwoo.NetworkTask.LMW_OrderListNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_OrderNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_PointNetworkTask;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
+import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity11111;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -95,6 +89,8 @@ public class BeforePayActivity extends AppCompatActivity {
     int oNo;
     int point;
 
+    int getPoint;
+    int discountedPrice;
     String tempText;
 
     // 통신 ------------- 소켓 닫는 거
@@ -102,7 +98,7 @@ public class BeforePayActivity extends AppCompatActivity {
 //    protected void onStop() {
 //        super.onStop();
 //        try {
-//            sendWriter.close();
+////            sendWriter.close();
 //            socket.close();
 //        } catch (IOException e) {
 //            e.printStackTrace();
@@ -118,7 +114,7 @@ public class BeforePayActivity extends AppCompatActivity {
         // 통신 ------------------------------------------------
         ///////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////
-        mHandler = new Handler();
+//        mHandler = new Handler();
 
 //        new Thread() {
 //            public void run() { // 받는 스레드
@@ -256,8 +252,7 @@ public class BeforePayActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent intent = null;
 
-            int getPoint;
-            int discountedPrice;
+
             int remainPoint;
             NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
 
@@ -299,21 +294,21 @@ public class BeforePayActivity extends AppCompatActivity {
                 case R.id.beforePay_Btn_Card:
 
                     // 통신 -------------------------- 점주에게 접수 요청
-                    strStatus = "주문이 들어왔습니다!! \n주문내역을 확인해주세요.";
-                    Log.v(TAG, "Customer 주는 값 : " + strStatus);
-                    new Thread() { // 주는 스레드
-                        @Override
-                        public void run() {
-                            super.run();
-                            try {
-                                sendWriter.println(strStatus);
-                                sendWriter.flush();
-//                            message.setText("");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }.start();
+//                    strStatus = "주문이 들어왔습니다!! \n주문내역을 확인해주세요.";
+//                    Log.v(TAG, "Customer 주는 값 : " + strStatus);
+//                    new Thread() { // 주는 스레드
+//                        @Override
+//                        public void run() {
+//                            super.run();
+//                            try {
+//                                sendWriter.println(strStatus);
+//                                sendWriter.flush();
+////                            message.setText("");
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }.start();
                     // ------------------------------
 
 
@@ -326,44 +321,71 @@ public class BeforePayActivity extends AppCompatActivity {
 
                     // 테스트 ---------
                     // order 테이블 Insert
-                    where = "insert";
-                    int cardNum = 13153123;
-                    String cardName = "신한은행";
-                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_insert.jsp?user_uNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&oSum=" + totalPrice + "&oCardName=" + cardName + "&oCardNo=" + cardNum + "&oReview=" + 0 + "&oStatus=" + 0;
-
-                    connectInsertData(); // order Insert
-
-                    where = "oNo";
-                    urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
-                    list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
-                    if (list.size() == 0){
-                        oNo = 1;
-                    }else{
-                        oNo = list.get(0).getMax();
-                    }
-                    Log.v(TAG, "마지막 oNo : " + oNo);
+//                    where = "insert";
+//                    int cardNum = 13153123;
+//                    String cardName = "신한은행";
+//                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_insert.jsp?user_uNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&oSum=" + totalPrice + "&oCardName=" + cardName + "&oCardNo=" + cardNum + "&oReview=" + 0 + "&oStatus=" + 0;
+//
+//                    connectInsertData(); // order Insert
+//
+//                    where = "oNo";
+//                    urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
+//                    list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
+//                    if (list.size() == 0){
+//                        oNo = 1;
+//                    }else{
+//                        oNo = list.get(0).getMax();
+//                    }
+//                    Log.v(TAG, "마지막 oNo : " + oNo);
 
 //                    // oNo Select
-//                    where = "select";
-//                    urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
+                        where = "select";
+                        urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
 
 //                    list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
 //                    int oNo = list.get(0).getoNo();
 //                    Log.v(TAG, "받은 oNo : " + oNo);
 
                     // orderlist 테이블 Insert
-                    where = "insert";
-                    urlAddr = "http://" + macIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uSeqNo + "&order_oNo=" + oNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&menu_mName=" + menu_mName + "&olSizeUp=" + olSizeUp + "&olAddShot=" + olAddShot + "&olRequest=" + olRequest + "&olPrice=" + olPrice + "&olQuantity=" + olQuantity;
+//                    where = "insert";
+//                    urlAddr = "http://" + macIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uSeqNo + "&order_oNo=" + oNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&menu_mName=" + menu_mName + "&olSizeUp=" + olSizeUp + "&olAddShot=" + olAddShot + "&olRequest=" + olRequest + "&olPrice=" + olPrice + "&olQuantity=" + olQuantity;
+//
+//                    connectInsertData(); // orderlist Insert
+//
+//                    // 테스트용
+//                    intent = new Intent(BeforePayActivity.this, OrderListActivity.class);
+//                    intent.putExtra("macIP", macIP);
+//                    intent.putExtra("user_uSeqNo", user_uSeqNo);
+//                    intent.putExtra("store_sSeqNo", store_sSeqNo);
+//                    intent.putExtra("totalPrice", totalPrice);
+//                    intent.putExtra("user_uSeqNo", user_uSeqNo);
+//                    intent.putExtra("from", "BeforePayActivity");
+//                    startActivity(intent);
 
-                    connectInsertData(); // orderlist Insert
-
-                    // 테스트용
-                    intent = new Intent(BeforePayActivity.this, OrderListActivity.class);
-                    intent.putExtra("macIP", macIP);
-                    intent.putExtra("user_uSeqNo", user_uSeqNo);
+                    intent = new Intent(BeforePayActivity.this, OrderPage_PaymentActivity11111.class);
+                    intent.putExtra("olPrice", olPrice);
+                    intent.putExtra("menu_mName", menu_mName);
+                    intent.putExtra("olSizeUp", olSizeUp);
+                    intent.putExtra("olAddShot", olAddShot);
+                    intent.putExtra("olRequest", olRequest);
+                    intent.putExtra("olQuantity", olQuantity);
+                    intent.putExtra("sName", sName);
+                    intent.putExtra("from", "BeforePayActivity");
                     intent.putExtra("store_sSeqNo", store_sSeqNo);
-                    intent.putExtra("totalPrice", totalPrice);
-                    intent.putExtra("user_uSeqNo", user_uSeqNo);
+
+                    if(discountedPrice == 0){
+                        intent.putExtra("total", totalPrice);
+                    }else{
+                        intent.putExtra("total", discountedPrice);
+                    }
+                    Log.v(TAG, "total : " + discountedPrice);
+                    Log.v(TAG, "total : " + totalPrice);
+
+                    if(getPoint == 0){
+                        intent.putExtra("point", 0);
+                    }else{
+                        intent.putExtra("point", getPoint);
+                    }
                     startActivity(intent);
 
                     break;
@@ -505,25 +527,25 @@ public class BeforePayActivity extends AppCompatActivity {
     }
 
     // 통신 ------------------------------------------
-    class msgUpdate implements Runnable{ // 받아서 작동하는 메소드
-        private String msg;
-        public msgUpdate(String str) {this.msg=str;}
-
-        @Override
-        public void run() {
-            Log.v("통신 순서", "순서 2 - msgUpdate");
-            Log.v(TAG, "msgUpdate msg : " + msg);
-//            status.setText(status.getText().toString()+msg+"\n");
-
-//            AlertDialog.Builder builder = new AlertDialog.Builder(BeforePayActivity.this);
-//            builder.setTitle("주문 결과");
-//            builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
-//            builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
-//            builder.show();
+//    class msgUpdate implements Runnable{ // 받아서 작동하는 메소드
+//        private String msg;
+//        public msgUpdate(String str) {this.msg=str;}
 //
-//            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
-
-        }
-    }
+//        @Override
+//        public void run() {
+//            Log.v("통신 순서", "순서 2 - msgUpdate");
+//            Log.v(TAG, "msgUpdate msg : " + msg);
+////            status.setText(status.getText().toString()+msg+"\n");
+//
+////            AlertDialog.Builder builder = new AlertDialog.Builder(BeforePayActivity.this);
+////            builder.setTitle("주문 결과");
+////            builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
+////            builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
+////            builder.show();
+////
+////            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
+//
+//        }
+//    }
     // -----------------------------------------------
 }

@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private int port = 8888;
     String strStatus = null;
     String sendStatus = null;
+    int check_Socket = 0;
 
     // DB Connect
     String macIP;
@@ -61,16 +62,20 @@ public class MainActivity extends AppCompatActivity {
     Fragment CompleteFragment, OrderRequestFragment, ProgressingFragment;
 
     // 통신 ---------------------- 소켓 끊기
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        try {
-//            sendWriter.close();
-//            socket.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            Log.v(TAG, "소켓 닫힘");
+
+                sendWriter.close();
+                socket.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     // ----------------------------------
 
     @Override
@@ -86,22 +91,23 @@ public class MainActivity extends AppCompatActivity {
         new Thread() {
             public void run() { // 받는 스레드
                 try {
-                    InetAddress serverAddr = InetAddress.getByName(ip);
-                    socket = new Socket(serverAddr, port);
-                    sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
-                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
-                    while(true){
-                        Log.v("통신 순서", "순서 1 - 받는 스레드");
-                        strStatus = input.readLine();
-                        Log.v("통신 확인(tify_store)", "Store 받은 값 : " + strStatus);
+                        InetAddress serverAddr = InetAddress.getByName(ip);
+                        socket = new Socket(serverAddr, port);
+                        sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
+                        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
+                        while(true){
+                            Log.v("통신 순서", "순서 1 - 받는 스레드");
+                            strStatus = input.readLine();
+                            Log.v("통신 확인(tify_store)", "Store 받은 값 : " + strStatus);
 
-                        if(strStatus!=null){ // 고객이 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
-                            mHandler.post(new showOrder(strStatus));
+                            if(strStatus!=null){ // 고객이 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
+                                mHandler.post(new showOrder(strStatus));
+                            }
                         }
-                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } }}.start();
+
 
         //////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////
@@ -113,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         macIP = intent.getStringExtra("macIP");
         skSeqNo = intent.getIntExtra("skSeqNo", 0);
+        skStatus = intent.getIntExtra("skStatus", 0);
+
 
         // 툴바 생성
         Toolbar toolbar = (Toolbar)findViewById(R.id.lmw_main_toolbar); // 상단 툴바
@@ -269,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("test", "onPrepareOptionsMenu - 옵션메뉴가 " +
                 "화면에 보여질때 마다 호출됨");
 
-        if(strResult.equals("1")){
+        if(strResult.equals("1") || skStatus == 1){
             Log.v(TAG, "오픈 상태 : 오픈");
             menu.getItem(0).setIcon(R.drawable.ic_action_storeopen_open);
         }

@@ -34,6 +34,7 @@ import com.example.tify.Hyeona.Activity.main_search;
 import com.example.tify.Hyeona.Activity.qrActivity;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_userinfo;
 import com.example.tify.Jiseok.Adapta.MainCafeListAdapter;
+import com.example.tify.Jiseok.Adapta.MainCafeListAdapter_Top10;
 import com.example.tify.Jiseok.Bean.Bean_MainCafeList_cjs;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask_CafeList;
@@ -67,14 +68,16 @@ public class JiseokMainActivity extends AppCompatActivity {
 
 
     private RecyclerView recyclerView = null;
+    private RecyclerView recyclerView2 =null;
     private RecyclerView.LayoutManager layoutManager = null;
     MainCafeListAdapter mainCafeListAdapter =null;
+    MainCafeListAdapter_Top10 mainCafeListAdapter_top10 = null;
     Bean_MainCafeList_cjs bean_mainCafeList_cjs = new Bean_MainCafeList_cjs();
     ArrayList<Bean_MainCafeList_cjs> arrayList = null;
     String userEmail;
     int userSeq;
     String userNickName;
-    String myLocation;
+    String myLocation="noLocation";
     int coffeeCount = 0;
 
 
@@ -88,7 +91,7 @@ public class JiseokMainActivity extends AppCompatActivity {
         userEmail = auto.getString("userEmail", null);
         userSeq = auto.getInt("userSeq", 0);
         userNickName = auto.getString("userNickName", null);
-        myLocation = auto.getString("myLocation", null);
+        myLocation = auto.getString("myLocation", "noLocation");
 
 
 
@@ -110,8 +113,8 @@ public class JiseokMainActivity extends AppCompatActivity {
 
         nickname_main = findViewById(R.id.nickname_main);
 
-        nickname_main.setText(userNickName+"님 근처에 있는 카페");
-        nickname_main.clearComposingText();
+
+
         // 만약 주소값이 없으면 이부분 변경 해야 한다.
 
 
@@ -120,10 +123,17 @@ public class JiseokMainActivity extends AppCompatActivity {
 
 
         // 리스트 띄우기
-        if(myLocation != null){
+        if(myLocation == "noLocation"){
+            selectCafeList();
+            main_Edit_SearchText.setText("위치를 설정해주세요.");
+            nickname_main.setText("Top 10 카페리스트");
+
+        }else{
             selectCafeList();
             Log.v("내위치","구간 2-----");
             main_Edit_SearchText.setText(myLocation.substring(0,myLocation.indexOf(" ",3))+"에 계신가요?");
+            nickname_main.setText(userNickName+"님 근처에 있는 카페");
+            mainCafeListAdapter.setOnItemClickListener(rcvClick);
         }
         Log.v("내위치","구간 3-----");
 
@@ -217,16 +227,40 @@ public class JiseokMainActivity extends AppCompatActivity {
         imgSearch.setOnClickListener(mapListener);
 
 
-        if(myLocation != null){
 
+        if(myLocation == "noLocation"){
+
+
+        }else{
             mainCafeListAdapter.setOnItemClickListener(rcvClick);
-
         }
+
+
+
 
 
     }
 
     MainCafeListAdapter.OnItemClickListener rcvClick = new MainCafeListAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View v, int position) {
+
+            Intent intent = new Intent(JiseokMainActivity.this, StoreInfoActivity.class);
+            intent.putExtra("sName",arrayList.get(position).getsName());
+            intent.putExtra("sAddress",arrayList.get(position).getsAddress());
+            intent.putExtra("sImage",arrayList.get(position).getsImage());
+            intent.putExtra("sTime",arrayList.get(position).getsRunningTime());
+            intent.putExtra("sTelNo",arrayList.get(position).getsTelNo());
+            intent.putExtra("sPackaging",arrayList.get(position).getsPackaging());
+            intent.putExtra("sComment",arrayList.get(position).getsComment());
+            intent.putExtra("skSeqNo",arrayList.get(position).getStorekeeper_skSeqNo());
+            intent.putExtra("skStatus",arrayList.get(position).getSkStatus());
+            startActivity(intent);
+
+        }
+    };
+
+    MainCafeListAdapter.OnItemClickListener rcvClick2 = new MainCafeListAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
 
@@ -300,16 +334,17 @@ public class JiseokMainActivity extends AppCompatActivity {
         }
 
 
+
+
         private void selectCafeList(){
             String urlAddr="";
 
             try {
-               if(myLocation==null){
-                   urlAddr = "http://" + MacIP + ":8080/tify/cjs_mainCafeListTOP10.jsp";
-               }else {
-                   urlAddr = "http://" + MacIP + ":8080/tify/mainCafeLocationList.jsp";
-               }
-
+                if(myLocation.equals("noLocation")){
+                    urlAddr = "http://" + MacIP + ":8080/tify/cjs_mainCafeListTOP10.jsp";
+                }else {
+                    urlAddr = "http://" + MacIP + ":8080/tify/mainCafeLocationList.jsp";
+                }
                 Log.v("여기여기여기", "urlAddr : " + urlAddr);
                 CJS_NetworkTask_CafeList cjs_networkTask_cafeList = new CJS_NetworkTask_CafeList(JiseokMainActivity.this,urlAddr,"selectCafeList");
                 Object obj = cjs_networkTask_cafeList.execute().get();
@@ -343,14 +378,19 @@ public class JiseokMainActivity extends AppCompatActivity {
 
                 // 1000미터 안에있는 매장의 수 구하기
                 int arrayCount = 0;
-                for(int i=0;i<arrayList.size();i++){
-                    latitude2=findGeoPoint(JiseokMainActivity.this,arrayList.get(i).getsAddress()).getLatitude();
-                    longitude2=findGeoPoint(JiseokMainActivity.this,arrayList.get(i).getsAddress()).getLongitude();
-                    Log.v("여기여기여기",arrayList.get(i).getsAddress());
+                if(myLocation.equals("noLocation")) {
+                    arrayCount=arrayList.size();
+                }else{
 
-                    Location2=new LatLng(latitude2,longitude2);
-                    Log.v("여기여기여기",""+getDistance(Location1,Location2));
-                    if(getDistance(Location1,Location2)<1000.0) arrayCount++;
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        latitude2 = findGeoPoint(JiseokMainActivity.this, arrayList.get(i).getsAddress()).getLatitude();
+                        longitude2 = findGeoPoint(JiseokMainActivity.this, arrayList.get(i).getsAddress()).getLongitude();
+                        Log.v("여기여기여기", arrayList.get(i).getsAddress());
+
+                        Location2 = new LatLng(latitude2, longitude2);
+                        Log.v("여기여기여기", "" + getDistance(Location1, Location2));
+                        if (getDistance(Location1, Location2) < 1000.0) arrayCount++;
+                    }
                 }
 
                 Log.v("여기여기여기", "arrayList : " + arrayList);
@@ -358,13 +398,67 @@ public class JiseokMainActivity extends AppCompatActivity {
                 Log.v("여기여기여기", "arrayCount : " + arrayCount);
                 String cc = "ok";
 
+
                 mainCafeListAdapter = new MainCafeListAdapter(JiseokMainActivity.this,R.layout.cha_maincafe_content,arrayList,myLocation,arrayCount);
                 recyclerView.setAdapter(mainCafeListAdapter);
+
 
             } catch (Exception e) {
 
             }
         }
+
+    private void selectCafeListTop10(){
+        String urlAddr="";
+
+        try {
+
+                urlAddr = "http://" + MacIP + ":8080/tify/cjs_mainCafeListTOP10.jsp";
+                Log.v("노위치",urlAddr);
+
+            Log.v("여기여기여기", "urlAddr : " + urlAddr);
+            CJS_NetworkTask_CafeList cjs_networkTask_cafeList = new CJS_NetworkTask_CafeList(JiseokMainActivity.this,urlAddr,"selectCafeList");
+            Object obj = cjs_networkTask_cafeList.execute().get();
+
+            arrayList = (ArrayList<Bean_MainCafeList_cjs>) obj;
+
+            Log.v("여기여기여기", "arrayList : " + arrayList.size());
+            Log.v("여기여기여기", "arrayList : " + arrayList);
+
+            Log.v("리사이클",""+arrayList.get(1).getsAddress());
+            Log.v("리사이클",""+arrayList.size());
+
+            //리사이클러뷰 규격 만들기
+            recyclerView.setHasFixedSize(true);
+
+
+            //레이아웃 매니저 만들기
+            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+            recyclerView.setLayoutManager(staggeredGridLayoutManager);
+
+//            LatLng Location1,Location2;
+//            double latitude;
+//            double longitude;
+//            double latitude2;
+//            double longitude2;
+//
+//            latitude=findGeoPoint(JiseokMainActivity.this,myLocation).getLatitude();
+//            longitude=findGeoPoint(JiseokMainActivity.this,myLocation).getLongitude();
+//            Location1= new LatLng(latitude,longitude);
+
+
+
+            Log.v("여기여기여기", "arrayList : " + arrayList);
+            Log.v("여기여기여기", "myLocation : " + myLocation);
+            String cc = "ok";
+
+            mainCafeListAdapter_top10 = new MainCafeListAdapter_Top10(JiseokMainActivity.this,R.layout.cha_maincafe_content,arrayList,myLocation);
+            recyclerView.setAdapter(mainCafeListAdapter_top10);
+
+        } catch (Exception e) {
+
+        }
+    }
 
 
 

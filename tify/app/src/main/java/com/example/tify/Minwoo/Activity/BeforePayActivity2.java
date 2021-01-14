@@ -21,7 +21,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tify.Minwoo.Adapter.CartAdapter;
 import com.example.tify.Minwoo.Bean.Cart;
 import com.example.tify.Minwoo.Bean.Order;
 import com.example.tify.Minwoo.Bean.OrderList;
@@ -31,6 +30,7 @@ import com.example.tify.Minwoo.NetworkTask.LMW_OrderNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_PointNetworkTask;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
+import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity11111;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -78,10 +78,13 @@ public class BeforePayActivity2 extends AppCompatActivity {
     int oNo;
     int point;
 
+    int getPoint;
+
     String strPoint;
     String strDiscountPoint;
     String strRemainPoint;
     String strTotal;
+    int discountedPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,7 @@ public class BeforePayActivity2 extends AppCompatActivity {
         where = "oNo";
         urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
         list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
+
         connectPoint(); // 포인트 불러오기 // 포인트 불러오기
         oNo = list.get(0).getMax() + 1;
         Log.v(TAG, "마지막 oNo : " + oNo);
@@ -201,8 +205,7 @@ public class BeforePayActivity2 extends AppCompatActivity {
 
             Intent intent = null;
 
-            int getPoint;
-            int discountedPrice;
+
             int remainPoint;
             NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
 
@@ -258,30 +261,49 @@ public class BeforePayActivity2 extends AppCompatActivity {
 
                     // 테스트 ---------
                     // order 테이블 Insert
-                    where = "insert1";
-                    int cardNum = 13153123;
-                    String cardName = "신한은행";
-                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_insert.jsp?user_uNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&oSum=" + total + "&oCardName=" + cardName + "&oCardNo=" + cardNum + "&oReview=" + 0 + "&oStatus=" + 0;
-
-                    connectInsertData(); // order Insert
+//                    where = "insert1";
+//                    int cardNum = 13153123;
+//                    String cardName = "신한은행";
+//                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_insert.jsp?user_uNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&oSum=" + total + "&oCardName=" + cardName + "&oCardNo=" + cardNum + "&oReview=" + 0 + "&oStatus=" + 0;
+//
+//                    connectInsertData(); // order Insert
 
                     // orderlist 테이블 Insert
-                    for(int i = 0; i < carts.size(); i++){ // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
-                        where = "insert";
-                        urlAddr = "http://" + macIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uSeqNo + "&order_oNo=" + oNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp() + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice() + "&olQuantity=" + carts.get(i).getcLQuantity();
-                        connectInsertData(); // orderlist Insert
-                    }
+//                    for(int i = 0; i < carts.size(); i++){ // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
+//                        where = "insert";
+//                        urlAddr = "http://" + macIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uSeqNo + "&order_oNo=" + oNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp() + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice() + "&olQuantity=" + carts.get(i).getcLQuantity();
+//                        connectInsertData(); // orderlist Insert
+//                    }
 
                     // 테스트용
-                    intent = new Intent(BeforePayActivity2.this, OrderListActivity.class);
-                    intent.putExtra("macIP", macIP);
-                    intent.putExtra("user_uSeqNo", user_uSeqNo);
-                    intent.putExtra("store_sSeqNo", store_sSeqNo);
-                    intent.putExtra("totalPrice", total);
-                    intent.putExtra("user_uSeqNo", user_uSeqNo);
-                    intent.putExtra("from", from);
-                    startActivity(intent);
+//                    intent = new Intent(BeforePayActivity2.this, OrderListActivity.class);
+//                    intent.putExtra("macIP", macIP);
+//                    intent.putExtra("user_uSeqNo", user_uSeqNo);
+//                    intent.putExtra("store_sSeqNo", store_sSeqNo);
+//                    intent.putExtra("totalPrice", total);
+//                    intent.putExtra("user_uSeqNo", user_uSeqNo);
+//                    intent.putExtra("from", from);
+//                    startActivity(intent);
 
+                    intent = new Intent(BeforePayActivity2.this, OrderPage_PaymentActivity11111.class);
+                    intent.putExtra("Carts", carts);
+                    intent.putExtra("from", "BeforePayActivity2");
+                    intent.putExtra("store_sSeqNo", store_sSeqNo);
+
+                    if(discountedPrice == 0){
+                        intent.putExtra("total", total);
+                    }else{
+                        intent.putExtra("total", discountedPrice);
+                    }
+                    Log.v(TAG, "total : " + discountedPrice);
+                    Log.v(TAG, "total : " + total);
+
+                    if(getPoint == 0){
+                        intent.putExtra("point", 0);
+                    }else{
+                        intent.putExtra("point", getPoint);
+                    }
+                    startActivity(intent);
                     break;
             }
 
@@ -372,6 +394,8 @@ public class BeforePayActivity2 extends AppCompatActivity {
 
             Object obj = networkTask.execute().get();
             carts = (ArrayList<Cart>) obj;
+
+            Cart cart = new Cart(carts);
             Log.v(TAG, "data.size() : " + carts.size());
 
 

@@ -1,8 +1,6 @@
 package com.example.tify.Jiseok.Adapta;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -10,19 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
-import com.example.tify.Hyeona.Adapter.stampOrder_adapter;
-import com.example.tify.Hyeona.Bean.Bean_reward_stamphistory;
-import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.Jiseok.Bean.Bean_MainCafeList_cjs;
 import com.example.tify.R;
 import com.google.android.gms.maps.model.LatLng;
@@ -32,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapter.MyViewHolder>{
+public class MainCafeListAdapter_Top10 extends RecyclerView.Adapter<MainCafeListAdapter_Top10.MyViewHolder>{
 
     ArrayList<Bean_MainCafeList_cjs> arrayList=null;
     String myLocation ="강남";
@@ -51,29 +44,28 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
     //-----------------Click Event---------------------
     //-----------------Click Event---------------------
     //인터페이스 선언
-    public interface OnItemClickListener{
-        void onItemClick(View v, int position);
+    public interface OnItemClickListener2{
+        void onItemClick2(View v, int position);
     }
-    private OnItemClickListener mListener = null;
+    private OnItemClickListener2 mListener2 = null;
 
     //메인에서 사용할 클릭메서드 선언
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.mListener = listener;
+    public void setOnItemClickListener2(OnItemClickListener2 listener2){
+        this.mListener2 = listener2;
     }
     //-----------------Click Event---------------------
     //-----------------Click Event---------------------
 
 
-    public MainCafeListAdapter() {
+    public MainCafeListAdapter_Top10() {
     }
 
-    public MainCafeListAdapter(Context mContext, int layout, ArrayList<Bean_MainCafeList_cjs> bean_mainCafeList_cjs, String myLocation, int arrayCount){
+    public MainCafeListAdapter_Top10(Context mContext, int layout, ArrayList<Bean_MainCafeList_cjs> bean_mainCafeList_cjs, String myLocation){
         this.context = mContext;
         this.arrayList=bean_mainCafeList_cjs;
         this.myLocation=myLocation;
         this.latitude=findGeoPoint(context,myLocation).getLatitude();
         this.longitude=findGeoPoint(context,myLocation).getLongitude();
-        this.count=arrayCount;
     }
 
 
@@ -92,12 +84,6 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
     }
 
 
-    @Override
-    public void onViewRecycled(@NonNull MyViewHolder holder) {
-        super.onViewRecycled(holder);
-        holder.cafeTitle.clearComposingText();
-
-    }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
@@ -120,24 +106,15 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
             String strdistance = Double.toString(distance1);
 
             Log.v("위치","거리 :" +distance1);
-            Log.v("어탭터 내위치",myLocation);
-//            String ss[] = arrayList.get(position).getsAddress().split(" ");
-//            Log.v("왜왜왜",ss[0]+ss[1]+ss[2]);
 
-            if(myLocation.equals("noLocation")){
-                holder.cafeTitle.setText(arrayList.get(position).getsName());
-                holder.cafeLike.setText(arrayList.get(position).getLikeCount());
-                holder.cafeReviewCount.setText(arrayList.get(position).getReviewCount());
-                holder.distance.setText("");
-            }else {
-                if (distance1 < 1000.0) {
+
+
                     holder.cafeTitle.setText(arrayList.get(position).getsName());
                     holder.cafeLike.setText(arrayList.get(position).getLikeCount());
                     holder.cafeReviewCount.setText(arrayList.get(position).getReviewCount());
                     holder.distance.setText(strdistance.substring(0, strdistance.indexOf(".")) + " m");
                     Log.v("위치", "" + arrayList.get(position).getsAddress());
-                }
-            }
+
 
 
 
@@ -146,7 +123,9 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
 
     @Override
     public int getItemCount() {
-        return count;
+        Log.v("countcount","123");
+
+        return arrayList.size();
     }
 
 
@@ -180,8 +159,8 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
                     int position=getAdapterPosition();//어뎁터 포지션값
                     // 뷰홀더에서 사라지면 NO_POSITION 을 리턴
                     if(position!=RecyclerView.NO_POSITION){
-                        if(mListener !=null){
-                            mListener.onItemClick(view,position);
+                        if(mListener2 !=null){
+                            mListener2.onItemClick2(view,position);
                         }
                     }
                 }
