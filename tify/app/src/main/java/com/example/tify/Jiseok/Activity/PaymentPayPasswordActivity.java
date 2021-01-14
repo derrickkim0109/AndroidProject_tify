@@ -20,12 +20,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tify.Hyeona.Activity.Payment_resultActivity;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask_Mypage;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Activity.Mypage_PayPasswordActivity;
-import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity;
-import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
 import java.util.Random;
 
@@ -45,30 +44,19 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
     ImageView[] img = new ImageView[6];
     Random random = new Random();
     String [] btnNum = new String[10];//랜덤 10개수를 받아서 버튼에 넣음
-    String urlAddr2 =  "http://" + MacIP + ":8080/tify/orderPay_insert.jsp?";
+
     String payPassword1=null;
     String payPassword2=null;// 비밀번호 확인
     int payCheck=0; // 0일때 payPassword1, 1일때 payPassword2
 
     TextView tvComment,tvCount,tvTitle;
 
-    String urlAddress;
-    String urlAddress2;
     String userTel;
     String userEmail;
     String userProfile;
     String userNickName;
     int userSeq;
     String myLocation;
-    int point;
-    int oNo;
-    int cNo;
-    int store_SeqNo;
-    String sName;
-    int totalPrice;
-    String cCardCompany;
-    String card_cNo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,23 +71,6 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
         userSeq = auto.getInt("userSeq", 0);
         userNickName = auto.getString("userNickName", null);
         myLocation = auto.getString("myLocation", "noLocation");
-
-
-
-
-        Intent intent = getIntent();
-        point = intent.getIntExtra("point",0);
-        oNo = intent.getIntExtra("oNo",0);
-        cNo = intent.getIntExtra("cNo",0);
-        store_SeqNo = intent.getIntExtra("store_SeqNo",0);
-        sName = intent.getStringExtra("sName");
-        totalPrice = intent.getIntExtra("totalPrice",0);
-        cCardCompany = intent.getStringExtra("cCardCompany");
-        card_cNo = intent.getStringExtra("card_cNo");
-        urlAddress2 = intent.getStringExtra("urlAddress");
-
-
-
 
         btn[0]=findViewById(R.id.paymentPwd_btn0);
         btn[1]=findViewById(R.id.paymentPwd_btn1);
@@ -206,15 +177,16 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                     if(payPassword1.equals(selectPwd())){
                         Toast.makeText(PaymentPayPasswordActivity.this,"결제성공",Toast.LENGTH_SHORT).show();
                         // 결제 성공 디비액션
-                        connectOrderInsert();
-                        connectOrderListInsert(urlAddress2);
+
+
                         new AlertDialog.Builder(PaymentPayPasswordActivity.this)
                                 .setTitle("결제가 완료되었습니다.")
                                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         // 결제완료창으로 이동
-
+                                        Intent intent = new Intent(PaymentPayPasswordActivity.this, Payment_resultActivity.class);
+                                        startActivity(intent);
                                     }
                                 })
                                 .show();
@@ -317,7 +289,6 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
             btn[i].setText(btnNum[i]);
         }
     }
-
     //디비에 결제비밀번호 받아오기
     private String selectPwd(){
         String Pwd = "null";
@@ -336,47 +307,4 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
         }
         return Pwd;
     }
-
-
-
-    //결제 네트워크 타스크  -> order  순서 1
-    @SuppressLint("LongLogTag")
-    private String connectOrderInsert () {
-
-        urlAddress = urlAddr2 + "&user_uNo=" + userSeq + "&storekeeper_skSeqNo=" + store_SeqNo + "&store_sName=" + sName
-                + "&oSum=" + totalPrice + "&oCardName=" + cCardCompany + "&oCardNo=" + card_cNo;
-
-        String result = null;
-        try {
-            NetworkTask_TaeHyun insertNetworkTask = new NetworkTask_TaeHyun(PaymentPayPasswordActivity.this, urlAddress, "insert");
-            Object obj = insertNetworkTask.execute().get();
-            result = (String) obj;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-        return result;
-    }
-
-
-    // orderlist 테이블 Insert
-    //결제 네트워크 타스크  --> order -> orderlist 순서 2
-
-    private String connectOrderListInsert(String orderlistUrl) {
-        String result = null;
-        try {
-            NetworkTask_TaeHyun insertNetworkTask = new NetworkTask_TaeHyun(PaymentPayPasswordActivity.this, orderlistUrl, "insert");
-            Object obj = insertNetworkTask.execute().get();
-            result = (String) obj;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-        return result;
-    }
-
-
-
 }
