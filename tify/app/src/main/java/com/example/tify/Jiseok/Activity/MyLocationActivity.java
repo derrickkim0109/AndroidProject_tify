@@ -149,6 +149,10 @@ public class MyLocationActivity extends AppCompatActivity implements OnMapReadyC
                     autoLogin.putString("myLocation", myAddress);
                     autoLogin.commit();
                     Log.v("내위치",""+myAddress);
+                    new AlertDialog.Builder(MyLocationActivity.this)
+                            .setTitle("위치가 설정되었습니다.")
+                            .setPositiveButton("확인", null)
+                            .show();
                     break;
 //                case R.id.myLocation_img_backBtn:
 //                    startActivity(new Intent(MyLocationActivity.this,JiseokMainActivity.class));
