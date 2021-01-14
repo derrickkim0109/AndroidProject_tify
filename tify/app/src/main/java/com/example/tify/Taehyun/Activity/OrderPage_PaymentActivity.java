@@ -54,7 +54,9 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
     String MacIP = shareVar.getMacIP();
 
 
+
     //임시 유저 값.
+
      int user_uNo = 0;
 
 
@@ -105,6 +107,8 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cha_payment);
+
+
         intent = getIntent();
         inheritance();
         init();
@@ -112,6 +116,8 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
         user_uNo = auto.getInt("userSeq",0);
 
         urlAddr =  "http://" + MacIP + ":8080/tify/orderPay_insert.jsp?";
+
+
 
     }
 
@@ -158,6 +164,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                 }
 
             } else { // 바로결제에서 왔음
+
                 menu_mName = intent.getStringExtra("menu_mName");
                 olSizeUp = intent.getIntExtra("olSizeUp", 0);
                 olAddShot = intent.getIntExtra("olAddShot", 0);
@@ -186,9 +193,9 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                             break;
                         } else {
 
-                            String result = connectOrderInsert();
-                            Log.v(TAG,"result = " + result);
-                            if (result.equals("1")) {
+                            //String result = connectOrderInsert();
+//                            Log.v(TAG,"result = " + result);
+//                            if (result.equals("1")) {
 
                                 //oNo 다시 받아오기
                                 connectOrderNumber();
@@ -197,25 +204,40 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                                 Log.v(TAG,"oNo"+sName);
                                 Log.v(TAG,"oNo"+store_SeqNo);
                                 //orderlist에 들어갈 값들
-                                for (int i = 0; i < carts.size(); i++) { // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
-                                   String urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo="+ store_SeqNo + "&order_oNo=" + oNo +
-                                            "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp()
-                                            + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice()
-                                            + "&olQuantity=" + carts.get(i).getcLQuantity();
+                            Log.v("ddd",from);
+                                if(from.equals("BeforePayActivity2")) {
+                                    for (int i = 0; i < carts.size(); i++) { // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
+                                        urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo=" + store_SeqNo + "&order_oNo=" + oNo +
+                                                "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp()
+                                                + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice()
+                                                + "&olQuantity=" + carts.get(i).getcLQuantity();
 
-                                    connectOrderListInsert(urlAddress); // orderlist Insert
 
+                                    }
+                                }else{
+                                    urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo=" + store_SeqNo + "&order_oNo=" + oNo +
+                                            "&store_sName=" + sName + "&menu_mName=" + menu_mName + "&olSizeUp=" + olSizeUp
+                                            + "&olAddShot=" + olAddShot + "&olRequest=" + olRequest + "&olPrice=" + olPrice
+                                            + "&olQuantity=" + olQuantity;
                                 }
 
+                                Log.v("qqq",""+oNo);
 
                                 intent = new Intent(OrderPage_PaymentActivity.this, PaymentPayPasswordActivity.class)
                                         .putExtra("point", point)
                                         .putExtra("oNo", oNo)
-                                        .putExtra("cNo", cNo);
+                                        .putExtra("cNo", cNo)
+                                        .putExtra("store_SeqNo", store_SeqNo)
+                                        .putExtra("sName", sName)
+                                        .putExtra("totalPrice", totalPrice)
+                                        .putExtra("cCardCompany", cCardCompany)
+                                        .putExtra("card_cNo", card_cNo)
+                                        .putExtra("urlAddress", urlAddress);
+
                                 startActivity(intent);
-                            } else {
-                                Toast.makeText(OrderPage_PaymentActivity.this, "실패", Toast.LENGTH_SHORT).show();
-                            }
+//                            } else {
+//                                Toast.makeText(OrderPage_PaymentActivity.this, "실패", Toast.LENGTH_SHORT).show();
+//                            }
 
                         }
                         break;
@@ -229,13 +251,16 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
             super.onResume();
             //카드 이미지 리스트 띄우기
             connectCardView(user_uNo);
+            Log.v("dkdkdk",""+bean_mypage_cardlists.size());
+
+
 
             // 카드 선택 안 했을 경우!
-            cNo = bean_mypage_cardlists.get(0).getcNo();
-            cCardCompany = bean_mypage_cardlists.get(0).getcCardCompany();
-            card_cNo = bean_mypage_cardlists.get(0).getcCardNo();
-            //---------------------
+        cCardCompany = bean_mypage_cardlists.get(0).getcCardCompany();
+        card_cNo = bean_mypage_cardlists.get(0).getcCardNo();
 
+
+        Log.v("qqqq",cCardCompany);
         if (cCardCompany.equals("MASTERCARD")) {
             orderPay_cCompanyIV.setImageResource(R.drawable.mastercard);
         } else if (cCardCompany.equals("VISA")) {
@@ -255,6 +280,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
 
         }
 
+        Log.v("cardNo",card_cNo);
         String str = "";
         for (int j = 0; j < card_cNo.length() - 4; j++) {
             if (j % 4 == 0) {
@@ -297,21 +323,22 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
 
                 int card_quantities = cardCountselect();
                 Log.v(TAG,"card_quantities :" + card_quantities);
-                if (card_quantities == 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(OrderPage_PaymentActivity.this);
-                    builder.setTitle("카드등록");
-                    builder.setMessage("카드등록 하시겠습니까?");
-                    builder.setNegativeButton("아니오", null);
-                    builder.setPositiveButton("예", new DialogInterface.OnClickListener() { // 예를 눌렀을 경우 로그인 창으로 이동
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            intent = new Intent(OrderPage_PaymentActivity.this, Mypage_CardDetailActivity.class)
-                                    .putExtra("uNo", user_uNo);
-                            startActivity(intent);
-                        }
-                    });
-                    builder.create().show();
-                }
+
+//                if (card_quantities == 0) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(OrderPage_PaymentActivity.this);
+//                    builder.setTitle("카드등록");
+//                    builder.setMessage("카드등록 하시겠습니까?");
+//                    builder.setNegativeButton("아니오", null);
+//                    builder.setPositiveButton("예", new DialogInterface.OnClickListener() { // 예를 눌렀을 경우 로그인 창으로 이동
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            intent = new Intent(OrderPage_PaymentActivity.this, Mypage_CardDetailActivity.class)
+//                                    .putExtra("uNo", user_uNo);
+//                            startActivity(intent);
+//                        }
+//                    });
+//                    builder.create().show();
+//                }
 
 
                 cardListAdapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {

@@ -60,10 +60,11 @@
             <TextView
                 android:id="@+id/activity_OrderList_CV_sName"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:text="스타벅스"
+                android:paddingTop="20dp"
                 android:gravity="center"
-                android:textColor="@color/black"/>
+                android:textColor="@color/TextColor"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="20dp"/>
@@ -90,6 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="주문요청"
+                    android:textSize="12dp"
                     android:gravity="center"
                     android:layout_weight="1"
                     />
@@ -113,6 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="주문접수"
+                    android:textSize="12dp"
                     android:gravity="center"
                     android:layout_weight="1"
                     />
@@ -136,6 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="제조완료"
+                    android:textSize="12dp"
                     android:gravity="center"
                     android:layout_weight="1"
                     />
