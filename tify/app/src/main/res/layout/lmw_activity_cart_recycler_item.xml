@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="아메리카노(COLD)"
-                    android:textSize="18dp"
+                    android:textSize="15dp"
                     android:textColor="@color/TextColor"
                     />
 
@@ -80,8 +80,8 @@
                         android:id="@+id/activity_Cart_CV_AddOrder1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
-                        android:textColor="@color/TextColor"
+                        android:textSize="12dp"
+                        android:textColor="@color/SubColor"
                         android:text="+사이즈업" />
                     <TextView
                         android:id="@+id/activity_Cart_CV_AddOrder2"
@@ -98,7 +98,7 @@
                         android:id="@+id/activity_Cart_CV_Request"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:textSize="12dp"
                         android:textColor="@color/SubColor"
                         android:text="얼음 조금만 넣어주세요" />
 
@@ -138,6 +138,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="60dp"
                             android:text="4000원"
+                            android:textStyle="bold"
                             android:gravity="center"
                             android:textColor="@color/TextColor"
                             android:paddingLeft="30dp"
