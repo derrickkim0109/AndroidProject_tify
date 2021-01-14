@@ -14,10 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
+import com.example.tify.Jiseok.Activity.JoinPayPasswordActivity;
+import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
+import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask_Mypage;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 
@@ -28,7 +32,7 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
     String MacIP= shareVar.getMacIP();
 
     String userEmail;
-    String userSeq;
+    int userSeq;
     String userNickName;
     String myLocation;
 
@@ -47,7 +51,12 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
 
     String payPassword1=null;
     String payPassword2=null;// 비밀번호 확인
+    String payPassword3=null;// 비밀번호 확인
     int payCheck=0; // 0일때 payPassword1, 1일때 payPassword2
+    int payCheck2=0; // 0일때 payPassword1, 1일때 payPassword2, 2일때 payPassword3
+
+    String uTelNo;
+    String uImage;
 
     TextView tvComment,tvCount,tvTitle;
 
@@ -62,13 +71,52 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
         userEmail = auto.getString("userEmail", null);
-        userSeq = auto.getString("userSeq", null);
+        userSeq = auto.getInt("userSeq", 0);
         userNickName = auto.getString("userNickName", null);
         myLocation = auto.getString("myLocation", null);
 
         init();
         intent = getIntent();
         inheritance();
+
+        if(selectPwd()=="null"){
+            tvTitle.setText("결제비밀번호를\n입력해 주세요.");
+        }
+
+
+
+
+        Intent intent = getIntent();
+        uTelNo=intent.getStringExtra("uTelNo");
+        uImage=intent.getStringExtra("uImage");
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 2:
+                new AlertDialog.Builder(Mypage_PayPasswordActivity.this)
+                        .setTitle("잘못된 접근입니다.")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                intent = new Intent(Mypage_PayPasswordActivity.this, Mypage_ProfileChageActivity.class)
+                                        .putExtra("uTelNo", uTelNo)
+                                        .putExtra("uImage", uImage)
+                                        .putExtra("MacIP", MacIP)
+                                        .putExtra("uNo", userSeq)
+                                        .putExtra("uNickName", userNickName);
+
+                                startActivityForResult(intent,2);
+                                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                            }
+                        })
+                        .show();
+                break;
+        }
     }
 
     private void inheritance() {
@@ -156,14 +204,16 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
             resultToStar();
             switch (result.length()){
                 case 7:
+                    // 비밀번호 설정이 안돼있을때
                     if(uPayPassword.equals("null")){
+                        Log.v("비밀번호 설정 x","start");
                         switch (payCheck){
                             // 첫번째 비밀번호 입력
                             case 0:
                                 payPassword1=result.substring(1,7);
                                 result="0";
                                 payCheck=1;
-                                Log.v(TAG,"payPassword1 : "+payPassword1+", result : "+result);
+                                Log.v("비밀번호 설정 x","payPassword1 : "+payPassword1+", result : "+result);
                                 resultToStar();
                                 tvTitle.setText("다시한번\n입력해주세요.");
                                 break;
@@ -176,15 +226,22 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
                                     Toast.makeText(Mypage_PayPasswordActivity.this,"yes",Toast.LENGTH_SHORT).show();
 
                                     //디비에 비밀번호 저장
-
+                                    updatePwd();
 
                                     new AlertDialog.Builder(Mypage_PayPasswordActivity.this)
-                                            .setTitle("비밀번호가 저장되었습니다.")
+                                            .setTitle("결제비밀번호가 저장되었습니다.")
                                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    Intent intent = new Intent(Mypage_PayPasswordActivity.this, JiseokMainActivity.class);
+                                                    intent = new Intent(Mypage_PayPasswordActivity.this, Mypage_ProfileChageActivity.class)
+                                                            .putExtra("uTelNo", uTelNo)
+                                                            .putExtra("uImage", uImage)
+                                                            .putExtra("MacIP", MacIP)
+                                                            .putExtra("uNo", userSeq)
+                                                            .putExtra("uNickName", userNickName);
+
                                                     startActivityForResult(intent,2);
+                                                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                                 }
                                             })
                                             .show();
@@ -224,6 +281,117 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
                                 break;
 
 
+                        }
+                        // 비밀번호가 설정돼있을때 현재비밀번호부터 체크
+                    }else{
+                        Log.v("비밀번호설정 ok","start");
+                        switch (payCheck2){
+                            //현재 비밀번호 체크
+                            case 0:
+                                payPassword1=result.substring(1,7);
+                                //디비에잇는 번호와 입력한 번호가 같을때
+                                if(payPassword1.equals(selectPwd())) {
+                                    Log.v("비밀번호 설정 ok","디비와 일치");
+                                    result = "0";
+                                    payCheck2 = 1;
+                                    Log.v(TAG, "payPassword1 : " + payPassword1 + ", result : " + result);
+                                    resultToStar();
+                                    rearrangement();
+                                    tvTitle.setText("비밀번호\n재설정1.");
+
+                                    // 디비에있는 번호와 입력한 번호가 다를때
+                                }else{
+                                    Log.v("비밀번호 설정 ok","디비와 불일치");
+                                    result = "0";
+                                    payCheck2 = 0;
+                                    Log.v(TAG, "payPassword1 : " + payPassword1 + ", result : " + result);
+                                    new AlertDialog.Builder(Mypage_PayPasswordActivity.this)
+                                            .setTitle("비밀번호를 확인해주세요.")
+                                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+//                                                    vTitle.setText("결제 비밀번호를\n입력해주세요");
+                                                    rearrangement();
+                                                    resultToStar();
+                                                }
+                                            })
+                                            .show();
+                                }
+                                break;
+                                // 디비에있는 번호와 같을때 새로운비밀번호 1
+                            case 1:
+                                rearrangement();
+                                payPassword2=result.substring(1,7);
+                                result="0";
+                                payCheck2=2;
+                                Log.v("비밀번호 설정 ok","payPassword2 : "+payPassword2+", result : "+result);
+                                resultToStar();
+                                tvTitle.setText("다시한번\n입력해주세요.");
+                                break;
+                                // 디비에있는 번호와 같을때 새로운비밀번호 재확인
+                            case 2:
+                                payPassword3=result.substring(1,7);
+                                Log.v("비밀번호 설정 ok","payPassword3 : "+payPassword3+", result : "+result);
+                                if(payPassword2.equals(payPassword3)){
+                                    //디비에 회원정보 저장
+                                    updatePwd();
+                                    Log.v("비밀번호 설정 ok","변경 성공");
+                                    new AlertDialog.Builder(Mypage_PayPasswordActivity.this)
+                                            .setTitle("비밀번호 변경 완료.")
+                                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    intent = new Intent(Mypage_PayPasswordActivity.this, Mypage_ProfileChageActivity.class)
+                                                            .putExtra("uTelNo", uTelNo)
+                                                            .putExtra("uImage", uImage)
+                                                            .putExtra("MacIP", MacIP)
+                                                            .putExtra("uNo", userSeq)
+                                                            .putExtra("uNickName", userNickName);
+
+                                                    startActivityForResult(intent,2);
+                                                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                                }
+                                            })
+                                            .show();
+
+                                }else{
+                                    Log.v("비밀번호 설정 ok","재설정 비밀번호 불일치");
+                                    Toast.makeText(Mypage_PayPasswordActivity.this,"no",Toast.LENGTH_SHORT).show();
+                                    rearrangement();
+                                    count++;
+                                    result="0";
+                                    resultToStar();
+                                    tvComment.setVisibility(View.VISIBLE);
+                                    tvCount.setVisibility(View.VISIBLE);
+                                    tvCount.setText("틀린횟수 ("+count+"/5)");
+                                    Log.v(TAG,"틀린횟수 : "+count);
+                                    // 5번틀리면 초기화
+                                    switch (count){
+                                        case 5:
+                                            Log.v("비밀번호 설정 ok","재설정 비밀번호 초기화");
+                                            Toast.makeText(Mypage_PayPasswordActivity.this,"5번틀렷으니 초기화",Toast.LENGTH_SHORT).show();
+                                            new AlertDialog.Builder(Mypage_PayPasswordActivity.this)
+                                                    .setTitle("비밀번호를 다시 입력해주세요.")
+                                                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            tvComment.setVisibility(View.INVISIBLE);
+                                                            tvCount.setVisibility(View.INVISIBLE);
+                                                            tvTitle.setText("현재 비밀번호를\n입력해주세요");
+                                                            rearrangement();
+                                                            payCheck2=0;
+                                                            count=0;
+                                                            result="0";
+                                                            resultToStar();
+                                                        }
+                                                    })
+                                                    .show();
+                                            break;
+
+                                    }
+                                }
+
+                                break;
                         }
                     }
 
@@ -288,6 +456,39 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
             btn[i].setText(btnNum[i]);
         }
     }
+
+
+    //디비에 결제비밀번호 받아오기
+    private String selectPwd(){
+        String Pwd = "null";
+
+        try {
+            String urlAddr = "http://" + MacIP + ":8080/tify/cjs_MyPageSelectPwd.jsp?uNo="+userSeq;
+            Log.v("dd",urlAddr);
+            CJS_NetworkTask_Mypage cjs_networkTask = new CJS_NetworkTask_Mypage(Mypage_PayPasswordActivity.this, urlAddr, "selectPayPassword");
+            Object obj = cjs_networkTask.execute().get();
+
+            Pwd= (String) obj;
+            Log.v("내비밀번호는 : ",Pwd);
+
+        }catch (Exception e){
+
+        }
+        return Pwd;
+    }
+
+    private void updatePwd(){
+        try {
+            String urlAddr = "http://" + MacIP + ":8080/tify/cjs_MyPageUpdatePwd.jsp?uNo="+userSeq+"&uPayPassword="+payPassword2;
+            Log.v("왜안돼",urlAddr);
+            CJS_NetworkTask_Mypage cjs_networkTask = new CJS_NetworkTask_Mypage(Mypage_PayPasswordActivity.this, urlAddr, "updatePwd");
+            cjs_networkTask.execute().get();
+
+        }catch (Exception e){
+
+        }
+    }
+
 
 
 

@@ -20,6 +20,12 @@ public class Bean_Mypage_cardlist {
         this.cNo = cNo;
     }
 
+    public Bean_Mypage_cardlist(String cCardCompany, String cCardNo, int cNo) {
+        this.cCardCompany = cCardCompany;
+        this.cCardNo = cCardNo;
+        this.cNo = cNo;
+    }
+
     public Bean_Mypage_cardlist() {
 
     }

@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="55dp"
+        android:layout_marginLeft="40dp"
         android:layout_width="300dp"
         android:layout_height="178dp">
         <androidx.recyclerview.widget.RecyclerView
@@ -42,12 +42,40 @@
             android:orientation="vertical"
             android:layout_margin="20dp"
             android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="결제 카드 : ">
+            </TextView>
+            <ImageView
+                android:id="@+id/orderPay_cCompany"
+                android:layout_gravity="center"
+                android:src="@drawable/mastercard"
+                android:layout_marginLeft="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+                <TextView
+                    android:id="@+id/orderPay_cNumber"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" **** **** **** 1234 ">
+                </TextView>
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="최종 결제금액">
             </TextView>
             <TextView
+                android:id="@+id/oderPay_oPrice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="20dp"
@@ -71,7 +99,7 @@
         android:layout_margin="10dp"
         android:layout_height="wrap_content">
         <CheckBox
-            android:id="@+id/login_cb_AutoLogin"
+            android:id="@+id/orderPay_CB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="위 구매조건을 확인, 결제진행에 동의합니다."
@@ -87,6 +115,7 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/orderPay_insertbtn"
             android:layout_width="match_parent"
             android:background="@drawable/button_shape"
             app:backgroundTint="@color/mainColor"

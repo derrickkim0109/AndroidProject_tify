@@ -90,7 +90,9 @@ public class NetworkTask_RecycleView_CardView extends AsyncTask<Integer, String,
                 //
                 ///////////////////////////////////////////////////////////////////////////////////////
                 if (where.equals("select_cardList")) {
-                parserSelect(stringBuffer.toString());
+                         parserSelect(stringBuffer.toString());
+                }else if (where.equals("CardList_Bean")) {
+                        parserCardList(stringBuffer.toString());
                 }else {
                 }
 
@@ -122,7 +124,11 @@ public class NetworkTask_RecycleView_CardView extends AsyncTask<Integer, String,
 
                 return cardlists;
 
-                } else {
+                }else if (where.equals("CardList_Bean")){
+                        return cardlist;
+
+                }
+                else {
                 return result;
                 }
                 ///////////////////////////////////////////////////////////////////////////////////////
@@ -176,6 +182,29 @@ public class NetworkTask_RecycleView_CardView extends AsyncTask<Integer, String,
             Log.v(TAG,"cCardNo" + cYear);
             Log.v(TAG,"cCardNo" + cMM);
             Log.v(TAG,"cCardNo" + cNo);
+            }
+
+            } catch (Exception e) {
+            e.printStackTrace();
+            }
+
+        }
+        private void parserCardList (String s){
+
+            try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("card_info"));
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+
+            String cCardNo = jsonObject1.getString("cCardNo");
+            String cCardCompany = jsonObject1.getString("cCardCompany");
+            int cNo = jsonObject1.getInt("cNo");
+
+            cardlist = new Bean_Mypage_cardlist(cCardCompany, cCardNo, cNo);
+
+
             }
 
             } catch (Exception e) {
