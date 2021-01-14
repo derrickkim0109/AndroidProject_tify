@@ -174,8 +174,6 @@ public class OrderListActivity extends AppCompatActivity {
                     }.start();
         // ------------------------------
 
-
-
         new Thread() {
             public void run() { // 받는 스레드
 

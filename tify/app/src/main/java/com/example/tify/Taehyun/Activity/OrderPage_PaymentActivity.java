@@ -243,6 +243,36 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
             card_cNo = bean_mypage_cardlists.get(0).getcCardNo();
             //---------------------
 
+        if (cCardCompany.equals("MASTERCARD")) {
+            orderPay_cCompanyIV.setImageResource(R.drawable.mastercard);
+        } else if (cCardCompany.equals("VISA")) {
+            orderPay_cCompanyIV.setImageResource(R.drawable.visa);
+
+        } else if (cCardCompany.equals("AMEX")) {
+            orderPay_cCompanyIV.setImageResource(R.drawable.amex);
+
+        } else if (cCardCompany.equals("DINERS_CLUB And CARTE_BLANCHE")) {
+            orderPay_cCompanyIV.setImageResource(R.drawable.dinersclub);
+
+        } else if (cCardCompany.equals("DISCOVER")) {
+            orderPay_cCompanyIV.setImageResource(R.drawable.discover);
+
+        } else if (cCardCompany.equals("JCB")) {
+            orderPay_cCompanyIV.setImageResource(R.drawable.jcb);
+
+        }
+
+        String str = "";
+        for (int j = 0; j < card_cNo.length() - 4; j++) {
+            if (j % 4 == 0) {
+                str += " ";
+            }
+            str += "*";
+        }
+        str += " ";
+        orderPay_cNumberTV.setText(str + card_cNo.substring((card_cNo.length() - 4), card_cNo.length()));
+
+
         }
 
 
