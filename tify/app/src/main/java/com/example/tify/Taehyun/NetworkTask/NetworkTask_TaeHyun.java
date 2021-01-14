@@ -19,7 +19,7 @@ import java.net.URL;
 
 public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
 
-    final static String TAG = "CUDNetworkTask";
+    final static String TAG = "NetworkTask_TaeHyun";
     Context context = null;
     String mAddr = null;
     ProgressDialog progressDialog = null;
@@ -288,11 +288,14 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
 
                 int oNo = jsonObject1.getInt("oNo");
+
                 int store_sSeqno = jsonObject1.getInt("store_sSeqno");
+
                 String store_sName = jsonObject1.getString("store_sName");
+                Log.v(TAG,"order :" + store_sName);
+
 
                 order = new Order(oNo,store_sSeqno,store_sName);
-
             }
         } catch (Exception e) {
             e.printStackTrace();

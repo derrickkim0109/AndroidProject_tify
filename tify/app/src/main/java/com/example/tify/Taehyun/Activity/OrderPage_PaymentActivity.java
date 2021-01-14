@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tify.Hyeona.Activity.Payment_resultActivity;
+import com.example.tify.Jiseok.Activity.PaymentPayPasswordActivity;
 import com.example.tify.Minwoo.Adapter.CartAdapter;
 import com.example.tify.Minwoo.Bean.Cart;
 import com.example.tify.Minwoo.Bean.Order;
@@ -143,10 +144,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
         store_SeqNo = intent.getIntExtra("store_sSeqNo", 0);
 
 
-        if (from.equals("BeforePayActivity2")) { // 일반
-            carts = (ArrayList<Cart>) getIntent().getSerializableExtra("Carts");
 
-        } else { //
             Log.v(TAG, "from : " + from);
             Log.v(TAG, "totalPrice : " + totalPrice);
             Log.v(TAG, "point : " + point);
@@ -168,10 +166,11 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                 sName = intent.getStringExtra("sName");
 
 
-            }
+
         }
     }
         View.OnClickListener mClickListener = new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
 
@@ -187,24 +186,28 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                         } else {
 
                             String result = connectOrderInsert();
+                            Log.v(TAG,"result = " + result);
                             if (result.equals("1")) {
-                                
+
                                 //oNo 다시 받아오기
                                 connectOrderNumber();
                                 ////////
-
+                                Log.v(TAG,"oNo"+oNo);
+                                Log.v(TAG,"oNo"+sName);
+                                Log.v(TAG,"oNo"+store_SeqNo);
                                 //orderlist에 들어갈 값들
                                 for (int i = 0; i < carts.size(); i++) { // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
-                                    urlAddr = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo="+ store_SeqNo + "&order_oNo=" + oNo +
+                                   String urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo="+ store_SeqNo + "&order_oNo=" + oNo +
                                             "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp()
                                             + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice()
                                             + "&olQuantity=" + carts.get(i).getcLQuantity();
 
-                                    connectOrderListInsert(urlAddr); // orderlist Insert
+                                    connectOrderListInsert(urlAddress); // orderlist Insert
+
                                 }
 
 
-                                intent = new Intent(OrderPage_PaymentActivity.this, Payment_resultActivity.class)
+                                intent = new Intent(OrderPage_PaymentActivity.this, PaymentPayPasswordActivity.class)
                                         .putExtra("point", point)
                                         .putExtra("oNo", oNo)
                                         .putExtra("cNo", cNo);
@@ -255,31 +258,29 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                 //어댑터에게 보내기
                 recyclerView.setAdapter(cardListAdapter);
 
+                int card_quantities = cardCountselect();
+                Log.v(TAG,"card_quantities :" + card_quantities);
+                if (card_quantities == 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OrderPage_PaymentActivity.this);
+                    builder.setTitle("카드등록");
+                    builder.setMessage("카드등록 하시겠습니까?");
+                    builder.setNegativeButton("아니오", null);
+                    builder.setPositiveButton("예", new DialogInterface.OnClickListener() { // 예를 눌렀을 경우 로그인 창으로 이동
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            intent = new Intent(OrderPage_PaymentActivity.this, Mypage_CardDetailActivity.class)
+                                    .putExtra("uNo", user_uNo);
+                            startActivity(intent);
+                        }
+                    });
+                    builder.create().show();
+                }
 
-                //
+
                 cardListAdapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
-                        int card_quantities = cardCountselect();
-                        if (card_quantities == 0) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(OrderPage_PaymentActivity.this);
-                            builder.setTitle("카드등록");
-                            builder.setMessage("카드등록 하시겠습니까?");
-                            builder.setNegativeButton("아니오", null);
-                            builder.setPositiveButton("예", new DialogInterface.OnClickListener() { // 예를 눌렀을 경우 로그인 창으로 이동
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    intent = new Intent(OrderPage_PaymentActivity.this, Mypage_CardDetailActivity.class)
-                                            .putExtra("uNo", user_uNo);
-                                    startActivity(intent);
-                                }
-                            });
-                            builder.create().show();
-                        } else {
-
-                            for (int i = 0; i < card_quantities; i++) {
-                                if (position == i) {
-
+                                    Toast.makeText(OrderPage_PaymentActivity.this,""+position,Toast.LENGTH_SHORT).show();
                                     cNo = bean_mypage_cardlists.get(position).getcNo();
                                     cCardCompany = bean_mypage_cardlists.get(position).getcCardCompany();
                                     card_cNo = bean_mypage_cardlists.get(position).getcCardNo();
@@ -313,10 +314,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                                     str += " ";
                                     orderPay_cNumberTV.setText(str + card_cNo.substring((card_cNo.length() - 4), card_cNo.length()));
                                 }
-                            }
-                        }
 
-                    }
                 });
 
             } catch (Exception e) {
@@ -329,7 +327,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
         @SuppressLint("LongLogTag")
         private String connectOrderInsert () {
 
-            urlAddress = urlAddr + "&user_uNo=" + user_uNo + "&storekeeper_skSeqNo" + store_SeqNo + "&store_sName" + sName
+            urlAddress = urlAddr + "&user_uNo=" + user_uNo + "&storekeeper_skSeqNo=" + store_SeqNo + "&store_sName=" + sName
                     + "&oSum=" + totalPrice + "&oCardName=" + cCardCompany + "&oCardNo=" + card_cNo;
 
             String result = null;
@@ -399,6 +397,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
             oNo = order.getoNo();
             store_SeqNo = order.getStore_sSeqno();
             sName = order.getStore_sName();
+
 
         } catch (Exception e) {
             e.printStackTrace();
