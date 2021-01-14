@@ -22,10 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tify.Hyeona.Activity.Payment_resultActivity;
 import com.example.tify.Minwoo.Adapter.CartAdapter;
 import com.example.tify.Minwoo.Bean.Cart;
+import com.example.tify.Minwoo.Bean.Order;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Adapter.Mypage_CardListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_cardlist;
+import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_RecycleView_CardView;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
@@ -93,6 +95,9 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
     //
     String urlAddress = null;
 
+
+    //order === BEAN
+    Order order = null;
 
 
     @Override
@@ -182,13 +187,16 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                         } else {
 
                             String result = connectOrderInsert();
-
-
                             if (result.equals("1")) {
+                                
+                                //oNo 다시 받아오기
+                                connectOrderNumber();
+                                ////////
+
                                 //orderlist에 들어갈 값들
                                 for (int i = 0; i < carts.size(); i++) { // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
-                                    urlAddr = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo=" + "&order_oNo=" + oNo +
-                                            +store_SeqNo + "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp()
+                                    urlAddr = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo="+ store_SeqNo + "&order_oNo=" + oNo +
+                                            "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp()
                                             + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice()
                                             + "&olQuantity=" + carts.get(i).getcLQuantity();
 
@@ -210,7 +218,6 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                 }
             }
         };
-
 
 
     @Override
@@ -373,6 +380,29 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
 
         }
         return result;
+    }
+
+    //oNo불러오기
+    private void connectOrderNumber() {
+
+        try {
+            //임시값
+            String urlAddr = "http://" + MacIP + ":8080/tify/order_numberselect.jsp?";
+
+            String urlAddress = urlAddr + "user_uNo=" + user_uNo;
+            Log.v("dddd","dd"+urlAddress);
+            NetworkTask_TaeHyun myPageNetworkTask = new NetworkTask_TaeHyun(OrderPage_PaymentActivity.this, urlAddress, "selectOrderNumber");
+            Object obj = myPageNetworkTask.execute().get();
+            order = (Order) obj;
+
+            //DB
+            oNo = order.getoNo();
+            store_SeqNo = order.getStore_sSeqno();
+            sName = order.getStore_sName();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }/////---END
