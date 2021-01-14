@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tify.Hyeona.Adapter.review_adapter;
@@ -49,7 +50,7 @@ public class Payment_resultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cha_main_search);
+        setContentView(R.layout.cha_payment_result);
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         user_uNo = auto.getInt("userSeq",0);
@@ -57,6 +58,11 @@ public class Payment_resultActivity extends AppCompatActivity {
         Intent intent = getIntent();
         oNo = intent.getIntExtra("oNo",0);
         // 인텐트로 포인트 값 꼭 받아야함
+        oNo = 71; // 임시로 선언
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        //액션바 삭제
 
         payment_money = findViewById(R.id.payment_money);
         payment_day = findViewById(R.id.payment_day);
@@ -79,10 +85,14 @@ public class Payment_resultActivity extends AppCompatActivity {
         connectGetData();
         connectInsertData(point);
         coffee_count = connectStampData(oNo);
+        Log.v("커피","테스트"+coffee_count);
+        //위에서 받은 커피 주문수를 밑의 스탬프 추가하는 곳에 넣는다
+        connectStampAdd(coffee_count);
 
     }
 
     private void connectGetData(){
+        // 시간 등 결제정보를 받아오는 곳
         try {
             String urlAddr = "http://" + MacIP + ":8080/tify/cha_payment_select.jsp?";
             String urlAddress = urlAddr + "oNo=" + oNo;
@@ -102,11 +112,24 @@ public class Payment_resultActivity extends AppCompatActivity {
 
 
     private int connectStampData(int oNo) {
-        // 여기에서 몇잔 주문했는지 받아올 것임 받은 숫자는 다시 스탬프에 넣어야한다 (넣을예정)
+        // 여기에서 몇잔 주문했는지 받아올 것임 받은 숫자는 다시 스탬프에 넣어야한다
         int result = 0;
         try {
-            String urlAddr = "http://" + MacIP + ":8080/tify/cha_stamp_update1?oNo="+oNo;
+            String urlAddr = "http://" + MacIP + ":8080/tify/cha_stamp_update1.jsp?oNo="+oNo;
             CUDNetworkTask_payment mCUDNetworkTask_payment = new CUDNetworkTask_payment(urlAddr,"stamp_count");
+            Object obj = mCUDNetworkTask_payment.execute().get();
+            result = (int) obj;
+        }catch (Exception e){
+            e.printStackTrace();
+        }return result;
+    }
+
+    private int connectStampAdd(int coffee_count) {
+        // 스탬프를 입력해주는 곳
+        int result = 0;
+        try {
+            String urlAddr = "http://" + MacIP + ":8080/tify/cha_stamp_update2.jsp?user_uNo="+user_uNo+"&coffee_count="+coffee_count;
+            CUDNetworkTask_payment mCUDNetworkTask_payment = new CUDNetworkTask_payment(urlAddr,"stamp_update");
             Object obj = mCUDNetworkTask_payment.execute().get();
             result = (int) obj;
         }catch (Exception e){

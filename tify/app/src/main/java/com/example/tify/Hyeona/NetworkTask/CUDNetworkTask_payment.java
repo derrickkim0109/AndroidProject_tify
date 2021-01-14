@@ -78,7 +78,10 @@ import java.sql.Timestamp;
                     }
                     else if(where.equals("stamp_count")){
                         result1 = parserStampCount(stringBuffer.toString());
+                    }else if(where.equals("stamp_update")){
+                        result1 = parserUpdate(stringBuffer.toString());
                     }
+
 
                 }
             }catch (Exception e){
@@ -100,6 +103,8 @@ import java.sql.Timestamp;
                 return result;
             }
             else if(where.equals("stamp_count")){
+                return result1;
+            }else if(where.equals("stamp_update")){
                 return result1;
             }else{
                 return null;
@@ -161,7 +166,7 @@ import java.sql.Timestamp;
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 Log.v("aaaaaa","parser()1111");
-                JSONArray jsonArray = new JSONArray(jsonObject.getString("user_info"));
+                JSONArray jsonArray = new JSONArray(jsonObject.getString("payment_select"));
                 Log.v("aaaaaa","parser()222");
 
 

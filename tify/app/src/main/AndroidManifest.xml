@@ -61,7 +61,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Hyeona.Activity.main_search" />
         <activity android:name=".Hyeona.Activity.test" />
-        <activity android:name=".Hyeona.Activity.IntroActivity">
+        <activity android:name=".Hyeona.Activity.Payment_resultActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
