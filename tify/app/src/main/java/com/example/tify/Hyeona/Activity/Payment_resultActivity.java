@@ -73,8 +73,6 @@ public class Payment_resultActivity extends AppCompatActivity {
         Log.v("TAG", "store_SeqNo : " + store_SeqNo);
         // 인텐트로 포인트 값 꼭 받아야함
 
-        //point = intent.getIntExtra("point",0);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         //액션바 삭제

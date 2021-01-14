@@ -202,6 +202,9 @@ public class NetworkTask_RecycleView_CardView extends AsyncTask<Integer, String,
             String cCardCompany = jsonObject1.getString("cCardCompany");
             int cNo = jsonObject1.getInt("cNo");
 
+            Log.v("tag","cCardNo"+cCardCompany);
+
+
             cardlist = new Bean_Mypage_cardlist(cCardCompany, cCardNo, cNo);
 
 

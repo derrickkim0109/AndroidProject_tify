@@ -1,5 +1,6 @@
 package com.example.tify.Minwoo.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -32,7 +34,9 @@ import com.example.tify.R;
 import com.example.tify.ShareVar;
 
 import com.example.tify.Taehyun.Activity.MypageActivity;
+import com.example.tify.Taehyun.Activity.Mypage_CardDetailActivity;
 import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity;
+import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -221,9 +225,7 @@ public class BeforePayActivity extends AppCompatActivity {
         sName = intent.getStringExtra("sName");
 
         connectPoint();
-        oNo = list.get(0).getMax() + 1;
-        Log.v(TAG, "마지막 oNo : " + oNo);
-        // 콤마 찍어서 원화로 바꿔줌!
+
         NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
         strTotal = moneyFormat.format(totalPrice);
         strPoint = moneyFormat.format(point);
@@ -354,7 +356,20 @@ public class BeforePayActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.beforePay_Btn_Card:
-
+                    if(cardCountselect()==0){
+                        new AlertDialog.Builder(BeforePayActivity.this)
+                                .setTitle("카드없어.")
+                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent1 = new Intent(BeforePayActivity.this, Mypage_CardDetailActivity.class);
+                                        intent1.putExtra("uNo",user_uSeqNo);
+                                        startActivity(intent1);
+                                    }
+                                })
+                                .show();
+                        break;
+                    }
                     // 통신 -------------------------- 점주에게 접수 요청
 //                    strStatus = "주문이 들어왔습니다!! \n주문내역을 확인해주세요.";
 //                    Log.v(TAG, "Customer 주는 값 : " + strStatus);
@@ -612,4 +627,22 @@ public class BeforePayActivity extends AppCompatActivity {
 //        }
 //    }
     // -----------------------------------------------
+    private int cardCountselect () {
+
+        int cardcount = 0;
+        try {
+
+            String urlAddr = "http://" + macIP + ":8080/tify/mypage_cardcountselect.jsp?user_uNo=" + user_uSeqNo;
+            Log.v("dddd",urlAddr);
+
+            NetworkTask_TaeHyun countnetworkTask = new NetworkTask_TaeHyun(BeforePayActivity.this, urlAddr, "count");
+            Object obj = countnetworkTask.execute().get();
+
+            cardcount = (int) obj;
+
+        } catch (Exception e) {
+
+        }
+        return cardcount;
+    }
 }

@@ -2,9 +2,11 @@ package com.example.tify.Minwoo.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.tify.Hyeona.Activity.qrActivity;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
+import com.example.tify.Jiseok.Activity.PaymentPayPasswordActivity;
 import com.example.tify.Minwoo.Bean.Cart;
 import com.example.tify.Minwoo.Bean.Order;
 import com.example.tify.Minwoo.Bean.OrderList;
@@ -34,7 +37,9 @@ import com.example.tify.R;
 import com.example.tify.ShareVar;
 
 import com.example.tify.Taehyun.Activity.MypageActivity;
+import com.example.tify.Taehyun.Activity.Mypage_CardDetailActivity;
 import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity;
+import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -311,6 +316,20 @@ public class BeforePayActivity2 extends AppCompatActivity {
                     break;
 
                 case R.id.beforePay_Btn_Card2:
+                    if(cardCountselect()==0){
+                        new AlertDialog.Builder(BeforePayActivity2.this)
+                                .setTitle("카드없어.")
+                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent1 = new Intent(BeforePayActivity2.this, Mypage_CardDetailActivity.class);
+                                        intent1.putExtra("uNo",user_uSeqNo);
+                                        startActivity(intent1);
+                                    }
+                                })
+                                .show();
+                        break;
+                    }
 
                     // 결제 부분 완료되면 결제 부분에서 JSP 실행하기 (카드번호랑 카드이름 필요)
                     // 1. 결제 완료되면 OrderListActivity로!
@@ -534,4 +553,24 @@ public class BeforePayActivity2 extends AppCompatActivity {
         parent.setContentInsetsAbsolute(0, 0);
         return true;
     }
+    // 전화번호 중복체크
+    private int cardCountselect () {
+
+        int cardcount = 0;
+        try {
+
+            String urlAddr = "http://" + macIP + ":8080/tify/mypage_cardcountselect.jsp?user_uNo=" + user_uSeqNo;
+            Log.v("dddd",urlAddr);
+
+            NetworkTask_TaeHyun countnetworkTask = new NetworkTask_TaeHyun(BeforePayActivity2.this, urlAddr, "count");
+            Object obj = countnetworkTask.execute().get();
+
+            cardcount = (int) obj;
+
+        } catch (Exception e) {
+
+        }
+        return cardcount;
+    }
+
 }
