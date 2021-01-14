@@ -102,7 +102,7 @@ public class BeforePayActivity extends AppCompatActivity {
 //    protected void onStop() {
 //        super.onStop();
 //        try {
-//            sendWriter.close();
+////            sendWriter.close();
 //            socket.close();
 //        } catch (IOException e) {
 //            e.printStackTrace();
@@ -118,7 +118,7 @@ public class BeforePayActivity extends AppCompatActivity {
         // 통신 ------------------------------------------------
         ///////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////
-        mHandler = new Handler();
+//        mHandler = new Handler();
 
 //        new Thread() {
 //            public void run() { // 받는 스레드
@@ -299,21 +299,21 @@ public class BeforePayActivity extends AppCompatActivity {
                 case R.id.beforePay_Btn_Card:
 
                     // 통신 -------------------------- 점주에게 접수 요청
-                    strStatus = "주문이 들어왔습니다!! \n주문내역을 확인해주세요.";
-                    Log.v(TAG, "Customer 주는 값 : " + strStatus);
-                    new Thread() { // 주는 스레드
-                        @Override
-                        public void run() {
-                            super.run();
-                            try {
-                                sendWriter.println(strStatus);
-                                sendWriter.flush();
-//                            message.setText("");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }.start();
+//                    strStatus = "주문이 들어왔습니다!! \n주문내역을 확인해주세요.";
+//                    Log.v(TAG, "Customer 주는 값 : " + strStatus);
+//                    new Thread() { // 주는 스레드
+//                        @Override
+//                        public void run() {
+//                            super.run();
+//                            try {
+//                                sendWriter.println(strStatus);
+//                                sendWriter.flush();
+////                            message.setText("");
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }.start();
                     // ------------------------------
 
 
@@ -364,6 +364,7 @@ public class BeforePayActivity extends AppCompatActivity {
                     intent.putExtra("store_sSeqNo", store_sSeqNo);
                     intent.putExtra("totalPrice", totalPrice);
                     intent.putExtra("user_uSeqNo", user_uSeqNo);
+                    intent.putExtra("from", "BeforePayActivity");
                     startActivity(intent);
 
                     break;
@@ -505,25 +506,25 @@ public class BeforePayActivity extends AppCompatActivity {
     }
 
     // 통신 ------------------------------------------
-    class msgUpdate implements Runnable{ // 받아서 작동하는 메소드
-        private String msg;
-        public msgUpdate(String str) {this.msg=str;}
-
-        @Override
-        public void run() {
-            Log.v("통신 순서", "순서 2 - msgUpdate");
-            Log.v(TAG, "msgUpdate msg : " + msg);
-//            status.setText(status.getText().toString()+msg+"\n");
-
-//            AlertDialog.Builder builder = new AlertDialog.Builder(BeforePayActivity.this);
-//            builder.setTitle("주문 결과");
-//            builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
-//            builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
-//            builder.show();
+//    class msgUpdate implements Runnable{ // 받아서 작동하는 메소드
+//        private String msg;
+//        public msgUpdate(String str) {this.msg=str;}
 //
-//            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
-
-        }
-    }
+//        @Override
+//        public void run() {
+//            Log.v("통신 순서", "순서 2 - msgUpdate");
+//            Log.v(TAG, "msgUpdate msg : " + msg);
+////            status.setText(status.getText().toString()+msg+"\n");
+//
+////            AlertDialog.Builder builder = new AlertDialog.Builder(BeforePayActivity.this);
+////            builder.setTitle("주문 결과");
+////            builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
+////            builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
+////            builder.show();
+////
+////            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
+//
+//        }
+//    }
     // -----------------------------------------------
 }

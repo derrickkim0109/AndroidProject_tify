@@ -59,8 +59,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Hyeona.Activity.main_search" />
         <activity android:name=".Hyeona.Activity.test" />
-        <activity android:name=".Hyeona.Activity.IntroActivity"/>
-        <activity android:name=".Taehyun.Activity.OrderPage_PaymentActivity">
+        <activity android:name=".Taehyun.Activity.OrderPage_PaymentActivity"/>
+        <activity android:name=".Hyeona.Activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

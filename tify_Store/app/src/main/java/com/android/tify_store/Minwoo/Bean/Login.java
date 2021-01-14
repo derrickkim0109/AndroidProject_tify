@@ -4,10 +4,12 @@ public class Login {
 
     int skSeqNo;
     int cnt;
+    int skStatus;
 
-    public Login(int skSeqNo, int cnt) {
+    public Login(int skSeqNo, int cnt, int skStatus) {
         this.skSeqNo = skSeqNo;
         this.cnt = cnt;
+        this.skStatus = skStatus;
     }
 
     public int getSkSeqNo() {
@@ -24,5 +26,13 @@ public class Login {
 
     public void setCnt(int cnt) {
         this.cnt = cnt;
+    }
+
+    public int getSkStatus() {
+        return skStatus;
+    }
+
+    public void setSkStatus(int skStatus) {
+        this.skStatus = skStatus;
     }
 }

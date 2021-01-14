@@ -100,45 +100,27 @@ public class OrderListActivity extends AppCompatActivity {
     int skStatus;
     String userName;
 
+    // 통신 ------------- 소켓 닫는 거
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            if(from.equals("BeforePayActivity")){
+                sendWriter.close();
+                socket.close();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    // -----------------------------
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_order_list);
         Log.v(TAG, "OrderListActivity onCreate");
-
-        // 통신 ------------------------------------------------
-        ///////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////
-        mHandler = new Handler();
-
-        new Thread() {
-            public void run() { // 받는 스레드
-
-                try {
-                    InetAddress serverAddr = InetAddress.getByName(ip);
-                    socket = new Socket(serverAddr, port);
-                    sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
-                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
-                    while(true){
-                        Log.v("통신 순서", "순서 1 - 받는 스레드");
-
-                        strStatus = input.readLine();
-                        Log.v("통신 확인(tify)", "Customer 받은 값 : " + strStatus);
-
-                        if(strStatus!=null){ // 점주가 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
-                            mHandler.post(new msgUpdate(strStatus));
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } }}.start();
-
-
-//        if(strStatus != null){ // 점주가 요청에 반응했을 때
-//            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
-//        }
-        ///////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
 
         // 받은 값 저장
         Intent intent = getIntent();
@@ -162,6 +144,66 @@ public class OrderListActivity extends AppCompatActivity {
             from = intent.getStringExtra("from");
             connectDeleteData(); // 카트 비우기
         }
+
+        // 통신 ------------------------------------------------
+        ///////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
+        mHandler = new Handler();
+
+        // 통신 -------------------------- 점주에게 접수 요청
+                    strStatus = "주문이 들어왔습니다!! \n주문내역을 확인해주세요.";
+                    Log.v(TAG, "Customer 주는 값 : " + strStatus);
+                    new Thread() { // 주는 스레드
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                if(from.equals("BeforePayActivity")){
+                                    sendWriter.println(strStatus);
+                                    sendWriter.flush();
+                                }
+//                            message.setText("");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+        // ------------------------------
+
+
+
+        new Thread() {
+            public void run() { // 받는 스레드
+
+                try {
+                    if(from.equals("BeforePayActivity")){
+
+                        InetAddress serverAddr = InetAddress.getByName(ip);
+                        socket = new Socket(serverAddr, port);
+                        sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
+                        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
+                        while(true){
+                            Log.v("통신 순서", "순서 1 - 받는 스레드");
+
+                            strStatus = input.readLine();
+                            Log.v("통신 확인(tify)", "Customer 받은 값 : " + strStatus);
+
+                            if(strStatus!=null){ // 점주가 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
+                                mHandler.post(new msgUpdate(strStatus));
+                            }
+                        }
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } }}.start();
+
+
+//        if(strStatus != null){ // 점주가 요청에 반응했을 때
+//            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
+//        }
+        ///////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
 
         //리사이클러뷰에 있는 아이디를 찾기
         recyclerView = findViewById(R.id.orderList_recycler_view);
