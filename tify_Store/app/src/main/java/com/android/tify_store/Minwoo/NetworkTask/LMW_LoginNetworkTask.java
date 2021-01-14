@@ -125,10 +125,11 @@ public class LMW_LoginNetworkTask extends AsyncTask<Integer, String, Object> {
 
                 int cnt = jsonObject1.getInt("cnt");
                 int skSeqNo = jsonObject1.getInt("skSeqNo");
+                int skStatus = jsonObject1.getInt("skStatus");
 
                 Log.v(TAG, "cnt : " + cnt);
 
-                Login login = new Login(skSeqNo, cnt);
+                Login login = new Login(skSeqNo, cnt, skStatus);
                 datas.add(login);
 
                 Log.v(TAG, "----------------------------------");
