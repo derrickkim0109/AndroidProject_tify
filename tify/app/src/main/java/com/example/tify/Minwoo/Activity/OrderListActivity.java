@@ -127,6 +127,7 @@ public class OrderListActivity extends AppCompatActivity {
         ShareVar shareVar = new ShareVar();
         macIP = shareVar.getMacIP();
         store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
+        Log.v(TAG, "skSeqNo : " + store_sSeqNo);
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
@@ -328,10 +329,7 @@ public class OrderListActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(OrderListActivity.this, StoreInfoActivity.class);
-        intent.putExtra("macIP", macIP);
-        intent.putExtra("user_uSeqNo", user_uSeqNo);
-        intent.putExtra("store_sSeqNo", store_sSeqNo);
+        Intent intent = new Intent(OrderListActivity.this, JiseokMainActivity.class);
         startActivity(intent);
 
     }
@@ -495,5 +493,6 @@ public class OrderListActivity extends AppCompatActivity {
         }
         return result;
     }
+
 
 }

@@ -15,8 +15,10 @@
 <FrameLayout
     android:layout_width="150dp"
     android:orientation="vertical"
-    android:layout_height="wrap_content"
+    android:layout_height="200dp"
     android:background="@color/black">
+
+
     <ImageView
         android:id="@+id/main_cafeList_img"
         android:layout_width="match_parent"
@@ -25,6 +27,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/cafe1">
     </ImageView>
+
 
     <TextView
         android:id="@+id/main_cafeList_title"

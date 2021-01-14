@@ -45,6 +45,7 @@ public class MenuFragment extends Fragment {
     int user_uSeqNo = 0;
     int store_sSeqNo = 0;
     int skStatus = 0;
+    String sTel;
 
     RecyclerView RV = null;
     LinearLayout LL = null;
@@ -64,6 +65,7 @@ public class MenuFragment extends Fragment {
             store_sSeqNo = bundle.getInt("store_sSeqNo");
             sName = bundle.getString("sName");
             skStatus = bundle.getInt("skStatus");
+            sTel = bundle.getString("sTelNo");
 
             // 초기 설정 값
             where = "select";
@@ -116,6 +118,7 @@ public class MenuFragment extends Fragment {
                             intent.putExtra("user_uSeqNo", user_uSeqNo);
                             intent.putExtra("store_sSeqNo", store_sSeqNo);
                             intent.putExtra("sName", sName);
+                            intent.putExtra("sTel", sTel);
 
                             startActivity(intent);
                         }

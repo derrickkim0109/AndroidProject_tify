@@ -58,6 +58,7 @@ public class StoreInfoActivity extends AppCompatActivity {
     int skSeqNo;
     int skStatus;
     String userName;
+    String sTel;
 
 
     @Override
@@ -151,7 +152,6 @@ public class StoreInfoActivity extends AppCompatActivity {
         bundle.putString("sComment", sComment);
         bundle.putString("sAddress", sAddress);
         bundle.putInt("sPackaging", sPackaging);
-        bundle.putInt("skStatus", skStatus);
 
         menuFragment.setArguments(bundle);
         infoFragment.setArguments(bundle);

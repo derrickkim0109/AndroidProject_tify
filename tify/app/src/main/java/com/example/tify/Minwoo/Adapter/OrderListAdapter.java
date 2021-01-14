@@ -140,7 +140,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 holder.btn_Review.setVisibility(View.INVISIBLE);
                 break;
             case 2:
-                holder.tv_right3.setImageResource(R.drawable.ic_action_progress_checked);
+                Glide.with(holder.tv_right3).load(R.drawable.dotdot).into(holder.tv_right3);
                 holder.tv_complete.setTextColor(Color.parseColor("#0084ff"));
                 holder.btn_Review.setVisibility(View.INVISIBLE);
                 break;
@@ -188,6 +188,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 Intent intent = new Intent(v.getContext(), com.example.tify.Hyeona.Activity.review_white.class); // 정확한 주소 필요!
                 intent.putExtra("uNo", uNo);
                 intent.putExtra("sSeqNo", skSeqNo);
+                intent.putExtra("oNo", mDataset.get(position).getoNo());
+                Log.v(TAG, "skSeqNo : " + skSeqNo);
                 context.startActivity(intent);
 
             }

@@ -56,7 +56,6 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
 
 
     //임시 유저 값.
-
      int user_uNo = 0;
 
 
@@ -67,7 +66,6 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
     int oNo = 0;
 
     //DB
-
     String cCardCompany;
 
     int cNo = 0;
@@ -198,7 +196,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
 //                            if (result.equals("1")) {
 
                                 //oNo 다시 받아오기
-                                connectOrderNumber();
+
                                 ////////
                                 Log.v(TAG,"oNo"+oNo);
                                 Log.v(TAG,"oNo"+sName);
@@ -206,8 +204,8 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                                 //orderlist에 들어갈 값들
                             Log.v("ddd",from);
                                 if(from.equals("BeforePayActivity2")) {
-                                    for (int i = 0; i < carts.size(); i++) { // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
-                                        urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo=" + store_SeqNo + "&order_oNo=" + oNo +
+                                    for (int i = 0; i < carts.size(); i++) { // 클래스 만들어서 메소드 이용하면 더 빠를 수도?oNo
+                                        urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?order_oNo=" + oNo + "&store_sSeqNo=" + store_SeqNo + "&user_uNo=" + user_uNo +
                                                 "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp()
                                                 + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice()
                                                 + "&olQuantity=" + carts.get(i).getcLQuantity();
@@ -215,7 +213,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
 
                                     }
                                 }else{
-                                    urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo=" + store_SeqNo + "&order_oNo=" + oNo +
+                                    urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?order_oNo=" + oNo + "&store_sSeqNo=" + store_SeqNo + "&user_uNo=" + user_uNo +
                                             "&store_sName=" + sName + "&menu_mName=" + menu_mName + "&olSizeUp=" + olSizeUp
                                             + "&olAddShot=" + olAddShot + "&olRequest=" + olRequest + "&olPrice=" + olPrice
                                             + "&olQuantity=" + olQuantity;
@@ -225,7 +223,6 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
 
                                 intent = new Intent(OrderPage_PaymentActivity.this, PaymentPayPasswordActivity.class)
                                         .putExtra("point", point)
-                                        .putExtra("oNo", oNo)
                                         .putExtra("cNo", cNo)
                                         .putExtra("store_SeqNo", store_SeqNo)
                                         .putExtra("sName", sName)
@@ -448,28 +445,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
         return result;
     }
 
-    //oNo불러오기
-    private void connectOrderNumber() {
-
-        try {
-            //임시값
-            String urlAddr = "http://" + MacIP + ":8080/tify/order_numberselect.jsp?";
-
-            String urlAddress = urlAddr + "user_uNo=" + user_uNo;
-            Log.v("dddd","dd"+urlAddress);
-            NetworkTask_TaeHyun myPageNetworkTask = new NetworkTask_TaeHyun(OrderPage_PaymentActivity.this, urlAddress, "selectOrderNumber");
-            Object obj = myPageNetworkTask.execute().get();
-            order = (Order) obj;
-
-            //DB
-            oNo = order.getoNo();
-            store_SeqNo = order.getStore_sSeqno();
-            sName = order.getStore_sName();
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }/////---END

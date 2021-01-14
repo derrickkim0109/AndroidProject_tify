@@ -115,6 +115,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
         mType = intent.getIntExtra("mType", 0);
         mComment = intent.getStringExtra("mComment");
         sName = intent.getStringExtra("sName");
+        sTel = intent.getStringExtra("sTel");
 
         ShareVar shareVar = new ShareVar();
         macIP = shareVar.getMacIP();
@@ -221,10 +222,12 @@ public class OrderSummaryActivity extends AppCompatActivity {
                         strTotal = moneyFormat.format(plusTotal);
                         tv_TotalPrice.setText(strTotal + "원");
 
+                        Log.v(TAG, "sName , sTel : " + sName + "/" + sTel);
+
                         // sTel, sName 넣기
                         AlertDialog.Builder builder = new AlertDialog.Builder(OrderSummaryActivity.this);
                         builder.setTitle("<주문 제한>");
-                        builder.setMessage("최대 10개까지 주문가능합니다. \n더 많은 주문을 원하시면 매장으로 연락주시길 바랍니다. \n\n매장명 : 스타벅스 강남점  \n매장 연락처 : 031-666-7777");
+                        builder.setMessage("최대 10개까지 주문가능합니다. \n더 많은 주문을 원하시면 매장으로 연락주시길 바랍니다. \n\n매장명 : " + sName +  "\n매장 연락처 : " + sTel);
                         builder.setPositiveButton("확인", null);
                         builder.create().show();
                     }else{

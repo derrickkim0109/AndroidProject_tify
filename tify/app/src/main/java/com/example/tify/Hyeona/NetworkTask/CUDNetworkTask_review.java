@@ -32,6 +32,8 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
     ArrayList<Bean_review_review> reviews = null;
     Bean_review_store bean_review_store = null;
 
+    int oNo;
+
     public CUDNetworkTask_review(Context context, String mAddr, String where) {
         this.context = context;
         this.mAddr = mAddr;
@@ -80,8 +82,9 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
                     parserSelect(stringBuffer.toString());
                 }else if(where.equals("select_review_storeinfo")){
                     parserSelect_review_storeinfo(stringBuffer.toString());
-                }
-                else{
+                }else if(where.equals("oNo")){
+                    parserSelect_review_oNo(stringBuffer.toString());
+                } else{
                     result = parserAction(stringBuffer.toString());
                 }
 
@@ -97,6 +100,10 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
             }catch (Exception e2){
                 e2.printStackTrace();
             }
+        }
+
+        if(where.equals("oNo")){
+            return oNo;
         }
 
         if(where.equals("select")){
@@ -208,4 +215,25 @@ public class CUDNetworkTask_review extends AsyncTask<Integer, String, Object> {
             e.printStackTrace();
         }
     }
+
+    private void  parserSelect_review_oNo(String s){
+        //Log.v("aaaaaa","parser()");
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("oNo"));
+
+            for (int i=0; i<jsonArray.length(); i++){
+
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                oNo = jsonObject1.getInt("oNo");
+
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 } // —————

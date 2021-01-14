@@ -31,8 +31,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.tify.Hyeona.Adapter.review_adapter;
+import com.example.tify.Hyeona.Bean.Bean_review_review;
 import com.example.tify.Hyeona.Bean.Bean_review_store;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_review;
+import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.NetworkTask.ImageNetworkTask_TaeHyun;
@@ -41,6 +44,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class review_white extends AppCompatActivity {
@@ -72,6 +76,7 @@ public class review_white extends AppCompatActivity {
     File tempSelectFile;
     String imgName = null;
     String db_review_content;
+    int oNo;
 
     String devicePath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.android.tify/"; //// 외부쓰레드 에서 메인 UI화면을 그릴때 사용 인데 뭔지모르겟음
 
@@ -84,7 +89,9 @@ public class review_white extends AppCompatActivity {
         setContentView(R.layout.cha_activity_review_white);
         Intent intent = getIntent();
         uNo = intent.getIntExtra("uNo",0);
-        sSeqNo = intent.getIntExtra("sSeqNo",0);
+        oNo = intent.getIntExtra("oNo", 0);
+//        sSeqNo = intent.getIntExtra("skSeqNo",0);
+        sSeqNo = 1;
         Log.v("다이얼로그", "ㅇ" + uNo);
         Log.v("다이얼로그", "ㅇ" + sSeqNo);
 
@@ -143,6 +150,7 @@ public class review_white extends AppCompatActivity {
                 else {
                     //여기는 리뷰 내용 저장하는곳
                     String result = connectUpdate();
+                    connectoReview();
                     if(result.equals("1")){
                         new AlertDialog.Builder(review_white.this)
                                 .setMessage("리뷰를 등록했습니다.")
@@ -151,8 +159,9 @@ public class review_white extends AppCompatActivity {
                     }else{
                         //실패
                     }
-                    finish();
-            }
+                    Intent intent1 = new Intent(review_white.this, JiseokMainActivity.class );
+                    startActivity(intent1);
+                }
           };
         });
     }
@@ -239,7 +248,6 @@ public class review_white extends AppCompatActivity {
 
             switch (result){
                 case 1:
-                    Toast.makeText(review_white.this, "이미지서버 저장 성공 !", Toast.LENGTH_SHORT).show();
 
                     //////////////////////////////////////////////////////////////////////////////////////////////
                     //
@@ -319,6 +327,44 @@ public class review_white extends AppCompatActivity {
         Toolbar parent = (Toolbar) actionbar.getParent();
         parent.setContentInsetsAbsolute(0, 0);
         return true;
+    }
+
+
+
+//    private void connectGetoNo(){ // 등록된 리뷰의 oNo가져오기
+//        try {
+//            String urlAddress = "http://" + MacIP + ":8080/tify/lmw_review_select_ono.jsp?user_uNo=" + uNo;
+//            CUDNetworkTask_review mCUDNetworkTask_review = new CUDNetworkTask_review(review_white.this, urlAddress,"oNo");
+//            Object obj = mCUDNetworkTask_review.execute().get();
+//            oNo = (Integer) obj;
+//            Log.v("dddd","oNo"+oNo);
+//            Log.v("이미지", urlAddress);
+//
+//
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+
+
+    private String connectoReview() {// 가져온 oNo이용해 oReview Update
+        //여기서 업데이트 실행한다!!!
+        Log.v("이미지", "connectoReview()");
+
+        String result = null;
+        String urlAddress = "http://" + MacIP + ":8080/tify/lmw_order_update_oreview.jsp?oNo=" + oNo;
+        Log.v("이미지", urlAddress);
+
+        try {
+            CUDNetworkTask_review CUDNetworkTask_review = new CUDNetworkTask_review(review_white.this, urlAddress, "update");
+            Object obj = CUDNetworkTask_review.execute().get();
+            result = (String) obj;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }

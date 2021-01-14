@@ -22,11 +22,14 @@ import android.widget.Toast;
 
 import com.example.tify.Hyeona.Activity.Payment_resultActivity;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask_Mypage;
+import com.example.tify.Minwoo.Bean.Order;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Activity.Mypage_PayPasswordActivity;
+import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PaymentPayPasswordActivity extends AppCompatActivity {
@@ -70,7 +73,8 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
     String urlAddress2;
     String urlAddress;
 
-
+    //order === BEAN
+    Order order = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +93,6 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         point = intent.getIntExtra("point", 0);
-        oNo = intent.getIntExtra("oNo", 0);
         cNo = intent.getIntExtra("cNo", 0);
         store_SeqNo = intent.getIntExtra("store_SeqNo", 0);
         sName = intent.getStringExtra("sName");
@@ -205,7 +208,18 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                         Toast.makeText(PaymentPayPasswordActivity.this, "결제성공", Toast.LENGTH_SHORT).show();
                         // 결제 성공 디비액션
                         connectOrderInsert();
-                        connectOrderListInsert(urlAddress2);
+                        connectOrderNumber();
+
+                        String A = urlAddress2.substring(0,urlAddress2.indexOf("=",1)+1);
+                        String B =  urlAddress2.substring(urlAddress2.indexOf("&",1),urlAddress2.length());
+
+                        String AA = A + oNo + B;
+
+                        Log.v("url",AA);
+
+
+
+                        connectOrderListInsert(AA);
                         new AlertDialog.Builder(PaymentPayPasswordActivity.this)
                                 .setTitle("결제가 완료되었습니다.")
                                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -214,6 +228,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                                         // 결제완료창으로 이동
                                         Intent intent = new Intent(PaymentPayPasswordActivity.this, Payment_resultActivity.class);
                                         intent.putExtra("oNo",oNo);
+                                        Log.v(TAG, "oNo : " + oNo);
                                         intent.putExtra("point",point);
                                         startActivity(intent);
                                     }
@@ -372,6 +387,32 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
 
         }
         return result;
+    }
+
+    //oNo불러오기
+    private void connectOrderNumber() {
+
+        try {
+            //임시값
+            String urlAddr = "http://" + MacIP + ":8080/tify/order_numberselect.jsp?";
+
+            String urlAddress = urlAddr + "user_uNo=" + userSeq;
+            Log.v("dddd","dd"+urlAddress);
+            NetworkTask_TaeHyun myPageNetworkTask = new NetworkTask_TaeHyun(PaymentPayPasswordActivity.this, urlAddress, "selectOrderNumber");
+            Object obj = myPageNetworkTask.execute().get();
+            order = (Order) obj;
+
+            //DB
+            oNo = order.getoNo();
+
+            Log.v(TAG, "oNo : " + oNo);
+            store_SeqNo = order.getStore_sSeqno();
+            sName = order.getStore_sName();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

@@ -53,7 +53,6 @@ public class MypageActivity_paymentlist extends AppCompatActivity {
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         user_uNo = auto.getInt("userSeq",0);
-        user_uNo = 1;
         user_uName= auto.getString("userNickName",null);
 
         userName = findViewById(R.id.user_name);

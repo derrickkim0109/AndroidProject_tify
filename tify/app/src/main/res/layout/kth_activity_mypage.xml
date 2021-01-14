@@ -12,7 +12,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_marginTop="30dp"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp">
 
         <androidx.cardview.widget.CardView
             android:layout_marginTop="70dp"
@@ -69,11 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_centerInParent="true"
-            android:background="@color/colorGray"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -82,9 +78,10 @@
         >
 
         <ListView
+            android:layout_marginTop="250dp"
             android:id="@+id/mypage_listview"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="350dp" />
     </LinearLayout>
 
 
@@ -92,11 +89,12 @@
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
         android:layout_height="wrap_content">
+
         <include
             layout="@layout/cha_bottom_bar"
             android:id="@+id/bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            ></include>
+            />
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

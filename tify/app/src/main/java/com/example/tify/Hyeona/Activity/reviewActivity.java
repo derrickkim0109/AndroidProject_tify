@@ -59,6 +59,7 @@ public class reviewActivity extends Fragment {
 
         Bundle bundle = getArguments();
         storekeeper_skSeqNo = bundle.getInt("store_sSeqNo",0);
+        Log.v("가게번호!!", "store_sSeqNo : " + storekeeper_skSeqNo);
 
         return v;
     }
@@ -88,6 +89,7 @@ public class reviewActivity extends Fragment {
     private void connectGetData(){
         try {
             String urlAddress = urlAddr + "storekeeper_skSeqNo=" + storekeeper_skSeqNo;
+
             CUDNetworkTask_review mCUDNetworkTask_review = new CUDNetworkTask_review(getContext(), urlAddress,"select");
             Object obj = mCUDNetworkTask_review.execute().get();
             reviews = (ArrayList<Bean_review_review>) obj;
