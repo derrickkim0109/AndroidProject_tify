@@ -23,170 +23,170 @@
         android:layout_weight="9"
         >
         <!-- 1번 프레임-->
-    <LinearLayout
-        android:id="@+id/join_ly_fram1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="visible"
-        >
-       <!-- 1번 레이아웃-->
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1.8"
-        android:orientation="vertical"
-        android:gravity="bottom"
-        >
-
-        <LinearLayout
+            android:id="@+id/join_ly_fram1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="티피"
-                android:textSize="40dp"
-                android:textStyle="bold"
-                android:textColor="@color/TextColor"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="를"
-                android:textSize="40dp"
-                android:textColor="@color/TextColor"
-                />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="시작해볼까요?"
-            android:textSize="40dp"
-            android:textColor="@color/TextColor"
-
-            />
-    </LinearLayout>
-    <!--2번 레이아웃 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="3"
-        android:orientation="vertical"
-        android:gravity="center"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="핸드폰 인증을 진행해주세요"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <EditText
-                android:id="@+id/join_et_tel"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:hint="전화번호를 입력해 주세요"
-                android:inputType="phone"
-                android:maxLength="13"
-                />
-            <Button
-                android:id="@+id/join_btn_authentication"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_shape"
-                app:backgroundTint="@color/mainColor"
-                android:layout_marginLeft="20dp"
-                android:text="인증"
-                android:textSize="15dp"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="15dp"></LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
+            android:visibility="visible"
             >
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/join_et_authenticationNum"
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:hint="인증번호를 입력하세요"
-            android:maxLength="8"
-            android:inputType="number"
-            />
-            <TextView
-                android:id="@+id/join_tv_timer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:textSize="20dp"
-                android:textColor="#F40707"
-                />
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-
-
-    </LinearLayout>
-    <!--3번 레이아웃 -->
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="0.7"
-            ></LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            >
+            <!-- 1번 레이아웃-->
             <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="8">
-                <Button
-                    android:id="@+id/join_btn_go"
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1.8"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                >
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_shape"
-                    app:backgroundTint="@color/mainColor"
-                    android:text="계속하기"
+
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="티피"
+                        android:textSize="40dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/TextColor"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="를"
+                        android:textSize="40dp"
+                        android:textColor="@color/TextColor"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="시작해볼까요?"
+                    android:textSize="40dp"
+                    android:textColor="@color/TextColor"
+
                     />
-
             </LinearLayout>
+            <!--2번 레이아웃 -->
             <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="핸드폰 인증을 진행해주세요"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <EditText
+                        android:id="@+id/join_et_tel"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:hint="전화번호를 입력해 주세요"
+                        android:inputType="phone"
+                        android:maxLength="13"
+                        />
+                    <Button
+                        android:id="@+id/join_btn_authentication"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_shape"
+                        app:backgroundTint="@color/mainColor"
+                        android:layout_marginLeft="20dp"
+                        android:text="인증"
+                        android:textSize="15dp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"></LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/join_et_authenticationNum"
+                            android:layout_width="330dp"
+                            android:layout_height="wrap_content"
+                            android:hint="인증번호를 입력하세요"
+                            android:maxLength="8"
+                            android:inputType="number"
+                            />
+                        <TextView
+                            android:id="@+id/join_tv_timer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:textSize="20dp"
+                            android:textColor="#F40707"
+                            />
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
 
 
             </LinearLayout>
+            <!--3번 레이아웃 -->
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="0.7"
+                ></LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8">
+                    <Button
+                        android:id="@+id/join_btn_go"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_shape"
+                        app:backgroundTint="@color/mainColor"
+                        android:text="계속하기"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
-
-
-
-    </LinearLayout>
 
 
         <!-- 2번 프레임-->
@@ -236,58 +236,74 @@
                     android:orientation="horizontal"
                     android:layout_weight="3"
                     >
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    ></LinearLayout>
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    >
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        ></LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        >
+                        <FrameLayout
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
 
-                    >
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        app:cardCornerRadius="80dp"
-                        android:paddingLeft="35dp">
+                            >
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:cardCornerRadius="80dp"
+                                >
 
-                        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
-                            android:id="@+id/join_img_profile"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_centerHorizontal="true"
-                            android:maxWidth="80dp"
-                            android:maxHeight="80dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_person"
-                            app:c_border="true"
-                            app:c_border_color="@color/colorGray1"
-                            app:c_border_width="1dp" />
-                    </androidx.cardview.widget.CardView>
+                                <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+                                    android:id="@+id/join_img_profile"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:scaleType="centerCrop"
+                                    android:src="@raw/profile"
+                                    app:c_border="true"
+                                    app:c_border_color="@color/colorGray1"
+                                    app:c_border_width="1dp" />
+                            </androidx.cardview.widget.CardView>
 
 
-                    <ImageView
-                        android:id="@+id/join_img_profilePlus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@raw/plus"
-                        android:layout_gravity="bottom"
-                        android:paddingLeft="110dp"
-                        />
-                </FrameLayout>
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    ></LinearLayout>
+
+                        </FrameLayout>
+                        <LinearLayout
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="right"
+                            >
+
+                            <ImageView
+                                android:id="@+id/join_img_profilePlus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@raw/plus"
+
+
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        >
+
+
+                    </LinearLayout>
 
 
                 </LinearLayout>

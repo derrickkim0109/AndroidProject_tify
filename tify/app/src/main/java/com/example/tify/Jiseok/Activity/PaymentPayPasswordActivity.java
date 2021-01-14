@@ -24,6 +24,7 @@ import com.example.tify.Hyeona.Activity.Payment_resultActivity;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask_Mypage;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
+import com.example.tify.Taehyun.Activity.MypageActivity;
 import com.example.tify.Taehyun.Activity.Mypage_PayPasswordActivity;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
@@ -234,7 +235,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                             case 5:
                                 Toast.makeText(PaymentPayPasswordActivity.this, "5번틀렷으니 초기화", Toast.LENGTH_SHORT).show();
                                 new AlertDialog.Builder(PaymentPayPasswordActivity.this)
-                                        .setTitle("비밀번호를 다시 입력해주세요.")
+                                        .setTitle("비밀번호가 초기화 되었습니다\n 비밀번호를 다시 설정해 주세요.")
                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -245,6 +246,8 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                                                 count = 0;
                                                 result = "0";
                                                 resultToStar();
+                                                updatePwd();
+                                                startActivity(new Intent(PaymentPayPasswordActivity.this, MypageActivity.class));
                                             }
                                         })
                                         .show();
@@ -372,6 +375,17 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
 
         }
         return result;
+    }
+    private void updatePwd(){
+        try {
+            String urlAddr = "http://" + MacIP + ":8080/tify/cjs_MyPageUpdatePwd.jsp?uNo="+userSeq+"&uPayPassword=null";
+            Log.v("왜안돼",urlAddr);
+            CJS_NetworkTask_Mypage cjs_networkTask = new CJS_NetworkTask_Mypage(PaymentPayPasswordActivity.this, urlAddr, "updatePwd");
+            cjs_networkTask.execute().get();
+
+        }catch (Exception e){
+
+        }
     }
 }
 

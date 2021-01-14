@@ -164,6 +164,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 //        Log.v(TAG, String.valueOf(mNumbers2));
 //
 //        for(int i = 0; i < menuNames.size(); i++){
+        
 //            for(int j = 0; j < mNumbers2.size(); j++){
 //                if(mNumbers2.get(j) == menuNames.get(i).getmNo()){
 //                    holder.mName.setText(menuNames.get(i).getmName());
