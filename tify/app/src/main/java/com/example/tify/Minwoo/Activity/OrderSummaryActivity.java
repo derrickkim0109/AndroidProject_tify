@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +34,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class OrderSummaryActivity extends AppCompatActivity {
 
     String TAG = "OrderSummaryActivity";
+
+
+    LinearLayout ll_hide;
+    InputMethodManager inputMethodManager ;
 
     // MenuFragment로 부터 받을 값 설정
     int mNo;
@@ -60,8 +67,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
     Button tv_mShot;
     TextView tv_SizeupTitle;
     TextView tv_ShotTitle;
-    Button btn_Plus;
-    Button btn_Minus;
+    ImageButton btn_Plus;
+    ImageButton btn_Minus;
     TextView tv_Quantity;
     EditText et_Request;
     TextView tv_TotalPrice;
@@ -80,6 +87,20 @@ public class OrderSummaryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_order_summary);
+
+
+
+        //키보드 화면 터치시 숨기기위해 선언.
+        ll_hide = findViewById(R.id.detail_ll_hide);
+        inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);  //OS에서 지원해주는 메소드이다.
+
+        //키보드 화면 터치시 숨김.
+        ll_hide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputMethodManager.hideSoftInputFromWindow(ll_hide.getWindowToken(),0);
+            }
+        });
 
 
         // MenuFragment로 부터 값을 받는다.
