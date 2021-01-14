@@ -159,7 +159,7 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
                 String oDeleteDate = jsonObject1.getString("oDeleteDate");
                 int oSum = jsonObject1.getInt("oSum");
                 String oCardName = jsonObject1.getString("oCardName");
-                int oCardNo = jsonObject1.getInt("oCardNo");
+                String oCardNo = null;
                 int oReview = jsonObject1.getInt("oReview");
                 int oStatus = jsonObject1.getInt("oStatus");
 

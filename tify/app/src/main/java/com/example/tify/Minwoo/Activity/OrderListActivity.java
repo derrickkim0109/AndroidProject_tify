@@ -101,19 +101,19 @@ public class OrderListActivity extends AppCompatActivity {
     String userName;
 
     // 통신 ------------- 소켓 닫는 거
-    @Override
-    protected void onStop() {
-        super.onStop();
-        try {
-            if(from.equals("BeforePayActivity")){
-                sendWriter.close();
-                socket.close();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        try {
+//            if(from.equals("BeforePayActivity")){
+//                sendWriter.close();
+//                socket.close();
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     // -----------------------------
 
     @Override
@@ -178,8 +178,10 @@ public class OrderListActivity extends AppCompatActivity {
             public void run() { // 받는 스레드
 
                 try {
-                    if(from.equals("BeforePayActivity")){
+                    if(from == null){
 
+
+                    }else{
                         InetAddress serverAddr = InetAddress.getByName(ip);
                         socket = new Socket(serverAddr, port);
                         sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);

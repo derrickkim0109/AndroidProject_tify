@@ -11,12 +11,12 @@ public class Order {
     String oDeleteDate;
     int oSum;
     String oCardName;
-    int oCardNo;
+    String oCardNo;
     int oReview;
     int oStatus;
     int max;
 
-    public Order(int user_uNo, int oNo, int store_sSeqno, String store_sName, String oInsertDate, String oDeleteDate, int oSum, String oCardName, int oCardNo, int oReview, int oStatus) {
+    public Order(int user_uNo, int oNo, int store_sSeqno, String store_sName, String oInsertDate, String oDeleteDate, int oSum, String oCardName, String oCardNo, int oReview, int oStatus) {
         this.user_uNo = user_uNo;
         this.oNo = oNo;
         this.store_sSeqno = store_sSeqno;
@@ -29,6 +29,8 @@ public class Order {
         this.oReview = oReview;
         this.oStatus = oStatus;
     }
+
+
 
     public Order(int oNo, int store_sSeqno, String store_sName) {
         this.oNo = oNo;
@@ -96,14 +98,6 @@ public class Order {
         this.oCardName = oCardName;
     }
 
-    public int getoCardNo() {
-        return oCardNo;
-    }
-
-    public void setoCardNo(int oCardNo) {
-        this.oCardNo = oCardNo;
-    }
-
     public int getoReview() {
         return oReview;
     }
@@ -134,5 +128,13 @@ public class Order {
 
     public void setMax(int max) {
         this.max = max;
+    }
+
+    public String getoCardNo() {
+        return oCardNo;
+    }
+
+    public void setoCardNo(String oCardNo) {
+        this.oCardNo = oCardNo;
     }
 }
