@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
 
+
         <activity android:name=".Hyeona.Activity.qrActivity" /> <!-- 태현 -->
         <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_CardRegistrationActivity" />
@@ -33,7 +34,7 @@
         <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity" />
-        <activity android:name=".Taehyun.Activity.OrderPage_PaymentActivity" /> <!-- 태현 -->
+        <activity android:name=".Taehyun.Activity.OrderPage_PaymentActivity11111" /> <!-- 태현 -->
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
         <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />

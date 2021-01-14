@@ -1,6 +1,9 @@
 package com.example.tify.Minwoo.Bean;
 
-public class Cart {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Cart implements Serializable {
 
     int cLNo;
     int store_sSeqNo;
@@ -11,6 +14,7 @@ public class Cart {
     int cLSizeUp;
     int cLAddShot;
     String cLRequest;
+    ArrayList<Cart> carts;
 
 
     public Cart(int cLNo, int store_sSeqNo, String menu_mName, int cLPrice, int cLQuantity, String cLImage, int cLSizeUp, int cLAddShot, String cLRequest) {
@@ -23,6 +27,13 @@ public class Cart {
         this.cLSizeUp = cLSizeUp;
         this.cLAddShot = cLAddShot;
         this.cLRequest = cLRequest;
+    }
+
+    public Cart(ArrayList<Cart> carts) {
+        this.carts = carts;
+    }
+
+    public Cart() {
     }
 
     public int getcLNo() {
@@ -95,5 +106,13 @@ public class Cart {
 
     public void setcLRequest(String cLRequest) {
         this.cLRequest = cLRequest;
+    }
+
+    public ArrayList<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(ArrayList<Cart> carts) {
+        this.carts = carts;
     }
 }
