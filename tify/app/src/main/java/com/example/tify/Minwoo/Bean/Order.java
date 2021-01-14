@@ -30,6 +30,12 @@ public class Order {
         this.oStatus = oStatus;
     }
 
+    public Order(int oNo, int store_sSeqno, String store_sName) {
+        this.oNo = oNo;
+        this.store_sName = store_sName;
+        this.store_sSeqno = store_sSeqno;
+    }
+
     public Order(int max) {
         this.max = max;
     }

@@ -6,22 +6,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:id="@+id/detail_ll_hide"
     android:layout_gravity="center"
     tools:context=".Minwoo.Activity.OrderSummaryActivity">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        />
-
     <androidx.cardview.widget.CardView
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginTop="20dp"
         android:paddingLeft="35dp"
         android:layout_gravity="center">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/orderSummary_CIV_mPhoto"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxHeight="80dp"
             android:minHeight="80dp"
@@ -29,166 +25,191 @@
             android:src="@drawable/ic_launcher_foreground"
             />
     </androidx.cardview.widget.CardView>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
-        <TextView
-            android:id="@+id/orderSummary_TV_mName"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="음료 이름"
-            android:textSize="18dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"/>
-        <TextView
-            android:id="@+id/orderSummary_TV_mPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:text="음료 가격"
-            android:gravity="center"/>
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/orderSummary_TV_mName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="음료 이름"
+                android:textSize="18dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/orderSummary_TV_mPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/TextColor"
+                android:text="음료 가격"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/orderSummary_TV_Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:text="이 음료는 아메리카노 입니다."/>
+        </LinearLayout>
 
     </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/orderSummary_TV_Content"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="이 음료는 아메리카노 입니다."/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="vertical"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+           android:layout_gravity="center"
+            android:layout_weight="4"
+            android:gravity="center"
             android:orientation="horizontal"
             >
-            <TextView
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="60dp"
-                android:text="수량"
-                android:gravity="center"
-                android:textColor="@color/TextColor"
-                android:textSize="18dp"
-                />
-
             <LinearLayout
-                android:layout_width="0px"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                ></LinearLayout>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="수량"
+                android:layout_weight="2"
+                android:gravity="left"
+                android:paddingRight="20dp"
+                android:textColor="@color/TextColor"
+                android:textSize="15dp"></TextView>
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_weight="1"
-                android:paddingRight="50dp"
+                android:layout_weight="2"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
                 >
-
-            <Button
-                android:id="@+id/orderSummary_Btn_Minus"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:backgroundTint="@color/white"
-                android:textColor="@color/black"
-                android:text="-"/>
-            <TextView
-                android:id="@+id/orderSummary_TV_Quantity"
-                android:layout_width="50dp"
-                android:layout_height="60dp"
-                android:text="1"
-                android:gravity="center"
-                android:textColor="@color/TextColor"
-                android:textSize="18dp"
-                />
-            <Button
-                android:id="@+id/orderSummary_Btn_Plus"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:backgroundTint="@color/white"
-                android:textColor="@color/black"
-                android:text="+"/>
+                <ImageButton
+                    android:id="@+id/orderSummary_Btn_Minus"
+                    android:layout_width="30dp"
+                    android:background="#fff"
+                    android:layout_height="30dp"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:src="@drawable/ic_action_h_02"
+                    />
+                <TextView
+                    android:id="@+id/orderSummary_TV_Quantity"
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    android:text="1"
+                    android:gravity="center"
+                    android:textColor="@color/TextColor"
+                    android:textSize="18dp"
+                    />
+                <ImageButton
+                    android:id="@+id/orderSummary_Btn_Plus"
+                    android:layout_width="30dp"
+                    android:background="#fff"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_action_h_01"/>
             </LinearLayout>
+
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center"
             >
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                ></LinearLayout>
             <TextView
                 android:id="@+id/orderSummary_TV_SizeUpTitle"
-                android:layout_width="0px"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="사이즈업"
-                android:gravity="center"
-                android:textColor="@color/TextColor"
-                android:textSize="18dp"
-                />
-
-            <LinearLayout
-                android:layout_width="0px"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:paddingRight="65dp"
-                >
+                android:gravity="left"
+                android:paddingRight="20dp"
+                android:textColor="@color/TextColor"
+                android:textSize="15dp"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:layout_marginRight="60dp"
+                android:layout_height="wrap_content">
             <Button
-                android:id="@+id/orderSummary_Btn_SizeUp"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/orderSummary_Btn_SizeUp"
                 android:text="+1000원"
                 android:textColor="@color/SubColor"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/white"></Button>
 
-                />
+
             </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_weight="1"
             android:gravity="center"
             >
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                ></LinearLayout>
             <TextView
                 android:id="@+id/orderSummary_TV_ShotTitle"
-                android:layout_width="0px"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="샷추가"
-                android:gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingRight="20dp"
                 android:textColor="@color/TextColor"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 />
             <LinearLayout
-                android:layout_width="0px"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:paddingRight="65dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:layout_marginRight="60dp"
                 >
                 <Button
                     android:id="@+id/orderSummary_Btn_Shot"
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/SubColor"
-                    android:text="+500원"
+                    android:text="+ 500원"
+                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:backgroundTint="@color/white"
-
                     />
+
+
         </LinearLayout>
     </LinearLayout>
     </LinearLayout>
@@ -206,101 +227,93 @@
         >
     <EditText
         android:id="@+id/orderSummary_ET_Request"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="15dp"
+        android:layout_weight="1"
         android:lines="8"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:minLines="6"
         android:maxLines="10"
         android:paddingBottom="100dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:background="@drawable/ordersummary_edittext_border"
         android:hint="요청사항을 입력해주세요."
         />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_centerInParent="true"
-        android:background="@color/black"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        >
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_centerInParent="true"
+            android:background="#999999"/>
         <TextView
-            android:layout_width="0px"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="총 주문금액"
-            android:textSize="20dp"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="총 주문금액"
+                android:textSize="20dp"
+                android:gravity="center"
+                />
+            <TextView
+                android:id="@+id/orderSummary_TV_TotalPrice"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="10,000원"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
         <TextView
-            android:id="@+id/orderSummary_TV_TotalPrice"
-            android:layout_width="0px"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="10,000원"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            />
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/orderSummary_Btn_Cart"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:text="장바구니"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/SubColor"
+                />
+            <Button
+                android:id="@+id/orderSummary_Btn_Direct"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:text="바로 주문"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/mainColor"
+                />
+        </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <Button
-            android:id="@+id/orderSummary_Btn_Cart"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:text="장바구니"
-            android:textSize="20dp"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/SubColor"
-            />
-        <Button
-            android:id="@+id/orderSummary_Btn_Direct"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:text="바로 주문"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/mainColor"
-
-            />
-    </LinearLayout>
-
-
-
-
-
-
-
 </LinearLayout>
