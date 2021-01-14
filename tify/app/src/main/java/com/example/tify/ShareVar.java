@@ -6,7 +6,7 @@ public class ShareVar {
 
 
 
-    final static String macIP = "192.168.219.100";
+    final static String macIP = "192.168.0.55";
 
 
 
