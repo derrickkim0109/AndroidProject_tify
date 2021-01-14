@@ -2,9 +2,17 @@
 package com.example.tify.Minwoo.Activity;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,10 +21,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +44,17 @@ import com.example.tify.Minwoo.NetworkTask.LMW_OrderListNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_OrderNetworkTask;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -40,6 +62,15 @@ import java.util.Locale;
 public class OrderListActivity extends AppCompatActivity {
 
     String TAG = "OrderListActivity";
+
+    // 통신
+    private Handler mHandler;
+    InetAddress serverAddr;
+    Socket socket;
+    PrintWriter sendWriter;
+    private String ip = "211.195.53.163";
+    private int port = 8888;
+    String strStatus = null;
 
     private ArrayList<Order> data = null;
     private OrderListAdapter adapter = null;
@@ -69,12 +100,45 @@ public class OrderListActivity extends AppCompatActivity {
     int skStatus;
     String userName;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_order_list);
         Log.v(TAG, "OrderListActivity onCreate");
+
+        // 통신 ------------------------------------------------
+        ///////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
+        mHandler = new Handler();
+
+        new Thread() {
+            public void run() { // 받는 스레드
+
+                try {
+                    InetAddress serverAddr = InetAddress.getByName(ip);
+                    socket = new Socket(serverAddr, port);
+                    sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
+                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
+                    while(true){
+                        Log.v("통신 순서", "순서 1 - 받는 스레드");
+
+                        strStatus = input.readLine();
+                        Log.v("통신 확인(tify)", "Customer 받은 값 : " + strStatus);
+
+                        if(strStatus!=null){ // 점주가 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
+                            mHandler.post(new msgUpdate(strStatus));
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } }}.start();
+
+
+//        if(strStatus != null){ // 점주가 요청에 반응했을 때
+//            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
+//        }
+        ///////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
 
         // 받은 값 저장
         Intent intent = getIntent();
@@ -293,4 +357,59 @@ public class OrderListActivity extends AppCompatActivity {
         parent.setContentInsetsAbsolute(0, 0);
         return true;
     }
+
+    // 통신 ------------------------------------------
+    class msgUpdate implements Runnable{ // 받아서 작동하는 메소드
+        private String msg;
+        public msgUpdate(String str) {this.msg=str;}
+
+        @Override
+        public void run() {
+            createNotification();
+
+            Log.v("통신 순서", "순서 1 - 받는 스레드");
+
+            Log.v("통신 확인(tify)", "msgUpdate msg : " + msg);
+//            status.setText(status.getText().toString()+msg+"\n");
+
+//            AlertDialog.Builder builder = new AlertDialog.Builder(OrderListActivity.this);
+//            builder.setTitle("주문 결과");
+//            builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
+//            builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
+//            builder.show();
+
+//            Toast.makeText(OrderListActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+    // -----------------------------------------------
+
+    private void createNotification() {
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
+
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentTitle("주문 접수 알림!");
+        builder.setContentText("요청하신 주문이 정상적으로 접수되었습니다.");
+
+        builder.setColor(Color.RED);
+        // 사용자가 탭을 클릭하면 자동 제거
+        builder.setAutoCancel(true);
+
+        // 알림 표시
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(new NotificationChannel("default", "기본 채널", NotificationManager.IMPORTANCE_DEFAULT));
+        }
+        // id값은
+        // 정의해야하는 각 알림의 고유한 int값
+        notificationManager.notify(1, builder.build());
+    }
+
+
+    private void removeNotification() {
+        // Notification 제거
+        NotificationManagerCompat.from(this).cancel(1);
+    }
+
 }

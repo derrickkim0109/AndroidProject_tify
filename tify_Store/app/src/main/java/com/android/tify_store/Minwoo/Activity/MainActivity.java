@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     InetAddress serverAddr;
     Socket socket;
     PrintWriter sendWriter;
-    private String ip = "172.30.1.27";
+    private String ip = "211.195.53.163";
     private int port = 8888;
     String strStatus = null;
     String sendStatus = null;
@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
                     sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
                     BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
                     while(true){
+                        Log.v("통신 순서", "순서 1 - 받는 스레드");
                         strStatus = input.readLine();
-                        Log.v(TAG, "Store 받은 값 : " + strStatus);
+                        Log.v("통신 확인(tify_store)", "Store 받은 값 : " + strStatus);
 
                         if(strStatus!=null){ // 고객이 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
                             mHandler.post(new showOrder(strStatus));
@@ -285,9 +286,13 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
 //            status.setText(status.getText().toString()+msg+"\n");
 
-            if(sendStatus.equals(msg)){
-                Log.v(TAG, "sendStatus = strStatus");
-            }else{
+            Log.v("통신 sendStatus", "통신 sendStatus : " + strStatus);
+            if(strStatus.equals(null)){
+
+            }else if(strStatus.equals(msg)){
+                Log.v("통신 순서", "순서 2 - showOrder");
+                Log.v("통신 확인(tify_store)", "sendStatus = strStatus");
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("주문이 들어왔습니다");
                 builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.

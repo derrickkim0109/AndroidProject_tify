@@ -1,6 +1,8 @@
 package com.example.tify.Minwoo.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +53,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     int store_sSeqNo = 0;
     int order_oNo = 0;
     String order_oInsertDate = null;
+    String userName;
 
     // layout
     TextView tv_UserName;
@@ -71,9 +74,15 @@ public class OrderDetailActivity extends AppCompatActivity {
         order_oNo = intent.getIntExtra("order_oNo", 0);
         order_oInsertDate = intent.getStringExtra("order_oInsertDate");
 
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor autoLogin = auto.edit();
+        userName = auto.getString("userNickName",null); // 지석씨랑 화면 연결되면 쓰기
+
         // layout
         tv_UserName = findViewById(R.id.activity_OrderDetail_TV_cName);
         tv_TotalPrice = findViewById(R.id.orderDetail_TV_TotalPrice);
+
+        tv_UserName.setText(userName + "님의 주문내역");
 
         //리사이클러뷰에 있는 아이디를 찾기
         recyclerView = findViewById(R.id.orderDetail_recycler_view);

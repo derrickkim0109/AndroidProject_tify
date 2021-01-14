@@ -37,7 +37,7 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
     InetAddress serverAddr;
     Socket socket;
     PrintWriter sendWriter;
-    private String ip = "172.30.1.27";
+    private String ip = "211.195.53.163";
     private int port = 8888;
     String strStatus = null;
     String sendStatus = null;
@@ -66,16 +66,16 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
     int oNo;
 
     // 통신 ---------------------- 소켓 끊기
-    @Override
-    public void onStop() {
-        super.onStop();
-        try {
-            sendWriter.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        try {
+//            sendWriter.close();
+//            socket.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     // ----------------------------------
 
     public static DialogFragment_OrderRequest_Cancel newInstance(String mainMsg) {
@@ -134,7 +134,8 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
                     BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
                     while(true){
                         strStatus = input.readLine();
-                        Log.v(TAG, "Store 받은 값 : " + strStatus);
+                        Log.v("통신 순서", "다이얼로그 순서 1 - 받는 스레드");
+                        Log.v("통신 확인(tify_store) - 접수", "Store 받은 값 : " + strStatus);
 
                         if(strStatus!=null){ // 고객이 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
                             mHandler.post(new showOrder(strStatus));
@@ -199,12 +200,13 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
 
                         if(et_inputTime.getText().toString().length() > 0){
                             sendStatus = "주문이 접수되었습니다. \n예상제조시간은 " + why + "입니다.";
-                            Log.v(TAG, "Store 주는 값 : " + sendStatus);
+                            Log.v("통신 확인(tify_store) - 접수", "Store 주는 값 : " + sendStatus);
                             new Thread() { // 주는 스레드
                                 @Override
                                 public void run() {
                                     super.run();
                                     try {
+                                        Log.v("통신 순서", "순서 2 - 보내는 스레드");
                                         sendWriter.println(sendStatus);
                                         sendWriter.flush();
 //                            message.setText("");
@@ -288,8 +290,9 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
         public void run() {
 
             if(sendStatus.equals(msg)){
-                Log.v(TAG, "sendStatus = strStatus");
+                Log.v("통신 확인(tify_store) - OK", "sendStatus = strStatus");
             }else{
+                Log.v("통신 순서", "순서 3 - showOrder");
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("11111");
                 builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
