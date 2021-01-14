@@ -2,6 +2,7 @@ package com.example.tify.Taehyun.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,13 +13,19 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tify.Hyeona.Activity.LoginActivity;
 import com.example.tify.Hyeona.Activity.Payment_resultActivity;
+import com.example.tify.Minwoo.Adapter.CartAdapter;
+import com.example.tify.Minwoo.Bean.Cart;
+import com.example.tify.Minwoo.Bean.Order;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Adapter.Mypage_CardListAdapter;
@@ -26,8 +33,12 @@ import com.example.tify.Taehyun.Bean.Bean_Mypage_cardlist;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_RecycleView_CardView;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class OrderPage_PaymentActivity extends AppCompatActivity {
 
@@ -46,18 +57,21 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
     ShareVar shareVar =new ShareVar();
     String MacIP = shareVar.getMacIP();
 
-//    SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-//    int user_uNo = auto.getInt("userSeq",0);
+
     //임시 유저 값.
-    int user_uNo = 1;
+     int user_uNo = 0;
 
 
     //Intent
     Intent intent ;
-    int oNo = 0;
+    String card_cNo;
     int point = 0;
+    int oNo = 0;
+
     //DB
-    String order_cComapany, order_cCardNO;
+
+    String cCardCompany;
+
     int cNo = 0;
     //XML
     ImageView orderPay_cCompanyIV;
@@ -66,20 +80,64 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
     Button orderPay_insertbtn;
 
 
+
+    //jsp적을 주소
+    String urlAddr = null;
+    //
+    String urlAddress = null;
+
+    // BeforePayActivity2 (Cart)
+    ArrayList<Cart> carts = null;
+    String from = null;
+    int totalPrice = 0;
+
+    // BeforePayActivity
+    String menu_mName;
+    int olSizeUp;
+    int olAddShot;
+    String olRequest;
+    int olPrice;
+    int olQuantity;
+    int store_SeqNo;
+    String sName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cha_payment);
-        init();
-
         intent = getIntent();
         inheritance();
+        init();
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        user_uNo = auto.getInt("userSeq",0);
+
+        urlAddr =  "http://" + MacIP + ":8080/tify/orderPay_insert.jsp?";
 
     }
 
+    @SuppressLint("LongLogTag")
     private void inheritance() {
-        oNo = intent.getIntExtra("oNo",0);
+
         point = intent.getIntExtra("point",0);
+        from = intent.getStringExtra("from");
+        totalPrice = intent.getIntExtra("total", 0);
+        store_SeqNo = intent.getIntExtra("store_sSeqNo", 0);
+
+
+        if(from.equals("BeforePayActivity2")){ // 일반
+            carts = (ArrayList<Cart>) getIntent().getSerializableExtra("Carts");
+
+        }else { //
+            menu_mName = intent.getStringExtra("menu_mName");
+            olSizeUp = intent.getIntExtra("olSizeUp", 0);
+            olAddShot = intent.getIntExtra("olAddShot", 0);
+            olRequest = intent.getStringExtra("olRequest");
+            olPrice = intent.getIntExtra("olPrice", 0);
+            olQuantity = intent.getIntExtra("olQuantity", 0);
+            sName = intent.getStringExtra("sName");
+
+
+        }
     }
 
     private void init() {
@@ -92,6 +150,13 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
 
         orderPay_CB.setOnClickListener(mClickListener);
         orderPay_insertbtn.setOnClickListener(mClickListener);
+
+        // 결제 가격
+        Log.v("TAG", " 최종 totalPrice : " + totalPrice);
+        NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
+        String strTotal = moneyFormat.format(totalPrice);
+        oderPay_oPriceTV.setText(strTotal + "원");
+        // --------------------
     }
 
     View.OnClickListener mClickListener = new View.OnClickListener() {
@@ -99,16 +164,41 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
         public void onClick(View v) {
 
             switch (v.getId()){
-                //동의 체크 박스
-                case R.id.orderPay_CB:
-
-                    break;
-                    // 결제하기 버튼
+                // 결제하기 버튼
                 case R.id.orderPay_insertbtn:
-                    intent = new Intent(OrderPage_PaymentActivity.this, Payment_resultActivity.class)
-                            .putExtra("oNo",oNo)
-                            .putExtra("point",point);
-                    startActivity(intent);
+                    if (orderPay_CB.isChecked()==false){
+                        new AlertDialog.Builder(OrderPage_PaymentActivity.this)
+                                .setTitle("동의를 체크해주세요.")
+                                .setPositiveButton("확인",null)
+                                .show();
+                        break;
+                    }
+                    else{
+
+                        String result = connectOrderInsert();
+
+
+                        if (result.equals("1")){
+                            //orderlist에 들어갈 값들
+                            for(int i = 0; i < carts.size(); i++){ // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
+                                urlAddr = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo="+ "&order_oNo=" + oNo +
+                                        + store_SeqNo + "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp()
+                                        + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice()
+                                        + "&olQuantity=" + carts.get(i).getcLQuantity();
+                                connectOrderListInsert(urlAddr); // orderlist Insert
+                            }
+
+
+                            intent = new Intent(OrderPage_PaymentActivity.this, Payment_resultActivity.class)
+                                    .putExtra("point",point)
+                                    .putExtra("oNo",oNo)
+                                    .putExtra("cNo",cNo);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(OrderPage_PaymentActivity.this,"실패",Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
                     break;
             }
         }
@@ -120,63 +210,13 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
         super.onResume();
         //카드 이미지 리스트 띄우기
         connectCardView(user_uNo);
-        //카드 정보띄우기
-        connectGetData(user_uNo);
+
     }
 
-    private void connectGetData(int s) {
-        try {
-            //임시값
 
 
-            String urlAddr = "http://" + MacIP + ":8080/tify/mypage_card_list_select.jsp?";
-            String urlAddress = urlAddr + "user_uNo=" + s;
 
-
-            NetworkTask_RecycleView_CardView networkTask_taeHyun = new NetworkTask_RecycleView_CardView(urlAddress,"CardList_Bean");
-            Object obj = networkTask_taeHyun.execute().get();
-            cardlist = (Bean_Mypage_cardlist) obj;
-
-            //DB
-            order_cComapany = cardlist.getcCardCompany();
-            order_cCardNO = cardlist.getcCardNo();
-            cNo = cardlist.getcNo();
-
-            if (order_cComapany.equals("MASTERCARD")){
-                orderPay_cCompanyIV.setImageResource(R.drawable.mastercard);
-            }else if (order_cComapany.equals("VISA")){
-                orderPay_cCompanyIV.setImageResource(R.drawable.visa);
-
-            }else if (order_cComapany.equals("AMEX")){
-                orderPay_cCompanyIV.setImageResource(R.drawable.amex);
-
-            }else if (order_cComapany.equals("DINERS_CLUB And CARTE_BLANCHE")){
-                orderPay_cCompanyIV.setImageResource(R.drawable.dinersclub);
-
-            }else if (order_cComapany.equals("DISCOVER")){
-                orderPay_cCompanyIV.setImageResource(R.drawable.discover);
-
-            }else if (order_cComapany.equals("JCB")){
-                orderPay_cCompanyIV.setImageResource(R.drawable.jcb);
-
-            }
-
-            String str= "";
-            for (int i = 0; i < order_cCardNO.length()-4; i++) {
-                if (i%4 == 0 ){
-                    str += " ";
-                }
-                str +="*";
-            }
-            str +=" ";
-            orderPay_cNumberTV.setText(str+order_cCardNO.substring((order_cCardNO.length()-4),order_cCardNO.length()));
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    ///카드 이미지보이기 // 카드 정보 띄우기
     @SuppressLint("LongLogTag")
     private void connectCardView(int s){
 
@@ -201,9 +241,135 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
             //어댑터에게 보내기
             recyclerView.setAdapter(cardListAdapter);
 
+
+            //
+            cardListAdapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View v, int position) {
+                    int card_quantities = cardCountselect();
+                    if (card_quantities == 0){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(OrderPage_PaymentActivity.this);
+                        builder.setTitle("카드등록");
+                        builder.setMessage("카드등록 하시겠습니까?");
+                        builder.setNegativeButton("아니오", null);
+                        builder.setPositiveButton("예", new DialogInterface.OnClickListener() { // 예를 눌렀을 경우 로그인 창으로 이동
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                intent = new Intent(OrderPage_PaymentActivity.this,Mypage_CardDetailActivity.class)
+                                        .putExtra("uNo",user_uNo);
+                                startActivity(intent);
+                            }
+                        });
+                        builder.create().show();
+                    }
+                    else {
+
+                        for(int i = 0; i < card_quantities; i ++){
+                            if (position == i) {
+
+                                cNo = bean_mypage_cardlists.get(position).getcNo();
+                                cCardCompany = bean_mypage_cardlists.get(position).getcCardCompany();
+                                card_cNo = bean_mypage_cardlists.get(position).getcCardNo();
+
+                                if (cCardCompany.equals("MASTERCARD")){
+                                    orderPay_cCompanyIV.setImageResource(R.drawable.mastercard);
+                                }else if (cCardCompany.equals("VISA")){
+                                    orderPay_cCompanyIV.setImageResource(R.drawable.visa);
+
+                                }else if (cCardCompany.equals("AMEX")){
+                                    orderPay_cCompanyIV.setImageResource(R.drawable.amex);
+
+                                }else if (cCardCompany.equals("DINERS_CLUB And CARTE_BLANCHE")){
+                                    orderPay_cCompanyIV.setImageResource(R.drawable.dinersclub);
+
+                                }else if (cCardCompany.equals("DISCOVER")){
+                                    orderPay_cCompanyIV.setImageResource(R.drawable.discover);
+
+                                }else if (cCardCompany.equals("JCB")){
+                                    orderPay_cCompanyIV.setImageResource(R.drawable.jcb);
+
+                                }
+
+                                String str= "";
+                                for (int j = 0; j < card_cNo.length()-4; j++) {
+                                    if (j%4 == 0 ){
+                                        str += " ";
+                                    }
+                                    str +="*";
+                                }
+                                str +=" ";
+                                orderPay_cNumberTV.setText(str+card_cNo.substring((card_cNo.length()-4),card_cNo.length()));
+                            }
+                        }
+                    }
+
+                }
+            });
+
         }catch (Exception e){
             e.printStackTrace();
 
         }
     }
-}
+
+        //결제 네트워크 타스크  -> order  순서 1
+        @SuppressLint("LongLogTag")
+        private String connectOrderInsert( ) {
+
+            urlAddress = urlAddr + "&user_uNo=" + user_uNo + "&storekeeper_skSeqNo"+ store_SeqNo + "&store_sName"+ sName
+                    + "&oSum=" + totalPrice + "&oCardName=" + cCardCompany + "&oCardNo=" + card_cNo;
+
+            String result = null;
+            try {
+                NetworkTask_TaeHyun insertNetworkTask = new NetworkTask_TaeHyun(OrderPage_PaymentActivity.this, urlAddress, "insert");
+                Object obj = insertNetworkTask.execute().get();
+                result = (String) obj;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+            return result;
+        }
+
+
+    // orderlist 테이블 Insert
+
+
+    //결제 네트워크 타스크  --> order -> orderlist 순서 2
+    @SuppressLint("LongLogTag")
+    private String connectOrderListInsert(String orderlistUrl) {
+
+        String result = null;
+        try {
+            NetworkTask_TaeHyun insertNetworkTask = new NetworkTask_TaeHyun(OrderPage_PaymentActivity.this, orderlistUrl, "insert");
+            Object obj = insertNetworkTask.execute().get();
+            result = (String) obj;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return result;
+    }
+
+
+    // 전화번호 중복체크
+        private int cardCountselect(){
+            int cardcount = 0;
+            try {
+
+                String urlAddr = "http://" + MacIP + ":8080/tify/mypage_cardcountselect.jsp?user_uNo="+ user_uNo;
+
+                NetworkTask_TaeHyun countnetworkTask = new NetworkTask_TaeHyun(OrderPage_PaymentActivity.this, urlAddr, "count");
+                Object obj = countnetworkTask.execute().get();
+
+                cardcount= (int) obj;
+
+            }catch (Exception e){
+
+            }
+            return cardcount;
+        }
+
+}/////---END

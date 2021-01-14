@@ -13,6 +13,9 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3b8b0ddcc4912baaee2e1406bc39bc3a/jetified-usermgmt-1.15.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3b8b0ddcc4912baaee2e1406bc39bc3a/jetified-usermgmt-1.15.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3b8b0ddcc4912baaee2e1406bc39bc3a/jetified-usermgmt-1.15.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/85661ad9c4a54216034924cd162bf35f/jetified-usermgmt-1.15.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/85661ad9c4a54216034924cd162bf35f/jetified-usermgmt-1.15.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/85661ad9c4a54216034924cd162bf35f/jetified-usermgmt-1.15.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

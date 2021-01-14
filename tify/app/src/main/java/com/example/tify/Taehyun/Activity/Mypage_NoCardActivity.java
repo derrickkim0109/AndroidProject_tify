@@ -43,8 +43,32 @@ public class Mypage_NoCardActivity extends AppCompatActivity {
     }
 
     private void init() {
+        nocard_firstbtn = findViewById(R.id.nocard_firstbtn);
+        nocard_cardadd_btn = findViewById(R.id.nocard_cardadd_btn);
 
+        nocard_firstbtn.setOnClickListener(mClickListener);
+        nocard_cardadd_btn.setOnClickListener(mClickListener);
     }
+    View.OnClickListener mClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.nocard_firstbtn:
+                    intent = new Intent(Mypage_NoCardActivity.this,Mypage_CardDetailActivity.class)
+                            .putExtra("uNo",uNo)
+                            .putExtra("MacIP",MacIP);
+                    startActivity(intent);
+                    break;
+                case R.id.nocard_cardadd_btn:
+                    intent = new Intent(Mypage_NoCardActivity.this,Mypage_CardDetailActivity.class)
+                            .putExtra("uNo",uNo)
+                            .putExtra("MacIP",MacIP);
+                    startActivity(intent);
+                    break;
+            }
+
+        }
+    };
 
 
     //액션바에 등록하기 버튼 만들기
