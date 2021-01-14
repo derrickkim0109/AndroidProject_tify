@@ -101,6 +101,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
 
 
 
+
         btn[0]=findViewById(R.id.paymentPwd_btn0);
         btn[1]=findViewById(R.id.paymentPwd_btn1);
         btn[2]=findViewById(R.id.paymentPwd_btn2);
@@ -345,6 +346,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
 
         urlAddress = urlAddr2 + "&user_uNo=" + userSeq + "&storekeeper_skSeqNo=" + store_SeqNo + "&store_sName=" + sName
                 + "&oSum=" + totalPrice + "&oCardName=" + cCardCompany + "&oCardNo=" + card_cNo;
+        Log.v("^^",urlAddress);
 
         String result = null;
         try {
