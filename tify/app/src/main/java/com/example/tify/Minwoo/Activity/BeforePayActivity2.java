@@ -30,7 +30,7 @@ import com.example.tify.Minwoo.NetworkTask.LMW_OrderNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_PointNetworkTask;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
-import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity11111;
+import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -285,7 +285,7 @@ public class BeforePayActivity2 extends AppCompatActivity {
 //                    intent.putExtra("from", from);
 //                    startActivity(intent);
 
-                    intent = new Intent(BeforePayActivity2.this, OrderPage_PaymentActivity11111.class);
+                    intent = new Intent(BeforePayActivity2.this, OrderPage_PaymentActivity.class);
                     intent.putExtra("Carts", carts);
                     intent.putExtra("from", "BeforePayActivity2");
                     intent.putExtra("store_sSeqNo", store_sSeqNo);
