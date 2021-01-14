@@ -191,8 +191,8 @@ public class CUDNetworkTask_payment extends AsyncTask<Integer, String, Object> {
                         String oInsertDate = jsonObject1.getString("oInsertDate");
                         String oDeleteDate = jsonObject1.getString("oDeleteDate");
                         String oSum = jsonObject1.getString("oSum");
-                        String oCardName = jsonObject1.getString("oDeleteDate");
-                        String oCardNo = jsonObject1.getString("oSum");
+                        String oCardName = jsonObject1.getString("oCardName");
+                        String oCardNo = jsonObject1.getString("oCardNo");
 
                         bean_payment_select = new Bean_payment_select(user_uNo, oNo, storekeeper_skSeqNo,store_sName, oInsertDate, oDeleteDate, oSum, oCardName, oCardNo);
                 }
