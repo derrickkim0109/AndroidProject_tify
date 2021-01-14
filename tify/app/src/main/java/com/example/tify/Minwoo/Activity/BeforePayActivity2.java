@@ -30,7 +30,6 @@ import com.example.tify.Minwoo.NetworkTask.LMW_OrderNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_PointNetworkTask;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
-import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity11111;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -109,8 +108,8 @@ public class BeforePayActivity2 extends AppCompatActivity {
         list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
 
         connectPoint(); // 포인트 불러오기 // 포인트 불러오기
-        oNo = list.get(0).getMax() + 1;
-        Log.v(TAG, "마지막 oNo : " + oNo);
+//        oNo = list.get(0).getMax() + 1;
+//        Log.v(TAG, "마지막 oNo : " + oNo);
 
         // layout 설정
         cardBtn2 = findViewById(R.id.beforePay_Btn_Card2);
@@ -285,7 +284,7 @@ public class BeforePayActivity2 extends AppCompatActivity {
 //                    intent.putExtra("from", from);
 //                    startActivity(intent);
 
-                    intent = new Intent(BeforePayActivity2.this, OrderPage_PaymentActivity11111.class);
+                    intent = new Intent(BeforePayActivity2.this, OrderPage_PaymentActivity.class);
                     intent.putExtra("Carts", carts);
                     intent.putExtra("from", "BeforePayActivity2");
                     intent.putExtra("store_sSeqNo", store_sSeqNo);

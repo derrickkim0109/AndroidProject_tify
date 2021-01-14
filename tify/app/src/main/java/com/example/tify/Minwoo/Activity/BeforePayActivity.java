@@ -28,7 +28,6 @@ import com.example.tify.Minwoo.NetworkTask.LMW_OrderNetworkTask;
 import com.example.tify.Minwoo.NetworkTask.LMW_PointNetworkTask;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
-import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity11111;
 
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -160,7 +159,8 @@ public class BeforePayActivity extends AppCompatActivity {
         sName = intent.getStringExtra("sName");
 
         connectPoint();
-
+        oNo = list.get(0).getMax() + 1;
+        Log.v(TAG, "마지막 oNo : " + oNo);
         // 콤마 찍어서 원화로 바꿔줌!
         NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
         strTotal = moneyFormat.format(totalPrice);
@@ -362,7 +362,7 @@ public class BeforePayActivity extends AppCompatActivity {
 //                    intent.putExtra("from", "BeforePayActivity");
 //                    startActivity(intent);
 
-                    intent = new Intent(BeforePayActivity.this, OrderPage_PaymentActivity11111.class);
+                    intent = new Intent(BeforePayActivity.this, OrderPage_PaymentActivity.class);
                     intent.putExtra("olPrice", olPrice);
                     intent.putExtra("menu_mName", menu_mName);
                     intent.putExtra("olSizeUp", olSizeUp);

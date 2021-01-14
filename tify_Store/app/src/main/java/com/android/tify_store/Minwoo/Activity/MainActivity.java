@@ -62,20 +62,20 @@ public class MainActivity extends AppCompatActivity {
     Fragment CompleteFragment, OrderRequestFragment, ProgressingFragment;
 
     // 통신 ---------------------- 소켓 끊기
-    @Override
-    protected void onStop() {
-        super.onStop();
-        try {
-            Log.v(TAG, "소켓 닫힘");
-
-                sendWriter.close();
-                socket.close();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        try {
+//            Log.v(TAG, "소켓 닫힘");
+//
+//                sendWriter.close();
+//                socket.close();
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     // ----------------------------------
 
     @Override
