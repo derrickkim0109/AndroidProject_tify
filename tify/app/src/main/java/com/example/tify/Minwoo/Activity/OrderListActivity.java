@@ -126,6 +126,7 @@ public class OrderListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         ShareVar shareVar = new ShareVar();
         macIP = shareVar.getMacIP();
+        store_sSeqNo = intent.getIntExtra("store_sSeqNo", 0);
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
@@ -140,8 +141,7 @@ public class OrderListActivity extends AppCompatActivity {
 
         if (from == null){
 
-        }else if(from.equals("CartActivity")){
-            from = intent.getStringExtra("from");
+        }else if(from.equals("BeforeActivity2")){ // 장바구니에서 결제한 경우
             connectDeleteData(); // 카트 비우기
         }
 
@@ -285,7 +285,7 @@ public class OrderListActivity extends AppCompatActivity {
         return beanList;
     }
 
-    private String connectDeleteData(){ // 선택한 메뉴 삭제 or 전체 삭제
+    private String connectDeleteData(){ // 장바구니 전체 삭제
         String result = null;
 
         urlAddr = "http://" + macIP + ":8080/tify/lmw_cartlist_delete_all.jsp?user_uSeqNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo;

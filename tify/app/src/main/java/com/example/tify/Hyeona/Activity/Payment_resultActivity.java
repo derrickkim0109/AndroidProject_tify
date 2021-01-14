@@ -20,10 +20,14 @@ import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_payment;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_review;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_stampCount;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
+import com.example.tify.Minwoo.Activity.OrderListActivity;
+import com.example.tify.Minwoo.Bean.Cart;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 
 import java.util.ArrayList;
+
+
 
 
 public class Payment_resultActivity extends AppCompatActivity {
@@ -38,14 +42,16 @@ public class Payment_resultActivity extends AppCompatActivity {
     int oNo;
     int user_uNo;
 
-
     int coffee_count;
-
 
     TextView payment_money, payment_day, payment_card,payment_card_number;
     Bean_payment_select bean_payment_select;
 
-    int point = 1000;
+    int point = 0;
+    int totalPrice = 0;
+    int store_SeqNo = 0;
+
+    String from = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +63,16 @@ public class Payment_resultActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         oNo = intent.getIntExtra("oNo",0);
+        point = intent.getIntExtra("point", 0);
+        totalPrice = intent.getIntExtra("total", 0);
+        from = intent.getStringExtra("from");
+        store_SeqNo = intent.getIntExtra("store_sSeqNo", 0);
+
+        Log.v("TAG", "oNo : " + oNo);
+        Log.v("TAG", "point : " + point);
+        Log.v("TAG", "store_SeqNo : " + store_SeqNo);
         // 인텐트로 포인트 값 꼭 받아야함
-        oNo = 71; // 임시로 선언
+//        oNo = 71; // 임시로 선언
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -73,7 +87,14 @@ public class Payment_resultActivity extends AppCompatActivity {
         payment_result_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Payment_resultActivity.this, JiseokMainActivity.class);
+                Intent intent = new Intent(Payment_resultActivity.this, OrderListActivity.class)
+                        .putExtra("oNo",oNo)
+                        .putExtra("from", from)
+                        .putExtra("store_sSeqNo", store_SeqNo);
+
+                Log.v("TAG", "oNo : " + oNo);
+                Log.v("TAG", "from : " + from);
+                Log.v("TAG", "store_SeqNo : " + store_SeqNo);
                 startActivity(intent);
                 finish();
             }
