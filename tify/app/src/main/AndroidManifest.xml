@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
 
+
         <activity android:name=".Hyeona.Activity.qrActivity" /> <!-- 태현 -->
         <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity" />
         <activity android:name=".Taehyun.Activity.Mypage_CardRegistrationActivity" />
@@ -41,7 +42,7 @@
         <activity android:name=".Jiseok.Activity.EmailLoginActivity" />
         <activity android:name=".Jiseok.Activity.MyLocationActivity" />
         <activity android:name=".Jiseok.Activity.AddressSearchActivity" />
-        <activity android:name=".Jiseok.Activity.PaymentPayPasswordActivity"/>
+        <activity android:name=".Hyeona.Activity.IntroActivity"/>
         <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.BeforePayActivity2" />
@@ -62,7 +63,7 @@
         <activity android:name=".Hyeona.Activity.main_search" />
         <activity android:name=".Hyeona.Activity.test" />
         <activity android:name=".Hyeona.Activity.Payment_resultActivity" />
-        <activity android:name=".Hyeona.Activity.IntroActivity">
+        <activity android:name=".Jiseok.Activity.PaymentPayPasswordActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

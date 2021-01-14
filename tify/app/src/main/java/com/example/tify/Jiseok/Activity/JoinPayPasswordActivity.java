@@ -179,7 +179,6 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                         break;
                 }
             }
-
             resultToStar();
 
             switch (result.length()){
