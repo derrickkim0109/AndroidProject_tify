@@ -2,6 +2,9 @@ package com.example.tify.Hyeona.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,22 +22,35 @@ import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Activity.main_search;
 import com.example.tify.Hyeona.Bean.Bean_main_search;
 import com.example.tify.Hyeona.Bean.Bean_point_history;
+import com.example.tify.Jiseok.Adapta.MainCafeListAdapter;
 import com.example.tify.Minwoo.Activity.StoreInfoActivity;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
-    public class search_storeAdapter extends RecyclerView.Adapter<search_storeAdapter.MyViewHolder>  {
+public class search_storeAdapter extends RecyclerView.Adapter<search_storeAdapter.MyViewHolder>  {
         private ArrayList<Bean_main_search> searchs;
         ShareVar shareVar =new ShareVar();
         String MacIP = shareVar.getMacIP();
         private Context mContext = null;
+        LatLng Location1,Location2;
+        double latitude;
+        double longitude;
+        double latitude2;
+        double longitude2;
+        String myLocation;
 
-        public search_storeAdapter(Context mContext, int layout, ArrayList<Bean_main_search> searchs) {
+        public search_storeAdapter(Context mContext, int layout, ArrayList<Bean_main_search> searchs,String myLocation) {
             this.searchs = searchs;
             this.mContext = mContext;
+            this.myLocation=myLocation;
+            this.latitude=findGeoPoint(mContext,myLocation).getLatitude();
+            this.longitude=findGeoPoint(mContext,myLocation).getLongitude();
         }
         @NonNull
         @Override
@@ -83,7 +99,25 @@ import java.util.ArrayList;
             holder.main_cafeList_like.setText(likeCount);
             holder.main_cafeList_review.setText(reviewCount);
             //여기에 거리측정 넣어야댐
-            //holder.main_cafeList_distance.setText(reviewCount);
+            latitude2=findGeoPoint(mContext,sAddress).getLatitude();
+            longitude2=findGeoPoint(mContext,sAddress).getLongitude();
+            Log.v("내위치@@",myLocation);
+            Log.v("내위치","latitude : "+latitude+", longtiude : "+longitude);
+            Log.v("위치","latitude : "+latitude2+", longtiude : "+longitude2);
+
+            Location1 = new LatLng(latitude, longitude);
+            Location2 = new LatLng(latitude2, longitude2);
+
+
+
+
+            if(!myLocation.equals("noLocation")) {
+                double distance1 = getDistance(Location1,Location2);
+                String strdistance = Double.toString(distance1);
+                holder.main_cafeList_distance.setText(strdistance.substring(0, strdistance.indexOf(".")) + " m");
+            }else{
+                holder.main_cafeList_distance.setText("");
+            }
 
             holder.main_cafeList_img.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,5 +165,45 @@ import java.util.ArrayList;
 
 
         }
+    // 주소 -> 위도,경도
+    public static Location findGeoPoint(Context mcontext, String address) {
+        Location loc = new Location("");
+        Geocoder coder = new Geocoder(mcontext);
+        List<Address> addr = null;// 한좌표에 대해 두개이상의 이름이 존재할수있기에 주소배열을 리턴받기 위해 설정
+        try {
+            addr = coder.getFromLocationName(address, 5);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }// 몇개 까지의 주소를 원하는지 지정 1~5개 정도가 적당
+        if (addr != null) {
+            for (int i = 0; i < addr.size(); i++) {
+                Address lating = addr.get(i);
+                double lat = lating.getLatitude(); // 위도가져오기
+                double lon = lating.getLongitude(); // 경도가져오기
+                loc.setLatitude(lat);
+                loc.setLongitude(lon);
+            }
+        }
+        return loc;
+    }
+
+
+
+
+    // 거리계산
+    public double getDistance(LatLng LatLng1, LatLng LatLng2) {
+        double distance = 0;
+        Location locationA = new Location("A");
+        locationA.setLatitude(LatLng1.latitude);
+        locationA.setLongitude(LatLng1.longitude);
+        Location locationB = new Location("B");
+        locationB.setLatitude(LatLng2.latitude);
+        locationB.setLongitude(LatLng2.longitude);
+        distance = locationA.distanceTo(locationB);
+
+        return Math.round(distance);
+
+    }
     }
 

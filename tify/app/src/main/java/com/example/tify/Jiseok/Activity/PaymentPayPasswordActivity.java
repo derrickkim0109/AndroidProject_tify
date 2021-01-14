@@ -204,8 +204,8 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                     if (payPassword1.equals(selectPwd())) {
                         Toast.makeText(PaymentPayPasswordActivity.this, "결제성공", Toast.LENGTH_SHORT).show();
                         // 결제 성공 디비액션
-
-
+                        connectOrderInsert();
+                        connectOrderListInsert(urlAddress2);
                         new AlertDialog.Builder(PaymentPayPasswordActivity.this)
                                 .setTitle("결제가 완료되었습니다.")
                                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -240,7 +240,6 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 tvComment.setVisibility(View.INVISIBLE);
                                                 tvCount.setVisibility(View.INVISIBLE);
-                                                //tvTitle.setText("결제 비밀번호를\n입력해주세요");
                                                 rearrangement();
                                                 payCheck = 0;
                                                 count = 0;

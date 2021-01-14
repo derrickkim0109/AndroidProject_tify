@@ -226,15 +226,7 @@ public class JiseokMainActivity extends AppCompatActivity {
         gps_setting.setOnClickListener(mapListener);
         imgSearch.setOnClickListener(mapListener);
 
-
-
-
             mainCafeListAdapter.setOnItemClickListener(rcvClick);
-
-
-
-
-
 
     }
 
@@ -305,6 +297,7 @@ public class JiseokMainActivity extends AppCompatActivity {
                 case R.id.main_img_gps:
                     Intent intent = new Intent(JiseokMainActivity.this,MyLocationActivity.class);
                     startActivityForResult(intent,9999);
+                    finish();
                     break;
 
                 case R.id.main_img_SearchBtn:

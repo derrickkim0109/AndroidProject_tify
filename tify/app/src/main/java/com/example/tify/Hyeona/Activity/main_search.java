@@ -130,7 +130,8 @@ public class main_search extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
     }
     private void connectGetData(String s){
@@ -148,7 +149,7 @@ public class main_search extends AppCompatActivity {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
 
             recyclerView.setLayoutManager(gridLayoutManager);
-            adapter = new search_storeAdapter(main_search.this, R.layout.cha_maincafe_content,searchs);
+            adapter = new search_storeAdapter(main_search.this, R.layout.cha_maincafe_content,searchs,myLocation);
             //어댑터에게 보내기
             recyclerView.setAdapter(adapter);
 
