@@ -59,6 +59,7 @@ public class Payment_resultActivity extends AppCompatActivity {
         oNo = intent.getIntExtra("oNo",0);
         // 인텐트로 포인트 값 꼭 받아야함
         oNo = 71; // 임시로 선언
+        //point = intent.getIntExtra("point",0);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -88,6 +89,9 @@ public class Payment_resultActivity extends AppCompatActivity {
         Log.v("커피","테스트"+coffee_count);
         //위에서 받은 커피 주문수를 밑의 스탬프 추가하는 곳에 넣는다
         connectStampAdd(coffee_count);
+        if (point>0){
+            connectPointhistory();
+        }
 
     }
 
@@ -136,6 +140,29 @@ public class Payment_resultActivity extends AppCompatActivity {
             e.printStackTrace();
         }return result;
     }
+
+    private int connectPointhistory() {
+
+        // 포인트 사용시 히스토리 입력
+        int result = 0;
+        try {
+            String rhContent = "포인트사용";
+            int rhChoice = 0; // 이 경우는 사용
+            String rhPointHow = point+"p";
+
+            // 스탬프로 인한 적립 히스토리 저장
+            String urlAddress3 = "http://" + MacIP + ":8080/tify/cha_rewardhistory_insert2.jsp?user_uNo="+user_uNo +"&rhContent="+rhContent +"&rhChoice="+rhChoice+"&rhPointHow="+rhPointHow;
+            CUDNetworkTask_stampCount CUDNetworkTask_stampCount =  new CUDNetworkTask_stampCount(urlAddress3,"stamp_update");
+            // 귀찮으니까 걍 업데이트랑 같은거 사용
+            Object obj = CUDNetworkTask_stampCount.execute().get();
+            result = (int) obj;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }return result;
+    }
+
+
 
     private int connectInsertData(int point) {
         //여기 리절트는 성공 실패만 확인

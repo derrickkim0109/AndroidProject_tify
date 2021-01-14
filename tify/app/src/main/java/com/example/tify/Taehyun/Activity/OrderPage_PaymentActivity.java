@@ -198,6 +198,8 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(layoutManager);
             cardListAdapter = new Mypage_CardListAdapter(OrderPage_PaymentActivity.this, R.layout.kth_activity_mypage_cardimagelist,bean_mypage_cardlists,MacIP,user_uNo);
 
+
+
             //어댑터에게 보내기
             recyclerView.setAdapter(cardListAdapter);
 
