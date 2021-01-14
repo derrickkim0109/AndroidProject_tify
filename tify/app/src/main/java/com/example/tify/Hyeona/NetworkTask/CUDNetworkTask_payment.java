@@ -3,7 +3,11 @@ package com.example.tify.Hyeona.NetworkTask;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.tify.Hyeona.Bean.Bean_payment_paylist;
 import com.example.tify.Hyeona.Bean.Bean_payment_select;
+import com.example.tify.Hyeona.Bean.Bean_point_history;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -12,9 +16,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 
-    public class CUDNetworkTask_payment extends AsyncTask<Integer, String, Object> {
+public class CUDNetworkTask_payment extends AsyncTask<Integer, String, Object> {
 
         /*공용이므로 항상 수정사항 알려주시기 바랍니다.*/
 
@@ -24,13 +29,16 @@ import java.sql.Timestamp;
         ProgressDialog progressDialog = null;
         String where = null;
         Bean_payment_select bean_payment_select = null;
+        Bean_payment_paylist bean_payment_paylist = null;
+        ArrayList<Bean_payment_paylist> payment_paylists = null;
 
         public CUDNetworkTask_payment(String mAddr, String where) {
 
             this.mAddr = mAddr;
             this.where = where;
             this.bean_payment_select = new Bean_payment_select();
-
+            this.bean_payment_paylist = new Bean_payment_paylist();
+            this.payment_paylists = new ArrayList<Bean_payment_paylist>();
             Log.v(TAG,"Start : " + mAddr);
         }
 
@@ -80,9 +88,10 @@ import java.sql.Timestamp;
                         result1 = parserStampCount(stringBuffer.toString());
                     }else if(where.equals("stamp_update")){
                         result1 = parserUpdate(stringBuffer.toString());
+                    }else if(where.equals("paylist")) {
+                        parserpaySelect(stringBuffer.toString());
+
                     }
-
-
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -106,6 +115,8 @@ import java.sql.Timestamp;
                 return result1;
             }else if(where.equals("stamp_update")){
                 return result1;
+            }else if(where.equals("paylist")){
+                return payment_paylists;
             }else{
                 return null;
             }
@@ -191,7 +202,32 @@ import java.sql.Timestamp;
             }
         }
 
+        private void parserpaySelect(String s){
+            Log.v("aaaaaa","parser()");
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                JSONArray jsonArray = new JSONArray(jsonObject.getString("pay_history"));
 
+
+                for (int i=0; i<jsonArray.length(); i++){
+                    JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+
+                    String store_sName = jsonObject1.getString("store_sName");
+                    String oInsertDate = jsonObject1.getString("oInsertDate");
+                    int oSum = jsonObject1.getInt("oSum");
+
+                    Log.v("ddd","테스트"+store_sName);
+                    Log.v("ddd","테스트"+oInsertDate);
+                    Log.v("ddd","테스트"+oSum);
+
+                   bean_payment_paylist = new Bean_payment_paylist(store_sName, oInsertDate, oSum);
+                   payment_paylists.add(bean_payment_paylist);
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
 
     }
 
