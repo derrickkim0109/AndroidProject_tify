@@ -54,6 +54,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
     String MacIP = shareVar.getMacIP();
 
 
+
     //임시 유저 값.
      int user_uNo = 0;
 
@@ -145,7 +146,6 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
         sName = intent.getStringExtra("sName");
 
 
-
             Log.v(TAG, "from : " + from);
             Log.v(TAG, "totalPrice : " + totalPrice);
             Log.v(TAG, "point : " + point);
@@ -186,9 +186,9 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                             break;
                         } else {
 
-                            String result = connectOrderInsert();
-                            Log.v(TAG,"result = " + result);
-                            if (result.equals("1")) {
+                            //String result = connectOrderInsert();
+//                            Log.v(TAG,"result = " + result);
+//                            if (result.equals("1")) {
 
                                 //oNo 다시 받아오기
                                 connectOrderNumber();
@@ -198,12 +198,12 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                                 Log.v(TAG,"oNo"+store_SeqNo);
                                 //orderlist에 들어갈 값들
                                 for (int i = 0; i < carts.size(); i++) { // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
-                                   String urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo="+ store_SeqNo + "&order_oNo=" + oNo +
+                                   urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uNo + "&store_sSeqNo="+ store_SeqNo + "&order_oNo=" + oNo +
                                             "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp()
                                             + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice()
                                             + "&olQuantity=" + carts.get(i).getcLQuantity();
 
-                                    connectOrderListInsert(urlAddress); // orderlist Insert
+
 
                                 }
 
@@ -211,11 +211,18 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                                 intent = new Intent(OrderPage_PaymentActivity.this, PaymentPayPasswordActivity.class)
                                         .putExtra("point", point)
                                         .putExtra("oNo", oNo)
-                                        .putExtra("cNo", cNo);
+                                        .putExtra("cNo", cNo)
+                                        .putExtra("store_SeqNo", store_SeqNo)
+                                        .putExtra("sName", sName)
+                                        .putExtra("totalPrice", totalPrice)
+                                        .putExtra("cCardCompany", cCardCompany)
+                                        .putExtra("card_cNo", card_cNo)
+                                        .putExtra("urlAddress", urlAddress);
+
                                 startActivity(intent);
-                            } else {
-                                Toast.makeText(OrderPage_PaymentActivity.this, "실패", Toast.LENGTH_SHORT).show();
-                            }
+//                            } else {
+//                                Toast.makeText(OrderPage_PaymentActivity.this, "실패", Toast.LENGTH_SHORT).show();
+//                            }
 
                         }
                         break;
