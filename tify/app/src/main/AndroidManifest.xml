@@ -24,25 +24,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
-        <activity android:name=".Hyeona.Activity.qrActivity"></activity>
-        <!-- 태현 -->
-        <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity"/>
-        <activity android:name=".Taehyun.Activity.Mypage_CardRegistrationActivity"/>
-        <activity android:name=".Taehyun.Activity.Mypage_NoCardActivity"/>
-        <activity android:name=".Taehyun.Activity.MypageActivity"/>
-        <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity"/>
-        <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity"/>
-        <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity"/>
-        <activity android:name=".Taehyun.Activity.OrderPage_PaymentActivity"/>
 
-        <!-- 태현 -->
+        <activity android:name=".Hyeona.Activity.qrActivity" /> <!-- 태현 -->
+        <activity android:name=".Taehyun.Activity.Mypage_CardDetailActivity" />
+        <activity android:name=".Taehyun.Activity.Mypage_CardRegistrationActivity" />
+        <activity android:name=".Taehyun.Activity.Mypage_NoCardActivity" />
+        <activity android:name=".Taehyun.Activity.MypageActivity" />
+        <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity" />
+        <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity" />
+        <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity" />
+        <activity android:name=".Taehyun.Activity.OrderPage_PaymentActivity" /> <!-- 태현 -->
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
         <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />
         <activity android:name=".Jiseok.Activity.JiseokMainActivity" />
         <activity android:name=".Jiseok.Activity.EmailLoginActivity" />
         <activity android:name=".Jiseok.Activity.MyLocationActivity" />
-        <activity android:name=".Jiseok.Activity.AddressSearchActivity" /> <!-- 지석 -->
+        <activity android:name=".Jiseok.Activity.AddressSearchActivity" />
+        <activity android:name=".Jiseok.Activity.PaymentPayPasswordActivity"/>
+        <!-- 지석 -->
         <!-- 민우 -->
         <activity android:name=".Minwoo.Activity.BeforePayActivity2" />
         <activity android:name=".Minwoo.Activity.EmptyCartActivity" />
@@ -62,7 +62,6 @@
         <activity android:name=".Hyeona.Activity.main_search" />
         <activity android:name=".Hyeona.Activity.test" />
         <activity android:name=".Hyeona.Activity.Payment_resultActivity" />
-
         <activity android:name=".Hyeona.Activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
