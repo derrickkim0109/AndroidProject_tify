@@ -2,6 +2,7 @@ package com.example.tify.Taehyun.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tify.Minwoo.Adapter.CartAdapter;
 import com.example.tify.R;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_cardlist;
 
@@ -25,6 +27,7 @@ public class Mypage_CardListAdapter extends RecyclerView.Adapter<Mypage_CardList
     private Context mContext = null;
     String MacIP = "";
     int uNo = 0;
+    private CartAdapter.OnItemClickListener mListener = null;
 
 
     public Mypage_CardListAdapter (Context mContext, int layout, ArrayList<Bean_Mypage_cardlist> cardlists, String MacIP, int uNo) {
@@ -32,6 +35,17 @@ public class Mypage_CardListAdapter extends RecyclerView.Adapter<Mypage_CardList
         this.MacIP = MacIP;
         this.uNo = uNo;
         this.mContext = mContext;
+    }
+    //인터페이스 선언
+    public interface OnItemClickListener{
+        void onItemClick(View v, int position);
+
+    }
+
+    //메인에서 사용할 클릭메서드 선언 (삭제)
+    public void setOnItemClickListener(CartAdapter.OnItemClickListener listener){
+        this.mListener = listener;
+
     }
 
 
@@ -201,6 +215,19 @@ public class Mypage_CardListAdapter extends RecyclerView.Adapter<Mypage_CardList
             cardBox_cMM = v.findViewById(R.id.cardBox_cMM);
             cardBox_slash = v.findViewById(R.id.cardBox_slash);
             cardBox_cYear = v.findViewById(R.id.cardBox_cYear);
+
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position=getAdapterPosition();
+                    if(position!=RecyclerView.NO_POSITION){
+                        if(mListener !=null){
+                            mListener.onItemClick(v,position);
+                        }
+                    }
+                }
+            });
 
         }
 

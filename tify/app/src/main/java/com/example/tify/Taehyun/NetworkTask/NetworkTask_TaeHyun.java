@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.tify.Minwoo.Bean.Order;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
 
 import org.json.JSONArray;
@@ -18,11 +19,12 @@ import java.net.URL;
 
 public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
 
-    final static String TAG = "CUDNetworkTask";
+    final static String TAG = "NetworkTask_TaeHyun";
     Context context = null;
     String mAddr = null;
     ProgressDialog progressDialog = null;
     Bean_Mypage_userinfo userinfo = null;
+    Order order = null;
     String where = null;
 
 
@@ -71,6 +73,7 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
         ///////////////////////////////////////////////////////////////////////////////////////
         String result = null;
         int count = 0;
+
         ///////////////////////////////////////////////////////////////////////////////////////
 
         try {
@@ -100,6 +103,8 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
                     parserSelect(stringBuffer.toString());
                 } else if (where.equals("count")){
                     count = parserCardSelect(stringBuffer.toString());
+                } else if (where.equals("selectOrderNumber")){
+                    parserOrderNumber(stringBuffer.toString());
                 }
                 else {
                     result = parserAction(stringBuffer.toString());
@@ -134,13 +139,15 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
             return userinfo;
         } else if (where.equals("count")){
             return count;
-        } else {
+        } else if (where.equals("selectOrderNumber")){
+            return order;
+        }else {
             return result;
         }
         ///////////////////////////////////////////////////////////////////////////////////////
     }
 
-        @Override
+    @Override
         protected void onPostExecute (Object o){
             Log.v(TAG, "onPostExecute()");
             super.onPostExecute(o);
@@ -258,6 +265,41 @@ public class NetworkTask_TaeHyun extends AsyncTask<Integer, String, Object> {
             e.printStackTrace();
         }
         return returnValue;
+    }
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Date : 2021.01.14
+    //
+    // Description:
+    //  - OrderNumber 띄우기
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    private void parserOrderNumber(String s) {
+        Log.v(TAG, "Parser()");
+
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = new JSONArray(jsonObject.getString("order_info"));
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+
+                int oNo = jsonObject1.getInt("oNo");
+
+                int store_sSeqno = jsonObject1.getInt("store_sSeqno");
+
+                String store_sName = jsonObject1.getString("store_sName");
+                Log.v(TAG,"order :" + store_sName);
+
+
+                order = new Order(oNo,store_sSeqno,store_sName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

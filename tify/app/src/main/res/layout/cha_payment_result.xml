@@ -168,10 +168,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textAlignment="center"
-                android:layout_marginTop="50dp"
-                android:text="확인내역을 누르시면 메인화면으로 돌아가며\n결제내역은 마이페이지에서 확인하실 수 있습니다"></TextView>
+                android:layout_marginTop="30dp"
+                android:text="확인을 누르시면 주문내역을 확인하실 수 있습니다.\n결제내역은 마이페이지에서 확인하실 수 있습니다"></TextView>
 
 
             <Button
