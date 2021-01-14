@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
         skSeqNo = intent.getIntExtra("skSeqNo", 0);
         skStatus = intent.getIntExtra("skStatus", 0);
 
+        Log.v(TAG, "skStatus : " + skStatus);
+
 
         // 툴바 생성
         Toolbar toolbar = (Toolbar)findViewById(R.id.lmw_main_toolbar); // 상단 툴바

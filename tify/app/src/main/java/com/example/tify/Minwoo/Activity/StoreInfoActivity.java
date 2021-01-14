@@ -118,7 +118,9 @@ public class StoreInfoActivity extends AppCompatActivity {
         tv_sName = findViewById(R.id.activity_StoreInfo_TV_sName);
         tv_sAddress = findViewById(R.id.activity_StoreInfo_TV_sAddress);
 
+        tv_sName.setText(sName);
         sendImageRequest(sImage);
+        Log.v(TAG, "sImage : " + sImage);
 
         //지석씨에게 인텐트로 받는다.
 //        iv_sPhoto.setImageResource();

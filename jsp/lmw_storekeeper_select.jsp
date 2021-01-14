@@ -12,7 +12,7 @@
 	String url_mysql = "jdbc:mysql://localhost/tify?serverTimezone=Asia/Seoul&characterEncoding=utf8&useSSL=false";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "select count(*)as cnt, skSeqNo from tify.storekeeper where skId = '" + skId + "' and skPw = '" + skPw + "'";
+    String WhereDefault = "select count(*)as cnt, skSeqNo, skStatus from tify.storekeeper where skId = '" + skId + "' and skPw = '" + skPw + "'";
     int count = 0;
 
 
@@ -44,7 +44,8 @@
 			{
 
 			"cnt" : "<%=rs.getInt(1) %>",
-            "skSeqNo" : "<%=rs.getInt(2) %>"
+            "skSeqNo" : "<%=rs.getInt(2) %>",
+            "skStatus" : "<%=rs.getInt(3) %>"
             
      
       
