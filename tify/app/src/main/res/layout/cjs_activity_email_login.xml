@@ -61,7 +61,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
                 android:hint="이메일"
-                android:paddingLeft="20dp"
+                android:paddingLeft="10dp"
                 android:paddingBottom="20dp"
                 android:textColor="#fff"
                 android:textColorHint="#fff"
@@ -80,22 +80,23 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="20dp"
-                android:paddingLeft="20dp"
-                android:paddingBottom="20dp"
-                app:backgroundTint="#fff"
-                >
-            <EditText
-                android:id="@+id/email_join_et_userPwd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="비밀번호"
-                android:textColor="#fff"
                 android:textColorHint="#fff"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                android:inputType="numberPassword"
-                android:maxLength="6"
-                ></EditText>
+                android:background="#fff"
+                android:paddingBottom="1dp"
+                >
+
+                <EditText
+                    android:id="@+id/email_join_et_userPwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="비밀번호"
+                    android:inputType="numberPassword"
+                    android:maxLength="6"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff"
+                    android:background="@color/mainColor"
+                    android:textSize="15dp"
+                    android:textStyle="bold"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
