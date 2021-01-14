@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,13 +24,17 @@ import androidx.appcompat.widget.Toolbar;
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.bumptech.glide.Glide;
 import com.example.tify.Hyeona.Activity.LoginActivity;
+import com.example.tify.Hyeona.Activity.qrActivity;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
+import com.example.tify.Minwoo.Activity.BeforePayActivity;
+import com.example.tify.Minwoo.Activity.OrderListActivity;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Adapter.MypageListAdapter;
 import com.example.tify.Taehyun.Bean.Bean_MypageList;
 import com.example.tify.Taehyun.Bean.Bean_Mypage_userinfo;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
@@ -67,6 +73,8 @@ public class MypageActivity extends AppCompatActivity {
     Intent intent = null;
     String mypage_uImage = null;
 
+    BottomNavigationView bottomNavigationView; // 바텀네비게이션 뷰
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +82,57 @@ public class MypageActivity extends AppCompatActivity {
         setContentView(R.layout.kth_activity_mypage);
         nickName = findViewById(R.id.mypage_nickName);
         email = findViewById(R.id.mypage_email);
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        //하단 네비게이션 선언
+        menu = bottomNavigationView.getMenu();
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) { //menu_bottom.xml에서 지정해줬던 아이디 값을 받아와서 각 아이디값마다 다른 이벤트를 발생시킵니다.//
+                    case R.id.action1: {
+                        Intent intent = new Intent(MypageActivity.this, JiseokMainActivity.class);
+                        startActivity(intent);
+                        //홈버튼
+                        return true;
+                    }
+                    case R.id.action2: {
+                        //주문내역
+                        Intent intent = new Intent(MypageActivity.this, OrderListActivity.class);
+                        intent.putExtra("from", "JiseokMainActivity"); // value에 어디서 보내는지를 적어주세요
+                        startActivity(intent);
+                        finish();
+
+                        return true;
+                    }
+                    case R.id.action3: {
+                        Intent intent = new Intent(MypageActivity.this, qrActivity.class);
+                        startActivity(intent);
+                        finish();
+                        //준비중 페이지 뜸 여기는 즐겨찾기 부분
+                        return true;
+                    }
+
+                    case R.id.action4: {
+                        Intent intent = new Intent(MypageActivity.this, qrActivity.class);
+                        startActivity(intent);
+                        finish();
+                        //준비중 페이지 뜸
+
+                        return true;
+                    }
+                    case R.id.action5: {
+                        //마이페이지
+                        Intent intent = new Intent(MypageActivity.this, MypageActivity.class);
+                        startActivity(intent);
+
+                        return true;
+                    }
+                    default:
+                        return false;
+                }
+            }
+        });
 
         //url
         urlAddr = "http://" + MacIP + ":8080/tify/mypage.jsp?";
@@ -103,6 +162,8 @@ public class MypageActivity extends AppCompatActivity {
 
 
     }
+
+
 
 
     AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
@@ -310,5 +371,7 @@ public class MypageActivity extends AppCompatActivity {
         parent.setContentInsetsAbsolute(0, 0);
         return true;
     }
+
+
     //---------------------------------
 }////---END
