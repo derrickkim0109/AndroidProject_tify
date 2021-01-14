@@ -228,12 +228,9 @@ public class JiseokMainActivity extends AppCompatActivity {
 
 
 
-        if(myLocation == "noLocation"){
 
-
-        }else{
             mainCafeListAdapter.setOnItemClickListener(rcvClick);
-        }
+
 
 
 

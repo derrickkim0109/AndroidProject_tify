@@ -1,6 +1,7 @@
 package com.example.tify.Jiseok.Activity;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -59,6 +60,9 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cjs_activity_payment_pay_password);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
