@@ -36,9 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     String id;
     String pw;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         et_Id = findViewById(R.id.ip);
         et_Pw = findViewById(R.id.pw);
         loginBtn = findViewById(R.id.loginBtn);
-
-
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

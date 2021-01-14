@@ -216,6 +216,19 @@ public class Mypage_CardListAdapter extends RecyclerView.Adapter<Mypage_CardList
             cardBox_slash = v.findViewById(R.id.cardBox_slash);
             cardBox_cYear = v.findViewById(R.id.cardBox_cYear);
 
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position=getAdapterPosition();
+                    if(position!=RecyclerView.NO_POSITION){
+                        if(mListener !=null){
+                            mListener.onItemClick(v,position);
+                        }
+                    }
+                }
+            });
+
         }
 
     }

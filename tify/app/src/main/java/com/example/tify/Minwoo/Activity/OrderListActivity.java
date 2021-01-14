@@ -141,8 +141,12 @@ public class OrderListActivity extends AppCompatActivity {
 
         if (from == null){
 
-        }else if(from.equals("BeforeActivity2")){ // 장바구니에서 결제한 경우
-            connectDeleteData(); // 카트 비우기
+        }else{
+//            connectInsertStoreOrder();
+            if(from.equals("BeforePayActivity2")){// 장바구니에서 결제한 경우
+                connectDeleteData(); // 카트 비우기
+            }
+
         }
 
         // 통신 ------------------------------------------------
@@ -169,8 +173,6 @@ public class OrderListActivity extends AppCompatActivity {
                         }
                     }.start();
         // ------------------------------
-
-
 
         new Thread() {
             public void run() { // 받는 스레드
@@ -452,6 +454,44 @@ public class OrderListActivity extends AppCompatActivity {
     private void removeNotification() {
         // Notification 제거
         NotificationManagerCompat.from(this).cancel(1);
+    }
+
+    private String connectInsertStoreOrder(){
+
+        urlAddr = "http://" + macIP + ":8080/tify/lmw_cartlist_delete_all.jsp?user_uSeqNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo;
+        where = "insert";
+        String result = null;
+
+        try {
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // Date : 2020.12.25
+            //
+            // Description:
+            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
+            //  - NetworkTask의 생성자 추가 : where <- "insert"
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////
+                LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(OrderListActivity.this, urlAddr, where);
+                Object obj = networkTask.execute().get();
+                result = (String)obj;
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // Date : 2020.12.24
+            //
+            // Description:
+            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }
