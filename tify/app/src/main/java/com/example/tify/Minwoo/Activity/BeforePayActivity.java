@@ -358,7 +358,7 @@ public class BeforePayActivity extends AppCompatActivity {
                 case R.id.beforePay_Btn_Card:
                     if(cardCountselect()==0){
                         new AlertDialog.Builder(BeforePayActivity.this)
-                                .setTitle("카드없어.")
+                                .setTitle("등록하신 카드가 없습니다. \n카드등록페이지로 이동합니다.")
                                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

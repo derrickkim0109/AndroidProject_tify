@@ -207,7 +207,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         }
 
         holder.mName.setText(mDataset.get(position).getMenu_mName());
-        holder.cLQuantity.setText("<" + mDataset.get(position).getcLQuantity() + ">");
+        holder.cLQuantity.setText(mDataset.get(position).getcLQuantity());
         holder.cLPrice.setText(price+ "원");
         holder.request.setText(mDataset.get(position).getcLRequest());
 

@@ -301,7 +301,8 @@ public class MyLocationActivity extends AppCompatActivity implements OnMapReadyC
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(MyLocationActivity.this, JiseokMainActivity.class);
+                startActivity(intent);
             }
         });
 

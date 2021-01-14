@@ -243,7 +243,7 @@ public class CartActivity extends AppCompatActivity {
                             where = "delete";
 
                             connectDeleteData(); // 해당 메뉴 삭제
-                            Intent intent = new Intent(CartActivity.this, CartActivity.class);
+                            Intent intent = new Intent(CartActivity.this, JiseokMainActivity.class);
                             intent.putExtra("sName", sName);
                             intent.putExtra("macIP", macIP);
                             intent.putExtra("user_uSeqNo", user_uSeqNo);

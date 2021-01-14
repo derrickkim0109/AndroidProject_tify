@@ -17,8 +17,8 @@
         android:layout_gravity="center">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/orderSummary_CIV_mPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:maxHeight="80dp"
             android:minHeight="80dp"
             android:scaleType="centerCrop"

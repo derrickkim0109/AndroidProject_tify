@@ -118,6 +118,7 @@ public class StoreInfoActivity extends AppCompatActivity {
         tv_sName = findViewById(R.id.activity_StoreInfo_TV_sName);
         tv_sAddress = findViewById(R.id.activity_StoreInfo_TV_sAddress);
 
+        tv_sAddress.setText(sAddress);
         tv_sName.setText(sName);
         sendImageRequest(sImage);
         Log.v(TAG, "sImage : " + sImage);
