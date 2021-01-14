@@ -232,12 +232,7 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
 
                     //앞에 오는 숫자 체크 위해
 
-                    if (card_check_agree.isSelected()){
-                        new AlertDialog.Builder(Mypage_CardDetailActivity.this)
-                                .setTitle("동의를 체크해 주세요.")
-                                .setPositiveButton("확인", null)
-                                .show();
-                    }
+
                     if(getNumberCheck.length()==0) {
                         new AlertDialog.Builder(Mypage_CardDetailActivity.this)
                                 .setTitle("신용카드 정보를 확인해 주세요.")
@@ -341,6 +336,12 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                                 .show();
                         card_password.requestFocus();
                         break;
+                    }
+                    if (card_check_agree.isSelected()){
+                        new AlertDialog.Builder(Mypage_CardDetailActivity.this)
+                                .setTitle("동의를 체크해 주세요.")
+                                .setPositiveButton("확인", null)
+                                .show();
                     }
                     Log.v(TAG,"Check = " + check);
                     if (check == 0) {
