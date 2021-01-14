@@ -33,6 +33,7 @@
         <activity android:name=".Taehyun.Activity.Mypage_PayPasswordActivity"/>
         <activity android:name=".Taehyun.Activity.Mypage_ProfileChageActivity"/>
         <activity android:name=".Taehyun.Activity.Mypage_UserDeleteActivity"/>
+
         <!-- 태현 -->
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
