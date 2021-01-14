@@ -22,7 +22,7 @@
 	    Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql,pw_mysql);
 	    Statement stmt_mysql = conn_mysql.createStatement();
 	
-        String A = "insert into tify.review(rContent,rImage,user_uNo,storekeeper_skSeqNo,rInsertDate) value (?, ?, ?, ?,now())";
+        String A = "insert into tify.review(rContent,rImage,user_uNo,storekeeper_skSeqNo,rInsertDate) value (?, ?, ?, ?, now())";
 
 
         ps = conn_mysql.prepareStatement(A);
