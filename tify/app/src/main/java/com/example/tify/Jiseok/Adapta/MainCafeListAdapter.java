@@ -19,12 +19,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.example.tify.Hyeona.Adapter.stampOrder_adapter;
 import com.example.tify.Hyeona.Bean.Bean_reward_stamphistory;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.Jiseok.Bean.Bean_MainCafeList_cjs;
 import com.example.tify.R;
+import com.example.tify.ShareVar;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
@@ -44,6 +46,9 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
     double longitude;
     double latitude2;
     double longitude2;
+
+    ShareVar shareVar =new ShareVar();
+    String MacIP = shareVar.getMacIP();
 
 
 
@@ -123,14 +128,16 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
             Log.v("어탭터 내위치",myLocation);
 //            String ss[] = arrayList.get(position).getsAddress().split(" ");
 //            Log.v("왜왜왜",ss[0]+ss[1]+ss[2]);
-
+            String sImage = arrayList.get(position).getsImage();
             if(myLocation.equals("noLocation")){
+                Glide.with(context).load("http://" + MacIP + ":8080/tify/"+ sImage).into(holder.img);
                 holder.cafeTitle.setText(arrayList.get(position).getsName());
                 holder.cafeLike.setText(arrayList.get(position).getLikeCount());
                 holder.cafeReviewCount.setText(arrayList.get(position).getReviewCount());
                 holder.distance.setText("");
             }else {
                 if (distance1 < 1000.0) {
+                    Glide.with(context).load("http://" + MacIP + ":8080/tify/"+ sImage).into(holder.img);
                     holder.cafeTitle.setText(arrayList.get(position).getsName());
                     holder.cafeLike.setText(arrayList.get(position).getLikeCount());
                     holder.cafeReviewCount.setText(arrayList.get(position).getReviewCount());

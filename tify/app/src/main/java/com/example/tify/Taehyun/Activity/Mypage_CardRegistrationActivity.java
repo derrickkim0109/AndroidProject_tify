@@ -141,7 +141,8 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent4 = new Intent(Mypage_CardRegistrationActivity.this,MypageActivity.class);
+                intent.putExtra("uNo",uNo);
             }
         });
 

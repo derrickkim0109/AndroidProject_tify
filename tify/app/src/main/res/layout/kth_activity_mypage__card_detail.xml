@@ -209,20 +209,15 @@
         android:layout_width="match_parent"
         android:layout_marginLeft="30dp"
         android:layout_height="wrap_content">
-        <ImageView
+        <CheckBox
             android:id="@+id/card_check_agree"
-            android:src="@drawable/ic_action_agree_check"
-            android:layout_width="40dp"
-            android:layout_gravity="center"
-            android:layout_height="40dp"/>
-        <TextView
-            android:textSize="15dp"
-            android:textColor="@color/TextColor"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:text=" 서비스 이용 약관에 동의 합니다."
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"/>
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:text="서비스 이용 약관에 동의 합니다."
+            android:textColor="@color/input_login"
+            android:textSize="11dp"
+            android:buttonTint="@color/mainColor"
+            />
         <TextView
             android:id="@+id/card_agree_exp"
             android:textSize="15dp"

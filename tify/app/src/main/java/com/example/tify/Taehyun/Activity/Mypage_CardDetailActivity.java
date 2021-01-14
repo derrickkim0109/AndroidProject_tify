@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -44,7 +45,8 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
 
 
     EditText card_Number1,card_Number2,card_Number3,card_Number4,card_validyear, card_validmm,card_birth,card_password;
-    ImageView card_check_agree,card_personal_IV,card_corporation_IV;
+    ImageView card_personal_IV,card_corporation_IV;
+    CheckBox card_check_agree;
     TextView card_agree_exp;
     Button card_cancel,card_success;
 
@@ -195,20 +197,6 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                         cInfo = "";
                     }
                     break;
-                    //동의 버튼
-                case R.id.card_check_agree:
-                    if(limitT3 == 0) {
-                        limitT3++;
-                        card_check_agree.setImageResource(R.drawable.ic_action_agree1_check);
-                        //DB에 보낼값.
-
-                        Toast.makeText(Mypage_CardDetailActivity.this,"동의합니다.",Toast.LENGTH_SHORT).show();
-
-                    }else if(limitT3 == 1) {
-                        limitT3--;
-                        card_check_agree.setImageResource(R.drawable.ic_action_agree_check);
-                    }
-                    break;
                 //키보드 화면 터치시 숨김.
                 case R.id.card_detail_ll:
 
@@ -243,6 +231,7 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                     cBirthday = card_birth.getText().toString().trim();
 
                     //앞에 오는 숫자 체크 위해
+
 
                     if(getNumberCheck.length()==0) {
                         new AlertDialog.Builder(Mypage_CardDetailActivity.this)
@@ -347,6 +336,12 @@ public class Mypage_CardDetailActivity extends AppCompatActivity {
                                 .show();
                         card_password.requestFocus();
                         break;
+                    }
+                    if (card_check_agree.isSelected()){
+                        new AlertDialog.Builder(Mypage_CardDetailActivity.this)
+                                .setTitle("동의를 체크해 주세요.")
+                                .setPositiveButton("확인", null)
+                                .show();
                     }
                     Log.v(TAG,"Check = " + check);
                     if (check == 0) {
