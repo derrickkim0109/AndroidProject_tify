@@ -169,7 +169,7 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
             holder.oSeqno.setText("주문번호 : " + mDataset.get(position).getOrder_oNo());
             holder.oDate.setText(mDataset.get(position).getoInsertDate());
             holder.sName.setText(mDataset.get(position).getStore_sName());
-            holder.mName.setText(mDataset.get(position).getMenu_mName());
+            holder.mName.setText(mDataset.get(position).getMenu_mName() + " X " + mDataset.get(position).getOlQuantity());
 
             if (mDataset.get(position).getOlAddShot() != 0) {
                 holder.addOrder1.setVisibility(View.VISIBLE);

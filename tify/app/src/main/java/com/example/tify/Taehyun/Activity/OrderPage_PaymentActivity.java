@@ -99,7 +99,8 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
 
     //order === BEAN
     Order order = null;
-
+    int dataSize = 0;
+    ArrayList<String> urls = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +157,7 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
             Log.v(TAG, "store_SeqNo : " + store_SeqNo); // 옮겨 넣기
             if (from.equals("BeforePayActivity2")) { // 장바구니에서 왔음
                 carts = (ArrayList<Cart>) getIntent().getSerializableExtra("Carts");
+                dataSize = carts.size();
 
                 for (int i = 0; i < carts.size(); i++) {
                     Log.v(TAG, "carts(" + i + "): " + carts.get(i).getMenu_mName());
@@ -210,8 +212,14 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                                                 + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice()
                                                 + "&olQuantity=" + carts.get(i).getcLQuantity();
 
+                                        urls.add(urlAddress);
+
 
                                     }
+                                    for(int i = 0; i < urls.size(); i++){
+                                        Log.v(TAG, "urls : " + urls.get(i));
+                                    }
+
                                 }else{
                                     urlAddress = "http://" + MacIP + ":8080/tify/lmw_orderlist_insert.jsp?order_oNo=" + oNo + "&store_sSeqNo=" + store_SeqNo + "&user_uNo=" + user_uNo +
                                             "&store_sName=" + sName + "&menu_mName=" + menu_mName + "&olSizeUp=" + olSizeUp
@@ -230,6 +238,12 @@ public class OrderPage_PaymentActivity extends AppCompatActivity {
                                         .putExtra("cCardCompany", cCardCompany)
                                         .putExtra("card_cNo", card_cNo)
                                         .putExtra("urlAddress", urlAddress);
+
+                                if(from.equals("BeforePayActivity2")){
+                                    intent.putExtra("size", dataSize);
+                                    intent.putExtra("urls", urls);
+                                    Log.v(TAG, "size : " + dataSize);
+                                }
 
                                 startActivity(intent);
 //                            } else {

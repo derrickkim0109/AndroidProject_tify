@@ -1,8 +1,10 @@
 package com.example.tify.Jiseok.Activity;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -17,20 +19,26 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.tify.Hyeona.Activity.Payment_resultActivity;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask_Mypage;
+import com.example.tify.Minwoo.Bean.Order;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
 import com.example.tify.Taehyun.Activity.MypageActivity;
 import com.example.tify.Taehyun.Activity.Mypage_PayPasswordActivity;
+import com.example.tify.Taehyun.Activity.OrderPage_PaymentActivity;
 import com.example.tify.Taehyun.NetworkTask.NetworkTask_TaeHyun;
 
+import java.util.ArrayList;
 import java.util.Random;
+
 public class PaymentPayPasswordActivity extends AppCompatActivity {
     String TAG = "여기, PaymentPayPasswordActivity";
     Context context;
     ShareVar shareVar = new ShareVar();
     String MacIP = shareVar.getMacIP();
+
     Button btnRearrangement;
     ImageButton btnDelete;
     Button[] btn = new Button[10];
@@ -41,10 +49,13 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
     ImageView[] img = new ImageView[6];
     Random random = new Random();
     String[] btnNum = new String[10];//랜덤 10개수를 받아서 버튼에 넣음
+
     String payPassword1 = null;
     String payPassword2 = null;// 비밀번호 확인
     int payCheck = 0; // 0일때 payPassword1, 1일때 payPassword2
+
     TextView tvComment, tvCount, tvTitle;
+
     String userTel;
     String userEmail;
     String userProfile;
@@ -62,21 +73,29 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
     String urlAddr2 =  "http://" + MacIP + ":8080/tify/orderPay_insert.jsp?";
     String urlAddress2;
     String urlAddress;
+
+    //order === BEAN
+    Order order = null;
+    int dataSize = 0;
+    ArrayList<String> urls = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cjs_activity_payment_pay_password);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
         userEmail = auto.getString("userEmail", null);
         userSeq = auto.getInt("userSeq", 0);
         userNickName = auto.getString("userNickName", null);
         myLocation = auto.getString("myLocation", "noLocation");
+
+
         Intent intent = getIntent();
         point = intent.getIntExtra("point", 0);
-        oNo = intent.getIntExtra("oNo", 0);
         cNo = intent.getIntExtra("cNo", 0);
         store_SeqNo = intent.getIntExtra("store_SeqNo", 0);
         sName = intent.getStringExtra("sName");
@@ -84,6 +103,9 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
         cCardCompany = intent.getStringExtra("cCardCompany");
         card_cNo = intent.getStringExtra("card_cNo");
         urlAddress2 = intent.getStringExtra("urlAddress");
+        dataSize = intent.getIntExtra("size", 0);
+
+
         btn[0] = findViewById(R.id.paymentPwd_btn0);
         btn[1] = findViewById(R.id.paymentPwd_btn1);
         btn[2] = findViewById(R.id.paymentPwd_btn2);
@@ -94,24 +116,32 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
         btn[7] = findViewById(R.id.paymentPwd_btn7);
         btn[8] = findViewById(R.id.paymentPwd_btn8);
         btn[9] = findViewById(R.id.paymentPwd_btn9);
+
         btnRearrangement = findViewById(R.id.paymentPwd_btn_rearrangement);
         btnDelete = findViewById(R.id.paymentPwd_btn_delete);
+
         img[0] = findViewById(R.id.paymentPwd_img_dot1);
         img[1] = findViewById(R.id.paymentPwd_img_dot2);
         img[2] = findViewById(R.id.paymentPwd_img_dot3);
         img[3] = findViewById(R.id.paymentPwd_img_dot4);
         img[4] = findViewById(R.id.paymentPwd_img_dot5);
         img[5] = findViewById(R.id.paymentPwd_img_dot6);
+
         tvComment = findViewById(R.id.paymentPwd_tv_countComment);
         tvCount = findViewById(R.id.paymentPwd_tv_count);
         tvTitle = findViewById(R.id.paymentPwd_tv_title);
+
         for (int i = 0; i < 10; i++) {
             btn[i].setOnClickListener(numClickListener);
         }
         btnRearrangement.setOnClickListener(numClickListener);
         btnDelete.setOnClickListener(deleteClickListener);
+
         rearrangement();
+
+
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -129,6 +159,8 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
     View.OnClickListener numClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -171,14 +203,43 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
             }
             Log.v("reulst", result);
             resultToStar();
+
             switch (result.length()) {
                 case 7:
                     payPassword1 = result.substring(1, 7);
+
                     if (payPassword1.equals(selectPwd())) {
                         Toast.makeText(PaymentPayPasswordActivity.this, "결제성공", Toast.LENGTH_SHORT).show();
                         // 결제 성공 디비액션
                         connectOrderInsert();
-                        connectOrderListInsert(urlAddress2);
+                        connectOrderNumber();
+
+                        String C = urlAddress2.substring(0,urlAddress2.indexOf("=",1)+1);
+                        String D =  urlAddress2.substring(urlAddress2.indexOf("&",1),urlAddress2.length());
+
+                        String FF = C + oNo + D;
+
+//                        Log.v("url",AA);
+
+
+                        if(dataSize != 0){
+                            Intent intent = getIntent();
+                            urls = intent.getStringArrayListExtra("urls");
+
+                            for(int i = 0; i < dataSize; i++){
+                                String A = urls.get(i).substring(0,urls.get(i).indexOf("=",1)+1);
+                                String B = urls.get(i).substring(urls.get(i).indexOf("&",1),urls.get(i).length());
+                                String AA = A + oNo + B;
+
+//                                Log.v(TAG, "urls : " + urls.get(0).substring(0,urls.get(i).indexOf("=",1)+1));
+//                                Log.v(TAG, "urls : " + urls.get(0).substring(urls.get(0).indexOf("&",1),urls.get(0).length()));
+                                Log.v(TAG, "urls : " + AA);
+                                connectOrderListInsert(AA);
+                            }
+                        }else{
+                            connectOrderListInsert(FF);
+                        }
+
                         new AlertDialog.Builder(PaymentPayPasswordActivity.this)
                                 .setTitle("결제가 완료되었습니다.")
                                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -187,7 +248,14 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                                         // 결제완료창으로 이동
                                         Intent intent = new Intent(PaymentPayPasswordActivity.this, Payment_resultActivity.class);
                                         intent.putExtra("oNo",oNo);
+                                        Log.v(TAG, "oNo : " + oNo);
                                         intent.putExtra("point",point);
+                                        intent.putExtra("store_sSeqNo", store_SeqNo);
+                                        if(dataSize != 0){
+                                            intent.putExtra("from", "BeforePayActivity2");
+                                        }else{
+                                            intent.putExtra("from", "BeforePayActivity");
+                                        }
                                         startActivity(intent);
                                     }
                                 })
@@ -207,7 +275,6 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                             case 5:
                                 Toast.makeText(PaymentPayPasswordActivity.this, "5번틀렷으니 초기화", Toast.LENGTH_SHORT).show();
                                 new AlertDialog.Builder(PaymentPayPasswordActivity.this)
-                                        .setTitle("비밀번호를 다시 입력해주세요.")
                                         .setTitle("비밀번호가 초기화 되었습니다\n 비밀번호를 다시 설정해 주세요.")
                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                             @Override
@@ -215,32 +282,42 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                                                 tvComment.setVisibility(View.INVISIBLE);
                                                 tvCount.setVisibility(View.INVISIBLE);
                                                 rearrangement();
-                                                payCheck = 0;
-                                                count = 0;
-                                                result = "0";
+                                                payCheck=0;
+                                                count=0;
+                                                result="0";
                                                 resultToStar();
                                                 updatePwd();
                                                 startActivity(new Intent(PaymentPayPasswordActivity.this, MypageActivity.class));
+
                                             }
                                         })
                                         .show();
                                 break;
                         }
                     }
+
+
                 default:
                     break;
+
             }
+
+
         }
     };
+
+
     // 지우기버튼
     View.OnClickListener deleteClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (result.length() == 1) {
             } else result = result.substring(0, result.length() - 1);
+
             resultToStar();
         }
     };
+
     @SuppressLint("ResourceType")
     private void resultToStar() {
         // 색 없는 별로 전체 초기화
@@ -252,11 +329,14 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
             img[i].setImageResource(R.raw.dot01);
         }
     }
+
+
     // 재배열
     private void rearrangement() {
         rand();
         setBtn();
     }
+
     //0~9 중복없이 뽑기
     public void rand() {
         String[] str = new String[10];
@@ -271,55 +351,99 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
         }
         btnNum = str;
     }
+
     //버튼에 숫자넣기
     private void setBtn() {
         for (int i = 0; i < 10; i++) {
             btn[i].setText(btnNum[i]);
         }
     }
+
     //디비에 결제비밀번호 받아오기
     private String selectPwd() {
         String Pwd = "null";
+
         try {
             String urlAddr = "http://" + MacIP + ":8080/tify/cjs_MyPageSelectPwd.jsp?uNo=" + userSeq;
             Log.v("dd", urlAddr);
             CJS_NetworkTask_Mypage cjs_networkTask = new CJS_NetworkTask_Mypage(PaymentPayPasswordActivity.this, urlAddr, "selectPayPassword");
             Object obj = cjs_networkTask.execute().get();
+
             Pwd = (String) obj;
             Log.v("내비밀번호는 : ", Pwd);
+
         } catch (Exception e) {
+
         }
         return Pwd;
     }
+
+
     //결제 네트워크 타스크  -> order  순서 1
     @SuppressLint("LongLogTag")
     private String connectOrderInsert() {
+
         urlAddress = urlAddr2 + "&user_uNo=" + userSeq + "&storekeeper_skSeqNo=" + store_SeqNo + "&store_sName=" + sName
                 + "&oSum=" + totalPrice + "&oCardName=" + cCardCompany + "&oCardNo=" + card_cNo;
         Log.v("^^", urlAddress);
+
         String result = null;
         try {
             NetworkTask_TaeHyun insertNetworkTask = new NetworkTask_TaeHyun(PaymentPayPasswordActivity.this, urlAddress, "insert");
             Object obj = insertNetworkTask.execute().get();
             result = (String) obj;
+
         } catch (Exception e) {
             e.printStackTrace();
+
         }
         return result;
     }
+
+
     // orderlist 테이블 Insert
     //결제 네트워크 타스크  --> order -> orderlist 순서 2
+
     private String connectOrderListInsert(String orderlistUrl) {
         String result = null;
         try {
             NetworkTask_TaeHyun insertNetworkTask = new NetworkTask_TaeHyun(PaymentPayPasswordActivity.this, orderlistUrl, "insert");
             Object obj = insertNetworkTask.execute().get();
             result = (String) obj;
+
         } catch (Exception e) {
             e.printStackTrace();
+
         }
         return result;
     }
+
+    //oNo불러오기
+    private void connectOrderNumber() {
+
+        try {
+            //임시값
+            String urlAddr = "http://" + MacIP + ":8080/tify/order_numberselect.jsp?";
+
+            String urlAddress = urlAddr + "user_uNo=" + userSeq;
+            Log.v("dddd","dd"+urlAddress);
+            NetworkTask_TaeHyun myPageNetworkTask = new NetworkTask_TaeHyun(PaymentPayPasswordActivity.this, urlAddress, "selectOrderNumber");
+            Object obj = myPageNetworkTask.execute().get();
+            order = (Order) obj;
+
+            //DB
+            oNo = order.getoNo();
+
+            Log.v(TAG, "oNo : " + oNo);
+            store_SeqNo = order.getStore_sSeqno();
+            sName = order.getStore_sName();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void updatePwd(){
         try {
             String urlAddr = "http://" + MacIP + ":8080/tify/cjs_MyPageUpdatePwd.jsp?uNo="+userSeq+"&uPayPassword=null";
@@ -332,3 +456,6 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
         }
     }
 }
+
+
+

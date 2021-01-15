@@ -88,7 +88,7 @@ public class Payment_resultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Payment_resultActivity.this, OrderListActivity.class)
                         .putExtra("oNo",oNo)
-                        .putExtra("from", "BeforePayActivity")
+                        .putExtra("from", from)
                         .putExtra("store_sSeqNo", store_SeqNo);
 
                 Log.v("TAG", "oNo : " + oNo);

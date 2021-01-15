@@ -13,14 +13,22 @@
         app:layout_scrollFlags="scroll|snap"
         />
 
-    <androidx.cardview.widget.CardView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
         android:paddingLeft="35dp">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/activity_MenuUpdate_CIV_mImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="match_parent"
+        android:maxHeight="80dp"
+        android:minHeight="80dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/americano"
         />
     </androidx.cardview.widget.CardView>
