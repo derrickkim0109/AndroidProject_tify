@@ -442,8 +442,8 @@ public class JiseokMainActivity extends AppCompatActivity {
             Log.v("여기여기여기", "myLocation : " + myLocation);
             String cc = "ok";
 
-            mainCafeListAdapter_top10 = new MainCafeListAdapter_Top10(JiseokMainActivity.this,R.layout.cha_maincafe_content,arrayList,myLocation);
-            recyclerView.setAdapter(mainCafeListAdapter_top10);
+            mainCafeListAdapter = new MainCafeListAdapter(JiseokMainActivity.this,R.layout.cha_maincafe_content,arrayList,myLocation);
+            recyclerView.setAdapter(mainCafeListAdapter);
 
         } catch (Exception e) {
 

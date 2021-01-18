@@ -88,6 +88,7 @@
                     android:textColorHint="#555555"
                     android:completionThreshold="1"
                     tools:ignore="Autofill,TextFields"
+                    android:gravity="center"
                     android:textSize="17dp"
                     />
                 <ImageView

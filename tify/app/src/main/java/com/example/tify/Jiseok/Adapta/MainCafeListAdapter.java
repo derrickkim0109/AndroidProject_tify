@@ -69,7 +69,7 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
     //-----------------Click Event---------------------
 
 
-    public MainCafeListAdapter() {
+    public MainCafeListAdapter(JiseokMainActivity jiseokMainActivity, int cha_maincafe_content, ArrayList<Bean_MainCafeList_cjs> arrayList, String myLocation) {
     }
 
     public MainCafeListAdapter(Context mContext, int layout, ArrayList<Bean_MainCafeList_cjs> bean_mainCafeList_cjs, String myLocation, int arrayCount){
@@ -130,11 +130,12 @@ public class MainCafeListAdapter extends RecyclerView.Adapter<MainCafeListAdapte
 //            Log.v("왜왜왜",ss[0]+ss[1]+ss[2]);
             String sImage = arrayList.get(position).getsImage();
             if(myLocation.equals("noLocation")){
+                String ss = arrayList.get(position).getsAddress().substring(0,arrayList.get(position).getsAddress().indexOf("시",2));
                 Glide.with(context).load("http://" + MacIP + ":8080/tify/"+ sImage).into(holder.img);
                 holder.cafeTitle.setText(arrayList.get(position).getsName());
                 holder.cafeLike.setText(arrayList.get(position).getLikeCount());
                 holder.cafeReviewCount.setText(arrayList.get(position).getReviewCount());
-                holder.distance.setText("");
+                holder.distance.setText(ss);
             }else {
                 if (distance1 < 1000.0) {
                     Glide.with(context).load("http://" + MacIP + ":8080/tify/"+ sImage).into(holder.img);

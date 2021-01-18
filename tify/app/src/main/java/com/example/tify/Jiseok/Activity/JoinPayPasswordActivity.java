@@ -73,7 +73,6 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         Log.v(TAG,"userNickName : "+userNickName);
         Log.v(TAG,"userProfile : "+userProfile);
 
-
         btn[0]=findViewById(R.id.join_pay_btn0);
         btn[1]=findViewById(R.id.join_pay_btn1);
         btn[2]=findViewById(R.id.join_pay_btn2);
@@ -132,7 +131,9 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         super.onBackPressed();
+
     }
 
 
@@ -179,6 +180,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                         break;
                 }
             }
+
             resultToStar();
 
             switch (result.length()){
@@ -200,7 +202,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                             Log.v(TAG,"payPassword2 : "+payPassword2+", result : "+result);
                             // 확인비밀번호가 일치할때
                             if(payPassword1.equals(payPassword2)){
-                                Toast.makeText(JoinPayPasswordActivity.this,"yes",Toast.LENGTH_SHORT).show();
+
 
                                 //디비에 회원정보 저장
                                 insertUserInfo();
@@ -227,7 +229,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                                         .show();
 
                             }else{
-                                Toast.makeText(JoinPayPasswordActivity.this,"no",Toast.LENGTH_SHORT).show();
+
                                 rearrangement();
                                 count++;
                                 result="0";
@@ -239,7 +241,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                                 // 5번틀리면 초기화
                                 switch (count){
                                     case 5:
-                                        Toast.makeText(JoinPayPasswordActivity.this,"5번틀렷으니 초기화",Toast.LENGTH_SHORT).show();
+
                                         new AlertDialog.Builder(JoinPayPasswordActivity.this)
                                                 .setTitle("비밀번호를 다시 입력해주세요.")
                                                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -269,6 +271,9 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
         }
     };
+
+
+
 
     // 지우기버튼
     View.OnClickListener deleteClickListener = new View.OnClickListener() {
