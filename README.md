@@ -75,6 +75,7 @@
 
     tify.sql 파일
     
-
+# 5. 시연 동영상 
+    https://youtu.be/K-URbYZJWVI
 
         
