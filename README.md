@@ -1,6 +1,10 @@
 # AndroidProject_tify
  @copyright :  김태현 , 최현아, 최지석, 이민우 
- #Logo
+ ### 시연 동영상 
+    https://youtu.be/K-URbYZJWVI
+
+ 
+# Logo
  
   
   
@@ -89,7 +93,5 @@
 
     tify.sql 파일
     
-# 5. 시연 동영상 
-    https://youtu.be/K-URbYZJWVI
 
         
