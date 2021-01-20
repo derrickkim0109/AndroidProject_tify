@@ -4,7 +4,7 @@
  
   
   
-     <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/tifyLogo.png">
+  <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/tifyLogo.png">
      
      
      
@@ -13,7 +13,7 @@
      
  # 시스템 흐름도
    
-    <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/system.png">
+   <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/system.png">
  
  # 1.Build gradle에 추가를 한다.
  
