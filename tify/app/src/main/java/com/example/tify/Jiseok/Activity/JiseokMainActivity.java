@@ -34,7 +34,6 @@ import com.example.tify.Hyeona.Activity.main_search;
 import com.example.tify.Hyeona.Activity.qrActivity;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_userinfo;
 import com.example.tify.Jiseok.Adapta.MainCafeListAdapter;
-import com.example.tify.Jiseok.Adapta.MainCafeListAdapter_Top10;
 import com.example.tify.Jiseok.Bean.Bean_MainCafeList_cjs;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask;
 import com.example.tify.Jiseok.NetworkTask.CJS_NetworkTask_CafeList;
@@ -71,7 +70,6 @@ public class JiseokMainActivity extends AppCompatActivity {
     private RecyclerView recyclerView2 =null;
     private RecyclerView.LayoutManager layoutManager = null;
     MainCafeListAdapter mainCafeListAdapter =null;
-    MainCafeListAdapter_Top10 mainCafeListAdapter_top10 = null;
     Bean_MainCafeList_cjs bean_mainCafeList_cjs = new Bean_MainCafeList_cjs();
     ArrayList<Bean_MainCafeList_cjs> arrayList = null;
     String userEmail;

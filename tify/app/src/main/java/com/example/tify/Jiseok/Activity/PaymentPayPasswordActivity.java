@@ -209,7 +209,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                     payPassword1 = result.substring(1, 7);
 
                     if (payPassword1.equals(selectPwd())) {
-                        Toast.makeText(PaymentPayPasswordActivity.this, "결제성공", Toast.LENGTH_SHORT).show();
+
                         // 결제 성공 디비액션
                         connectOrderInsert();
                         connectOrderNumber();
@@ -273,7 +273,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                         // 5번틀리면 초기화
                         switch (count) {
                             case 5:
-                                Toast.makeText(PaymentPayPasswordActivity.this, "5번틀렷으니 초기화", Toast.LENGTH_SHORT).show();
+
                                 new AlertDialog.Builder(PaymentPayPasswordActivity.this)
                                         .setTitle("비밀번호가 초기화 되었습니다\n 비밀번호를 다시 설정해 주세요.")
                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
