@@ -127,17 +127,17 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
         orderRequests = connectOrderGetData();
 
         for(int i = 0; i < orderRequests.size(); i++){ // 선언하면 바로 oStatus가 0인 데이터 뽑아낸다.
-            list.add(orderRequests.get(i).getOrder_oNo());
+            list.add(orderRequests.get(i).getOrder_oNo()); // oStatus == 0 (주문요청상태)인 데이터들을 저장
         }
         Log.v(TAG, "list : " + list);
 
         ArrayList<Integer> integers = new ArrayList<Integer>();
 
         for(int i = 0; i < mDataset.size(); i++){
-            if(!list.contains(mDataset.get(i).getOrder_oNo())){
+            if(!list.contains(mDataset.get(i).getOrder_oNo())){ // list(주문요청상태)인 상태가 아니라면 뷰홀더를 꾸리는 mDataset의 해당 데이터를 삭제
                 mDataset.remove(i);
             }else{
-                integers.add(mDataset.get(i).getOrder_oNo());
+                integers.add(mDataset.get(i).getOrder_oNo()); // 아니라면 integers라는 ArrayList에 추가
             }
         }
 
@@ -184,13 +184,14 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
                 holder.request.setText(mDataset.get(position).getOlRequest());
             }
 
+            // 세자리 콤마
             NumberFormat moneyFormat = null;
             moneyFormat = NumberFormat.getInstance(Locale.KOREA);
             String strTotal = moneyFormat.format(mDataset.get(position).getOlPrice());
 
             holder.subTotalPrice.setText(strTotal + "원");
 
-            holder.reject.setOnClickListener(new View.OnClickListener() {
+            holder.reject.setOnClickListener(new View.OnClickListener() { // 거절사유 작성 폼
                 @Override
                 public void onClick(View v) {
                     Log.v(TAG, "클릭값 : " + mDataset.get(position).getOrder_oNo());
@@ -198,7 +199,7 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
                     Bundle bundle = new Bundle();
                     Log.v(TAG, "거절");
 
-                    DialogFragment_OrderRequest_Cancel dialogFragment_orderRequest_cancel = new DialogFragment_OrderRequest_Cancel();
+                    DialogFragment_OrderRequest_Cancel dialogFragment_orderRequest_cancel = new DialogFragment_OrderRequest_Cancel(); // 거절사유를 작성하는 프래그먼트를 띄움
                     bundle.putString("macIP", macIP);
                     bundle.putInt("skSeqNo", skSeqNo);
                     bundle.putInt("oNo", mDataset.get(position).getOrder_oNo());
@@ -209,13 +210,13 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
                     dialogFragment_orderRequest_cancel.show(fragment.getActivity().getSupportFragmentManager(),"tag");
                 }
             });
-            holder.accept.setOnClickListener(new View.OnClickListener() {
+            holder.accept.setOnClickListener(new View.OnClickListener() { // 예상소요시간 작성 폼
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     Log.v(TAG, "접수");
 
-                    DialogFragment_OrderRequest_Ok dialogFragment_orderRequest_ok = new DialogFragment_OrderRequest_Ok();
+                    DialogFragment_OrderRequest_Ok dialogFragment_orderRequest_ok = new DialogFragment_OrderRequest_Ok(); // 예상소요시간을 작성하는 프래그먼트를 띄움
                     bundle.putString("macIP", macIP);
                     bundle.putInt("skSeqNo", skSeqNo);
                     bundle.putInt("oNo", mDataset.get(position).getOrder_oNo());
@@ -236,11 +237,8 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
         return mDataset.size();
     }
 
-
-
-
     @Override
-    public void onViewRecycled(@NonNull MyViewHolder holder) {
+    public void onViewRecycled(@NonNull MyViewHolder holder) { // 데이터 꼬임 방지
         super.onViewRecycled(holder);
 
         holder.oSeqno.clearComposingText();
@@ -260,15 +258,7 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
         ArrayList<OrderRequest> beanList = new ArrayList<OrderRequest>();
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(fragment.getActivity(), urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();
             orderRequests = (ArrayList<OrderRequest>) obj;

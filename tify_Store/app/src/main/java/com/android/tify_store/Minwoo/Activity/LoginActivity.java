@@ -20,6 +20,8 @@ import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
 
+    // 로그인 화면
+
     String TAG = "LoginActivity";
     EditText et_Id;
     EditText et_Pw;
@@ -41,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_login);
 
-        macIP = "172.30.1.27";
+        macIP = "172.30.1.20"; // IP설정
 
         // layout 설정
         et_Id = findViewById(R.id.ip);
@@ -62,15 +64,15 @@ public class LoginActivity extends AppCompatActivity {
                     Log.v(TAG, "입력값 있음");
 
                     datas = new ArrayList<Login>();
-                    datas = connectGetData(); // 로그인 정보가 올바른지 확인
+                    datas = connectGetData(); // 입력한 정보에 맞는 데이터가 존재하는지 확인
 
-                    if(datas.get(0).getCnt() == 0){
+                    if(datas.get(0).getCnt() == 0){ // 존재하지 않을 경우
                         Toast.makeText(LoginActivity.this, "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
-                    }else{
+                    }else{ // 존재할 경우
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
-                        intent.putExtra("macIP", "172.30.1.27");
+                        intent.putExtra("macIP", macIP);
                         intent.putExtra("skSeqNo", datas.get(0).getSkSeqNo());
                         intent.putExtra("skStatus", datas.get(0).getSkStatus());
                         Log.v(TAG, "skSeqNo : " + datas.get(0).getSkSeqNo());
@@ -94,15 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         urlAddr = "http://" + macIP + ":8080/tify/lmw_storekeeper_select.jsp?skId=" + id + "&skPw=" + pw;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_LoginNetworkTask networkTask = new LMW_LoginNetworkTask(LoginActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();
             logins = (ArrayList<Login>) obj;

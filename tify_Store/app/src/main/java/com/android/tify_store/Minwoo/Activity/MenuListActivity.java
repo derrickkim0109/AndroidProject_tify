@@ -45,6 +45,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MenuListActivity extends AppCompatActivity {
 
+    // 메뉴 리스트 화면
+
     String TAG = "MenuListActivity";
 
     private ArrayList<Menu> menuList = new ArrayList<>();
@@ -68,11 +70,6 @@ public class MenuListActivity extends AppCompatActivity {
     String f_ext = null;
     File tempSelectFile;
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //
-    //          Tomcat Server의 IP Address와 Package이름은 수정 하여야 함
-    //           2021.01.07 -태현
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     String devicePath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.android.tify/";
     //// 외부쓰레드 에서 메인 UI화면을 그릴때 사용
 
@@ -132,7 +129,7 @@ public class MenuListActivity extends AppCompatActivity {
 
                         intent = new Intent(MenuListActivity.this, MenuInsertActivity.class);
 
-                        intent.putExtra("macIP", "172.30.1.27");
+                        intent.putExtra("macIP", macIP);
                         intent.putExtra("skSeqNo", skSeqNo);
 
                         startActivity(intent);
@@ -221,14 +218,14 @@ public class MenuListActivity extends AppCompatActivity {
 
         mAdapter.setOnItemClickListener(new MenuListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position) { // 아이템을 클릭했을 경우
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MenuListActivity.this);
                 builder.setTitle("<메뉴 편집>");
                 builder.setMessage("원하시는 기능을 눌러주세요.");
-                builder.setNeutralButton("삭제", new DialogInterface.OnClickListener() { // 해당 메뉴 장바구니에서 삭제
+                builder.setNeutralButton("삭제", new DialogInterface.OnClickListener() { // 해당 메뉴 장바구니에서 삭제 클릭
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which) { // 삭제를 눌렀을 경우 다시 한번 확인
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(MenuListActivity.this);
                         builder.setTitle("<메뉴 삭제>");
@@ -249,9 +246,9 @@ public class MenuListActivity extends AppCompatActivity {
 
                                     startActivity(intent);
 
-                                    Toast.makeText(MenuListActivity.this, "선택하신 메뉴가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MenuListActivity.this, "선택하신 메뉴가 삭제되었습니다.", Toast.LENGTH_SHORT).show(); // 정상 삭제 확인
                                 }else{
-                                    Toast.makeText(MenuListActivity.this, "오류 발생! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MenuListActivity.this, "오류 발생! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show(); // 삭제 중 오류 처리
                                 }
                             }
                         });
@@ -260,7 +257,7 @@ public class MenuListActivity extends AppCompatActivity {
                         builder.create().show();
                     }
                 });
-                builder.setNegativeButton("수정", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("수정", new DialogInterface.OnClickListener() { // 수정 버튼 클릭
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

@@ -219,7 +219,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
 
                         String FF = C + oNo + D;
 
-//                        Log.v("url",AA);
+
 
 
                         if(dataSize != 0){
@@ -231,8 +231,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                                 String B = urls.get(i).substring(urls.get(i).indexOf("&",1),urls.get(i).length());
                                 String AA = A + oNo + B;
 
-//                                Log.v(TAG, "urls : " + urls.get(0).substring(0,urls.get(i).indexOf("=",1)+1));
-//                                Log.v(TAG, "urls : " + urls.get(0).substring(urls.get(0).indexOf("&",1),urls.get(0).length()));
+
                                 Log.v(TAG, "urls : " + AA);
                                 connectOrderListInsert(AA);
                             }
@@ -269,11 +268,11 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                         tvComment.setVisibility(View.VISIBLE);
                         tvCount.setVisibility(View.VISIBLE);
                         tvCount.setText("틀린횟수 (" + count + "/5)");
-                        Log.v(TAG, "틀린횟수 : " + count);
+
+
                         // 5번틀리면 초기화
                         switch (count) {
                             case 5:
-
                                 new AlertDialog.Builder(PaymentPayPasswordActivity.this)
                                         .setTitle("비밀번호가 초기화 되었습니다\n 비밀번호를 다시 설정해 주세요.")
                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {

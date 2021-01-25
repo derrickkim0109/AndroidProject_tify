@@ -46,6 +46,8 @@ import java.util.Date;
 
 public class StoreInfoActivity extends AppCompatActivity {
 
+    // 가게 정보 화면
+
     String TAG = "StoreInfoActivity";
 
     // DB Connect
@@ -241,31 +243,15 @@ public class StoreInfoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private String connectStore(){ // skStatus 1로 바꾸기
+    private String connectStore(){ // skStatus 1로 바꾸기 => 매장 오픈
         String result = null;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_StoreNetworkTask networkTask = new LMW_StoreNetworkTask(StoreInfoActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
+            LMW_StoreNetworkTask networkTask = new LMW_StoreNetworkTask(StoreInfoActivity.this, urlAddr, where);
+
             Object obj = networkTask.execute().get();
             result = (String) obj;
-            ///////////////////////////////////////////////////////////////////////////////////////
 
         }catch (Exception e){
             e.printStackTrace();
@@ -287,7 +273,7 @@ public class StoreInfoActivity extends AppCompatActivity {
             Intent intent = new Intent(StoreInfoActivity.this, StoreInfoActivity.class);
 
             switch (v.getId()){
-                case R.id.activity_StoreInfo_Btn_Insert:
+                case R.id.activity_StoreInfo_Btn_Insert: // 매장 정보 등록
 
                     sName = et_storeName.getText().toString();
                     sAddress = et_storeAddress.getText().toString();
@@ -295,7 +281,7 @@ public class StoreInfoActivity extends AppCompatActivity {
                     sComment = et_storeComment.getText().toString();
                     sRunningTime = et_storeTime.getText().toString();
 
-                    if(sName == null || sAddress == null || sTelNo == null || sComment == null || sRunningTime == null){
+                    if(sName == null || sAddress == null || sTelNo == null || sComment == null || sRunningTime == null){ // 모든 정보 입력받기
                         Toast.makeText(StoreInfoActivity.this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
                     }else{
                         if(btn_Insert.getText().toString().equals("입력")){ // 처음 입력할 경우

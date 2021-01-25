@@ -140,7 +140,8 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Log.v(TAG, "onBindViewHolder");
         Log.v(TAG, "switchNum : " + switchNum);
-        if(switchNum == 1){
+
+        if(switchNum == 1){ // 이미 픽업이 완료된 상태의 주문이라면 해당 버튼들 사용 불가
             holder.makeDone.setEnabled(false);
             holder.pickUpDone.setEnabled(false);
         }
@@ -150,19 +151,20 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
         holder.sName.setText(mDataset.get(position).getStore_sName());
         holder.mName.setText(mDataset.get(position).getMenu_mName());
 
-        if(mDataset.get(position).getOlSizeUp() != 0){
+        if(mDataset.get(position).getOlSizeUp() != 0){ // 사이즈업 여부
             holder.addOrder1.setVisibility(View.VISIBLE);
             holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlSizeUp());
         }
-        if(mDataset.get(position).getOlAddShot() != 0){
+        if(mDataset.get(position).getOlAddShot() != 0){ // 샷추가 여부
             holder.addOrder2.setVisibility(View.VISIBLE);
             holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlAddShot());
         }
-        if(mDataset.get(position).getOlRequest() != null){
+        if(mDataset.get(position).getOlRequest() != null){ // 요청사항 여부
             holder.request.setVisibility(View.VISIBLE);
             holder.request.setText(mDataset.get(position).getOlRequest());
         }
 
+        // 세자리 콤마
         NumberFormat moneyFormat = null;
         moneyFormat = NumberFormat.getInstance(Locale.KOREA);
         String strTotal = moneyFormat.format(mDataset.get(position).getOlPrice());
@@ -172,12 +174,12 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
 
         Log.v(TAG, "mDataset.get(position).getoStatus() : " + mDataset.get(position).getoStatus());
 
-        if(mDataset.get(position).getoStatus() == 1){
+        if(mDataset.get(position).getoStatus() == 1){ // oStatus == 1 (요청 접수)인 경우
             holder.makeDone.setEnabled(true);
             holder.makeDone.setBackgroundColor(Color.WHITE);
             holder.pickUpDone.setEnabled(false);
             holder.pickUpDone.setBackgroundColor(Color.parseColor("#1D000000"));
-        }else{
+        }else{ // oStatus == 2 (제조완료)인 경우
             holder.makeDone.setEnabled(false);
             holder.makeDone.setBackgroundColor(Color.parseColor("#1D000000"));
             holder.pickUpDone.setBackgroundColor(Color.WHITE);
@@ -185,7 +187,7 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
             holder.pickUpDone.setTextColor(Color.BLACK);
         }
 
-        holder.makeDone.setOnClickListener(new View.OnClickListener() {
+        holder.makeDone.setOnClickListener(new View.OnClickListener() { // 제조완료 버튼을 눌렀을 경우 (픽업완료 버튼 활성화)
             @Override
             public void onClick(View v) {
 
@@ -196,19 +198,19 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
                 holder.pickUpDone.setBackgroundColor(Color.WHITE);
                 holder.pickUpDone.setEnabled(true);
 
-                urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus1.jsp?oNo=" + mDataset.get(position).getOrder_oNo() + "&oStatus=" + 2;
+                urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus1.jsp?oNo=" + mDataset.get(position).getOrder_oNo() + "&oStatus=" + 2; // oStatus 2로 Update
                 where = "update";
 
                 String result = connectUpdateData();
 
                 if(result.equals("1")){
 
-                }else {
+                }else { // DB Action 실패 시 예외처리
                     Toast.makeText(fragment.getActivity(), "오류 발생! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        holder.pickUpDone.setOnClickListener(new View.OnClickListener() {
+        holder.pickUpDone.setOnClickListener(new View.OnClickListener() { // 픽업완료 버튼 눌렀을 경우
             @Override
             public void onClick(View v) {
                 holder.pickUpDone.setEnabled(false);
@@ -216,7 +218,7 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
                 holder.makeDone.setVisibility(View.GONE);
                 holder.pickUpDone.setText("완료탭에서 확인해주세요");
 
-                urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus1.jsp?oNo=" + mDataset.get(position).getOrder_oNo() + "&oStatus=" + 3;
+                urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus1.jsp?oNo=" + mDataset.get(position).getOrder_oNo() + "&oStatus=" + 3; // oStatus 3으로 Update
                 where = "update";
 
                 String result = connectUpdateData();
@@ -224,17 +226,7 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
                 if(result.equals("1")){
                     Toast.makeText(fragment.getActivity(), "고객에게 알림이 전송되었습니다.", Toast.LENGTH_SHORT).show();
                     switchNum = 1;
-
-//                    DialogFragment_Progressing_Accept dialogFragment_progressing_accept = new DialogFragment_Progressing_Accept();
-//
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("macIP", macIP);
-//                    bundle.putInt("skSeqNo", skSeqNo);
-//
-//                    dialogFragment_progressing_accept.setArguments(bundle);
-//                    dialogFragment_progressing_accept.show(fragment.getActivity().getSupportFragmentManager(),"tag");
-
-                }else {
+                }else { // DB Action 실패 시 예외처리
                     Toast.makeText(fragment.getActivity(), "오류 발생! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -250,7 +242,7 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
     }
 
     @Override
-    public void onViewRecycled(@NonNull MyViewHolder holder) {
+    public void onViewRecycled(@NonNull MyViewHolder holder) { // 데이터 꼬임 방지
         super.onViewRecycled(holder);
 
         holder.oSeqno.setText("");
@@ -268,27 +260,10 @@ public class ProgressingAdapter extends RecyclerView.Adapter<ProgressingAdapter.
         String result = null;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_OrderListNetworkTask networkTask = new LMW_OrderListNetworkTask(fragment.getActivity(), urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             Object obj = networkTask.execute().get();
             result = (String) obj;
-            ///////////////////////////////////////////////////////////////////////////////////////
 
         }catch (Exception e){
             e.printStackTrace();

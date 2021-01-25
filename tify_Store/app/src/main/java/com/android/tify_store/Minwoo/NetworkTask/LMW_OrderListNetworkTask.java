@@ -56,15 +56,8 @@ public class LMW_OrderListNetworkTask extends AsyncTask<Integer, String, Object>
         InputStream inputStream = null;
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // Date : 2020.12.25
-        //
-        // Description:
-        //  - NetworkTask에서 입력,수정,검색 결과값 관리.
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////
+
         String result = null;
-        ///////////////////////////////////////////////////////////////////////////////////////
 
         try {
             URL url = new URL(mAddr);
@@ -81,20 +74,13 @@ public class LMW_OrderListNetworkTask extends AsyncTask<Integer, String, Object>
                     if(strline == null) break;
                     stringBuffer.append(strline + "\n");
                 }
-                ///////////////////////////////////////////////////////////////////////////////////////
-                // Date : 2020.12.25
-                //
-                // Description:
-                //  - 검색으로 들어온 Task는 parserSelect()로
-                //  - 입력, 수정, 삭제로 들어온 Task는 parserAction()으로 구분
-                //
-                ///////////////////////////////////////////////////////////////////////////////////////
+
                 if(where.equals("select")){
                     parserSelect(stringBuffer.toString());
                 }else{
                     result = parserAction(stringBuffer.toString());
                 }
-                ///////////////////////////////////////////////////////////////////////////////////////
+
 
             }
         }catch (Exception e){
@@ -109,20 +95,13 @@ public class LMW_OrderListNetworkTask extends AsyncTask<Integer, String, Object>
                 e2.printStackTrace();
             }
         }
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // Date : 2020.12.25
-        //
-        // Description:
-        //  - 검색으로 들어온 Task는 members를 return
-        //  - 입력, 수정, 삭제로 들어온 Task는 result를 return
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////
+
         if(where.equals("select")){
             return orderLists;
         }else{
             return result;
         }
-        ///////////////////////////////////////////////////////////////////////////////////////
+
 
     }
 
@@ -140,14 +119,7 @@ public class LMW_OrderListNetworkTask extends AsyncTask<Integer, String, Object>
         super.onCancelled();
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Date : 2020.12.25
-    //
-    // Description:
-    //  - 검색후 json parsing
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-    private void parserSelect(String s){
+    private void parserSelect(String s){ // DB에 등록된 오더리스트를 가져온다.
         Log.v(TAG,"Parser()");
 
         try {
@@ -169,7 +141,6 @@ public class LMW_OrderListNetworkTask extends AsyncTask<Integer, String, Object>
                 String oInsertDate = jsonObject1.getString("oInsertDate");
                 int oStatus = jsonObject1.getInt("oStatus");
 
-
                 Log.v(TAG, "olSeqNo : " + olSeqNo);
 
                 OrderRequest orderList = new OrderRequest(order_oNo, store_sName, menu_mName, olSeqNo, olSizeUp, olAddShot, olRequest, olPrice, olQuantity, oInsertDate, oStatus);
@@ -181,15 +152,6 @@ public class LMW_OrderListNetworkTask extends AsyncTask<Integer, String, Object>
             e.printStackTrace();
         }
     }
-    ///////////////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Date : 2020.12.25
-    //
-    // Description:
-    //  - 입력, 수정, 삭제후 json parsing
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
     private String parserAction(String s){
         Log.v(TAG,"Parser()");
         String returnValue = null;
@@ -206,7 +168,6 @@ public class LMW_OrderListNetworkTask extends AsyncTask<Integer, String, Object>
         }
         return returnValue;
     }
-    ///////////////////////////////////////////////////////////////////////////////////////
 
 
 } // ------

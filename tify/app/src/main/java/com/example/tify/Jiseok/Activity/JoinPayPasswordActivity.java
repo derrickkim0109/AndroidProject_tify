@@ -115,6 +115,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
+            // 뒤돌아오기 버튼눌렀을때 다시못돌아오게
             case 1:
                 new AlertDialog.Builder(JoinPayPasswordActivity.this)
                         .setTitle("잘못된 접근입니다.")
@@ -140,7 +141,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
     View.OnClickListener numClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            // 숫자버튼 클
             if(result.length()<7) {
                 switch (v.getId()) {
                     case R.id.join_pay_btn0:
@@ -180,7 +181,7 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
                         break;
                 }
             }
-
+            // 버튼 누르고 난후 이미지 색
             resultToStar();
 
             switch (result.length()){
@@ -333,6 +334,8 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         }
     }
 
+
+    //회원가입
     private void insertUserInfo(){
        try {
            if(userProfile==null){
@@ -348,11 +351,12 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
 
     }
 
+    //이메일 중복체
     private int selectUserSeq(){
         int utc= 0;
         try {
             String urlAddr = "http://" + MacIP + ":8080/tify/userSeqSelect.jsp?uEmail="+ userEmail;
-            Log.v("왜안떠",urlAddr);
+
             CJS_NetworkTask cjs_networkTask = new CJS_NetworkTask(JoinPayPasswordActivity.this, urlAddr, "uNoSelect");
             Object obj = cjs_networkTask.execute().get();
 
@@ -363,6 +367,9 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         return utc;
     }
 
+
+
+    // 리워드테이블 셋팅
     private void insertRewardTable(String seq){
         try {
             String urlAddr = "http://" + MacIP + ":8080/tify/insertReward.jsp?uNo="+seq;

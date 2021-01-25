@@ -144,7 +144,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MyView
     }
 
     @Override
-    public void onViewRecycled(@NonNull MyViewHolder holder) {
+    public void onViewRecycled(@NonNull MyViewHolder holder) { // 데이터 꼬임 방지
         super.onViewRecycled(holder);
 
         holder.mName.clearComposingText();

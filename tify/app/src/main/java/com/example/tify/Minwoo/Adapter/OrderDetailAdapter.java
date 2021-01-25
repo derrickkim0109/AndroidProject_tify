@@ -110,7 +110,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
        holder.oSeqno.setText("주문번호 : " + order_oNo);
        holder.oDate.setText(order_oInsertDate);
        holder.sName.setText(mDataset.get(position).getStore_sName());
-        holder.mName.setText(mDataset.get(position).getMenu_mName() + " X " + mDataset.get(position).getOlQuantity());
+       holder.mName.setText(mDataset.get(position).getMenu_mName() + " X " + mDataset.get(position).getOlQuantity());
 
         //데이터를 받은걸 올리기
 
@@ -135,7 +135,6 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
         holder.subTotalPrice.setText(strTotal + "원");
 
-
     }
 
     @Override
@@ -145,7 +144,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     }
 
     @Override
-    public void onViewRecycled(@NonNull MyViewHolder holder) {
+    public void onViewRecycled(@NonNull MyViewHolder holder) { // 데이터꼬임 방지
         super.onViewRecycled(holder);
 
         holder.mName.clearComposingText();

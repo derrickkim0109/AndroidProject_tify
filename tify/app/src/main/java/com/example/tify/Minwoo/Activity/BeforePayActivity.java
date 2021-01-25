@@ -49,17 +49,9 @@ import java.util.Locale;
 
 public class BeforePayActivity extends AppCompatActivity {
 
+    // 메뉴 고르고 바로결제를 클릭했을 경우
 
     String TAG = "BeforePayActivity";
-
-    // 통신
-    private Handler mHandler;
-    InetAddress serverAddr;
-    Socket socket;
-    PrintWriter sendWriter;
-    private String ip = "211.195.53.163";
-    private int port = 8888;
-    String strStatus = null;
 
     private ArrayList<Order> list;
 
@@ -105,19 +97,6 @@ public class BeforePayActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView; // 바텀네비게이션 뷰
     Menu menu;
-
-    // 통신 ------------- 소켓 닫는 거
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        try {
-////            sendWriter.close();
-//            socket.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-    // -----------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,38 +154,6 @@ public class BeforePayActivity extends AppCompatActivity {
             }
         });
 
-
-        // 통신 ------------------------------------------------
-        ///////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////
-//        mHandler = new Handler();
-
-//        new Thread() {
-//            public void run() { // 받는 스레드
-//                try {
-//                    Log.v("통신 순서", "순서 1 - showOrder");
-//                    InetAddress serverAddr = InetAddress.getByName(ip);
-//                    socket = new Socket(serverAddr, port);
-//                    sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
-//                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
-//                    while(true){
-//                        strStatus = input.readLine();
-//                        Log.v(TAG, "Customer 받은 값 : " + strStatus);
-//
-//                        if(strStatus!=null){ // 점주가 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
-//                            mHandler.post(new msgUpdate(strStatus));
-//                        }
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } }}.start();
-
-//        if(strStatus != null){ // 점주가 요청에 반응했을 때
-//            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
-//        }
-        ///////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-
         // OrderSummaryActivity로 부터 값을 받는다.
         Intent intent = getIntent();
 
@@ -224,8 +171,9 @@ public class BeforePayActivity extends AppCompatActivity {
         olQuantity = intent.getIntExtra("olQuantity", 0);
         sName = intent.getStringExtra("sName");
 
-        connectPoint();
+        connectPoint(); // 유저 포인트 불러오기
 
+        // 세자리 콤마
         NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
         strTotal = moneyFormat.format(totalPrice);
         strPoint = moneyFormat.format(point);
@@ -242,7 +190,7 @@ public class BeforePayActivity extends AppCompatActivity {
         tv_totalOrderPrice.setText(strTotal + "원");
         tv_totalPayPrice.setText(strTotal + "원");
 
-        if(point == 0){
+        if(point == 0){ // 포인트가 없을 경우 버튼 비활성화
             btn_point.setEnabled(false);
         }
         et_point.setHint(strPoint);
@@ -250,7 +198,7 @@ public class BeforePayActivity extends AppCompatActivity {
 
         // et_point 값 제한
 
-        et_point.addTextChangedListener(new TextWatcher() {
+        et_point.addTextChangedListener(new TextWatcher() { // 포인트 값 입력 변화에 따라 제한
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -268,18 +216,18 @@ public class BeforePayActivity extends AppCompatActivity {
                     } else {
                         int temp = Integer.parseInt(s.toString());
 
-                        if (point < temp) { // 사용하려는 포인트가 보유 포인트보다 클 때
+                        if (point < temp) { // 사용하려는 포인트가 보유 포인트보다 클 때 (적어놓은 포인트 초기화)
                             et_point.setText("");
                             Toast.makeText(BeforePayActivity.this, "보유하신 포인트는 " + strPoint + "p 입니다.", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (totalPrice < temp) { // 사용하려는 포인트가 totalPrice를 초과했을 때!
+                            if (totalPrice < temp) { // 사용하려는 포인트가 총금액을 초과했을 때! (버튼 비활성화)
                                 btn_point.setEnabled(false);
                                 btn_point.setBackgroundColor(Color.parseColor("#28979595"));
                                 Toast.makeText(BeforePayActivity.this, "최대 " + strTotal + "p 까지 사용가능합니다.", Toast.LENGTH_SHORT).show();
-                            } else if (totalPrice >= temp){
+                            } else if (totalPrice >= temp){ // 총금액이 사용하려는 포인트 보다 많거나 같을 때 (정상 => 버튼 활성화)
                                 btn_point.setEnabled(true);
                                 btn_point.setBackgroundColor(Color.parseColor("#0084ff"));
-                            }else if(point < temp){
+                            }else if(point < temp){ // 총금액이 사용하려는 포인트보다 적을 때 (적어놓은 포인트 초기화)
                                 et_point.setText("");
                                 Toast.makeText(BeforePayActivity.this, "보유하신 포인트는 " + strPoint + "p 입니다.", Toast.LENGTH_SHORT).show();
                             }
@@ -321,9 +269,9 @@ public class BeforePayActivity extends AppCompatActivity {
             NumberFormat moneyFormat = NumberFormat.getInstance(Locale.KOREA);
 
             switch (v.getId()){
-                case R.id.activity_Before_Btn_Point:
+                case R.id.activity_Before_Btn_Point: // 포인트 사용을 위해 적용버튼을 눌렀을 경우
 
-                    if(btn_point.getText().toString().equals("적용")){
+                    if(btn_point.getText().toString().equals("적용")){ // 포인트를 정상 사용할 수 있는 경우
                         getPoint = Integer.parseInt(et_point.getText().toString());
                         discountedPrice = totalPrice - getPoint;
                         remainPoint = point - getPoint;
@@ -340,7 +288,7 @@ public class BeforePayActivity extends AppCompatActivity {
                         btn_point.setEnabled(true);
                         btn_point.setText("초기화");
                         btn_point.setBackgroundColor(Color.parseColor("#0084ff"));
-                    }else{
+                    }else{ // 버튼 Text가 '초기화' 상태로 있는 경우
 
                         strTotal = moneyFormat.format(totalPrice);
 
@@ -355,7 +303,7 @@ public class BeforePayActivity extends AppCompatActivity {
                         btn_point.setEnabled(false);
                     }
                     break;
-                case R.id.beforePay_Btn_Card:
+                case R.id.beforePay_Btn_Card: // 카드 결제
                     if(cardCountselect()==0){
                         new AlertDialog.Builder(BeforePayActivity.this)
                                 .setTitle("등록하신 카드가 없습니다. \n카드등록페이지로 이동합니다.")
@@ -370,74 +318,9 @@ public class BeforePayActivity extends AppCompatActivity {
                                 .show();
                         break;
                     }
-                    // 통신 -------------------------- 점주에게 접수 요청
-//                    strStatus = "주문이 들어왔습니다!! \n주문내역을 확인해주세요.";
-//                    Log.v(TAG, "Customer 주는 값 : " + strStatus);
-//                    new Thread() { // 주는 스레드
-//                        @Override
-//                        public void run() {
-//                            super.run();
-//                            try {
-//                                sendWriter.println(strStatus);
-//                                sendWriter.flush();
-////                            message.setText("");
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }.start();
-                    // ------------------------------
 
-
-                    // 결제 부분 완료되면 결제 부분에서 JSP 실행하기 (카드번호랑 카드이름 필요)
-                    // 1. 결제 완료되면 OrderListActivity로!
-                    // 1-1. order 테이블 Insert
-                    // 1-2. order oNo Select => oNo가 있어야 orderlist에 Insert 가능..
-                    // 1-3. orderlist 테이블 Insert
-                    // 2. 결제 실패하면 StoreInfoActivity로!
-
-                    // 테스트 ---------
-                    // order 테이블 Insert
-//                    where = "insert";
-//                    int cardNum = 13153123;
-//                    String cardName = "신한은행";
-//                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_insert.jsp?user_uNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&oSum=" + totalPrice + "&oCardName=" + cardName + "&oCardNo=" + cardNum + "&oReview=" + 0 + "&oStatus=" + 0;
-//
-//                    connectInsertData(); // order Insert
-//
-//                    where = "oNo";
-//                    urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
-//                    list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
-//                    if (list.size() == 0){
-//                        oNo = 1;
-//                    }else{
-//                        oNo = list.get(0).getMax();
-//                    }
-//                    Log.v(TAG, "마지막 oNo : " + oNo);
-
-//                    // oNo Select
-                        where = "select";
-                        urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
-
-//                    list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
-//                    int oNo = list.get(0).getoNo();
-//                    Log.v(TAG, "받은 oNo : " + oNo);
-
-                    // orderlist 테이블 Insert
-//                    where = "insert";
-//                    urlAddr = "http://" + macIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uSeqNo + "&order_oNo=" + oNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&menu_mName=" + menu_mName + "&olSizeUp=" + olSizeUp + "&olAddShot=" + olAddShot + "&olRequest=" + olRequest + "&olPrice=" + olPrice + "&olQuantity=" + olQuantity;
-//
-//                    connectInsertData(); // orderlist Insert
-//
-//                    // 테스트용
-//                    intent = new Intent(BeforePayActivity.this, OrderListActivity.class);
-//                    intent.putExtra("macIP", macIP);
-//                    intent.putExtra("user_uSeqNo", user_uSeqNo);
-//                    intent.putExtra("store_sSeqNo", store_sSeqNo);
-//                    intent.putExtra("totalPrice", totalPrice);
-//                    intent.putExtra("user_uSeqNo", user_uSeqNo);
-//                    intent.putExtra("from", "BeforePayActivity");
-//                    startActivity(intent);
+                    where = "select";
+                    urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
 
                     intent = new Intent(BeforePayActivity.this, OrderPage_PaymentActivity.class);
                     intent.putExtra("olPrice", olPrice);
@@ -450,15 +333,15 @@ public class BeforePayActivity extends AppCompatActivity {
                     intent.putExtra("from", "BeforePayActivity");
                     intent.putExtra("store_sSeqNo", store_sSeqNo);
 
-                    if(discountedPrice == 0){
+                    if(discountedPrice == 0){ // 할인된 금액이 없는 경우 총금액 보내기
                         intent.putExtra("total", totalPrice);
-                    }else{
+                    }else{ // 할인된 금액이 있는 경우 할인된 금액 보내기
                         intent.putExtra("total", discountedPrice);
                     }
                     Log.v(TAG, "total : " + discountedPrice);
                     Log.v(TAG, "total : " + totalPrice);
 
-                    if(getPoint == 0){
+                    if(getPoint == 0){ // 포인트 사용 여부에 따라 다른 값 보내기
                         intent.putExtra("point", 0);
                     }else{
                         intent.putExtra("point", getPoint);
@@ -470,71 +353,6 @@ public class BeforePayActivity extends AppCompatActivity {
 
         }
     };
-    private String connectInsertData(){ // 장바구니에 넣기
-        String result = null;
-
-        try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            if(where.equals("insert")){
-                LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(BeforePayActivity.this, urlAddr, where);
-                Object obj = networkTask.execute().get();
-                result = (String)obj;
-            }else{
-                LMW_OrderListNetworkTask networkTask = new LMW_OrderListNetworkTask(BeforePayActivity.this, urlAddr, where);
-                Object obj = networkTask.execute().get();
-                result = (String)obj;
-            }
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    private ArrayList<Order> connectGetData(){
-        ArrayList<Order> beanList = new ArrayList<Order>();
-
-        try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(BeforePayActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-            Object obj = networkTask.execute().get();
-            list = (ArrayList<Order>) obj;
-            Log.v(TAG, "data.size() : " + list.size());
-
-            beanList = list;
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return beanList;
-    }
 
     private void connectPoint(){
         where = "select";
@@ -559,8 +377,6 @@ public class BeforePayActivity extends AppCompatActivity {
         }
 
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -605,28 +421,6 @@ public class BeforePayActivity extends AppCompatActivity {
         return true;
     }
 
-    // 통신 ------------------------------------------
-//    class msgUpdate implements Runnable{ // 받아서 작동하는 메소드
-//        private String msg;
-//        public msgUpdate(String str) {this.msg=str;}
-//
-//        @Override
-//        public void run() {
-//            Log.v("통신 순서", "순서 2 - msgUpdate");
-//            Log.v(TAG, "msgUpdate msg : " + msg);
-////            status.setText(status.getText().toString()+msg+"\n");
-//
-////            AlertDialog.Builder builder = new AlertDialog.Builder(BeforePayActivity.this);
-////            builder.setTitle("주문 결과");
-////            builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
-////            builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
-////            builder.show();
-////
-////            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
-//
-//        }
-//    }
-    // -----------------------------------------------
     private int cardCountselect () {
 
         int cardcount = 0;
