@@ -65,7 +65,7 @@ public class CJS_NetworkTask extends AsyncTask<Integer, String, Object> {
         try {
             URL url = new URL(mAddr);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setConnectTimeout(10000);
+            httpURLConnection.setConnectTimeout(100000);
 
             if(httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
                 inputStream = httpURLConnection.getInputStream();

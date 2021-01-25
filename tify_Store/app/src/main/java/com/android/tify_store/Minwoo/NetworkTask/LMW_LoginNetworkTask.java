@@ -112,7 +112,7 @@ public class LMW_LoginNetworkTask extends AsyncTask<Integer, String, Object> {
         super.onCancelled();
     }
 
-    private void parserSelect(String s){
+    private void parserSelect(String s){ // 로그인 시 해당 정보가 DB에 있는 지 확인
         Log.v(TAG,"Parser()");
 
         try {

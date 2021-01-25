@@ -42,6 +42,8 @@ import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
 
+    // 장바구니 화면
+
     String TAG = "CartActivity";
 
     private ArrayList<Cart> data = null;
@@ -150,12 +152,6 @@ public class CartActivity extends AppCompatActivity {
         tv_sName.setText(sName);
         tv_totalPrice.setText(strTotal + "원");
 
-        orders = OrderConnectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
-        if (orders.size() != 0) {
-            oNo = orders.get(0).getMax() + 1;
-            Log.v(TAG, "마지막 oNo + 1: " + oNo);
-        }
-
         //리사이클러뷰에 있는 아이디를 찾기
         recyclerView = findViewById(R.id.cart_recycler_view);
 
@@ -166,16 +162,9 @@ public class CartActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        //리사이클러뷰 어댑터를 넣기
-//        adapter = new CartAdapter(CartActivity.this, R.layout.lmw_activity_cart_recycler_item, data);
-
-        //어댑터에게 보내기
-//        recyclerView.setAdapter(adapter);
-
         // 기본 구분선
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),new LinearLayoutManager(this).getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
-
 
         list = new ArrayList<Cart>();
         list = connectGetData(); // db를 통해 받은 데이터를 담는다.
@@ -195,8 +184,6 @@ public class CartActivity extends AppCompatActivity {
         // 클릭 리스너
         payBtn.setOnClickListener(mClickListener);
         iv_Init.setOnClickListener(mClickListener);
-
-
 
     }
 
@@ -218,7 +205,7 @@ public class CartActivity extends AppCompatActivity {
             Intent intent = null;
 
             switch (v.getId()){
-                case R.id.cart_Btn_Pay:
+                case R.id.cart_Btn_Pay: // 결제 버튼을 눌렀을 경우
                     intent = new Intent(CartActivity.this, BeforePayActivity2.class);
 
                     intent.putExtra("sName", sName);
@@ -230,7 +217,7 @@ public class CartActivity extends AppCompatActivity {
 
                     startActivity(intent);
                     break;
-                case R.id.cart_IV_Cancel:
+                case R.id.cart_IV_Cancel: // 장바구니 전체 삭제
                     Log.v(TAG, "클릭 확인");
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
@@ -242,8 +229,8 @@ public class CartActivity extends AppCompatActivity {
                             urlAddr = "http://" + macIP + ":8080/tify/lmw_cartlist_delete_all.jsp?user_uSeqNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo;
                             where = "delete";
 
-                            connectDeleteData(); // 해당 메뉴 삭제
-                            Intent intent = new Intent(CartActivity.this, JiseokMainActivity.class);
+                            connectDeleteData();
+                            Intent intent = new Intent(CartActivity.this, CartActivity.class);
                             intent.putExtra("sName", sName);
                             intent.putExtra("macIP", macIP);
                             intent.putExtra("user_uSeqNo", user_uSeqNo);
@@ -310,15 +297,7 @@ public class CartActivity extends AppCompatActivity {
         urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(CartActivity.this, urlAddr, "oNo");
-            ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();
             orders = (ArrayList<Order>) obj;
@@ -336,27 +315,11 @@ public class CartActivity extends AppCompatActivity {
         String result = null;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_CartNetworkTask networkTask = new LMW_CartNetworkTask(CartActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
+            LMW_CartNetworkTask networkTask = new LMW_CartNetworkTask(CartActivity.this, urlAddr, where);
+
             Object obj = networkTask.execute().get();
             result = (String) obj;
-            ///////////////////////////////////////////////////////////////////////////////////////
 
         }catch (Exception e){
             e.printStackTrace();
@@ -371,7 +334,7 @@ public class CartActivity extends AppCompatActivity {
 
         adapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, int position) { // 장바구니 선택 삭제
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
                 builder.setTitle("<장바구니 삭제>");

@@ -42,6 +42,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MenuInsertActivity extends AppCompatActivity {
 
+    // 메뉴 등록 화면
+
     String TAG = "MenuInsertActivity";
 
     // DB Connect
@@ -81,16 +83,10 @@ public class MenuInsertActivity extends AppCompatActivity {
     private final int REQ_CODE_SELECT_IMAGE = 300; // Gallery Return Code
 
     String imgName = null;
-    ///////////
     String img_path = null;// 최종 file name
     String f_ext = null;
     File tempSelectFile;
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //
-    //          Tomcat Server의 IP Address와 Package이름은 수정 하여야 함
-    //           2021.01.07 -태현
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     String devicePath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.android.tify/";
     //// 외부쓰레드 에서 메인 UI화면을 그릴때 사용
 
@@ -99,7 +95,7 @@ public class MenuInsertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_menu_insert);
 
-        ActivityCompat.requestPermissions(MenuInsertActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
+        ActivityCompat.requestPermissions(MenuInsertActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE); // 사진 사용권한 확인
 
         SharedPreferences sharedPreferences = getSharedPreferences("openStatus", MODE_PRIVATE);
         strResult = sharedPreferences.getString("openResult", "null");
@@ -126,7 +122,7 @@ public class MenuInsertActivity extends AppCompatActivity {
         btn_Insert = findViewById(R.id.activity_MenuInsert_Btn_Insert);
 
 
-        mImage = "null_image.jpg";
+        mImage = "null_image.jpg"; // 초기엔 등록된 이미지가 없으므로 특정 이미지 출력
         sendImageRequest(mImage);
 
         // 클릭 리스너
@@ -173,28 +169,10 @@ public class MenuInsertActivity extends AppCompatActivity {
         String result = null;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_MenuNetworkTask networkTask = new LMW_MenuNetworkTask(MenuInsertActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             Object obj = networkTask.execute().get();
             result = (String) obj;
-            ///////////////////////////////////////////////////////////////////////////////////////
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -214,7 +192,7 @@ public class MenuInsertActivity extends AppCompatActivity {
                     intent = new Intent(Intent.ACTION_PICK);
                     intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                     intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);// 2021.01.08 - 태현
+                    startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);
 
                     break;
                 case R.id.activity_MenuInsert_Btn_Insert: // 입력
@@ -227,16 +205,16 @@ public class MenuInsertActivity extends AppCompatActivity {
                         imgName = "null_image.jpg";
                     }
 
-                    if(mName.length() == 0 || mPrice.length() == 0 || mComment.length() == 0){
+                    if(mName.length() == 0 || mPrice.length() == 0 || mComment.length() == 0){ // 아무런 정보를 입력하지 않았을 경우
                         Toast.makeText(MenuInsertActivity.this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    }else{
+                    }else{ // 모든 정보를 입력했을 경우
                         where = "insert";
                         urlAddr = "http://" + macIP + ":8080/tify/lmw_menu_insert.jsp?storekeeper_skSeqNo=" + skSeqNo + "&mName=" + mName + "&mPrice=" + mPrice + "&mSizeUp=" + sizeUpRGCheck + "&mShut=" + addShotRGCheck + "&mImage=" + imgName + "&mType=" + typeRGCheck + "&mComment=" + mComment;
 
                         CResult = connectMenuInsert();
 
-                        if(CResult.equals("1")){
-//                            Toast.makeText(MenuInsertActivity.this, "메뉴 등록 성공!", Toast.LENGTH_SHORT).show();
+                        if(CResult.equals("1")){ // DB Action 성공
+                            Toast.makeText(MenuInsertActivity.this, "메뉴 등록 성공!", Toast.LENGTH_SHORT).show();
 
                             connectImage();
 
@@ -244,8 +222,8 @@ public class MenuInsertActivity extends AppCompatActivity {
                             intent.putExtra("macIP", macIP);
                             intent.putExtra("skSeqNo", skSeqNo);
                             startActivity(intent);
-                        }else{
-//                            Toast.makeText(MenuInsertActivity.this, "메뉴 등록 실패! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show();
+                        }else{ // DB Action 실패
+                            Toast.makeText(MenuInsertActivity.this, "메뉴 등록 실패! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -257,11 +235,8 @@ public class MenuInsertActivity extends AppCompatActivity {
 
     RadioGroup.OnCheckedChangeListener radioGroupButtonChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
+        public void onCheckedChanged(RadioGroup group, int checkedId) { // 메뉴 타입 및 사이즈업, 샷추가 가능 여부
             Log.v(TAG, "버튼 클릭 : " + checkedId);
-
-            RadioButton radio_btn = (RadioButton) findViewById(checkedId);
-//            Toast.makeText(MenuInsertActivity.this, radio_btn.getText().toString(), Toast.LENGTH_SHORT).show();
 
             switch (checkedId) {
                 case R.id.activity_MenuInsert_RB_Drink:
@@ -292,7 +267,7 @@ public class MenuInsertActivity extends AppCompatActivity {
         Log.d("test", "onPrepareOptionsMenu - 옵션메뉴가 " +
                 "화면에 보여질때 마다 호출됨");
 
-        if(strResult.equals("1")){
+        if(strResult.equals("1")){ // 오픈한 경우 색칠된 아이콘을 띄워 오픈상태 쉽게 확인 가능
             Log.v(TAG, "오픈 상태 : 오픈");
             menu.getItem(0).setIcon(R.drawable.ic_action_storeopen_open);
         }

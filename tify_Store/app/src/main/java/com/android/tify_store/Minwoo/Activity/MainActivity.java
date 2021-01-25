@@ -38,18 +38,9 @@ import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
-    String TAG = "MainActivity";
+    // 로그인 후 보여지는 탭 레이아웃 화면 (주문 요청 및 완료 사항 확인 가능)
 
-    // 통신
-    private Handler mHandler;
-    InetAddress serverAddr;
-    Socket socket;
-    PrintWriter sendWriter;
-    private String ip = "211.195.53.163";
-    private int port = 8888;
-    String strStatus = null;
-    String sendStatus = null;
-    int check_Socket = 0;
+    String TAG = "MainActivity";
 
     // DB Connect
     String macIP;
@@ -61,56 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
     Fragment CompleteFragment, OrderRequestFragment, ProgressingFragment;
 
-    // 통신 ---------------------- 소켓 끊기
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        try {
-//            Log.v(TAG, "소켓 닫힘");
-//
-//                sendWriter.close();
-//                socket.close();
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-    // ----------------------------------
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_main);
-
-        // 통신 --------------------------
-        //////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////
-        mHandler = new Handler();
-
-        new Thread() {
-            public void run() { // 받는 스레드
-                try {
-                        InetAddress serverAddr = InetAddress.getByName(ip);
-                        socket = new Socket(serverAddr, port);
-                        sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
-                        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
-                        while(true){
-                            Log.v("통신 순서", "순서 1 - 받는 스레드");
-                            strStatus = input.readLine();
-                            Log.v("통신 확인(tify_store)", "Store 받은 값 : " + strStatus);
-
-                            if(strStatus!=null){ // 고객이 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
-                                mHandler.post(new showOrder(strStatus));
-                            }
-                        }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } }}.start();
-
-
-        //////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////
 
         SharedPreferences sharedPreferences = getSharedPreferences("openStatus", MODE_PRIVATE);
         strResult = sharedPreferences.getString("openResult", "null");
@@ -183,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         ProgressingFragment = new ProgressingFragment();
         CompleteFragment = new CompleteFragment();
 
-        // OrderRequestFragment로 넘긴다. (지석씨에게 값 받으면 다시 설정해주자)
+        // OrderRequestFragment로 넘긴다.
         Bundle bundle = new Bundle();
         bundle.putString("macIP", macIP);
         bundle.putInt("skSeqNo", skSeqNo);
@@ -195,9 +140,9 @@ public class MainActivity extends AppCompatActivity {
         tabs.addTab(tabs.newTab().setText("처리중"));
         tabs.addTab(tabs.newTab().setText("완료"));
 
-        getSupportFragmentManager().beginTransaction().add(R.id.frame, OrderRequestFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.frame, OrderRequestFragment).commit(); // 탭 레이아웃 시작 화면
 
-        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() { // 탭 레이아웃
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
@@ -246,27 +191,10 @@ public class MainActivity extends AppCompatActivity {
         where = "update";
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_LoginNetworkTask networkTask = new LMW_LoginNetworkTask(MainActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             Object obj = networkTask.execute().get();
             result = (String) obj;
-            ///////////////////////////////////////////////////////////////////////////////////////
 
         }catch (Exception e){
             e.printStackTrace();
@@ -287,29 +215,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // 통신 --------------------------------------------
-    class showOrder implements Runnable{ // 받아서 작동하는 메소드
-        private String msg;
-        public showOrder(String str) {this.msg=str;}
-
-        @Override
-        public void run() {
-//            status.setText(status.getText().toString()+msg+"\n");
-
-            Log.v("통신 sendStatus", "통신 sendStatus : " + strStatus);
-            if(strStatus.equals(null)){
-
-            }else if(strStatus.equals(msg)){
-                Log.v("통신 순서", "순서 2 - showOrder");
-                Log.v("통신 확인(tify_store)", "sendStatus = strStatus");
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("주문이 들어왔습니다");
-                builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
-                builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
-                builder.show();
-            }
-        }
-    }
-    /////////////////////////////////////////////////////////
 }

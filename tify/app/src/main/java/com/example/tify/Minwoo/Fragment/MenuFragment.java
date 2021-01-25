@@ -30,6 +30,8 @@ import java.util.ArrayList;
 
 public class MenuFragment extends Fragment {
 
+    // 메뉴 정보 보여주는 화면
+
     String TAG = "MenuFragment";
 
     private ArrayList<Menu> menuList = new ArrayList<>();
@@ -100,7 +102,7 @@ public class MenuFragment extends Fragment {
                 mAdapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
-                        if(skStatus == 0){
+                        if(skStatus == 0){ // 점주가 매장을 오픈하지 않았을 경우
                             Toast.makeText(getContext(), "영업 준비중입니다.", Toast.LENGTH_SHORT).show();
                         }else{
                             Intent intent = new Intent(getActivity(), OrderSummaryActivity.class);
@@ -130,15 +132,8 @@ public class MenuFragment extends Fragment {
     private ArrayList<Menu> connectGetData(){
         ArrayList<Menu> beanList = new ArrayList<Menu>();
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
+
             LMW_MenuNetworkTask networkTask = new LMW_MenuNetworkTask(getActivity(), urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();
             menuList = (ArrayList<Menu>) obj;
@@ -153,19 +148,5 @@ public class MenuFragment extends Fragment {
             e.printStackTrace();
         }
         return beanList;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
     }
 }

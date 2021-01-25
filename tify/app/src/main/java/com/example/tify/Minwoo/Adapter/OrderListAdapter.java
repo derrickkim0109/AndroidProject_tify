@@ -129,22 +129,22 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         holder.tv_sName.setText(mDataset.get(position).getStore_sName());
 
         switch (mDataset.get(position).getoStatus()){ // 0 주문요청 1 주문접수 2 제조완료 3 픽업완료 4 고객이 취소 5 매장이 취소
-            case 0:
+            case 0: // 주문요청이 들어간 경우
                 Glide.with(holder.tv_right1).load(R.drawable.dotdot).into(holder.tv_right1);
                 holder.tv_orderRequest.setTextColor(Color.parseColor("#0084ff"));
                 holder.btn_Review.setVisibility(View.INVISIBLE);
                 break;
-            case 1:
+            case 1: // 주문접수가 완료된 경우
                 Glide.with(holder.tv_right2).load(R.drawable.dotdot).into(holder.tv_right2);
                 holder.tv_orderGet.setTextColor(Color.parseColor("#0084ff"));
                 holder.btn_Review.setVisibility(View.INVISIBLE);
                 break;
-            case 2:
+            case 2: // 제조완료된 경우
                 Glide.with(holder.tv_right3).load(R.drawable.dotdot).into(holder.tv_right3);
                 holder.tv_complete.setTextColor(Color.parseColor("#0084ff"));
                 holder.btn_Review.setVisibility(View.INVISIBLE);
                 break;
-            case 3:
+            case 3: // 픽업완료한 경우 (리뷰쓰기 버튼 활성화)
                 holder.tv_right1.setImageResource(R.drawable.ic_action_progress_checked);
                 holder.tv_right2.setImageResource(R.drawable.ic_action_progress_checked);
                 holder.tv_right3.setImageResource(R.drawable.ic_action_progress_checked);
@@ -155,7 +155,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 break;
         }
 
-        if(mDataset.get(position).getoReview() == 1 && mDataset.get(position).getoStatus() == 3){
+        if(mDataset.get(position).getoReview() == 1 && mDataset.get(position).getoStatus() == 3){ // 리뷰를 작성했고 픽업도 완료한 주문의 경우
             holder.linearLayout.setBackgroundColor(Color.WHITE);
             holder.btn_Review.setVisibility(View.GONE);
             holder.tv_right1.setVisibility(View.GONE);
@@ -166,7 +166,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             holder.tv_orderGet.setText("픽업 완료된 주문입니다.");
         }
 
-        if(mDataset.get(position).getoStatus() == 4 || mDataset.get(position).getoStatus() == 5){
+        if(mDataset.get(position).getoStatus() == 4 || mDataset.get(position).getoStatus() == 5){ // 주문이 취소된 경우
             holder.linearLayout.setBackgroundColor(Color.parseColor("#16000000"));
             holder.btn_Review.setVisibility(View.GONE);
             holder.tv_right1.setVisibility(View.GONE);
@@ -185,7 +185,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         holder.btn_Review.setOnClickListener(new View.OnClickListener() { // 리뷰쓰기 버튼 클릭
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), com.example.tify.Hyeona.Activity.review_white.class); // 정확한 주소 필요!
+                Intent intent = new Intent(v.getContext(), com.example.tify.Hyeona.Activity.review_white.class);
                 intent.putExtra("uNo", uNo);
                 intent.putExtra("sSeqNo", skSeqNo);
                 intent.putExtra("oNo", mDataset.get(position).getoNo());

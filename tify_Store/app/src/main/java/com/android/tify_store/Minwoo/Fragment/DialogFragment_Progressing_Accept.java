@@ -84,7 +84,7 @@ public class DialogFragment_Progressing_Accept extends DialogFragment {
         public void onClick(View v) {
 
             switch (v.getId()){
-                case R.id.dialog_accept_ok:
+                case R.id.dialog_accept_ok: //
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     intent.putExtra("macIP", macIP);
@@ -92,7 +92,7 @@ public class DialogFragment_Progressing_Accept extends DialogFragment {
                     intent.putExtra("refrash", "Aceept");
                     startActivity(intent);
                     break;
-                case R.id.dialog_accept_dismiss:
+                case R.id.dialog_accept_dismiss: // 취소 버튼
                     dismiss();
                     break;
 

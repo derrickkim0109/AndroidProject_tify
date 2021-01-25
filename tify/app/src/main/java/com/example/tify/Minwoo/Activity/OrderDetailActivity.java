@@ -40,6 +40,8 @@ import java.util.Locale;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
+    // 주문 상세 내역 화면
+
     String TAG = "OrderDetailActivity";
 
     private ArrayList<OrderList> data = null;
@@ -186,15 +188,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         urlAddr = "http://" + macIP + ":8080/tify/lmw_orderlist_select.jsp?user_uNo=" + user_uSeqNo + "&order_oNo=" + order_oNo;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
+
             LMW_OrderListNetworkTask networkTask = new LMW_OrderListNetworkTask(OrderDetailActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();
             data = (ArrayList<OrderList>) obj;

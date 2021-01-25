@@ -61,16 +61,9 @@ import java.util.Locale;
 
 public class OrderListActivity extends AppCompatActivity {
 
-    String TAG = "OrderListActivity";
+    // 주문 내역 화면
 
-    // 통신
-    private Handler mHandler;
-    InetAddress serverAddr;
-    Socket socket;
-    PrintWriter sendWriter;
-    private String ip = "211.195.53.163";
-    private int port = 8888;
-    String strStatus = null;
+    String TAG = "OrderListActivity";
 
     private ArrayList<Order> data = null;
     private OrderListAdapter adapter = null;
@@ -100,22 +93,6 @@ public class OrderListActivity extends AppCompatActivity {
     int skStatus;
     String userName;
 
-    // 통신 ------------- 소켓 닫는 거
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        try {
-//            if(from.equals("BeforePayActivity")){
-//                sendWriter.close();
-//                socket.close();
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-    // -----------------------------
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,71 +119,9 @@ public class OrderListActivity extends AppCompatActivity {
         Log.v(TAG, "from : " + from);
 
 
-            if(from.equals("BeforePayActivity2")){// 장바구니에서 결제한 경우
-                connectDeleteData(); // 카트 비우기
-            }
-
-
-
-        // 통신 ------------------------------------------------
-        ///////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////
-        mHandler = new Handler();
-
-//        // 통신 -------------------------- 점주에게 접수 요청
-//                    strStatus = "주문이 들어왔습니다!! \n주문내역을 확인해주세요.";
-//                    Log.v(TAG, "Customer 주는 값 : " + strStatus);
-//                    new Thread() { // 주는 스레드
-//                        @Override
-//                        public void run() {
-//                            super.run();
-//                            try {
-//                                if(from.equals("BeforePayActivity")){
-//                                    sendWriter.println(strStatus);
-//                                    sendWriter.flush();
-//                                }
-////                            message.setText("");
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }.start();
-//        // ------------------------------
-//
-//        new Thread() {
-//            public void run() { // 받는 스레드
-//
-//                try {
-//                    if(from == null){
-//
-//
-//                    }else{
-//                        InetAddress serverAddr = InetAddress.getByName(ip);
-//                        socket = new Socket(serverAddr, port);
-//                        sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
-//                        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
-//                        while(true){
-//                            Log.v("통신 순서", "순서 1 - 받는 스레드");
-//
-//                            strStatus = input.readLine();
-//                            Log.v("통신 확인(tify)", "Customer 받은 값 : " + strStatus);
-//
-//                            if(strStatus!=null){ // 점주가 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
-//                                mHandler.post(new msgUpdate(strStatus));
-//                            }
-//                        }
-//                    }
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } }}.start();
-
-
-//        if(strStatus != null){ // 점주가 요청에 반응했을 때
-//            Toast.makeText(BeforePayActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
-//        }
-        ///////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
+        if(from.equals("BeforePayActivity2")){// 장바구니에서 결제한 경우
+            connectDeleteData(); // 카트 비우기
+        }
 
         //리사이클러뷰에 있는 아이디를 찾기
         recyclerView = findViewById(R.id.orderList_recycler_view);
@@ -234,11 +149,10 @@ public class OrderListActivity extends AppCompatActivity {
             startActivity(intent1);
         }
 
-
         adapter.setOnItemClickListener(mClickListener);
     }
 
-    OrderListAdapter.OnItemClickListener mClickListener = new OrderListAdapter.OnItemClickListener() {
+    OrderListAdapter.OnItemClickListener mClickListener = new OrderListAdapter.OnItemClickListener() { // 주문 상세 내역으로 이동하는 경우
         @Override
         public void onItemClick(View v, int position) {
             Intent intent = new Intent(OrderListActivity.this, OrderDetailActivity.class);
@@ -296,27 +210,10 @@ public class OrderListActivity extends AppCompatActivity {
         where = "delete";
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_CartNetworkTask networkTask = new LMW_CartNetworkTask(OrderListActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             Object obj = networkTask.execute().get();
             result = (String) obj;
-            ///////////////////////////////////////////////////////////////////////////////////////
 
         }catch (Exception e){
             e.printStackTrace();
@@ -325,7 +222,7 @@ public class OrderListActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() { // 뒤로가기 예외처리
         super.onBackPressed();
 
         Intent intent = new Intent(OrderListActivity.this, JiseokMainActivity.class);
@@ -366,7 +263,7 @@ public class OrderListActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v(TAG, "from : " + from); // from에 따라 다르게 보내주기 (EmptyOrderList에도 똑같이 해주기)
+                Log.v(TAG, "from : " + from); // from에 따라 다르게 보내주기 (EmptyOrderList에도 똑같이 해주기) // 어디서 들어왔는지에 따른 구분
 
                 Intent intent = null;
 
@@ -401,97 +298,31 @@ public class OrderListActivity extends AppCompatActivity {
         return true;
     }
 
-    // 통신 ------------------------------------------
-    class msgUpdate implements Runnable{ // 받아서 작동하는 메소드
-        private String msg;
-        public msgUpdate(String str) {this.msg=str;}
-
-        @Override
-        public void run() {
-            createNotification();
-
-            Log.v("통신 순서", "순서 1 - 받는 스레드");
-
-            Log.v("통신 확인(tify)", "msgUpdate msg : " + msg);
-//            status.setText(status.getText().toString()+msg+"\n");
-
-//            AlertDialog.Builder builder = new AlertDialog.Builder(OrderListActivity.this);
-//            builder.setTitle("주문 결과");
-//            builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
-//            builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
-//            builder.show();
-
-//            Toast.makeText(OrderListActivity.this, "주문이 정상적으로 접수되었습니다.", Toast.LENGTH_SHORT).show();
-
-        }
-    }
-    // -----------------------------------------------
-
-    private void createNotification() {
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
-
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle("주문 접수 알림!");
-        builder.setContentText("요청하신 주문이 정상적으로 접수되었습니다.");
-
-        builder.setColor(Color.RED);
-        // 사용자가 탭을 클릭하면 자동 제거
-        builder.setAutoCancel(true);
-
-        // 알림 표시
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(new NotificationChannel("default", "기본 채널", NotificationManager.IMPORTANCE_DEFAULT));
-        }
-        // id값은
-        // 정의해야하는 각 알림의 고유한 int값
-        notificationManager.notify(1, builder.build());
-    }
-
-
-    private void removeNotification() {
-        // Notification 제거
-        NotificationManagerCompat.from(this).cancel(1);
-    }
-
-    private String connectInsertStoreOrder(){
-
-        urlAddr = "http://" + macIP + ":8080/tify/lmw_cartlist_delete_all.jsp?user_uSeqNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo;
-        where = "insert";
-        String result = null;
-
-        try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-                LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(OrderListActivity.this, urlAddr, where);
-                Object obj = networkTask.execute().get();
-                result = (String)obj;
-
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-
+//    private void createNotification() { // 알림
+//
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
+//
+//        builder.setSmallIcon(R.mipmap.ic_launcher);
+//        builder.setContentTitle("주문 접수 알림!");
+//        builder.setContentText("요청하신 주문이 정상적으로 접수되었습니다.");
+//
+//        builder.setColor(Color.RED);
+//        // 사용자가 탭을 클릭하면 자동 제거
+//        builder.setAutoCancel(true);
+//
+//        // 알림 표시
+//        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            notificationManager.createNotificationChannel(new NotificationChannel("default", "기본 채널", NotificationManager.IMPORTANCE_DEFAULT));
+//        }
+//        // id값은
+//        // 정의해야하는 각 알림의 고유한 int값
+//        notificationManager.notify(1, builder.build());
+//    }
+//
+//
+//    private void removeNotification() {
+//        // Notification 제거
+//        NotificationManagerCompat.from(this).cancel(1);
+//    }
 }

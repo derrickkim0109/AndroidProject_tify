@@ -56,15 +56,8 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
         InputStream inputStream = null;
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // Date : 2020.12.25
-        //
-        // Description:
-        //  - NetworkTask에서 입력,수정,검색 결과값 관리.
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////
+
         String result = null;
-        ///////////////////////////////////////////////////////////////////////////////////////
 
         try {
             URL url = new URL(mAddr);
@@ -81,20 +74,12 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
                     if(strline == null) break;
                     stringBuffer.append(strline + "\n");
                 }
-                ///////////////////////////////////////////////////////////////////////////////////////
-                // Date : 2020.12.25
-                //
-                // Description:
-                //  - 검색으로 들어온 Task는 parserSelect()로
-                //  - 입력, 수정, 삭제로 들어온 Task는 parserAction()으로 구분
-                //
-                ///////////////////////////////////////////////////////////////////////////////////////
+
                 if(where.equals("select")){
                     parserSelect(stringBuffer.toString());
                 }else{
                     result = parserAction(stringBuffer.toString());
                 }
-                ///////////////////////////////////////////////////////////////////////////////////////
 
             }
         }catch (Exception e){
@@ -109,20 +94,12 @@ public class LMW_OrderNetworkTask extends AsyncTask<Integer, String, Object> {
                 e2.printStackTrace();
             }
         }
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // Date : 2020.12.25
-        //
-        // Description:
-        //  - 검색으로 들어온 Task는 members를 return
-        //  - 입력, 수정, 삭제로 들어온 Task는 result를 return
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////
+
         if(where.equals("select")){
             return orderLists;
         }else{
             return result;
         }
-        ///////////////////////////////////////////////////////////////////////////////////////
 
     }
 

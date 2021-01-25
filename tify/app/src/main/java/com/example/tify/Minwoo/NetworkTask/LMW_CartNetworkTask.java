@@ -54,15 +54,8 @@ public class LMW_CartNetworkTask extends AsyncTask<Integer, String, Object> {
         InputStream inputStream = null;
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // Date : 2020.12.25
-        //
-        // Description:
-        //  - NetworkTask에서 입력,수정,검색 결과값 관리.
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////
+
         String result = null;
-        ///////////////////////////////////////////////////////////////////////////////////////
 
         try {
             URL url = new URL(mAddr);
@@ -79,20 +72,13 @@ public class LMW_CartNetworkTask extends AsyncTask<Integer, String, Object> {
                     if(strline == null) break;
                     stringBuffer.append(strline + "\n");
                 }
-                ///////////////////////////////////////////////////////////////////////////////////////
-                // Date : 2020.12.25
-                //
-                // Description:
-                //  - 검색으로 들어온 Task는 parserSelect()로
-                //  - 입력, 수정, 삭제로 들어온 Task는 parserAction()으로 구분
-                //
-                ///////////////////////////////////////////////////////////////////////////////////////
+
                 if(where.equals("select")){
                     parserSelect(stringBuffer.toString());
                 }else{
                     result = parserAction(stringBuffer.toString());
                 }
-                ///////////////////////////////////////////////////////////////////////////////////////
+
 
             }
         }catch (Exception e){
@@ -107,20 +93,12 @@ public class LMW_CartNetworkTask extends AsyncTask<Integer, String, Object> {
                 e2.printStackTrace();
             }
         }
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // Date : 2020.12.25
-        //
-        // Description:
-        //  - 검색으로 들어온 Task는 members를 return
-        //  - 입력, 수정, 삭제로 들어온 Task는 result를 return
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////
+
         if(where.equals("select")){
             return carts;
         }else{
             return result;
         }
-        ///////////////////////////////////////////////////////////////////////////////////////
 
     }
 
@@ -138,13 +116,6 @@ public class LMW_CartNetworkTask extends AsyncTask<Integer, String, Object> {
         super.onCancelled();
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Date : 2020.12.25
-    //
-    // Description:
-    //  - 검색후 json parsing
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
     private void parserSelect(String s){
         Log.v(TAG,"Parser()");
 
@@ -176,15 +147,7 @@ public class LMW_CartNetworkTask extends AsyncTask<Integer, String, Object> {
             e.printStackTrace();
         }
     }
-    ///////////////////////////////////////////////////////////////////////////////////////
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Date : 2020.12.25
-    //
-    // Description:
-    //  - 입력, 수정, 삭제후 json parsing
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
     private String parserAction(String s){
         Log.v(TAG,"Parser()");
         String returnValue = null;
@@ -201,7 +164,5 @@ public class LMW_CartNetworkTask extends AsyncTask<Integer, String, Object> {
         }
         return returnValue;
     }
-    ///////////////////////////////////////////////////////////////////////////////////////
-
 
 } // ------

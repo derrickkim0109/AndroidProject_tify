@@ -129,13 +129,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Log.v(TAG, "onBindViewHolder");
 
-        if (isStartViewCheck) {
+        if (isStartViewCheck) { // 카드뷰 애니메이션
             if (position > 6) isStartViewCheck = false;
         } else {
             if (position > positionCheck) { holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.down));
             } else {
                 holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.up)); }
-        } // 어뎁터 데이터 화면 표시 구간 holder.textview.setText("데이터 표시"); // 현재 위치값을 positionCheck에 저장 - onBindViewHolder 마지막 부분에 구현 positionCheck = position;
+        }
+        // 어뎁터 데이터 화면 표시 구간 holder.textview.setText("데이터 표시"); // 현재 위치값을 positionCheck에 저장 - onBindViewHolder 마지막 부분에 구현 positionCheck = position;
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
@@ -164,7 +165,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 //        Log.v(TAG, String.valueOf(mNumbers2));
 //
 //        for(int i = 0; i < menuNames.size(); i++){
-        
+
 //            for(int j = 0; j < mNumbers2.size(); j++){
 //                if(mNumbers2.get(j) == menuNames.get(i).getmNo()){
 //                    holder.mName.setText(menuNames.get(i).getmName());
@@ -208,7 +209,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         }
 
         holder.mName.setText(mDataset.get(position).getMenu_mName());
-        Log.v(TAG, "개수가 왜 안나와 !? : " + mDataset.get(position).getcLQuantity());
         holder.cLQuantity.setText(mDataset.get(position).getcLQuantity() + "");
         holder.cLPrice.setText(price+ "원");
         holder.request.setText(mDataset.get(position).getcLRequest());
@@ -222,7 +222,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onViewRecycled(@NonNull MyViewHolder holder) {
+    public void onViewRecycled(@NonNull MyViewHolder holder) { // 데이터 꼬임 방지
         super.onViewRecycled(holder);
 
         holder.mName.clearComposingText();
@@ -232,8 +232,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         holder.cLQuantity.clearComposingText();
         holder.cLPrice.clearComposingText();
         holder.cLPhoto.clearColorFilter();
-
-
 
     }
 }

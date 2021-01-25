@@ -113,7 +113,7 @@ public class LMW_StoreNetworkTask extends AsyncTask<Integer, String, Object> {
         super.onCancelled();
     }
 
-    private void parserSelect(String s){
+    private void parserSelect(String s){ // 매장 정보를 불러옴
         Log.v(TAG,"Parser()");
 
         try {

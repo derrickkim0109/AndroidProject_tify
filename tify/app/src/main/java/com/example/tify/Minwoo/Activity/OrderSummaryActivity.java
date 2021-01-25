@@ -33,8 +33,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OrderSummaryActivity extends AppCompatActivity {
 
-    String TAG = "OrderSummaryActivity";
+    // 메뉴 주문 정보 확인 화면
 
+    String TAG = "OrderSummaryActivity";
 
     LinearLayout ll_hide;
     InputMethodManager inputMethodManager ;
@@ -87,8 +88,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_order_summary);
-
-
 
         //키보드 화면 터치시 숨기기위해 선언.
         ll_hide = findViewById(R.id.detail_ll_hide);
@@ -178,7 +177,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
         tv_mSizeUp.setOnClickListener(mClickListener);
         tv_mShot.setOnClickListener(mClickListener);
 
-
     }
 
     View.OnClickListener mClickListener = new View.OnClickListener() { // 버튼들 액션!!!!
@@ -190,8 +188,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             String strTotal = null;
 
             switch (v.getId()){
-                case R.id.orderSummary_Btn_Direct:
-
+                case R.id.orderSummary_Btn_Direct: // 바로결제
 
                      intent = new Intent(OrderSummaryActivity.this, BeforePayActivity.class);
 
@@ -210,10 +207,10 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
                      startActivity(intent);
                      break;
-                case R.id.orderSummary_Btn_Plus:
+                case R.id.orderSummary_Btn_Plus: // 메뉴 수량 추가
                      count++;
 
-                    if(count > 10){
+                    if(count > 10){ // 10개까지만 주문 가능 제한
 
                         count = 10;
                         tv_Quantity.setText("10");
@@ -239,10 +236,10 @@ public class OrderSummaryActivity extends AppCompatActivity {
                     }
 
                      break;
-                case R.id.orderSummary_Btn_Minus:
+                case R.id.orderSummary_Btn_Minus: // 주문 수량 감소
                      count--;
 
-                    if (count < 1) {
+                    if (count < 1) { // 주문 1개 미만 제한
                         count = 1;
                         plusTotal = mPrice * count;
                         tv_Quantity.setText("1");
@@ -267,7 +264,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
                         tv_mSizeUp.setText("+사이즈업");
                     }
                     break;
-                case R.id.orderSummary_Btn_SizeUp:
+                case R.id.orderSummary_Btn_SizeUp: // 사이즈업을 추가하는 경우 (주문수량에 맞춰서 최대 가능 횟수 제한)
                     sizeUpCount++;
                     Log.v(TAG, "sizeUpCount : " + sizeUpCount);
 
@@ -290,18 +287,9 @@ public class OrderSummaryActivity extends AppCompatActivity {
                     }else{
                         sizeUpCount = count;
                     }
-//                    else{
-//                        Log.v(TAG, "sizeUpSwitchNum : " + sizeUpSwitchNum);
-//                        sizeUpSwitchNum = 0;
-//                        plusTotal = plusTotal - 1000;
-//                        tv_mSizeUp.setBackgroundColor(Color.WHITE);
-//
-//                        moneyFormat = NumberFormat.getInstance(Locale.KOREA);
-//                        strTotal = moneyFormat.format(plusTotal);
-//                        tv_TotalPrice.setText(strTotal + "원");
-//                    }
+
                     break;
-                case R.id.orderSummary_Btn_Shot:
+                case R.id.orderSummary_Btn_Shot: // 샷추가 경우 (주문수량에 맞춰 최대 가능 횟수 제한)
                     shotCount++;
                     Log.v(TAG, "shotCount : " + shotCount);
 
@@ -323,26 +311,16 @@ public class OrderSummaryActivity extends AppCompatActivity {
                     }else{
                         shotCount = count;
                     }
-//                    else{
-//                        Log.v(TAG, "shotSwitchNum : " + shotSwitchNum);
-//                        shotSwitchNum = 0;
-//                        plusTotal = plusTotal - 500;
-//                        tv_mShot.setBackgroundColor(Color.WHITE);
-//
-//                        moneyFormat = NumberFormat.getInstance(Locale.KOREA);
-//                        strTotal = moneyFormat.format(plusTotal);
-//                        tv_TotalPrice.setText(strTotal + "원");
-//                    }
+
                     break;
 
-
-                case R.id.orderSummary_Btn_Cart:
+                case R.id.orderSummary_Btn_Cart: // 장바구니에 추가하는 경우
 
                     String request = et_Request.getText().toString();
                     int quantity = Integer.parseInt(tv_Quantity.getText().toString());
 
                     Log.v(TAG, "plusTotal : " + plusTotal);
-                    if(request.length() == 0){
+                    if(request.length() == 0){ // 요청사항이 없을 경우
                         request = "요청없음";
                     }
 
@@ -372,27 +350,11 @@ public class OrderSummaryActivity extends AppCompatActivity {
         String result = null;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_CartNetworkTask networkTask = new LMW_CartNetworkTask(OrderSummaryActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
+            LMW_CartNetworkTask networkTask = new LMW_CartNetworkTask(OrderSummaryActivity.this, urlAddr, where);
+
             Object obj = networkTask.execute().get();
             result = (String) obj;
-            ///////////////////////////////////////////////////////////////////////////////////////
 
         }catch (Exception e){
             e.printStackTrace();
