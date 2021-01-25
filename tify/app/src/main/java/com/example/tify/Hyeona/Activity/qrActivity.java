@@ -9,7 +9,7 @@ import android.os.Bundle;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
 import com.example.tify.Minwoo.Activity.OrderListActivity;
 import com.example.tify.R;
-
+//해당 페이지는 준비중입니다 띄울 예정
 public class qrActivity extends AppCompatActivity {
 
     @Override
@@ -21,6 +21,7 @@ public class qrActivity extends AppCompatActivity {
         actionBar.hide();
         //액션바 삭제
     }
+
 
     @Override
     public void onBackPressed() {

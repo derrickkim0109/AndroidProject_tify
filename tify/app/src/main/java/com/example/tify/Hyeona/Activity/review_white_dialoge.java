@@ -49,8 +49,6 @@ public class review_white_dialoge extends Dialog {
 
     public void callDialog() {
 
-        Log.v("다이얼로그","ㅇ"+uNo);
-        Log.v("다이얼로그","ㅇ"+sSeqNo);
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.cha_review_white_dialoge);
@@ -61,7 +59,7 @@ public class review_white_dialoge extends Dialog {
         final ImageView review_add_image = findViewById(R.id.review_add_image);
         final ImageView review_cancel = findViewById(R.id.review_cancel);
         final EditText review_content = findViewById(R.id.review_content);
-        //ll_hide.setOnClickListener(monClickListener);
+
         ll_hide = findViewById(R.id.detail_ll_hide);
 
         View.OnClickListener monClickListener = new View.OnClickListener() {
@@ -72,16 +70,6 @@ public class review_white_dialoge extends Dialog {
                 review_add_image.setVisibility(View.INVISIBLE);
             }
         };
-
-
-
-//        review_cancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
-
 
         //레이아웃 정보 받아옴
 

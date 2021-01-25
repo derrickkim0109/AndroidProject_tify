@@ -47,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+// 주문내역에서 픽업 완료된 것만 리뷰쓰기가 가능
 public class review_white extends AppCompatActivity {
     LinearLayout ll_hide;
     InputMethodManager inputMethodManager ;
@@ -92,8 +93,6 @@ public class review_white extends AppCompatActivity {
         oNo = intent.getIntExtra("oNo", 0);
 //        sSeqNo = intent.getIntExtra("skSeqNo",0);
         sSeqNo = 1;
-        Log.v("다이얼로그", "ㅇ" + uNo);
-        Log.v("다이얼로그", "ㅇ" + sSeqNo);
 
         review_white_complete = findViewById(R.id.review_white_complete);
         review_add_image = findViewById(R.id.review_add_image);
@@ -172,8 +171,7 @@ public class review_white extends AppCompatActivity {
                 try {
                     //이미지의 URI를 얻어 경로값으로 반환.
                     img_path = getImagePathToUri(data.getData());
-                    Log.v("이미지", "image path :" + img_path);
-                    Log.v("이미지", "Data :" +String.valueOf(data.getData()));
+
 
                     //이미지를 비트맵형식으로 반환
                     Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
@@ -191,7 +189,7 @@ public class review_white extends AppCompatActivity {
 
                     // 임시 파일 경로로 위의 img_path 재정의
                     img_path = devicePath + imageName;
-                    Log.v("이미지","fileName :" + img_path);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -329,23 +327,6 @@ public class review_white extends AppCompatActivity {
         return true;
     }
 
-
-
-//    private void connectGetoNo(){ // 등록된 리뷰의 oNo가져오기
-//        try {
-//            String urlAddress = "http://" + MacIP + ":8080/tify/lmw_review_select_ono.jsp?user_uNo=" + uNo;
-//            CUDNetworkTask_review mCUDNetworkTask_review = new CUDNetworkTask_review(review_white.this, urlAddress,"oNo");
-//            Object obj = mCUDNetworkTask_review.execute().get();
-//            oNo = (Integer) obj;
-//            Log.v("dddd","oNo"+oNo);
-//            Log.v("이미지", urlAddress);
-//
-//
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
 
 
     private String connectoReview() {// 가져온 oNo이용해 oReview Update

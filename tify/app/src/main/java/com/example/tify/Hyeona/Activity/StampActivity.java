@@ -25,8 +25,10 @@ import com.example.tify.Hyeona.Adapter.stampOrder_adapter;
 import com.example.tify.Hyeona.Bean.Bean_reward_stamphistory;
 import com.example.tify.Hyeona.NetworkTask.CUDNetworkTask_stampCount;
 import com.example.tify.Jiseok.Activity.JiseokMainActivity;
+import com.example.tify.Minwoo.Activity.OrderListActivity;
 import com.example.tify.R;
 import com.example.tify.ShareVar;
+import com.example.tify.Taehyun.Activity.MypageActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -53,6 +55,7 @@ public class StampActivity extends AppCompatActivity {
     String urlAddr4 = "http://" + MacIP + ":8080/tify/stamphistory.jsp?";
     int stamp_count;
 
+    //총 10개의 스탬프를 배열로 넣을 예정
     ImageView[] img = new ImageView[10];
 
 
@@ -79,6 +82,7 @@ public class StampActivity extends AppCompatActivity {
         user_name = findViewById(R.id.user_name);
         user_name.setText(user_uName+"님의");
 
+        // 스탬프 각각을 배열에 넣음
         img[0]=findViewById(R.id.stamp01);
         img[1]=findViewById(R.id.stamp02);
         img[2]=findViewById(R.id.stamp03);
@@ -104,18 +108,34 @@ public class StampActivity extends AppCompatActivity {
                         return true;
                     }
                     case R.id.action2: {
+                        //주문내역
+                        Intent intent = new Intent(StampActivity.this, OrderListActivity.class);
+                        intent.putExtra("from", "JiseokMainActivity"); // value에 어디서 보내는지를 적어주세요
+                        startActivity(intent);
+                        finish();
 
                         return true;
                     }
                     case R.id.action3: {
-
+                        Intent intent = new Intent(StampActivity.this, qrActivity.class);
+                        startActivity(intent);
+                        finish();
+                        //준비중 페이지 뜸 여기는 즐겨찾기 부분
                         return true;
                     }
+
                     case R.id.action4: {
+                        Intent intent = new Intent(StampActivity.this, qrActivity.class);
+                        startActivity(intent);
+                        finish();
+                        //준비중 페이지 뜸
 
                         return true;
                     }
                     case R.id.action5: {
+                        //마이페이지
+                        Intent intent = new Intent(StampActivity.this, MypageActivity.class);
+                        startActivity(intent);
 
                         return true;
                     }

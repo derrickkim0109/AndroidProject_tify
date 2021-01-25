@@ -51,9 +51,6 @@ public class ThirdFragment extends Fragment {
         TextView tv03_01 = view.findViewById(R.id.tv_03_01);
         tv03_01.setText("주변의 이웃과 함께 이겨낼 수 있도록\n 티피를 시작해볼까요?");
 
-        //ImageView iv_03 = view.findViewById(R.id.iv_03);
-       // iv_03.setImageResource(R.drawable.intro_03);
-
 
         return view;
     }
