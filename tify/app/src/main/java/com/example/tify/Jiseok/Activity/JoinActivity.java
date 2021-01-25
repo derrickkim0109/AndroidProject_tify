@@ -209,6 +209,7 @@ public class JoinActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                // 인증 버
                 case R.id.join_btn_authentication:
 
                     getTextCheck = etTel.getText().toString();
@@ -238,7 +239,7 @@ public class JoinActivity extends AppCompatActivity {
                                 .show();
                         break;
                     }
-
+                    // 메신저 보내기 권한 체크
                     if(ContextCompat.checkSelfPermission(JoinActivity.this,Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
                         if(ActivityCompat.shouldShowRequestPermissionRationale(JoinActivity.this,Manifest.permission.SEND_SMS)){
 
@@ -263,7 +264,7 @@ public class JoinActivity extends AppCompatActivity {
                     }
 
 
-                    //권한이 부여되어 있는지 확인
+                    //sms 받는 권한 체
                     int permissonCheck= ContextCompat.checkSelfPermission(JoinActivity.this, Manifest.permission.RECEIVE_SMS);
                     if(permissonCheck == PackageManager.PERMISSION_GRANTED){
                         if(timerCount != 0) countDownTimer.cancel();
@@ -394,7 +395,10 @@ public class JoinActivity extends AppCompatActivity {
 //                        etNickName.requestFocus();
 //                        break;
 //                    }
-                    //-------------------------- 정규식 종료 --------------------------
+                    //-------------------------- 정규식 종료 --------------------------크
+
+
+                    // 이메일 중복체크
                     if(userEmailCheck()==1){
                         new AlertDialog.Builder(JoinActivity.this)
                                 .setTitle("이미가입된 이메일 입니다.")

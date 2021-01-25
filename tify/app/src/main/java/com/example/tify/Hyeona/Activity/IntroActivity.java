@@ -10,7 +10,7 @@ import com.example.tify.R;
 public class IntroActivity extends Activity {
 
     /** Duration of wait **/
-
+    // 스플래시 시간 설정 (1.5초)
     private final int SPLASH_DISPLAY_LENGTH = 1500;
 
 
@@ -26,6 +26,8 @@ public class IntroActivity extends Activity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
+
+                //스플래시 이후 진행되는 슬라이드 뷰 페이저
                 Intent mainIntent = new Intent(IntroActivity.this, ViewPagerActivity.class);
                 IntroActivity.this.startActivity(mainIntent);
                 IntroActivity.this.finish();

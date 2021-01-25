@@ -32,16 +32,20 @@ import com.example.tify.ShareVar;
 import java.util.ArrayList;
 
 
+// 해당 액티비티는 메인에서 검색아이콘을 눌럿을 경우 나오는 검색 창
 public class main_search extends AppCompatActivity {
     private ImageView main_img_SearchBtn;
     private EditText main_SearchText;
     LinearLayout ll_hide;
     InputMethodManager inputMethodManager ;
     int userSeq;
+    // 검색 값은 리사이클러뷰로 받아옴 array에 저장시킴
     private ArrayList<Bean_main_search> searchs = null;
     String userNickName;
+    // 검색 시에 해당 유저의 위치값을 받아와서 m를 출력해야 하기 때문에 해당 값을 받아옴
     String myLocation;
 
+    //아이피주소는 쉐어바에 저장된 값을 받아옴
     ShareVar shareVar =new ShareVar();
     String MacIP = shareVar.getMacIP();
     String search_text;
@@ -56,6 +60,9 @@ public class main_search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cha_main_search);
 
+
+
+        /////////////////////////////////////////////////////////////
         //키보드 화면 터치시 숨기기위해 선언.
         ll_hide = findViewById(R.id.detail_ll_hide);
         inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);  //OS에서 지원해주는 메소드이다.
@@ -66,6 +73,12 @@ public class main_search extends AppCompatActivity {
                 inputMethodManager.hideSoftInputFromWindow(ll_hide.getWindowToken(),0);
             }
         });
+
+        /////////////////////////////////////////////////////////////
+
+
+
+        // 앞서 디바이스에서 저장된 아이디값을 받아옴. 내 위치값도 마찬가지
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
 
@@ -76,16 +89,22 @@ public class main_search extends AppCompatActivity {
         main_SearchText = findViewById(R.id.main_SearchText);
         main_img_SearchBtn = findViewById(R.id.main_img_SearchBtn);
 
+        /////////////////////////////////////////////////////////////
+
+
+        // 검색 버튼을 눌렀을 경우
         main_img_SearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(main_SearchText.getText().length()==0){
+                    // 검색값이 입력되지 않았을 경우
                     new AlertDialog.Builder(main_search.this)
                             .setTitle("검색어를 입력하세요")
                             .setPositiveButton("확인",null)
                             .show();
                     main_SearchText.requestFocus();
                 }else{
+                    // 검색값이 입력되면 해당 검색으로 네트워크 타스크 실행
                     search_text = String.valueOf(main_SearchText.getText());
                     connectGetData(search_text);
                 }

@@ -333,17 +333,12 @@ public class JiseokMainActivity extends AppCompatActivity {
                 }else {
                     urlAddr = "http://" + MacIP + ":8080/tify/mainCafeLocationList.jsp";
                 }
-                Log.v("여기여기여기", "urlAddr : " + urlAddr);
+
                 CJS_NetworkTask_CafeList cjs_networkTask_cafeList = new CJS_NetworkTask_CafeList(JiseokMainActivity.this,urlAddr,"selectCafeList");
                 Object obj = cjs_networkTask_cafeList.execute().get();
 
                 arrayList = (ArrayList<Bean_MainCafeList_cjs>) obj;
 
-                Log.v("여기여기여기", "arrayList : " + arrayList.size());
-                Log.v("여기여기여기", "arrayList : " + arrayList);
-
-                Log.v("리사이클",""+arrayList.get(1).getsAddress());
-                Log.v("리사이클",""+arrayList.size());
 
                 //리사이클러뷰 규격 만들기
                 recyclerView.setHasFixedSize(true);
@@ -364,7 +359,7 @@ public class JiseokMainActivity extends AppCompatActivity {
                 Location1= new LatLng(latitude,longitude);
 
 
-                // 1000미터 안에있는 매장의 수 구하기
+                // 1000미터 안에있는 매장의 수 구해서 Adapter 에 값 전
                 int arrayCount = 0;
                 if(myLocation.equals("noLocation")) {
                     arrayCount=arrayList.size();
@@ -381,9 +376,6 @@ public class JiseokMainActivity extends AppCompatActivity {
                     }
                 }
 
-                Log.v("여기여기여기", "arrayList : " + arrayList);
-                Log.v("여기여기여기", "myLocation : " + myLocation);
-                Log.v("여기여기여기", "arrayCount : " + arrayCount);
                 String cc = "ok";
 
 
@@ -396,60 +388,7 @@ public class JiseokMainActivity extends AppCompatActivity {
             }
         }
 
-    private void selectCafeListTop10(){
-        String urlAddr="";
-
-        try {
-
-                urlAddr = "http://" + MacIP + ":8080/tify/cjs_mainCafeListTOP10.jsp";
-                Log.v("노위치",urlAddr);
-
-            Log.v("여기여기여기", "urlAddr : " + urlAddr);
-            CJS_NetworkTask_CafeList cjs_networkTask_cafeList = new CJS_NetworkTask_CafeList(JiseokMainActivity.this,urlAddr,"selectCafeList");
-            Object obj = cjs_networkTask_cafeList.execute().get();
-
-            arrayList = (ArrayList<Bean_MainCafeList_cjs>) obj;
-
-            Log.v("여기여기여기", "arrayList : " + arrayList.size());
-            Log.v("여기여기여기", "arrayList : " + arrayList);
-
-            Log.v("리사이클",""+arrayList.get(1).getsAddress());
-            Log.v("리사이클",""+arrayList.size());
-
-            //리사이클러뷰 규격 만들기
-            recyclerView.setHasFixedSize(true);
-
-
-            //레이아웃 매니저 만들기
-            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
-            recyclerView.setLayoutManager(staggeredGridLayoutManager);
-
-//            LatLng Location1,Location2;
-//            double latitude;
-//            double longitude;
-//            double latitude2;
-//            double longitude2;
-//
-//            latitude=findGeoPoint(JiseokMainActivity.this,myLocation).getLatitude();
-//            longitude=findGeoPoint(JiseokMainActivity.this,myLocation).getLongitude();
-//            Location1= new LatLng(latitude,longitude);
-
-
-
-            Log.v("여기여기여기", "arrayList : " + arrayList);
-            Log.v("여기여기여기", "myLocation : " + myLocation);
-            String cc = "ok";
-
-            mainCafeListAdapter = new MainCafeListAdapter(JiseokMainActivity.this,R.layout.cha_maincafe_content,arrayList,myLocation);
-            recyclerView.setAdapter(mainCafeListAdapter);
-
-        } catch (Exception e) {
-
-        }
-    }
-
-
-
+        
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

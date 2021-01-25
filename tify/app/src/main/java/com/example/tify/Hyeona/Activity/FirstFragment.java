@@ -13,7 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tify.R;
 
-
+//인트로 스플래시 끝나고 진행되는 슬라이드 첫번째 프레그먼트
+// 해당 프레그먼트의 뷰페이저는 ViewPagerActivity
 public class FirstFragment extends Fragment {
 
     private String title;
@@ -43,7 +44,7 @@ public class FirstFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 
-
+        //레이아웃에 텍스트 세팅
         View view = null;
         view = inflater.inflate(R.layout.cha_fragment_first,container,false);
         TextView tv01 = view.findViewById(R.id.tv_01);

@@ -19,6 +19,9 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/972e53f3581d2b4010d52925d109265d/jetified-auth-1.15.1/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/972e53f3581d2b4010d52925d109265d/jetified-auth-1.15.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/972e53f3581d2b4010d52925d109265d/jetified-auth-1.15.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b4de6a3eb89d34647c5d122f87820e92/jetified-auth-1.15.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b4de6a3eb89d34647c5d122f87820e92/jetified-auth-1.15.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b4de6a3eb89d34647c5d122f87820e92/jetified-auth-1.15.1/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
