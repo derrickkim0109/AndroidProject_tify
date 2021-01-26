@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 
 
-
+// 결제완료 후 뜨는 창
 public class Payment_resultActivity extends AppCompatActivity {
 
     ShareVar shareVar =new ShareVar();
@@ -58,20 +58,16 @@ public class Payment_resultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cha_payment_result);
 
+        // 앞서 저장된 유저정보 받아옴
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         user_uNo = auto.getInt("userSeq",0);
-
+        // 앞에서 결제정보 관련 정보를 받아옴
         Intent intent = getIntent();
         oNo = intent.getIntExtra("oNo",0);
         point = intent.getIntExtra("point", 0);
         totalPrice = intent.getIntExtra("total", 0);
         from = intent.getStringExtra("from");
         store_SeqNo = intent.getIntExtra("store_sSeqNo", 0);
-
-        Log.v("TAG", "oNo : " + oNo);
-        Log.v("TAG", "point : " + point);
-        Log.v("TAG", "store_SeqNo : " + store_SeqNo);
-        // 인텐트로 포인트 값 꼭 받아야함
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -86,14 +82,12 @@ public class Payment_resultActivity extends AppCompatActivity {
         payment_result_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 디비 서버에 저장시키기 위한 정보들. 버튼을 누르면
                 Intent intent = new Intent(Payment_resultActivity.this, OrderListActivity.class)
                         .putExtra("oNo",oNo)
                         .putExtra("from", from)
                         .putExtra("store_sSeqNo", store_SeqNo);
 
-                Log.v("TAG", "oNo : " + oNo);
-                Log.v("TAG", "from : " + from);
-                Log.v("TAG", "store_SeqNo : " + store_SeqNo);
                 startActivity(intent);
                 finish();
             }

@@ -23,6 +23,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+//마이페이지에서 결제내역을 클릭할 경우 나오는 페이지
+// 결제 히스토리를 받아 출력한다
 public class MypageActivity_paymentlist extends AppCompatActivity {
 
     private paymentHistory_adapter adapter;
@@ -31,8 +33,8 @@ public class MypageActivity_paymentlist extends AppCompatActivity {
     private ArrayList<Bean_payment_paylist> payment_paylists = null;
 
 
-    private int user_uNo = 1;
-    private String user_uName = "지돌지돌";
+    private int user_uNo;
+    private String user_uName;
 
     ShareVar shareVar =new ShareVar();
     String MacIP = shareVar.getMacIP();
@@ -50,7 +52,7 @@ public class MypageActivity_paymentlist extends AppCompatActivity {
         recyclerView = findViewById(R.id.payment_history);
        //리사이클러뷰 찾기
 
-
+        // 앞서 저장된 유저 정보를 받아와서 결제정보를 출력하는데 사용
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         user_uNo = auto.getInt("userSeq",0);
         user_uName= auto.getString("userNickName",null);

@@ -120,7 +120,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         holder.mPrice.setText(price + "원");
         Glide.with(fragment).load("http://" + macIP + ":8080/tify/"+ mDataset.get(position).getmImage()).into(holder.mPhoto);
 
-
     }
 
 
@@ -131,7 +130,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onViewRecycled(@NonNull MyViewHolder holder) {
+    public void onViewRecycled(@NonNull MyViewHolder holder) { // 데이터 꼬임 방지
         super.onViewRecycled(holder);
         holder.mName.clearComposingText();
         holder.mPrice.clearComposingText();

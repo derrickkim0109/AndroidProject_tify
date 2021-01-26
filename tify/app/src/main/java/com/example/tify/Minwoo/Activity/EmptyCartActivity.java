@@ -24,6 +24,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class EmptyCartActivity extends AppCompatActivity {
 
+    // 장바구니가 비어있을 때 뜨는 화면
+
     Button orderNow;
 
     // cartlist RUD

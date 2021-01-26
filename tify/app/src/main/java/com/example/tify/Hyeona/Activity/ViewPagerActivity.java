@@ -53,21 +53,6 @@ public class ViewPagerActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-//        ll_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String skip = "skip";
-//                SharedPreferences introskip = getSharedPreferences("introskip", Activity.MODE_PRIVATE);
-//                SharedPreferences.Editor skipok = introskip.edit();
-//                skipok.putString("skip", skip);
-//                skipok.commit();
-//                Intent intent = new Intent(ViewPagerActivity.this,LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
-
-
         start_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

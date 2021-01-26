@@ -64,22 +64,6 @@ public class reviewActivity extends Fragment {
         return v;
     }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.cha_reviewlist);
-//
-//        recyclerView = findViewById(R.id.reviewList);
-//        //recyclerView.setHasFixedSize(true);
-//        //레이아웃 매니저 만들기
-//        layoutManager = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(layoutManager);
-//        //reviews = new ArrayList<Bean_review>();
-//
-//        Intent intent = getIntent();
-//        storekeeper_skSeqNo = intent.getIntExtra("sSeqNo",0);
-//    }
-
     @Override
     public void onResume() {
         super.onResume();

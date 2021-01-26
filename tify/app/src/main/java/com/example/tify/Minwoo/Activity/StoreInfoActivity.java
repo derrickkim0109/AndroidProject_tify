@@ -32,6 +32,8 @@ import com.google.android.material.tabs.TabLayout;
 
 public class StoreInfoActivity extends AppCompatActivity {
 
+    // 매장 정보, 메뉴, 리뷰 화면
+
     String TAG = "MainActivity";
 
     Fragment menuFragment, infoFragment, reviewFragment;
@@ -66,12 +68,12 @@ public class StoreInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lmw_activity_storeinfo);
 
-        // 기본 설정 값 (지석씨에게 받는다)
+        // 기본 설정 값
         Intent intent = getIntent();
         ShareVar shareVar = new ShareVar();
         macIP = shareVar.getMacIP();
 
-        if(intent.getStringExtra("from") == null){
+        if(intent.getStringExtra("from") == null){ // 매장 검색화면에서 온 경우
             store_sSeqNo = Integer.parseInt(intent.getStringExtra("skSeqNo"));
             sImage = intent.getStringExtra("sImage");
             sAddress = intent.getStringExtra("sAddress");
@@ -81,7 +83,7 @@ public class StoreInfoActivity extends AppCompatActivity {
             sPackaging = Integer.parseInt(intent.getStringExtra("sPackaging"));
             sComment = intent.getStringExtra("sComment");
             skStatus = Integer.parseInt(intent.getStringExtra("skStatus"));
-        }else{
+        }else{ // 그 외의 경우
             SharedPreferences sharedPreferences = getSharedPreferences("storeInfo", MODE_PRIVATE);
             store_sSeqNo = sharedPreferences.getInt("skSeqNo", 0);
             sImage = sharedPreferences.getString("sImage", null);
@@ -98,8 +100,8 @@ public class StoreInfoActivity extends AppCompatActivity {
 
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         SharedPreferences.Editor autoLogin = auto.edit();
-        user_uSeqNo = auto.getInt("userSeq",0); // 지석씨랑 화면 연결되면 쓰기
-        userNickName = auto.getString("userNickName",null); // 지석씨랑 화면 연결되면 쓰기
+        user_uSeqNo = auto.getInt("userSeq",0);
+        userNickName = auto.getString("userNickName",null);
 
         SharedPreferences sharedPreferences = getSharedPreferences("storeInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -124,20 +126,13 @@ public class StoreInfoActivity extends AppCompatActivity {
         sendImageRequest(sImage);
         Log.v(TAG, "sImage : " + sImage);
 
-        //지석씨에게 인텐트로 받는다.
-//        iv_sPhoto.setImageResource();
-//        tv_sName.setText();
-//        tv_sAddress.setText();
-
-        //-----------------------------
-
         TabLayout tabs = findViewById(R.id.tabs);
 
         menuFragment = new MenuFragment();
         infoFragment = new InfoFragment();
         reviewFragment = new ReviewFragment();
 
-        // MenuFragment로 넘긴다. (지석씨에게 값 받으면 다시 설정해주자)
+        // MenuFragment로 넘긴다.
         Bundle bundle = new Bundle();
         bundle.putString("macIP", macIP);
         bundle.putString("sName", sName);
@@ -167,7 +162,7 @@ public class StoreInfoActivity extends AppCompatActivity {
         tabs.addTab(tabs.newTab().setText("정보"));
         tabs.addTab(tabs.newTab().setText("리뷰"));
 
-        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() { // 탭 레이아웃 설정
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
@@ -195,49 +190,6 @@ public class StoreInfoActivity extends AppCompatActivity {
             }
         });
 
-
-
-//        // 툴바 생성
-//        Toolbar toolbar = (Toolbar)findViewById(R.id.storeinfo_toolbar); // 상단 툴바
-//        toolbar.setTitle("");
-//        setSupportActionBar(toolbar);
-//
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
-//
-//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                Intent intent = null;
-//                switch (item.getItemId()){
-//                    case R.id.toolbar_cart: // 이동할 때 해당 아이디 seqno 넘기기?
-
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
-//    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) { // 툴바 장바구니
-//
-//        MenuInflater menuInflater = getMenuInflater();
-//        menuInflater.inflate(R.menu.menu_toolbar, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
-//                Log.v(TAG, "test");
-////                finish();
-//                return true;
-//            }
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
     }
 
     @Override

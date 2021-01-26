@@ -112,7 +112,7 @@ public class LMW_MenuNetworkTask extends AsyncTask<Integer, String, Object> {
         super.onCancelled();
     }
 
-    private void parserSelect(String s){
+    private void parserSelect(String s){ // DB에 등록된 메뉴 리스트를 가져온다.
         Log.v(TAG,"Parser()");
 
         try {

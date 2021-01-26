@@ -124,26 +124,26 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
         holder.sName.setText(mDataset.get(position).getStore_sName());
         holder.mName.setText(mDataset.get(position).getMenu_mName());
 
-        if(mDataset.get(position).getOlAddShot() != 0){
+        if(mDataset.get(position).getOlAddShot() != 0){ // 샷추가 여부
             holder.addOrder1.setVisibility(View.VISIBLE);
-            holder.addOrder1.setText("+사이즈업 X " + mDataset.get(position).getOlAddShot());
+            holder.addOrder1.setText("+샷추가 X " + mDataset.get(position).getOlAddShot());
         }
-        if(mDataset.get(position).getOlSizeUp() != 0){
+        if(mDataset.get(position).getOlSizeUp() != 0){ // 사이즈업 여부
             holder.addOrder2.setVisibility(View.VISIBLE);
-            holder.addOrder2.setText("+샷추가 X " + mDataset.get(position).getOlSizeUp());
+            holder.addOrder2.setText("+사이즈업 X " + mDataset.get(position).getOlSizeUp());
         }
-        if(mDataset.get(position).getOlRequest() != null){
+        if(mDataset.get(position).getOlRequest() != null){ // 요청사항 여부
             holder.request.setVisibility(View.VISIBLE);
             holder.request.setText(mDataset.get(position).getOlRequest());
         }
 
-        if(mDataset.get(position).getoStatus() == 3){
+        if(mDataset.get(position).getoStatus() == 3){ // 픽업 완료된 주문
             holder.oStatus.setVisibility(View.VISIBLE);
             holder.oStatus.setText("픽업완료된 주문");
             holder.oStatus.setTextColor(Color.parseColor("#009688"));
         }
 
-        if(mDataset.get(position).getoStatus() == 4 || (mDataset.get(position).getoStatus() == 5)){
+        if(mDataset.get(position).getoStatus() == 4 || (mDataset.get(position).getoStatus() == 5)){ // 주문 취소된 경우 (매장 요청 or 고객 요청)
             holder.oStatus.setVisibility(View.VISIBLE);
             holder.oStatus.setTextColor(Color.parseColor("#870146"));
             if(mDataset.get(position).getoStatus() == 4){
@@ -154,6 +154,7 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
             }
         }
 
+        // 세자리 콤마
         NumberFormat moneyFormat = null;
         moneyFormat = NumberFormat.getInstance(Locale.KOREA);
         String strTotal = moneyFormat.format(mDataset.get(position).getOlPrice());
@@ -168,7 +169,7 @@ public class CompleteAdapter extends RecyclerView.Adapter<CompleteAdapter.MyView
     }
 
     @Override
-    public void onViewRecycled(@NonNull MyViewHolder holder) {
+    public void onViewRecycled(@NonNull MyViewHolder holder) { // 데이터 꼬임 방지
         super.onViewRecycled(holder);
 
             holder.oSeqno.setText("");

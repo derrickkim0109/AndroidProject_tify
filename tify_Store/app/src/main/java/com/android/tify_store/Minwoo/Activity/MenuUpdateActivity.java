@@ -47,6 +47,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MenuUpdateActivity extends AppCompatActivity {
 
+    // 메뉴 업데이트 화면
+
     String TAG = "MenuUpdateActivity";
 
     ArrayList<com.android.tify_store.Minwoo.Bean.Menu> menus;
@@ -219,27 +221,11 @@ public class MenuUpdateActivity extends AppCompatActivity {
         String result = null;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            LMW_MenuNetworkTask networkTask = new LMW_MenuNetworkTask(MenuUpdateActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
+            LMW_MenuNetworkTask networkTask = new LMW_MenuNetworkTask(MenuUpdateActivity.this, urlAddr, where);
+
             Object obj = networkTask.execute().get();
             result = (String) obj;
-            ///////////////////////////////////////////////////////////////////////////////////////
 
         }catch (Exception e){
             e.printStackTrace();
@@ -254,15 +240,8 @@ public class MenuUpdateActivity extends AppCompatActivity {
         urlAddr = "http://" + macIP + ":8080/tify/lmw_menulist_one.jsp?mNo=" + mNo;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
+
             LMW_MenuNetworkTask networkTask = new LMW_MenuNetworkTask(MenuUpdateActivity.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();
             menus = (ArrayList<com.android.tify_store.Minwoo.Bean.Menu>) obj;
@@ -301,15 +280,15 @@ public class MenuUpdateActivity extends AppCompatActivity {
                         imgName = "null_image.jpg";
                     }
 
-                    if(mName.length() == 0 || mPrice.length() == 0 || mComment.length() == 0){
+                    if(mName.length() == 0 || mPrice.length() == 0 || mComment.length() == 0){ // 모든 정보를 입력하지 않았을 경우
                         Toast.makeText(MenuUpdateActivity.this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    }else{
+                    }else{ // 모든 정보 입력했을 경우
                         where = "update";
                         urlAddr = "http://" + macIP + ":8080/tify/lmw_menu_update.jsp?mNo=" + mNo + "&mName=" + mName + "&mPrice=" + mPrice + "&mSizeUp=" + sizeUpRGCheck + "&mShut=" + addShotRGCheck + "&mImage=" + imgName + "&mType=" + typeRGCheck + "&mComment=" + mComment;
 
                         CResult = connectMenuUpdate();
 
-                        if(CResult.equals("1")){
+                        if(CResult.equals("1")){ // 수정 성공
                             Toast.makeText(MenuUpdateActivity.this, "메뉴 수정 성공!", Toast.LENGTH_SHORT).show();
 
                             intent = new Intent(MenuUpdateActivity.this, MenuListActivity.class);
@@ -318,7 +297,7 @@ public class MenuUpdateActivity extends AppCompatActivity {
                             startActivity(intent);
 
                             finish();
-                        }else{
+                        }else{ // 수정 실패 예외처리
                             Toast.makeText(MenuUpdateActivity.this, "메뉴 수정 실패! \n관리자에게 연락바랍니다.", Toast.LENGTH_SHORT).show();
 
                         }
@@ -333,9 +312,6 @@ public class MenuUpdateActivity extends AppCompatActivity {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             Log.v(TAG, "버튼 클릭 : " + checkedId);
-
-            RadioButton radio_btn = (RadioButton) findViewById(checkedId);
-//            Toast.makeText(MenuInsertActivity.this, radio_btn.getText().toString(), Toast.LENGTH_SHORT).show();
 
             switch (checkedId) {
                 case R.id.activity_MenuUpdate_RB_Drink:

@@ -26,6 +26,8 @@ import java.util.ArrayList;
 
 public class InfoFragment extends Fragment {
 
+    // 매장정보를 보여주는 화면
+
     // layout
     TextView tv_sTime;
     TextView tv_sAddress;
@@ -37,8 +39,6 @@ public class InfoFragment extends Fragment {
     String sAddress;
     String sComment;
     String sTel;
-
-
 
     @Nullable
     @Override

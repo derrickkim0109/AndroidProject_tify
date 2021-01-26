@@ -32,17 +32,6 @@ import java.net.Socket;
 
 public class DialogFragment_OrderRequest_Ok extends DialogFragment implements View.OnClickListener {
 
-    // 통신
-    private Handler mHandler;
-    InetAddress serverAddr;
-    Socket socket;
-    PrintWriter sendWriter;
-    private String ip = "211.195.53.163";
-    private int port = 8888;
-    String strStatus = null;
-    String sendStatus = null;
-
-
     // 주문 요청을 접수했을 때 뜨는 다이얼로그!
 
     String TAG = "DialogFragment_OrderRequest";
@@ -64,19 +53,6 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
     String where = null;
     int skSeqNo;
     int oNo;
-
-    // 통신 ---------------------- 소켓 끊기
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        try {
-//            sendWriter.close();
-//            socket.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-    // ----------------------------------
 
     public static DialogFragment_OrderRequest_Cancel newInstance(String mainMsg) {
 
@@ -119,35 +95,6 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.lmw_dialog_ok, container, false);
-
-        // 통신 --------------------------
-        //////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////
-        mHandler = new Handler();
-
-        new Thread() {
-            public void run() { // 받는 스레드
-                try {
-                    InetAddress serverAddr = InetAddress.getByName(ip);
-                    socket = new Socket(serverAddr, port);
-                    sendWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"euc-kr")),true);
-                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(),"euc-kr"));
-                    while(true){
-                        strStatus = input.readLine();
-                        Log.v("통신 순서", "다이얼로그 순서 1 - 받는 스레드");
-                        Log.v("통신 확인(tify_store) - 접수", "Store 받은 값 : " + strStatus);
-
-                        if(strStatus!=null){ // 고객이 변화를 줄 때 반응하는 부분 (여길 바꿔보자)
-                            mHandler.post(new showOrder(strStatus));
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } }}.start();
-
-        //////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////
-
 
         et_inputTime = view.findViewById(R.id.dialog_ok_inputTime);
         btn_5 = view.findViewById(R.id.dialog_ok_5);
@@ -195,27 +142,9 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
                         break;
                     case R.id.dialog_ok_SendBtn: // 전송 버튼 눌렀을 때!
 
-                        // 통신 -------------------------------------------
                         String why = et_inputTime.getText().toString(); // 예상 제조시간! 고객에게 알림으로 전달하기!
 
-                        if(et_inputTime.getText().toString().length() > 0){
-                            sendStatus = "주문이 접수되었습니다. \n예상제조시간은 " + why + "입니다.";
-                            Log.v("통신 확인(tify_store) - 접수", "Store 주는 값 : " + sendStatus);
-                            new Thread() { // 주는 스레드
-                                @Override
-                                public void run() {
-                                    super.run();
-                                    try {
-                                        Log.v("통신 순서", "순서 2 - 보내는 스레드");
-                                        sendWriter.println(sendStatus);
-                                        sendWriter.flush();
-//                            message.setText("");
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }.start();
-                            // ------------------------------------------
+                        if(et_inputTime.getText().toString().length() > 0){ // 예상 제조시간 입력했을 경우
 
                             where = "update";
                             urlAddr = "http://" + macIP + ":8080/tify/lmw_order_update_ostatus1.jsp?oNo=" + oNo + "&oStatus=" + 1;
@@ -235,7 +164,7 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
 
                             startActivity(intent);
                             dismiss();
-                        }else{
+                        }else{ // 입력하지 않았을 경우 예외처리
                             Toast.makeText(getActivity(), "예상제조시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
 
                         }
@@ -254,53 +183,16 @@ public class DialogFragment_OrderRequest_Ok extends DialogFragment implements Vi
         String result = null;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_OrderListNetworkTask networkTask = new LMW_OrderListNetworkTask(getActivity(), urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             Object obj = networkTask.execute().get();
             result = (String) obj;
-            ///////////////////////////////////////////////////////////////////////////////////////
             Log.v(TAG, "DB Action Result : " + result);
         }catch (Exception e){
             e.printStackTrace();
         }
         return result;
     }
-    // 통신 ----------------------------------------------
-    class showOrder implements Runnable{ // 받아서 작동하는 메소드
-        private String msg;
-        public showOrder(String str) {this.msg=str;}
 
-        @Override
-        public void run() {
-
-            if(sendStatus.equals(msg)){
-                Log.v("통신 확인(tify_store) - OK", "sendStatus = strStatus");
-            }else{
-                Log.v("통신 순서", "순서 3 - showOrder");
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("11111");
-                builder.setMessage(msg + " \n test"); // 문장이 길 때는 String에 넣어서 사용하면 된다.
-                builder.setIcon(R.mipmap.ic_launcher); // 아이콘은 mipmap에 넣고 사용한다.
-                builder.show();
-            }
-        }
-    }
-    // -----------------------------------------------------
 
 }

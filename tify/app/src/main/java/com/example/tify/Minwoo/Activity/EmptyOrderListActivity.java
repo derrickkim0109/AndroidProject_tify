@@ -23,6 +23,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class EmptyOrderListActivity extends AppCompatActivity {
 
+    // 주문내역이 없을 때 뜨는 화면
+
     Button orderNow;
 
     BottomNavigationView bottomNavigationView; // 바텀네비게이션 뷰

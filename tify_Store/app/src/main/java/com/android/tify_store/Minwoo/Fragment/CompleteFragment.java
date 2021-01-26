@@ -61,7 +61,7 @@ public class CompleteFragment extends Fragment {
         list = new ArrayList<OrderRequest>();
         list = connectGetData(); // db를 통해 받은 데이터를 담는다.
 
-        if(list.size() == 0){
+        if(list.size() == 0){ // 완료된 주문이 없는 경우
             Toast.makeText(getActivity(), "아직 완료된 주문이 없습니다.", Toast.LENGTH_SHORT).show();
         }
 
@@ -75,7 +75,7 @@ public class CompleteFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.complete_swiper);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.complete_swiper); // 당겨서 리프레쉬 하기 위한 Layout
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

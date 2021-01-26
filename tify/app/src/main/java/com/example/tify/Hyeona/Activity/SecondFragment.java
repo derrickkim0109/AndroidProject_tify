@@ -48,8 +48,6 @@ public class SecondFragment extends Fragment {
         TextView tv02_01 = view.findViewById(R.id.tv_02_01);
         tv02_01.setText("티피에서는 당신의 주변에 있는\n이웃 개인카페만 만나보실 수 있습니다.\n*프렌차이즈는 입점할 수 없습니다.");
 
-       // ImageView iv_02 = view.findViewById(R.id.iv_02);
-       //iv_02.setImageResource(R.drawable.intro_02);
 
         return view;
     }

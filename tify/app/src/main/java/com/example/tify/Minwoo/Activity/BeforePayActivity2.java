@@ -65,30 +65,17 @@ public class BeforePayActivity2 extends AppCompatActivity {
     Button btn_point;
     EditText et_point;
 
-    // order Insert (카드이름이랑 카드번호 받기)
+    // order Insert
     String macIP;
     String urlAddr = null;
     String where = null;
     int user_uSeqNo = 0;
     int store_sSeqNo = 0;
-    String oCardName;
-    int oCardNo;
     String sName;
-
-    // orderlist Insert
-    String menu_mName;
-    int olSizeUp;
-    int olAddShot;
-    String olRequest;
-    int olPrice;
-    int olQuantity;
 
     String from;
     int total;
-    int number;
-    int oNo;
     int point;
-
     int getPoint;
 
     String strPoint;
@@ -171,11 +158,9 @@ public class BeforePayActivity2 extends AppCompatActivity {
 
         where = "oNo";
         urlAddr = "http://" + macIP + ":8080/tify/lmw_orderoNo_select.jsp?user_uNo=" + user_uSeqNo;
-        list = connectGetData(); // order Select onCreate할 때 미리 마지막 번호 찾아와서 +1하기
+        list = connectGetData(); // 장바구니 리스트 불러오기
 
-        connectPoint(); // 포인트 불러오기 // 포인트 불러오기
-//        oNo = list.get(0).getMax() + 1;
-//        Log.v(TAG, "마지막 oNo : " + oNo);
+        connectPoint(); // 포인트 불러오기
 
         // layout 설정
         cardBtn2 = findViewById(R.id.beforePay_Btn_Card2);
@@ -300,7 +285,6 @@ public class BeforePayActivity2 extends AppCompatActivity {
                         btn_point.setBackgroundColor(Color.parseColor("#0084ff"));
                     }else{
 
-
                         strTotal = moneyFormat.format(total);
 
                         Log.v(TAG, "totalPrice : " + total);
@@ -331,39 +315,6 @@ public class BeforePayActivity2 extends AppCompatActivity {
                         break;
                     }
 
-                    // 결제 부분 완료되면 결제 부분에서 JSP 실행하기 (카드번호랑 카드이름 필요)
-                    // 1. 결제 완료되면 OrderListActivity로!
-                    // 1-1. order 테이블 Insert
-                    // 1-2. order oNo Select => oNo가 있어야 orderlist에 Insert 가능..
-                    // 1-3. orderlist 테이블 Insert
-                    // 2. 결제 실패하면 StoreInfoActivity로!
-
-                    // 테스트 ---------
-                    // order 테이블 Insert
-//                    where = "insert1";
-//                    int cardNum = 13153123;
-//                    String cardName = "신한은행";
-//                    urlAddr = "http://" + macIP + ":8080/tify/lmw_order_insert.jsp?user_uNo=" + user_uSeqNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&oSum=" + total + "&oCardName=" + cardName + "&oCardNo=" + cardNum + "&oReview=" + 0 + "&oStatus=" + 0;
-//
-//                    connectInsertData(); // order Insert
-
-                    // orderlist 테이블 Insert
-//                    for(int i = 0; i < carts.size(); i++){ // 클래스 만들어서 메소드 이용하면 더 빠를 수도?
-//                        where = "insert";
-//                        urlAddr = "http://" + macIP + ":8080/tify/lmw_orderlist_insert.jsp?user_uNo=" + user_uSeqNo + "&order_oNo=" + oNo + "&store_sSeqNo=" + store_sSeqNo + "&store_sName=" + sName + "&menu_mName=" + carts.get(i).getMenu_mName() + "&olSizeUp=" + carts.get(i).getcLSizeUp() + "&olAddShot=" + carts.get(i).getcLAddShot() + "&olRequest=" + carts.get(i).getcLRequest() + "&olPrice=" + carts.get(i).getcLPrice() + "&olQuantity=" + carts.get(i).getcLQuantity();
-//                        connectInsertData(); // orderlist Insert
-//                    }
-
-                    // 테스트용
-//                    intent = new Intent(BeforePayActivity2.this, OrderListActivity.class);
-//                    intent.putExtra("macIP", macIP);
-//                    intent.putExtra("user_uSeqNo", user_uSeqNo);
-//                    intent.putExtra("store_sSeqNo", store_sSeqNo);
-//                    intent.putExtra("totalPrice", total);
-//                    intent.putExtra("user_uSeqNo", user_uSeqNo);
-//                    intent.putExtra("from", from);
-//                    startActivity(intent);
-
                     intent = new Intent(BeforePayActivity2.this, OrderPage_PaymentActivity.class);
                     intent.putExtra("Carts", carts);
                     intent.putExtra("from", "BeforePayActivity2");
@@ -389,59 +340,13 @@ public class BeforePayActivity2 extends AppCompatActivity {
 
         }
     };
-    private String connectInsertData(){
-        String result = null;
-
-        try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask를 한곳에서 관리하기 위해 기존 CUDNetworkTask 삭제
-            //  - NetworkTask의 생성자 추가 : where <- "insert"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-            if(where.equals("insert")){
-                LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(BeforePayActivity2.this, urlAddr, where);
-                Object obj = networkTask.execute().get();
-                result = (String)obj;
-            }else{
-                LMW_OrderListNetworkTask networkTask = new LMW_OrderListNetworkTask(BeforePayActivity2.this, urlAddr, where);
-                Object obj = networkTask.execute().get();
-                result = (String)obj;
-            }
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.24
-            //
-            // Description:
-            //  - 입력 결과 값을 받기 위해 Object로 return후에 String으로 변환 하여 사용
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     private ArrayList<Order> connectGetData(){
         ArrayList<Order> beanList = new ArrayList<Order>();
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_OrderNetworkTask networkTask = new LMW_OrderNetworkTask(BeforePayActivity2.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
+
 
             Object obj = networkTask.execute().get();
             list = (ArrayList<Order>) obj;
@@ -462,15 +367,7 @@ public class BeforePayActivity2 extends AppCompatActivity {
         urlAddr = "http://" + macIP + ":8080/tify/lmw_cartlist_select.jsp?user_uSeqNo=" + user_uSeqNo;
 
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_CartNetworkTask networkTask = new LMW_CartNetworkTask(BeforePayActivity2.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();
             carts = (ArrayList<Cart>) obj;
@@ -491,15 +388,7 @@ public class BeforePayActivity2 extends AppCompatActivity {
         where = "select";
         urlAddr = "http://" + macIP + ":8080/tify/lmw_point_select.jsp?user_uSeqNo=" + user_uSeqNo;
         try {
-            ///////////////////////////////////////////////////////////////////////////////////////
-            // Date : 2020.12.25
-            //
-            // Description:
-            //  - NetworkTask의 생성자 추가 : where <- "select"
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////
             LMW_PointNetworkTask networkTask = new LMW_PointNetworkTask(BeforePayActivity2.this, urlAddr, where);
-            ///////////////////////////////////////////////////////////////////////////////////////
 
             Object obj = networkTask.execute().get();
             point = (Integer) obj;
@@ -553,7 +442,7 @@ public class BeforePayActivity2 extends AppCompatActivity {
         parent.setContentInsetsAbsolute(0, 0);
         return true;
     }
-    // 전화번호 중복체크
+
     private int cardCountselect () {
 
         int cardcount = 0;
