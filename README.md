@@ -10,7 +10,7 @@
  
   
   
-  <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/tifyLogo.png">
+  <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/ERD.jpeg">
      
      
      
@@ -21,6 +21,8 @@
    
    <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/system.png">
  
+ # ERD 
+   <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/system.png">
  # 1.Build gradle에 추가를 한다.
  
  
