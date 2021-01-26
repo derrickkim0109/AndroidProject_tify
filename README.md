@@ -3,6 +3,7 @@
  ### 시연 동영상 
     https://youtu.be/K-URbYZJWVI
 
+ ### 이슈 탭에서 개발 화면을 확인할 수 있습니다. 
  
 # Logo
  
@@ -19,10 +20,6 @@
    
    <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/system.png">
  
- # ERD 
-   
-   <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/ERD.jpeg">
-   
  # 1.Build gradle에 추가를 한다.
  
  
