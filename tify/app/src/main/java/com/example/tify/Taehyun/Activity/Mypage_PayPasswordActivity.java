@@ -28,6 +28,12 @@ import com.example.tify.ShareVar;
 import java.util.Random;
 
 public class Mypage_PayPasswordActivity extends AppCompatActivity {
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //              //   2021.01.07 -태현
+    //              결제 비밀번호 변경 구간
+    ////////////////////////////////////////////////////////////
+
     ShareVar shareVar =new ShareVar();
     String MacIP= shareVar.getMacIP();
 
@@ -480,7 +486,6 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
     private void updatePwd(){
         try {
             String urlAddr = "http://" + MacIP + ":8080/tify/cjs_MyPageUpdatePwd.jsp?uNo="+userSeq+"&uPayPassword="+payPassword2;
-            Log.v("왜안돼",urlAddr);
             CJS_NetworkTask_Mypage cjs_networkTask = new CJS_NetworkTask_Mypage(Mypage_PayPasswordActivity.this, urlAddr, "updatePwd");
             cjs_networkTask.execute().get();
 

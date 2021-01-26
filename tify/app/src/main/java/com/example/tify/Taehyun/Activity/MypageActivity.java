@@ -71,6 +71,7 @@ public class MypageActivity extends AppCompatActivity {
     //Bean
     Bean_Mypage_userinfo userinfo = null;
 
+    //변수 값 보내기 위해
     Intent intent = null;
     String mypage_uImage = null;
 
@@ -162,12 +163,15 @@ public class MypageActivity extends AppCompatActivity {
         intent = getIntent();
         mypage_uImage = intent.getStringExtra("uImage");
 
-
     }
 
 
 
-
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //      프로필 변경, 카드등록, 내 주문내역, 로그아웃.
+    //          //   2021.01.07 -태현     //
+    ////////////////////////////////////////////////////////////
     AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -249,14 +253,22 @@ public class MypageActivity extends AppCompatActivity {
             }
         }
     };
-
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //                                                        //
+    //        켰을때 뜰 데이터 값  //   2021.01.07 -태현     //
+    ////////////////////////////////////////////////////////////
     @Override
     protected void onResume() {
         super.onResume();
         connectGetData();
 
     }
-
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //                                                        //
+    //              Mypage_데이터 불러오기 //   2021.01.07 -태현     //
+    ////////////////////////////////////////////////////////////
     private void connectGetData() {
         try {
             //임시값
@@ -269,18 +281,18 @@ public class MypageActivity extends AppCompatActivity {
             userinfo = (Bean_Mypage_userinfo) obj;
 
             //DB
+            //전화번호
             uTelNo = userinfo.getuTelNo();
-            Log.v(TAG, "uTelNo" + uTelNo);
-
+            //결제 비번
             uPayPassword = userinfo.getuPayPassword();
-            Log.v(TAG, "uPayPassword" + uPayPassword);
+            //이메일
             uEmail = userinfo.getuEmail();
-            Log.v(TAG, "uEmail" + uEmail);
+            //닉네임
             uNickName = userinfo.getuNickName();
-            Log.v(TAG, "uNickName" + uNickName);
+            //이미지 이름
             uImage = userinfo.getuImage();
-            Log.v(TAG, "uImage" + uImage);
 
+            //닉네임,이메일 셋팅
             nickName.setText(uNickName);
             email.setText(uEmail);
 
@@ -291,7 +303,7 @@ public class MypageActivity extends AppCompatActivity {
             ////////////////////////////////////////////////////////////
 
 
-
+          //프로필 사진 셋팅
             sendImageRequest(uImage);
 
         } catch (Exception e) {
@@ -329,6 +341,7 @@ public class MypageActivity extends AppCompatActivity {
         return cardcount;
     }
 
+    //Back 버튼 누르면 메인 화면으로 -->
     @Override
     public void onBackPressed() {
 
@@ -342,9 +355,12 @@ public class MypageActivity extends AppCompatActivity {
         actionBar.show();
         // Custom Actionbar를 사용하기 위해 CustomEnabled을 true 시키고 필요 없는 것은 false 시킨다
         actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(false);            //액션바 아이콘을 업 네비게이션 형태로 표시합니다.
-        actionBar.setDisplayShowTitleEnabled(false);        //액션바에 표시되는 제목의 표시유무를 설정합니다.
-        actionBar.setDisplayShowHomeEnabled(false);            //홈 아이콘을 숨김처리합니다.
+        //액션바 아이콘을 업 네비게이션 형태로 표시합니다.
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        //액션바에 표시되는 제목의 표시유무를 설정합니다.
+        actionBar.setDisplayShowTitleEnabled(false);
+        //홈 아이콘을 숨김처리합니다.
+        actionBar.setDisplayShowHomeEnabled(false);
 
         //layout을 가지고 와서 actionbar에 포팅을 시킵니다.
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);

@@ -20,7 +20,13 @@ import com.example.tify.R;
 import com.example.tify.ShareVar;
 
 public class Mypage_NoCardActivity extends AppCompatActivity {
+    ////////////////////////////////////////////////////////////
+    //
+    //              //   2021.01.07 -태현
+    //               카드 등록 안되있을 경우 뜰 Activity
+    ////////////////////////////////////////////////////////////
 
+    //fields
     Intent intent;
     int uNo;
     //IP
@@ -29,6 +35,7 @@ public class Mypage_NoCardActivity extends AppCompatActivity {
 
     ImageView nocard_firstbtn;
     Button nocard_cardadd_btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +51,7 @@ public class Mypage_NoCardActivity extends AppCompatActivity {
     }
 
     private void init() {
+        //
         nocard_firstbtn = findViewById(R.id.nocard_firstbtn);
         nocard_cardadd_btn = findViewById(R.id.nocard_cardadd_btn);
 

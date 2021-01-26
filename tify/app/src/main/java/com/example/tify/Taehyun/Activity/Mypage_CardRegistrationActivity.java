@@ -32,14 +32,19 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
 
     //field
     final static private String TAG = "Mypage_CardRegistrationActivity";
+    //카드 정보 Adapter
     private Mypage_CardInfoAdapter cardInfoAdapter;
+    //카드 리스트 Adapter--> 내가 등록한 카드들
     private Mypage_CardListAdapter cardListAdapter;
+    //카드 정보를 위해
     private RecyclerView recyclerView = null;
-
+    //LayoutManager
     private RecyclerView.LayoutManager layoutManager = null;
+    //카드정보 ArrayList
     private ArrayList<Bean_Mypage_CardInfo> bean_mypage_cardInfos = null;
-
+    //카드 이미지 불러오기 위해
     private RecyclerView recyclerView_card_image = null;
+    //카드 이미지 ArrayList
     private ArrayList<Bean_Mypage_cardlist> bean_mypage_cardlists = null;
 
 
@@ -75,7 +80,6 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
     //XML아이디 선언. Button Listener 선언  - 태현 2020.01.10
     private void init() {
         //결제 수단 등록
-
         card_RG_updatebtn = findViewById(R.id.card_RG_updatebtn);
         card_RG_updatebtn.setOnClickListener(mClickListener);
         //back버튼
@@ -114,9 +118,12 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
         actionBar.show();
         // Custom Actionbar를 사용하기 위해 CustomEnabled을 true 시키고 필요 없는 것은 false 시킨다
         actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(false);            //액션바 아이콘을 업 네비게이션 형태로 표시합니다.
-        actionBar.setDisplayShowTitleEnabled(false);        //액션바에 표시되는 제목의 표시유무를 설정합니다.
-        actionBar.setDisplayShowHomeEnabled(false);            //홈 아이콘을 숨김처리합니다.
+        //액션바 아이콘을 업 네비게이션 형태로 표시합니다.
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        //액션바에 표시되는 제목의 표시유무를 설정합니다.
+        actionBar.setDisplayShowTitleEnabled(false);
+        //홈 아이콘을 숨김처리합니다.
+        actionBar.setDisplayShowHomeEnabled(false);
 
         //layout을 가지고 와서 actionbar에 포팅을 시킵니다.
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -163,7 +170,11 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
         //카드 리스트
         connectData(uNo);
     }
-
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //              //   2021.01.07 -태현
+    //               카드 이미지 RecyclerView 위한 Connector
+    ////////////////////////////////////////////////////////////
 
 
     @SuppressLint("LongLogTag")
@@ -173,11 +184,12 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
 
             String urlAddr = "http://" + MacIP + ":8080/tify/mypage_card_list_select.jsp?";
             String urlAddress = urlAddr + "user_uNo=" + s;
-            Log.v("dddd",urlAddress);
 
+            // 카드 정보를 불러오기 위한 NetworkTask
             NetworkTask_RecycleView_CardView networkTask_taeHyun = new NetworkTask_RecycleView_CardView(urlAddress,"select_cardList");
             Object obj = networkTask_taeHyun.execute().get();
 
+            // bean_cardlist 연결
             bean_mypage_cardlists = (ArrayList<Bean_Mypage_cardlist>) obj;
             Log.v(TAG,"빈 : "+bean_mypage_cardlists);
             recyclerView_card_image.setHasFixedSize(true);
@@ -194,6 +206,11 @@ public class Mypage_CardRegistrationActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //              //   2021.01.07 -태현
+    //               카드 이미지 RecyclerView 위한 Connector
+    ////////////////////////////////////////////////////////////
 
     @SuppressLint("LongLogTag")
     private void connectData(int s){
