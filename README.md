@@ -10,7 +10,7 @@
  
   
   
-  <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/ERD.jpeg">
+  <img src ="https://github.com/thlbyl0109/AndroidProject_tify/blob/main/document/tifyLogo.png">
      
      
      
