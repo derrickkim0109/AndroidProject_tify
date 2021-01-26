@@ -201,7 +201,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                         break;
                 }
             }
-            Log.v("reulst", result);
+           
             resultToStar();
 
             switch (result.length()) {
@@ -231,8 +231,6 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                                 String B = urls.get(i).substring(urls.get(i).indexOf("&",1),urls.get(i).length());
                                 String AA = A + oNo + B;
 
-
-                                Log.v(TAG, "urls : " + AA);
                                 connectOrderListInsert(AA);
                             }
                         }else{
@@ -247,7 +245,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                                         // 결제완료창으로 이동
                                         Intent intent = new Intent(PaymentPayPasswordActivity.this, Payment_resultActivity.class);
                                         intent.putExtra("oNo",oNo);
-                                        Log.v(TAG, "oNo : " + oNo);
+
                                         intent.putExtra("point",point);
                                         intent.putExtra("store_sSeqNo", store_SeqNo);
                                         if(dataSize != 0){
@@ -260,7 +258,7 @@ public class PaymentPayPasswordActivity extends AppCompatActivity {
                                 })
                                 .show();
                     } else {
-                        Toast.makeText(PaymentPayPasswordActivity.this, "비밀번호 다름", Toast.LENGTH_SHORT).show();
+
                         rearrangement();
                         count++;
                         result = "0";

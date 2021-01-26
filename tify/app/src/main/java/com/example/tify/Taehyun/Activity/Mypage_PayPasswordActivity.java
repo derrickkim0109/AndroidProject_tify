@@ -219,14 +219,14 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
                                 payPassword1=result.substring(1,7);
                                 result="0";
                                 payCheck=1;
-                                Log.v("비밀번호 설정 x","payPassword1 : "+payPassword1+", result : "+result);
+
                                 resultToStar();
                                 tvTitle.setText("다시한번\n입력해주세요.");
                                 break;
                             // 확인 비밀번호 입력
                             case 1:
                                 payPassword2=result.substring(1,7);
-                                Log.v(TAG,"payPassword2 : "+payPassword2+", result : "+result);
+
                                 // 확인비밀번호가 일치할때
                                 if(payPassword1.equals(payPassword2)){
                                     Toast.makeText(Mypage_PayPasswordActivity.this,"yes",Toast.LENGTH_SHORT).show();
@@ -297,7 +297,7 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
                                 payPassword1=result.substring(1,7);
                                 //디비에잇는 번호와 입력한 번호가 같을때
                                 if(payPassword1.equals(selectPwd())) {
-                                    Log.v("비밀번호 설정 ok","디비와 일치");
+
                                     result = "0";
                                     payCheck2 = 1;
                                     Log.v(TAG, "payPassword1 : " + payPassword1 + ", result : " + result);
@@ -307,7 +307,7 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
 
                                     // 디비에있는 번호와 입력한 번호가 다를때
                                 }else{
-                                    Log.v("비밀번호 설정 ok","디비와 불일치");
+
                                     result = "0";
                                     payCheck2 = 0;
                                     Log.v(TAG, "payPassword1 : " + payPassword1 + ", result : " + result);
@@ -341,7 +341,7 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
                                 if(payPassword2.equals(payPassword3)){
                                     //디비에 회원정보 저장
                                     updatePwd();
-                                    Log.v("비밀번호 설정 ok","변경 성공");
+
                                     new AlertDialog.Builder(Mypage_PayPasswordActivity.this)
                                             .setTitle("비밀번호 변경 완료.")
                                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -361,7 +361,6 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
                                             .show();
 
                                 }else{
-                                    Log.v("비밀번호 설정 ok","재설정 비밀번호 불일치");
                                     Toast.makeText(Mypage_PayPasswordActivity.this,"no",Toast.LENGTH_SHORT).show();
                                     rearrangement();
                                     count++;
@@ -374,8 +373,8 @@ public class Mypage_PayPasswordActivity extends AppCompatActivity {
                                     // 5번틀리면 초기화
                                     switch (count){
                                         case 5:
-                                            Log.v("비밀번호 설정 ok","재설정 비밀번호 초기화");
-                                            Toast.makeText(Mypage_PayPasswordActivity.this,"5번틀렷으니 초기화",Toast.LENGTH_SHORT).show();
+
+
                                             new AlertDialog.Builder(Mypage_PayPasswordActivity.this)
                                                     .setTitle("비밀번호를 다시 입력해주세요.")
                                                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
