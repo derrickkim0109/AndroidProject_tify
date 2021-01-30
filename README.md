@@ -1,10 +1,10 @@
 # AndroidProject_tify
  @copyright :  김태현 , 최현아, 최지석, 이민우 
  ### 시연 동영상 
-    https://youtu.be/K-URbYZJWVI
+   https://youtu.be/K-URbYZJWVI
 
  ### 이슈 탭에서 개발 화면을 확인할 수 있습니다. 
-    https://github.com/thlbyl0109/AndroidProject_tify/issues/1
+   https://github.com/thlbyl0109/AndroidProject_tify/issues/1
  
 # Logo
  
