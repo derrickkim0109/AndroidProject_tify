@@ -1,5 +1,5 @@
 # AndroidProject_tify
- @copyright :  김태현, 최현아,이민우,
+ @copyright :  김태현, 최현아,이민우,최지석        
  ### 시연 동영상 
    https://youtu.be/K-URbYZJWVI
 
