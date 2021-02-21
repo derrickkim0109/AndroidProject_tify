@@ -1,5 +1,5 @@
 # AndroidProject_tify
- @copyright :  김태현 
+ @copyright :  김태현 외 3                
 -담당 업무 : 카드리스트,마이페이지, File Uploading
  ### 시연 동영상 
    https://youtu.be/K-URbYZJWVI
