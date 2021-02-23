@@ -38,7 +38,7 @@
         <!-- 태현 -->
         <!-- 지석 -->
         <activity android:name=".Jiseok.Activity.JoinActivity" />
-        <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />
+
         <activity android:name=".Jiseok.Activity.JiseokMainActivity" />
         <activity android:name=".Jiseok.Activity.EmailLoginActivity" />
         <activity android:name=".Jiseok.Activity.MyLocationActivity" />
@@ -63,6 +63,7 @@
         <activity android:name=".Hyeona.Activity.main_search" />
         <activity android:name=".Hyeona.Activity.Payment_resultActivity"/>
         <activity android:name=".Hyeona.Activity.IntroActivity">
+        <activity android:name=".Jiseok.Activity.JoinPayPasswordActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

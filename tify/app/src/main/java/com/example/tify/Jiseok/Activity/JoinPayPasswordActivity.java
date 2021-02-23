@@ -293,10 +293,16 @@ public class JoinPayPasswordActivity extends AppCompatActivity {
         for(int i=0;i<6;i++){
             img[i].setImageResource(R.raw.dot02);
         }
-        // 비밀번호 길이만큼 별 색칠
+
+        // 비밀번호 길이만큼
         for (int i = 0; i < result.length() - 1; i++) {
             img[i].setImageResource(R.raw.dot01);
         }
+
+
+
+
+
     }
 
     // 재배열

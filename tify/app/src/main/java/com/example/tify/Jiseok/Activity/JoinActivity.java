@@ -269,7 +269,7 @@ public class JoinActivity extends AppCompatActivity {
                     if(permissonCheck == PackageManager.PERMISSION_GRANTED){
                         if(timerCount != 0) countDownTimer.cancel();
                         //수신권한 있을때
-                        sendmsg();
+                        sendMsg();
                         countDownTimer();
                         timerCount++;
                         btnAuthentication.setText("재요청");
@@ -427,12 +427,12 @@ public class JoinActivity extends AppCompatActivity {
     };
 
 
-    // 인텐트가 새로 들어왓을때 실행되는 매소드
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         //인증번호 setText
-        processCommand(intent);
+        msgParser(intent);
     }
 
     @Override
@@ -470,20 +470,21 @@ public class JoinActivity extends AppCompatActivity {
 
 
     //인증번호 setText
-    private void processCommand(Intent intent){
+    private void msgParser(Intent intent){
         if(intent != null){
-            String sender = intent.getStringExtra("sender");
-            String date = intent.getStringExtra("receivedDate");
+//            String sender = intent.getStringExtra("sender");
+//            String date = intent.getStringExtra("receivedDate");
             String content = intent.getStringExtra("contents");
-            Log.v("번호확인",content.substring(0,3));
-            etAuthentication.setText(content.substring(6,14));
-            etAuthentication.requestFocus();
+            if(content.substring(0,5).equals("인증번호")){
+                etAuthentication.setText(content.substring(6,14));
+                etAuthentication.requestFocus();
+            }
+
         }
     }
 
     //카운트 다운 메소드
     public void countDownTimer() {
-
         time_counter = findViewById(R.id.join_tv_timer);
         //줄어드는 시간을 나타내는 TextView
 
@@ -518,7 +519,7 @@ public class JoinActivity extends AppCompatActivity {
         }.start();
     }
 
-    public void sendmsg(){
+    public void sendMsg(){
          //문자 인증코드 생성
             String[] str = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
             String newCode = new String();
@@ -531,13 +532,11 @@ public class JoinActivity extends AppCompatActivity {
 
         String phoneNo = "5554";
         String sms = "인증번호는 " +passPhone+" 입니다." ;
+
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNo, null, sms, null, null);
-            Log.v("여기","메세지 전송 완료.");
         } catch (Exception e) {
-            Log.v("여기","메세지 에러 : "+e);
-
             e.printStackTrace();
         }
     }
